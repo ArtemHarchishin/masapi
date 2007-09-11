@@ -1,6 +1,7 @@
-#labels TODO
+#labels FAQ
 #FAQ
 
 = FAQ masapi =
 
-//TODO
+=== I started the loading and changed the value of the `parallelFiles` but nothing happened ===
+This is normal, because when the loading is launched, the changes of this value doesn't matter. You must specify the valut of this property before starting the loading.
