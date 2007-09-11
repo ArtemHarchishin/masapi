@@ -1,0 +1,31 @@
+#labels Presentation
+#Masapi project presentation 
+
+= Masapi Project =
+
+The target of the Masapi is to provide a complete framework dedicated to the management of the massive loading into a flash/flex application. It is designed to be as easy as possible to use but also to be as flexible as possible.
+
+Here is a simple piece of code showing how it works :
+{{{
+import ch.capi.net.*;
+
+//creates the file factory
+var factory:LoadableFileFactory = new LoadableFileFactory();
+
+//creates the files to load
+var file1:ILoadableFile = factory.create("myFile.txt");
+var file2:ILoadableFile = factory.create("myFile.swf");
+
+//creates the load manager
+var loader:MassLoader = new MassLoader();
+
+//add the files to the loading queue
+loader.addFile(file1);
+loader.addFile(file2);
+
+//starts the loading
+loader.start();
+}}}
+
+
+
