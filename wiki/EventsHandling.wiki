@@ -1,5 +1,5 @@
+#summary Event management of masapi
 #labels HOWTO
-#event management of masapi
 
 = Introduction =
 
