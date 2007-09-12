@@ -83,3 +83,27 @@ ml.addEventListener(MassLoadEvent.FILE_CLOSE, onFileClose);
 
 ml.start();
 }}}
+
+You can also listen to the other events (for example to retrieve the overall progress of your download) :
+{{{
+import ch.capi.net.*;
+
+var ml:IMassLoader = new MassLoader();
+
+//create & add the files to the loading queue
+//....
+
+var onOpen:Function = function(evt:Event):void { trace("MassLoad open"); }
+var onComplete:Function = function(evt:Event):void { trace("MassLoad complete"); }
+var onProgress:Function = function(evt:ProgressEvent):void
+{
+   var pct:uint = Math.floor((evt.bytesLoaded/evt.bytesTotal)*100);
+   trace("Overall progress : "+pct+"100%");
+}
+
+ml.addEventListener(Event.OPEN, onOpen);
+ml.addEventListener(Event.COMPLETE, onComplete);
+ml.addEventListener(ProgressEvent.PROGRESS, onProgress);
+
+ml.start();
+}}}
