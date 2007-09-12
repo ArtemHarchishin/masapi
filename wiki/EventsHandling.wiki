@@ -3,8 +3,7 @@
 
 = masapi core structure =
 
-
+http://masapi.googlecode.com/wiki/pictures/uml_masapi.jpg
 
 = Basic events handling =
-
 
