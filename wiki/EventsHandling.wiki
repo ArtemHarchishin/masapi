@@ -1,8 +1,8 @@
 #labels HOWTO
 #basic events management of masapi
 
-= masapi core structure =
-
-http://masapi.googlecode.com/svn/wiki/pictures/uml_masapi.jpg
+= Introduction =
 
 = Basic events handling =
+
+
