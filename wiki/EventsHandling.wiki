@@ -3,6 +3,8 @@
 
 = Introduction =
 
+The [http://code.google.com/p/masapi/wiki/CoreStructure core api classes] use a way to manage generic events that occurs during a load operation.
+
 = Basic events handling =
 
 
