@@ -20,36 +20,49 @@ This interface is implemented by some internal classes into the `ch.capi.net` pa
 
 == Creating a ILoadableFile implementation ==
 
-The easiest way to do it is to extends the `AbstractLoadableFile` class and implements the `ILoadableFile` interface. After that, there are only some methods such as `start()` or `stop()` to implement. Here is for example the implementation of the `ULoadableFile` that encapsulates a `URLLoader` object :
+The easiest way to do it is to extends the `AbstractLoadableFile` class and implements the `ILoadableFile` interface. After that, there are only some methods such as `start()` or `stop()` to implement. Here is for example the implementation of the `SLoadableFile` that encapsulates a `Sound` object :
 {{{
 package ch.capi.net
 {
 	import flash.events.IEventDispatcher;
-	import flash.net.URLLoader;
+	import flash.media.Sound;
+	import flash.media.SoundLoaderContext;
 	import flash.net.URLRequest;
 	
+	import ch.capi.net.LoadableFileType;
+	
 	/**
-	 * Represents a <code>ILoadableFile</code> based on a <code>URLLoader</code> object.
+	 * Represents a <code>ILoadableFile</code> based on a <code>Sound</code> object.
 	 * 
 	 * @author	Cedric Tabin - thecaptain
 	 * @version	1.0
 	 */
-	internal class ULoadableFile extends AbstractLoadableFile implements ILoadableFile
+	internal class SLoadableFile extends AbstractLoadableFile implements ILoadableFile
 	{
+		//---------//
+		//Variables//
+		//---------//
+		
+		/**
+		 * Defines the <code>SoundLoaderContext</code> to be used
+		 * within the loaded <code>Sound</code>.
+		 */
+		public var soundLoaderContext:SoundLoaderContext = new SoundLoaderContext();
+		
 		//-----------//
 		//Constructor//
 		//-----------//
 		
 		/**
-		 * Creates a new <code>ULoadableFile</code> object.
+		 * Creates a new <code>SLoadableFile</code> object.
 		 * 
-		 * @param	loadObject		The <code>URLLoader</code> object.
+		 * @param	snd		The <code>Sound</code> object.
 		 */
-		public function ULoadableFile(loadObject:URLLoader):void
+		public function SLoadableFile(snd:Sound):void
 		{
-			super(loadObject);
+			super(snd);
 			
-			registerTo(loadObject);
+			registerTo(snd);	
 		}
 		
 		//--------------//
@@ -64,8 +77,8 @@ package ch.capi.net
 			super.start();
 			
 			var re:URLRequest = getURLRequest();
-			var ul:URLLoader = loadManagerObject as URLLoader;
-			ul.load(re);
+			var sd:Sound = loadManagerObject as Sound;
+			sd.load(re, soundLoaderContext);
 		}
 		
 		/**
@@ -75,8 +88,8 @@ package ch.capi.net
 		{
 			super.stop();
 			
-			var ul:URLLoader = loadManagerObject as URLLoader;
-			ul.close();
+			var sd:Sound = loadManagerObject as Sound;
+			sd.close();
 			
 			super.close();
 		}
@@ -90,7 +103,7 @@ package ch.capi.net
 		 */
 		public function getEventDispatcher():IEventDispatcher
 		{
-			return loadManagerObject as URLLoader;
+			return loadManagerObject as Sound;
 		}
 		
 		/**
@@ -101,7 +114,7 @@ package ch.capi.net
 		 */
 		public function getData():*
 		{
-			return (loadManagerObject as URLLoader).data;
+			return loadManagerObject as Sound;
 		}
 		
 		/**
@@ -111,7 +124,7 @@ package ch.capi.net
 		 */
 		public function getType():String
 		{
-			return (loadManagerObject as URLLoader).dataFormat;
+			return LoadableFileType.SOUND;
 		}
 	}
 }
