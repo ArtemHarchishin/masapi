@@ -1,0 +1,7 @@
+#summary One-sentence summary of this page.
+
+= masapi core structure =
+
+Here is the basic structure of the core classes of masapi :
+
+http://masapi.googlecode.com/svn/wiki/pictures/uml_masapi.jpg
