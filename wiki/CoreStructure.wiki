@@ -1,4 +1,4 @@
-# Structure overview of the core classes
+#summary Structure overview of the core classes
 
 = masapi core structure =
 
