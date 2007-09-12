@@ -1,7 +1,19 @@
-#summary One-sentence summary of this page.
+#Structure overview of the core classes
 
 = masapi core structure =
 
 Here is the basic structure of the core classes of masapi :
 
 http://masapi.googlecode.com/svn/wiki/pictures/uml_masapi.jpg
+
+  * blue : interfaces
+  * blank : classes
+  * gray : internal classes
+
+Both `IMassLoader` and `ILoadableFile` extends the same interface `ILoadManager` (which extends `IEventDispatcher`) in order to provide the same type of events.
+
+== The ILoadableFile interface ==
+
+The target of this interface is to provide objects that provides some generic events during a load operation such as `Event.OPEN`, `ProgressEvent.PROGRESS`, `Event.COMPLETE`, ... In order to do that, the classes that implements it just encapsulates some load manager objects (`URLLoader`, `Loader`, `Sound`, `URLStream`) and redirect their events to match the interface declaration.
+
+This interface is implemented by some internal classes into the `ch.capi.net` package and are not directly accessible trough the implementation. However, the `ILoadableFile` interface allows you to access the load manager object (see the `loadManagerObject` property). Currently, all the implementations of `ILoadableFile` extends the `AbstractLoadableFile` class because it provides the basic data needed by the interface. It is the `LoadableFileFactory` who will knows what type of implementation of the `ILoadableFile` interface you need (it depends on the load manager object you want to use).
