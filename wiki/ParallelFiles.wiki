@@ -1,0 +1,41 @@
+#summary Parallel files downloading
+#labels HOWTO
+
+= Introduction =
+
+Depending of your project, it can be very useful to load the files sequentially (one by one)  instead of all together (low bandwidth for example). Masapi offers you to manage the number of files being loaded together, using the `parallelFiles` property.
+
+= Global MassLoader =
+
+By default, all the files will be loaded together. Here is a simple piece of code showing how it works :
+{{{
+import ch.capi.net.*;
+
+var factory:LoadableFileFactory = new LoadableFileFactory();
+var file1:ILoadableFile = factory.create("file1.swf");
+var file2:ILoadableFile = factory.create("file2.swf");
+var file3:ILoadableFile = factory.create("file3.swf");
+
+var massloader:IMassLoader = new MassLoader();
+
+//creates the event functions
+var onOpen:Function = function(evt:Event):void { trace("MassLoad open"); }
+var onProgress:Function = function(evt:ProgressEvent):void { trace("progres..."); }
+var onComplete:Function = function(evt:ProgressEvent):void { trace("complete"); }
+var fileOpen:Function = function(evt:MassLoadEvent):void { trace("file open : "+(evt.target as ILoadableFile).urlRequest.url); }
+var fileClose:Funnction = function(evt:MassLoadEvent):void { trace("file close : "+(evt.target as ILoadableFile).urlRequest.url); }
+
+//register the events
+massloader.addEventListener(Event.OPEN, onOpen);
+massloader.addEventListener(ProgressEvent.PROGRESS, onOprogress);
+massloader.addEventListener(Event.COMPLETE, onComplete);
+massloader.addEventListener(MassLoadEvent.FILE_OPEN, fileOpen);
+massloader.addEventListener(MassLoadEvent.FILE_CLOSE, fileClose);
+
+//adding the files
+massloader.addFile(file1);
+massloader.addFile(file2);
+massloader.addFile(file3);
+
+massloader.start();
+}}}
