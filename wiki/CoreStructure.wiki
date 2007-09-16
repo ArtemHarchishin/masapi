@@ -1,5 +1,5 @@
 #summary Structure overview of the core classes
-#labels CONCEPT
+#labels Concept
 
 = masapi core structure =
 
@@ -130,4 +130,5 @@ package ch.capi.net
 	}
 }
 }}}
+ 
  
