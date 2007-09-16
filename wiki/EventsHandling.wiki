@@ -45,7 +45,7 @@ Such as a `ILoadableFile` object, the `IMassLoader` objects manage the same even
   * `MassLoadEvent.FILE_OPEN` : the load of a `ILoadableFile` begins
   * `MassLoadEvent.FILE_CLOSE : the load of a `ILoadableFile` is closed (load complete or error)
 
-The `MassLoader` (standard implementation of the `IMassLoader` interface) doesn't matter if the file is successfully loaded or not.
+The `MassLoader` (standard implementation of the `IMassLoader` interface) *doesn't matter if the file is successfully loaded or not*.
 
 {{{
 import ch.capi.net.*;
@@ -107,3 +107,5 @@ ml.addEventListener(ProgressEvent.PROGRESS, onProgress);
 
 ml.start();
 }}}
+ 
+ 
