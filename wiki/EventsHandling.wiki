@@ -3,7 +3,7 @@
 
 = Introduction =
 
-The [http://code.google.com/p/masapi/wiki/CoreStructure core api classes] use a way to manage generic events that occurs during a load operation. This section will explain how to handle those events.
+The [http://code.google.com/p/masapi/wiki/CoreStructure core api classes] use a way to manage generic events that occurs during a load operation. This section will explain how to handle those events. Note that the event handling works the same, independently of the [http://code.google.com/p/masapi/wiki/ParallelFiles parallel files] being loaded.
 
 = Events handling =
 
@@ -107,5 +107,6 @@ ml.addEventListener(ProgressEvent.PROGRESS, onProgress);
 
 ml.start();
 }}}
+ 
  
  
