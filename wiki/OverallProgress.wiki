@@ -1,5 +1,5 @@
 #summary How does masapi to manage the overall progress
-#labels CONCEPT
+#labels Concept
 
 = Introduction =
 
@@ -55,4 +55,5 @@ trace(massloader.bytesTotal); //2048000
 }}}
 
 Remember : the target of this value is to represent _approximatively_ the size of your file. If you the size is very 'unstable' (such a php file generating an XML), put a high value into the `virtualBytesTotal` property !
+ 
  
