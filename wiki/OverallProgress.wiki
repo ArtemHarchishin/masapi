@@ -5,7 +5,9 @@
 
 As you know probably, the real size of a file cannot be directly retrieved... You must wait the the first `ProgressEvent.PROGRESS` event is dispatched, so you can access the `bytesTotal` property of the load manager object. This article describes how the default implementation of a `IMassLoader` (also a `MassLoader`) does to manages the overall progress, even if the files are loaded one by one).
 
-= The `bytesTotal` property =
+In order to understand this article, you should be aware of the [http://code.google.com/p/masapi/wiki/EventsHandling event handling].
+
+= The bytes total =
 
 Try this simple piece of code :
 {{{
@@ -17,6 +19,25 @@ var file2:ILoadableFile = factory.create("file2.swf");
 
 var massloader:IMassLoader = new MassLoader();
 trace(massloader.bytesTotal); //4096000
+}}}
+
+_4096000_ ??? What's this value ??? How does it come here ??? Yeah, that very simple : as long of a `ILoadableFile` doesn't know the `bytesTotal` value, it returns the `virtualBytesTotal` value. This value *should be* representative (at least greater) of the real size of the specified file. Why greater ? The idea is to prevent that your percentage / progress bar / preloader go backward when the real size of the downloaded file is known... If the `virtualBytesTotal` value is (a little bit) greater that the real size, then there is no problem, the overall progress will just go a little faster when the next `ProgressEvent.PROGRESS` arrives. So, if your `virtualBytesTotal` value is to big, you will see the overall progress make a big jump :)
+
+= Managing the virtual bytes =
+
+There are several ways to manage the `virtualBytesTotal` value of you files. First, you can manually set it to your `ILoadableFile` instances :
+{{{
+import ch.capi.net.*;
+
+var factory:LoadableFileFactory = new LoadableFileFactory();
+var file1:ILoadableFile = factory.create("file1.txt");
+var file2:ILoadableFile = factory.create("file2.swf");
+
+file1.virtualBytesTotal = 1024000
+file2.virtualBytesTotal = 1024000
+
+var massloader:IMassLoader = new MassLoader();
+trace(massloader.bytesTotal); //2048000
 }}}
 
 
