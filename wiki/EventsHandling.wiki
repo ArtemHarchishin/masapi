@@ -84,7 +84,7 @@ ml.addEventListener(MassLoadEvent.FILE_CLOSE, onFileClose);
 ml.start();
 }}}
 
-You can also listen to the other events (for example to retrieve the overall progress of your download) :
+You can also listen to the other events (for example to retrieve the [http://code.google.com/p/masapi/wiki/OverallProgress overall progress] of your download) :
 {{{
 import ch.capi.net.*;
 
