@@ -79,8 +79,8 @@ var massloader:MassLoader = new MassLoader(1);
 var onOpen:Function = function(evt:Event):void { trace("MassLoad open"); }
 var onProgress:Function = function(evt:ProgressEvent):void { trace("progres..."); }
 var onComplete:Function = function(evt:ProgressEvent):void { trace("complete"); }
-var fileOpen:Function = function(evt:MassLoadEvent):void { trace("file open : "+(evt.target as ILoadableFile).urlRequest.url); }
-var fileClose:Funnction = function(evt:MassLoadEvent):void { trace("file close : "+(evt.target as ILoadableFile).urlRequest.url); }
+var fileOpen:Function = function(evt:MassLoadEvent):void { trace("file open : "+(evt.file as ILoadableFile).urlRequest.url); }
+var fileClose:Funnction = function(evt:MassLoadEvent):void { trace("file close : "+(evt.file as ILoadableFile).urlRequest.url); }
 
 //register the events
 massloader.addEventListener(Event.OPEN, onOpen);
@@ -111,3 +111,4 @@ progress...
 file close : file3.swf
 complete
 }}}
+ 
