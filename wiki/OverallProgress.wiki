@@ -1,0 +1,23 @@
+#summary How does masapi to manage the overall progress
+#labels CONCEPT
+
+= Introduction =
+
+As you know probably, the real size of a file cannot be directly retrieved... You must wait the the first `ProgressEvent.PROGRESS` event is dispatched, so you can access the `bytesTotal` property of the load manager object. This article describes how the default implementation of a `IMassLoader` (also a `MassLoader`) does to manages the overall progress, even if the files are loaded one by one).
+
+= The `bytesTotal` property =
+
+Try this simple piece of code :
+{{{
+import ch.capi.net.*;
+
+var factory:LoadableFileFactory = new LoadableFileFactory();
+var file1:ILoadableFile = factory.create("file1.txt");
+var file2:ILoadableFile = factory.create("file2.swf");
+
+var massloader:IMassLoader = new MassLoader();
+trace(massloader.bytesTotal); //4096000
+}}}
+
+
+ 
