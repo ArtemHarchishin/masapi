@@ -112,3 +112,6 @@ file close : file3.swf
 complete
 }}}
  
+= See also =
+
+[http://code.google.com/p/masapi/wiki/ProgressManagement Managing the progression]
