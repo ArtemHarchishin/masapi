@@ -116,6 +116,8 @@ complete
 
   * [http://code.google.com/p/masapi/wiki/OverallProgress About the overall progress]
   * [http://code.google.com/p/masapi/wiki/ProgressManagement Managing the progression]
+  * [http://code.google.com/p/masapi/wiki/PriorityMassLoader Loading files by priority]
+ 
  
  
  
