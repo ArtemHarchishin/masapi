@@ -406,7 +406,7 @@
 			_bytesTotal = (_bytesTotalRetrieved) ? evt.bytesTotal : virtualBytesTotal;
 			
 			var ne:ProgressEvent = new ProgressEvent(evt.type, evt.bubbles, evt.cancelable, _bytesLoaded, _bytesTotal);
-			dispatchEvent(evt);
+			dispatchEvent(ne);
 		}
 	}
 }

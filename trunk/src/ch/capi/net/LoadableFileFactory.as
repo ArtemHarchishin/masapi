@@ -28,8 +28,8 @@
 	 * @example
 	 * Advanced usage of the <code>LoableFileFactory</code> :
 	 * <listing version="3.0">
-	 * var selector:ILoadableFileSelector = new ExtensionFileSelector();
-	 * selector.put("swf", LoadableFileType.BINARY);
+	 * var selector:ExtensionFileSelector = new ExtensionFileSelector();
+	 * selector.extensions.put("swf", LoadableFileType.BINARY);
 	 * 
 	 * var factory:LoadableFileFactory = new LoadableFileFactory(selector);
 	 * var file:ILoadableFile = factory.create("myFile.swf"); //creates a binary URLLoader-based ILoadableFile

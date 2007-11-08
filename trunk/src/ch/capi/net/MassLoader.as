@@ -408,7 +408,7 @@
 			registerTo(file);
 			
 			//open event
-			var op:MassLoadEvent = new MassLoadEvent(MassLoadEvent.FILE_OPEN, file)
+			var op:MassLoadEvent = new MassLoadEvent(MassLoadEvent.FILE_OPEN, file);
 			dispatchEvent(op);
 			
 			//try to start the loading
@@ -575,7 +575,7 @@
 			var length:uint = _filesToLoad.length;
 			for (var i:uint=0 ; i<length ; i++)
 			{
-				var il:ILoadManager = _filesToLoad.getElementAt(i) as ILoadManager
+				var il:ILoadManager = _filesToLoad.getElementAt(i) as ILoadManager;
 				loaded += il.bytesLoaded;
 				total += il.bytesTotal;
 			}

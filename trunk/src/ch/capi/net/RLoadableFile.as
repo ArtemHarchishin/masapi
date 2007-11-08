@@ -51,7 +51,7 @@ package ch.capi.net
 		 */
 		public override function stop():void
 		{
-			super.stop()
+			super.stop();
 			
 			var ul:URLStream = loadManagerObject as URLStream;
 			ul.close();
