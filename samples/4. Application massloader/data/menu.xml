@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+	<menu label="Page 1" file="page1" />
+	<menu label="Page 2" file="page2" />
+</root>
