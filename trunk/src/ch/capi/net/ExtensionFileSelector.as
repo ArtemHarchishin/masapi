@@ -47,6 +47,19 @@ package ch.capi.net
 		
 		/**
 		 * Creates a new <code>ExtensionFileSelector</code> object.
+		 * <p>The following extensions are defined by default :<br />
+		 * <ul>
+		 * 	<li><i>swf</i> as <code>LoadableFileType.SWF</code></li>
+		 * 	<li><i>txt</i> as <code>LoadableFileType.VARIABLES</code></li>
+		 * 	<li><i>xml</i> as <code>LoadableFileType.TEXT</code></li>
+		 * 	<li><i>css</i> as <code>LoadableFileType.TEXT</code></li>
+		 * 	<li><i>mp3</i> as <code>LoadableFileType.SOUND</code></li>
+		 * 	<li><i>wav</i> as <code>LoadableFileType.SOUND</code></li>
+		 * 	<li><i>jpg</i> as <code>LoadableFileType.BINARY</code></li>
+		 * 	<li><i>jpeg</i> as <code>LoadableFileType.BINARY</code></li>
+		 * 	<li><i>gif</i> as <code>LoadableFileType.BINARY</code></li>
+		 * 	<li><i>png</i> as <code>LoadableFileType.BINARY</code></li>
+		 * </ul></p>
 		 */
 		public function ExtensionFileSelector():void
 		{
@@ -54,7 +67,9 @@ package ch.capi.net
 			_extensions.put("swf", LoadableFileType.SWF);
 			_extensions.put("txt", LoadableFileType.VARIABLES);
 			_extensions.put("xml", LoadableFileType.TEXT);
+			_extensions.put("css", LoadableFileType.TEXT);
 			_extensions.put("mp3", LoadableFileType.SOUND);
+			_extensions.put("wav", LoadableFileType.SOUND);
 			_extensions.put("jpg", LoadableFileType.BINARY); 
 			_extensions.put("jpeg", LoadableFileType.BINARY);
 			_extensions.put("gif", LoadableFileType.BINARY);
@@ -111,7 +126,7 @@ package ch.capi.net
 		 */
 		public function getExtension(request:URLRequest):String
 		{
-			var u:String = request.url;
+			var u:String = request.url.toLowerCase();
 			
 			var a:int = u.indexOf("?");
 			if (a != -1) u = u.substring(0, a);
