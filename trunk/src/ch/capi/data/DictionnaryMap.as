@@ -55,7 +55,7 @@ package ch.capi.data
 		 */
 		public function containsKey(key:*):Boolean
 		{
-			return _dictionnary[key] != null;
+			return (key in _dictionnary);
 		}
 		
 		/**
@@ -66,11 +66,11 @@ package ch.capi.data
 		 */
 		public function containsValue(value:*):Boolean
 		{
-			for (var i:String in _dictionnary)
+			for each(var k:* in _dictionnary)
 			{
-				if (_dictionnary[i] == value) return true;
+				if (k == value) return true;
 			}
-			
+						
 			return false;
 		}
 		
