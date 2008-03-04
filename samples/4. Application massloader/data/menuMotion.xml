@@ -1,9 +1,0 @@
-<Motion duration="15" xmlns="fl.motion.*" xmlns:geom="flash.geom.*" xmlns:filters="flash.filters.*">
-	<Keyframe index="0" tweenSnap="true" tweenSync="true">
-		<tweens>
-			<SimpleEase ease="1"/>
-		</tweens>
-	</Keyframe>
-
-	<Keyframe index="14" x="130"/>
-</Motion>
