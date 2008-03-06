@@ -11,7 +11,7 @@ This is a simple guide that explain how to quickly start using the masapi main c
  * Download the latest release of Masapi ([http://code.google.com/p/masapi/downloads/list here])
  * The 'ch' folder (that you can find in the 'src' folder) must be in the same folder as your FLA or in the classpath (Publish Settings > Flash > AS3 Settings)
  
-The main classes that are needed for masapi are into the package ch.capi.net.* !
+The main classes that are needed for masapi are into the package ch.capi.net and ch.capi.events.
 
 
 == Basic usage of masapi ==
@@ -37,6 +37,7 @@ cml.addFile("myFile.txt"); // will use a URLLoader object with the URLLoaderData
 cml.addFile("myFile.xml"); // will use a URLLoader object with the URLLoaderDataFormat.TEXT property
 cml.addFile("myFile.css"); // will use a URLLoader object with the URLLoaderDataFormat.TEXT property
 cml.addFile("myFile.png"); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
+cml.addFile("myFile.png", LoadableFileType.SWF); // will use a Loader object
 cml.addFile("myFile.jpg"); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
 cml.addFile("myFile.swf"); // will use a Loader object
 cml.addFile("myFile.swf", LoadableFileType.BINARY); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
@@ -60,8 +61,8 @@ var cml:CompositeMassLoader = new CompositeMassLoader();
 //listen to the overall progression
 function onOverallProgress(evt:ProgressEvent):void
 {
-   var percent:Number = Math.round(evt.bytesLoaded / evt.bytesTotal * 100);
-   trace("Loaded at "+percent+"%");
+    var percent:Number = Math.round(evt.bytesLoaded / evt.bytesTotal * 100);
+    trace("Loaded at "+percent+"%");
 }
 cml.massLoader.addEventListener(ProgressEvent.PROGRESS, onOverallProgress);
 
@@ -74,6 +75,13 @@ function onOpenHandler(evt:MassLoadEvent):void
 	file.addEventListener(ProgressEvent.PROGRESS, onFileProgress);
 }
 cml.massLoader.addEventListener(MassLoadEvent.FILE_OPEN, onOpenHandler);
+
+//listen to the complete event
+function completeHandler(evt:Event):void
+{
+    trace("MassLoad complete");
+}
+cml.massLoader.addEventListener(Event.COMPLETE, completeHandler);
 
 //starts the loading
 cml.start();
@@ -92,7 +100,6 @@ var file:ILoadableFile = cml.addFile("test.swf"); //use a Loader object
 
 var ldr:Loader = file.getData() as Loader;
 //or var ldr:Loader = file.loadManagerObject as Loader;
-
 }}}
 
 Below, the method to retrieve the data of any binary (LoadableFileType.BINARY) loaded data :
@@ -127,7 +134,6 @@ myXML.parseXML(data);
 Below, the method to retrieve the data of any variables (LoadableFileType.VARIABLES) loaded data :
 {{{
 import ch.capi.net.*;
-import flash.xml.*;
 
 var cml:CompositeMassLoader = new CompositeMassLoader();
 var file:ILoadableFile = cml.addFile("test.txt"); //use a URLLoader object with the URLLoaderDataFormat.VARIABLES property
@@ -140,7 +146,6 @@ var data:URLVariables = file.getData() as URLVariables;
 Below, the method to retrieve the data of any sound (LoadableFileType.SOUND) loaded data :
 {{{
 import ch.capi.net.*;
-import flash.xml.*;
 
 var cml:CompositeMassLoader = new CompositeMassLoader();
 var file:ILoadableFile = cml.addFile("test.mp3"); //use a Sound object
