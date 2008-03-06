@@ -95,7 +95,7 @@ var ldr:Loader = file.getData() as Loader;
 
 }}}
 
-Below, the method to retrieves the data of any binary (LoadableFileType.BINARY) loaded data :
+Below, the method to retrieve the data of any binary (LoadableFileType.BINARY) loaded data :
 {{{
 import ch.capi.net.*;
 
@@ -109,7 +109,7 @@ var ldr:Loader = new Loader();
 ldr.loadBytes(data);
 }}}
 
-Below, the method to retrieves the data of any text (LoadableFileType.TEXT) loaded data :
+Below, the method to retrieve the data of any text (LoadableFileType.TEXT) loaded data :
 {{{
 import ch.capi.net.*;
 import flash.xml.*;
@@ -124,7 +124,7 @@ var myXML:XMLDocument = new XMLDocument();
 myXML.parseXML(data);
 }}}
 
-Below, the method to retrieves the data of any variables (LoadableFileType.VARIABLES) loaded data :
+Below, the method to retrieve the data of any variables (LoadableFileType.VARIABLES) loaded data :
 {{{
 import ch.capi.net.*;
 import flash.xml.*;
@@ -137,7 +137,7 @@ var file:ILoadableFile = cml.addFile("test.txt"); //use a URLLoader object with 
 var data:URLVariables = file.getData() as URLVariables;
 }}}
 
-Below, the method to retrieves the data of any sound (LoadableFileType.SOUND) loaded data :
+Below, the method to retrieve the data of any sound (LoadableFileType.SOUND) loaded data :
 {{{
 import ch.capi.net.*;
 import flash.xml.*;
