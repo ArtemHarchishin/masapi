@@ -647,7 +647,7 @@
 		 */
 		protected function reloadFile(fileSource:ILoadManager, fileProcessed:ILoadManager):Boolean
 		{
-			return false;
+			return true;
 		}
 		
 		//---------------//
