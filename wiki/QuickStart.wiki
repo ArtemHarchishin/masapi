@@ -1,0 +1,156 @@
+#summary Quick Start guide for using masapi
+#labels Tutorial
+
+= Masapi Quick Start guide =
+
+This is a simple guide that explain how to quickly start using the masapi main classes.
+
+
+== Installation ==
+
+ * Download the latest release of Masapi ([http://code.google.com/p/masapi/downloads/list here])
+ * The 'ch' folder (that you can find in the 'src' folder) must be in the same folder as your FLA or in the classpath (Publish Settings > Flash > AS3 Settings)
+ 
+The main classes that are needed for masapi are into the package ch.capi.net.* !
+
+
+== Basic usage of masapi ==
+
+Masapi contains three levels of classes to manage the massive loading :
+  * The MassLoader that will load a list of files
+  * The PriorityMassLoader that allows to specify a priority to a file
+  * The ApplicationMassLoader that can manage the file dependencies
+  
+In order to avoid too much verbose code for basic usage, masapi also provides the CompositeMassLoader class that encapsulates all the most used features.
+
+=== Loading the files ===
+
+The piece of code below shows how you can very simply use the CompositeMassLoader to load a list of files :
+{{{
+import ch.capi.net.*;
+
+//creates the MassLoader
+var cml:CompositeMassLoader = new CompositeMassLoader();
+
+//creates & add the files to the MassLoader
+cml.addFile("myFile.txt"); // will use a URLLoader object with the URLLoaderDataFormat.VARIABLES property
+cml.addFile("myFile.xml"); // will use a URLLoader object with the URLLoaderDataFormat.TEXT property
+cml.addFile("myFile.css"); // will use a URLLoader object with the URLLoaderDataFormat.TEXT property
+cml.addFile("myFile.png"); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
+cml.addFile("myFile.jpg"); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
+cml.addFile("myFile.swf"); // will use a Loader object
+cml.addFile("myFile.swf", LoadableFileType.BINARY); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
+
+//starts the loading
+cml.start();
+}}}
+
+=== Listen to the massive loading events ===
+
+Here is an exemple on how to listen to the MassLoader events :
+{{{
+import ch.capi.net.*;
+import ch.capi.events.*;
+
+//creates the MassLoader
+var cml:CompositeMassLoader = new CompositeMassLoader();
+
+//... (creates the files and so on)
+
+//listen to the overall progression
+function onOverallProgress(evt:ProgressEvent):void
+{
+   var percent:Number = Math.round(evt.bytesLoaded / evt.bytesTotal * 100);
+   trace("Loaded at "+percent+"%");
+}
+cml.massLoader.addEventListener(ProgressEvent.PROGRESS, onOverallProgress);
+
+//listen to a specific file
+function onFileProgress(evt:ProgressEvent):void { trace("file progress"); }
+
+function onOpenHandler(evt:MassLoadEvent):void
+{
+	var file:ILoadableFile = evt.file as ILoadableFile;
+	file.addEventListener(ProgressEvent.PROGRESS, onFileProgress);
+}
+cml.massLoader.addEventListener(MassLoadEvent.FILE_OPEN, onOpenHandler);
+
+//starts the loading
+cml.start();
+}}}
+
+=== Retrieves the data of the loaded files ===
+
+There are many ways to retrieve the data of the loaded files. This depends of which type of file you are loading and which variant you choose. The easiest way is to use the getData() method of the ILoadableFile interface :
+{{{
+import ch.capi.net.*;
+
+var cml:CompositeMassLoader = new CompositeMassLoader();
+var file:ILoadableFile = cml.addFile("test.swf"); //use a Loader object
+
+//... (waits for the massive loading complete)
+
+var ldr:Loader = file.getData() as Loader;
+//or var ldr:Loader = file.loadManagerObject as Loader;
+
+}}}
+
+Below, the method to retrieves the data of any binary (LoadableFileType.BINARY) loaded data :
+{{{
+import ch.capi.net.*;
+
+var cml:CompositeMassLoader = new CompositeMassLoader();
+var file:ILoadableFile = cml.addFile("test.swf", LoadableFileType.BINARY); //use a URLLoader object with the URLLoaderDataFormat.BINARY property
+
+//... (waits for the massive loading complete)
+
+var data:ByteArray = file.getData() as ByteArray;
+var ldr:Loader = new Loader();
+ldr.loadBytes(data);
+}}}
+
+Below, the method to retrieves the data of any text (LoadableFileType.TEXT) loaded data :
+{{{
+import ch.capi.net.*;
+import flash.xml.*;
+
+var cml:CompositeMassLoader = new CompositeMassLoader();
+var file:ILoadableFile = cml.addFile("test.xml"); //use a URLLoader object with the URLLoaderDataFormat.TEXT property
+
+//... (waits for the massive loading complete)
+
+var data:String = file.getData() as String;
+var myXML:XMLDocument = new XMLDocument();
+myXML.parseXML(data);
+}}}
+
+Below, the method to retrieves the data of any variables (LoadableFileType.VARIABLES) loaded data :
+{{{
+import ch.capi.net.*;
+import flash.xml.*;
+
+var cml:CompositeMassLoader = new CompositeMassLoader();
+var file:ILoadableFile = cml.addFile("test.txt"); //use a URLLoader object with the URLLoaderDataFormat.VARIABLES property
+
+//... (waits for the massive loading complete)
+
+var data:URLVariables = file.getData() as URLVariables;
+}}}
+
+Below, the method to retrieves the data of any sound (LoadableFileType.SOUND) loaded data :
+{{{
+import ch.capi.net.*;
+import flash.xml.*;
+
+var cml:CompositeMassLoader = new CompositeMassLoader();
+var file:ILoadableFile = cml.addFile("test.mp3"); //use a Sound object
+
+//... (waits for the massive loading complete)
+
+var data:Sound = file.getData() as Sound;
+}}}
+
+
+== Sample ==
+
+You will find a complete sample into the [http://code.google.com/p/masapi/source/browse/trunk/bundles/ bundles].
