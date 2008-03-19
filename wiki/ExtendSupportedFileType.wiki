@@ -44,10 +44,10 @@ For the LoadableFileFactory class, you need to specify manually the load manager
 Masapi let you easily defines new extensions that you want to map by default to a predefined file type.
 {{{
 var sl:ExtensionFileSelector = new ExtensionFileSelector();
-sl.put("html", LoadableFileType.TEXT);
+sl.extensions.put("html", LoadableFileType.TEXT);
 
 //you can also override predefined type
-sl.put("jpg", LoadableFileType.SWF);
+sl.extensions.put("jpg", LoadableFileType.SWF);
 
 var factory:LoadableFileFactory = new LoadableFileFactory(sl);
 var cml:CompositeMassLoader = new CompositeMassLoader(null, sl);
@@ -57,7 +57,7 @@ Here is a shorter way to do the same thing above :
 {{{
 var cml:CompositeMassLoader = new CompositeMassLoader();
 var elf:ExtensionFileSelector = (cml.loadableFileFactory.loadableFileSelector as ExtensionFileSelector);
-elf.put("html", LoadableFileType.TEXT);
+elf.extensions.put("html", LoadableFileType.TEXT);
 }}}
 
 It would be also a much advanced way to extend the ExtensionFileSelector to put a more extended list of extensions.
