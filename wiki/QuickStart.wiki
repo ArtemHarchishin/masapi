@@ -45,6 +45,7 @@ cml.addFile("myFile.swf", LoadableFileType.BINARY); // will use a URLLoader obje
 //starts the loading
 cml.start();
 }}}
+You can also read how to [http://code.google.com/p/masapi/wiki/ExtendSupportedFileType extend the supported file types] !
 
 === Listen to the massive loading events ===
 
