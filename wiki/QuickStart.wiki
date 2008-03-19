@@ -1,5 +1,5 @@
 #summary Quick Start guide for using masapi
-#labels Tutorial
+#labels Featured
 
 = Masapi Quick Start guide =
 
