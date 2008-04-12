@@ -47,19 +47,6 @@ package ch.capi.net
 		}
 		
 		/**
-		 * Stops the loading of the data.
-		 */
-		public override function stop():void
-		{
-			super.stop();
-			
-			var ul:URLStream = loadManagerObject as URLStream;
-			ul.close();
-			
-			super.close();
-		}
-		
-		/**
 		 * Retrieves the <code>IEventDispatcher</code> of all the sub-events
 		 * of a <code>ILoadableFile</code>. For example, the source event dispatcher
 		 * of a <code>Loader</code> object will be his <code>contentLoaderInfo</code>.
