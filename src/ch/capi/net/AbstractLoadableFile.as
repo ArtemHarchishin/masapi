@@ -291,7 +291,13 @@
 		public function stop():void
 		{
 			if (!_stateLoading) throw new IllegalOperationError("State not loading");
+			if (bytesLoaded == bytesTotal) return; //nothing to do
+			
 			_stateLoading = false;
+			loadManagerObject.close();
+			
+			var evt:Event = new Event(Event.CLOSE, false, false);
+			dispatchEvent(evt);
 		}
 		
 		//-----------------//
@@ -331,15 +337,6 @@
 		//-----------------//
 		//Protected methods//
 		//-----------------//
-		
-		/**
-		 * Dispatch the close event.
-		 */
-		protected function close():void
-		{
-			var evt:Event = new Event(Event.CLOSE, false, false);
-			dispatchEvent(evt);	
-		}
 		
 		/**
 		 * <code>Event.COMPLETE</code> listener.
