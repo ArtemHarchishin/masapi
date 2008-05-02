@@ -3,16 +3,7 @@
 
 = Masapi Quick Start guide =
 
-This is a simple guide that explain how to quickly start using the masapi main classes.
-
-
-== Installation ==
-
- * Download the latest release of Masapi ([http://code.google.com/p/masapi/downloads/list here])
- * The 'ch' folder (that you can find in the 'src' folder) must be in the same folder as your FLA or in the classpath (Publish Settings > Flash > AS3 Settings)
- 
-The main classes that are needed for masapi are into the package ch.capi.net and ch.capi.events.
-
+This is a simple guide that explain how to quickly start using the masapi main classes. You can find how to install masapi [http://code.google.com/p/masapi/wiki/Installation here].
 
 == Basic usage of masapi ==
 
@@ -45,7 +36,7 @@ cml.addFile("myFile.swf", LoadableFileType.BINARY); // will use a URLLoader obje
 //starts the loading
 cml.start();
 }}}
-You can also read how to [http://code.google.com/p/masapi/wiki/ExtendSupportedFileType extend the supported file types] !
+You can also read how to [http://code.google.com/p/masapi/wiki/ExtendSupportedFileTypes extend the supported file types] ! There is also a page that show [http://code.google.com/p/masapi/wiki/PauseResume how to pause/resume a MassLoader].
 
 === Listen to the massive loading events ===
 
@@ -90,7 +81,11 @@ cml.start();
 
 === Retrieves the data of the loaded files ===
 
-There are many ways to retrieve the data of the loaded files. This depends of which type of file you are loading and which variant you choose. The easiest way is to use the getData() method of the ILoadableFile interface :
+There are many ways to retrieve the data of the loaded files. This depends of which type of file you are loading and which variant you choose. Be aware that Masapi will not keep any reference on the ILoadableFile that have been loaded !
+
+You'll find more information on [http://code.google.com/p/masapi/wiki/RetrieveData this page].
+
+The easiest way is to use the getData() method of the ILoadableFile interface :
 {{{
 import ch.capi.net.*;
 
