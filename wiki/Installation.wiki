@@ -7,15 +7,15 @@ This short page is a step by step guide to install masapi.
 
 == Download ==
 
-First step, you need to download the [http://code.google.com/p/masapi/downloads/list latest release] of Masapi. This package is a all-in-one package and contains the sources, the API reference (also [http://www.astorm.ch/masapi/doc online]) and the samples.
+First step, you need to download the [http://code.google.com/p/masapi/downloads/list latest release] of Masapi. This package is a all-in-one package and contains the sources, the [http://www.astorm.ch/masapi/doc API reference] and the samples.
 
 You can find other bundles [http://masapi.googlecode.com/svn/trunk/bundles/ here].
 
 == Installation ==
 
 The second step you need to have the 'ch' folder into the classpath of your project. There are two ways in flash to do that :
-* put the 'ch' folder in the same place as your FLA.
-* add the 'src' folder into your classpath (File > Publish settings > Flash > ActionScript 3 settings).
+  * put the 'ch' folder in the same place as your FLA.
+  * add the 'src' folder into your classpath (File > Publish settings > Flash > ActionScript 3 settings).
 
 == Test ==
 
