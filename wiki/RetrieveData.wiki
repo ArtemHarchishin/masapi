@@ -1,0 +1,82 @@
+#summary How to retrieve the data of loaded files
+#labels Featured
+
+= How to retrieve the data of loaded files =
+
+First, you need to know that the core classes of Masapi (ie MassLoader, CompositeMassLoader, ...) *doesn't keep any reference on the loaded ILoadableFile instances*. In order to access their data, you need to explicitly have a way to access the ILoadableFile instance.
+
+== Keep a reference to ILoadableFile instances ==
+
+Basically, when you're coding on the timeline, there is no problem to do that :
+{{{
+import ch.capi.net.*;
+
+var cml:CompositeMassLoader = new CompositeMassLoader();
+
+//add the files
+var f1:ILoadableFile = cml.addFile("file1.swf");
+var f2:ILoadableFile = cml.addFile("file2.xml");
+var f3:ILoadableFile = cml.addFile("file3.swf", LoadableFileType.BINARY);
+
+//listen to the complete
+cml.massLoader.addEventListener(Event.COMPLETE, onComplete);
+
+//starts the download
+cml.start();
+
+//COMPLETE handler
+function onComplete(evt:Event):void
+{
+   trace("Massive Loading complete");
+   
+   var ldr1:Loader = f1.getData() as Loader; //using the loadManagerObject property will also be correct
+   var myText:String = f2.getData() as String; //a xml file automatically contains a String (URLLoaderDataFormat.TEXT)
+   var myData:ByteArray = f3.getData() as ByteArray; //because of the LoadableFileType.BINARY specification 
+   
+   //... working with data
+}
+}}}
+
+When you're working with classes, you should have an instance variable for each ILoadableFile (or an Array). You also must keep a reference to the MassLoader in order to prevent the GC to delete it :
+{{{
+package
+{
+	import ch.capi.net.*;
+	import flash.events.*;
+
+	public class ReferenceDemo
+	{
+		private var _file1:ILoadableFile = null;
+		private var _file2:ILoadableFile = null;
+		private var _file3:ILoadableFile = null;
+		private var _loader:CompositeMassLoader = new CompositeMassLoader();
+		
+		public function ReferenceDemo():void
+		{
+			_file1 = _loader.addFile("file1.swf");
+			_file2 = _loader.addFile("file2.xml");
+			_file3 = _loader.addFile("file3.swf", LoadableFileType.BINARY);
+			
+			_loader.massLoader.addEventListener(Event.COMPLETE, onCompleteHandler);
+			_loader.start();
+		}
+		
+		protected function onCompleteHandler(evt:Event):void
+		{
+			trace("Massive Loading complete");
+   
+		    var ldr1:Loader = _file1.getData() as Loader;
+		    var myText:String = _file2.getData() as String;
+		    var myData:ByteArray = _file3.getData() as ByteArray; 
+		    
+		    //... working with data
+		}
+	}
+}
+}}}
+
+== getData() or loadManagerObject ? ==
+
+Those are two main ways to retrieve the data and all depends on what you need to proceed. The getData() method is very useful if you just need to retrieve the value contained into a file loaded by URLLoader file. In the other case, this methods returns the loadManagerObject.
+
+You can dynamically know what the getData() method will return by testing the type of the ILoadableFile by using the getType() method.
