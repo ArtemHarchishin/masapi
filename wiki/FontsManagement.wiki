@@ -7,7 +7,7 @@ Masapi includes some classes that let you easly manage embedded fonts into your 
 
 == Embedding a Font ==
 
-Just add your font into your library as usual. Then, in the linkage options, set 'ch.capi.display.test.AbstractFont' into the super class field. You can put your own class name into the class field. If that is a class that you wrote, then it must also extends AbstractFont (AbstractFont extends Font).
+Just add your font into your library as usual. Then, in the linkage options, set 'ch.capi.display.test.AbstractFont' into the super class field. You can put your own class name into the class field. If that is a class you wrote, then it must also extends AbstractFont (it extends Font).
 
 In order to use your embedded font into all your SWFs, you need to register it. The following code take place into the SWF that contains the embedded font :
 {{{

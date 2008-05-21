@@ -3,7 +3,7 @@
 
 = Masapi Quick Start guide =
 
-This is a simple guide that explain how to quickly start using the masapi main classes. You can find how to install masapi [http://code.google.com/p/masapi/wiki/Installation here].
+This is a simple guide that explain how to quickly start using the masapi main classes. You can find here how to [http://code.google.com/p/masapi/wiki/Installation install masapi].
 
 == Basic usage of masapi ==
 
@@ -24,18 +24,20 @@ import ch.capi.net.*;
 var cml:CompositeMassLoader = new CompositeMassLoader();
 
 //creates & add the files to the MassLoader
-cml.addFile("myFile.txt"); // will use a URLLoader object with the URLLoaderDataFormat.VARIABLES property
-cml.addFile("myFile.xml"); // will use a URLLoader object with the URLLoaderDataFormat.TEXT property
-cml.addFile("myFile.css"); // will use a URLLoader object with the URLLoaderDataFormat.TEXT property
-cml.addFile("myFile.png"); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
-cml.addFile("myFile.png", LoadableFileType.SWF); // will use a Loader object
-cml.addFile("myFile.jpg"); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
-cml.addFile("myFile.swf"); // will use a Loader object
-cml.addFile("myFile.swf", LoadableFileType.BINARY); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
+var file1:ILoadableFile = cml.addFile("myFile.txt"); // will use a URLLoader object with the URLLoaderDataFormat.VARIABLES property
+var file2:ILoadableFile = cml.addFile("myFile.xml"); // will use a URLLoader object with the URLLoaderDataFormat.TEXT property
+var file3:ILoadableFile = cml.addFile("myFile.css"); // will use a URLLoader object with the URLLoaderDataFormat.TEXT property
+var file4:ILoadableFile = cml.addFile("myFile.png"); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
+var file5:ILoadableFile = cml.addFile("myFile.png", LoadableFileType.SWF); // will use a Loader object
+var file6:ILoadableFile = cml.addFile("myFile.jpg"); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
+var file7:ILoadableFile = cml.addFile("myFile.swf"); // will use a Loader object
+var file8:ILoadableFile = cml.addFile("myFile.swf", LoadableFileType.BINARY); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
 
 //starts the loading
 cml.start();
 }}}
+Note that it is important to keep a reference to the created ILoadableFile !
+
 You can also read how to [http://code.google.com/p/masapi/wiki/ExtendSupportedFileTypes extend the supported file types] ! There is also a page that show [http://code.google.com/p/masapi/wiki/PauseResume how to pause/resume a MassLoader].
 
 === Listen to the massive loading events ===
