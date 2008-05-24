@@ -1,5 +1,5 @@
 #summary How to extend the supported file types
-#labels Featured
+
 
 = Supported file types =
 

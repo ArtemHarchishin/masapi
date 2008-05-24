@@ -1,5 +1,4 @@
 #summary How to manage embedded fonts
-#labels Featured
 
 = Embedded Fonts Management =
 
