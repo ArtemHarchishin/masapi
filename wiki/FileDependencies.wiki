@@ -13,7 +13,7 @@ Masapi can internally manage those dependencies for you. It is very easy to use 
 
 To explain how masapi works, the page loaded by masapi will use this architecture :
 
-http://code.google.com/p/masapi/wiki/sampleDependency.png
+http://masapi.googlecode.com/svn/wiki/sampleDependency.png
 
 That page (just call it 'astorm') will be loaded by anoter SWF ('index.swf' in the samples).
 
@@ -139,7 +139,7 @@ When you call the 'addApplicationFile' method, masapi will automatically add all
 
 Keeping the sample, masapi will work like that :
 
-http://code.google.com/p/masapi/wiki/sampleDependencySteps.png
+http://masapi.googlecode.com/svn/wiki/sampleDependencySteps.png
 
   # Step 1 : masapi will load the 'font' and 'text' that are needed for the 'animation' file.
   # Step 2 : masapi will load the 'animation' and 'background' files needed for the 'astorm' page.

@@ -10,7 +10,7 @@ You'll find here interesting links to use masapi into your application. You can 
   * [http://code.google.com/p/masapi/wiki/Installation Install] the masapi library
   * [http://code.google.com/p/masapi/wiki/RetrieveData Retrieve the data] of the loaded files
   * [http://code.google.com/p/masapi/wiki/PauseResume Pause & Resume] a massive loading
-  * Manage the [http://code.google.com/p/masapi/wiki/FontsManagement embedded fotns]
+  * Manage the [http://code.google.com/p/masapi/wiki/FontsManagement embedded fonts]
 
 = Masapi's advanced topics =
 

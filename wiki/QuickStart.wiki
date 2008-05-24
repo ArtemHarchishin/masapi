@@ -156,4 +156,4 @@ var data:Sound = file.getData() as Sound;
 
 == Sample ==
 
-You will find a complete sample into the [http://code.google.com/p/masapi/source/browse/trunk/bundles/ bundles].
+You will find a complete sample into the [http://code.google.com/p/masapi/source/browse/trunk/bundles/ bundles]. And you're now ready to have a look to the [http://code.google.com/p/masapi/wiki/UserGuide User Guide] !
