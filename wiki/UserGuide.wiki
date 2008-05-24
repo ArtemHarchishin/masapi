@@ -17,8 +17,8 @@ You'll find here interesting links to use masapi into your application. You can 
   * Extend the [http://code.google.com/p/masapi/wiki/ExtendSupportedFileTypes supported file types]
   * Manage the [http://code.google.com/p/masapi/wiki/FileDependencies file dependencies]
 
-== Useful links ==
+= Useful links =
 
   * [http://www.astorm.ch/masapi/doc Online API Reference]
   * [http://www.astorm.ch/blog/index.php?tag/Masapi French tutorials]
-  * [http://www.astorm.ch Author's blog]
+  * Author's blog : [http://www.astorm.ch AStorm - Cédric Tabin]

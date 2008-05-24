@@ -11,7 +11,7 @@ Masapi can internally manage those dependencies for you. It is very easy to use 
 
 == Preparing ==
 
-To explain how masapi works, the page loaded by masapi will use this architecture :
+To explain how masapi works, the sample page loaded by masapi will use this architecture :
 
 http://masapi.googlecode.com/svn/wiki/sampleDependency.png
 
@@ -135,7 +135,7 @@ massLoader.start();
 
 When you call the 'addApplicationFile' method, masapi will automatically add all the dependencies need by the specified file at the right priority.
 
-=== How does masapi loads dependencies ===
+=== How does masapi load dependencies ===
 
 Keeping the sample, masapi will work like that :
 
