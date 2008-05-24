@@ -1,5 +1,4 @@
 #summary How to pause/resume a download
-#labels Featured
 
 = How to pause/resume a download =
 
