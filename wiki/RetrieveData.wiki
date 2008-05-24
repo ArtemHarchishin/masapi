@@ -1,5 +1,4 @@
 #summary How to retrieve the data of loaded files
-#labels Featured
 
 = How to retrieve the data of loaded files =
 

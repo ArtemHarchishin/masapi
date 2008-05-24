@@ -1,0 +1,24 @@
+#summary Masapi's User Guide
+#labels Featured
+
+= Masapi's User Guide =
+
+You'll find here interesting links to use masapi into your application. You can begin by check the [http://code.google.com/p/masapi/wiki/QuickStart Quick Start Guide].
+
+= Masapi's basic =
+
+  * [http://code.google.com/p/masapi/wiki/Installation Install] the masapi library
+  * [http://code.google.com/p/masapi/wiki/RetrieveData Retrieve the data] of the loaded files
+  * [http://code.google.com/p/masapi/wiki/PauseResume Pause & Resume] a massive loading
+  * Manage the [http://code.google.com/p/masapi/wiki/FontsManagement embedded fotns]
+
+= Masapi's advanced topics =
+
+  * Extend the [http://code.google.com/p/masapi/wiki/ExtendSupportedFileTypes supported file types]
+  * Manage the [http://code.google.com/p/masapi/wiki/FileDependencies file dependencies]
+
+== Useful links ==
+
+  * [http://www.astorm.ch/masapi/doc Online API Reference]
+  * [http://www.astorm.ch/blog/index.php?tag/Masapi French tutorials]
+  * [http://www.astorm.ch Author's blog]
