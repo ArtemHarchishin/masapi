@@ -1,8 +1,5 @@
 package ch.capi.core 
 {	import ch.capi.net.ILoadableFile;
-	import ch.capi.data.IMap;
-	import ch.capi.data.DictionnaryMap;
-	import ch.capi.errors.NameAlreadyExistsError;
 	import ch.capi.errors.DependencyNotSafeError;
 	
 	/**
@@ -10,20 +7,29 @@ package ch.capi.core
 	 * 
 	 * @see		ch.capi.core.ApplicationFileParser	ApplicationFileParser
 	 * @see		ch.capi.core.ApplicationMassLoader	ApplicationMassLoader	 * @author	Cedric Tabin - thecaptain
-	 * @version	1.0	 */	public class ApplicationFile
+	 * @version	1.0	 */	public final class ApplicationFile
 	{
 		//---------//
 		//Variables//
 		//---------//
-		private static var __files:IMap				= new DictionnaryMap();
 		private var _dependencies:Array				= new Array();
 		private var _global:Boolean					= false;
 		private var _name:String;
 		private var _loadableFile:ILoadableFile;
+		private var _applicationContext:ApplicationContext;
 		
 		//-----------------//
 		//Getters & Setters//
 		//-----------------//
+		
+		/**
+		 * Defines the <code>ApplicationContext</code> of the <code>ApplicationFile</code>.
+		 */
+		public function get applicationContext():ApplicationContext { return _applicationContext; }
+		
+		//this method is just used to communicate the context between the ApplicationFile and ApplicationContext classes
+		//and shouldn't be used !
+		internal function setContext(value:ApplicationContext):void { _applicationContext = value; }
 		
 		/**
 		 * Defines the <code>ILoadableFile</code>.
@@ -56,15 +62,16 @@ package ch.capi.core
 		 * 
 		 * @param	name				The name. It must be unique !
 		 * @param	loadableFile		The linked <code>ILoadableFile</code>.
-		 * @throws	ch.capi.errors.NameAlreadyExistsError	If the specified name already exists.
+		 * @param	context				The <code>ApplicationContext</code>. If not specified, then the global context will be used.
+		 * @throws	ch.capi.errors.NameAlreadyExistsError	If the specified name already exists into the specified <code>ApplicationContext</code>.
 		 */
-		public function ApplicationFile(name:String, loadableFile:ILoadableFile=null):void
+		public function ApplicationFile(name:String, loadableFile:ILoadableFile=null, context:ApplicationContext=null):void
 		{
 			_loadableFile = loadableFile;
 			_name = name;
 			
-			if (__files.containsKey(name)) throw new NameAlreadyExistsError("File name '"+name+"' already exists");
-			__files.put(name, this);
+			if (context == null) context = ApplicationContext.getGlobalContext();
+			context.addFile(this);
 		}
 		
 		//--------------//
@@ -72,45 +79,32 @@ package ch.capi.core
 		//--------------//
 		
 		/**
-		 * Retrieves the specified <code>ApplicationFile</code>. 
+		 * Retrieves the specified <code>ApplicationFile</code>. This method is just an encapsulation to retrieve
+		 * the file throught the <code>ApplicationContext</code>.
 		 * 
 		 * @param	name		The name of the file to retrieve.
+		 * @param	context		The <code>ApplicationContext</code>. If not specified, the global context will be used.
 		 * @return	The <code>ApplicationFile</code> or <code>null</code>.
 		 */
-		public static function getFile(name:String):ApplicationFile
+		public static function getFile(name:String, context:ApplicationContext=null):ApplicationFile
 		{
-			return __files.getValue(name) as ApplicationFile;
-		}
-		
-		/**
-		 * Enumerates all the <code>ApplicationFile</code>.
-		 * 
-		 * @param	globalOnly		Defines if only the global files or all the files must be listed.
-		 * @return	An <code>Array</code> containing the enumerated <code>ApplicationFile</code>.
-		 */
-		public static function enumerateFiles(globalOnly:Boolean=false):Array
-		{
-			var c:Array = new Array();
-			var f:Array = __files.values();
-
-			for each(var a:ApplicationFile in f)
-			{
-				if (!globalOnly || a.global) c.push(a);
-			}
-			
-			return c;
+			if (context == null) context = ApplicationContext.getGlobalContext();
+			return context.getFile(name);
 		}
 		
 		/**
 		 * Add an <code>ApplicationFile</code> as dependency for this file. It means that the specified
 		 * <code>file</code> is necessary to be loaded before the current <code>ApplicationFile</code> can
 		 * be executed.
+		 * <p>The <code>ApplicationFile</code> added as dependency must be into the same <code>ApplicationContext</code>.</p>
 		 * 
 		 * @param	file		The <code>ApplicationFile</code> to add.
+		 * @throws	ArgumentError	If the <code>ApplicationContext</code> is not the same.
 		 * @throws	ch.capi.errors.DependencyNotSafeError	If the dependency is not safe.
 		 */
 		public function addDependency(file:ApplicationFile):void
 		{
+			if (file.applicationContext != applicationContext) throw new ArgumentError("The ApplicationContext is not the same");
 			if (!isDependencySafe(file)) throw new DependencyNotSafeError("Dependency not safe for file '"+file+"'");
 			
 			_dependencies.push(file);
@@ -120,27 +114,74 @@ package ch.capi.core
 		 * Removes a dependency from the <code>ApplicationFile</code>.
 		 * 
 		 * @param	file				The dependency to remove.
-		 * @param	recursiveRemoval	Defines if the dependency removal must be recursive.
+		 * @param	recursiveSearch		Defines if the search of the dependency must recursive trought the dependency tree.
+		 * 								The removal will be stopped after the first instance of the dependency has been found.
 		 */
-		public function removeDependency(file:ApplicationFile, recursiveRemoval:Boolean=false):void
+		public function removeDependency(file:ApplicationFile, recursiveSearch:Boolean=false):void
 		{
-			var l:uint = _dependencies.length;
-			for (var i:uint=0 ; i<l ; i++)
+			var dependencies:uint = _dependencies.length;
+			for (var i:uint=0 ; i<dependencies ; i++)
 			{
-				var ap:ApplicationFile = _dependencies[i];
-				if (ap == file)
+				var appFile:ApplicationFile = _dependencies[i];
+				if (appFile == file)
 				{
 					_dependencies.splice(i, 1);
 					return;
 				}
-				else if (recursiveRemoval)
+				else if (recursiveSearch)
 				{
-					ap.removeDependency(file, true);
+					appFile.removeDependency(file, true);
 				}
 			}
 		}
 		
 		/**
+		 * Removes all the dependencies of the <code>ApplicationFile</code>.
+		 */
+		public function clearDependencies():void
+		{
+			_dependencies = [];
+		}
+		
+		/**
+		 * Retrieves if the <code>ApplicationFile</code> is a direct dependency of the specified
+		 * <code>ApplicationFile</code>.
+		 * 
+		 * @param	file	The parent <code>ApplicationFile</code>.
+		 * @param	<code>true</code> if the current file is a dependency of the specified file.
+		 */
+		public function isDependencyOf(file:ApplicationFile):Boolean
+		{
+			var dependencies:Array = file.dependencies;
+			for each(var dependency:ApplicationFile in dependencies)
+			{
+				if (dependency == this) return true;
+			}
+			
+			return false;
+		}
+		
+		/**
+		 * Get all the <code>ApplicationFile</code> that have this file as directed dependency.
+		 * 
+		 * @return	The parents.
+		 */
+		public function getParents():Array
+		{
+			var parents:Array = [];
+			var files:Array = _applicationContext.enumerateFiles();
+			
+			for each(var file:ApplicationFile in files)
+			{
+				if (file != this && this.isDependencyOf(file))
+				{
+					parents.push(file);
+				}
+			}
+			
+			return parents;
+		}
+		/**
 		 * Retrieves the data of the <code>ILoadableFile</code> linked to the <code>ApplicationFile</code>. If
 		 * the <code>loadManagerObject</code> is a <code>URLLoader</code>, then the data are returned else the
 		 * <code>loadManagerObject</code> itself is returned.
@@ -151,6 +192,7 @@ package ch.capi.core
 		 */
 		public function getData():*
 		{
+			if (loadableFile == null) return null;
 			return loadableFile.getData();
 		}
 		

@@ -567,6 +567,7 @@
 		protected final function onOpen(evt:Event):void
 		{
 			var trg:ILoadManager = evt.target as ILoadManager;
+			_filesLoading.addElement(evt.target as ILoadManager);
 			
 			//if the MassLoad has been closed, stop the propagation
 			if (!_isLoading)
@@ -574,8 +575,6 @@
 				stopLoadingFile(trg);
 				return;
 			}
-			
-			_filesLoading.addElement(evt.target as ILoadManager);
 		}
 		
 		/**
