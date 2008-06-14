@@ -220,7 +220,7 @@
 			 * I don't set the () after the Date type because else FDT generates
 			 * an error saying that the number of arguments is wrong (7 expected).
 			 */
-			var ncValue:Number = (new Date).getTime();
+			var ncValue:Number = (new Date()).getTime();
 			
 			if (re.method == URLRequestMethod.POST || re.data == null) re.url += "?"+NO_CACHE_VARIABLE_NAME+"="+ncValue;
 			else if (re.data is URLVariables)

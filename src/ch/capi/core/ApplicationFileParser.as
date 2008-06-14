@@ -65,6 +65,7 @@ package ch.capi.core
 		//Variables//
 		//---------//
 		private var _loadableFileFactory:LoadableFileFactory;
+		private var _applicationContext:ApplicationContext;
 		
 		//-----------------//
 		//Getters & Setters//
@@ -80,6 +81,12 @@ package ch.capi.core
 			_loadableFileFactory = value;
 		}
 		
+		/**
+		 * Defines the <code>ApplicationContext</code>.
+		 */
+		public function get applicationContext():ApplicationContext { return _applicationContext; }
+		public function set applicationContext(value:ApplicationContext):void { _applicationContext = value; }
+		
 		//-----------//
 		//Constructor//
 		//-----------//
@@ -88,12 +95,17 @@ package ch.capi.core
 		 * Creates a new <code>ApplicationFileParser</code> object.
 		 * 
 		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code>.
+		 * @param	context					The <code>ApplicationContext</code>. If not defined, then the global <code>ApplicationContext</code>
+		 * 									will be used.
 		 */
-		public function ApplicationFileParser(loadableFileFactory:LoadableFileFactory=null):void
+		public function ApplicationFileParser(loadableFileFactory:LoadableFileFactory=null, context:ApplicationContext=null):void
 		{
 			_loadableFileFactory = (loadableFileFactory==null) ? new LoadableFileFactory() : loadableFileFactory;
+			
+			if (context == null) context = ApplicationContext.getGlobalContext();
+			_applicationContext = context;
 		}
-		
+
 		//--------------//
 		//Public methods//
 		//--------------//
@@ -126,7 +138,7 @@ package ch.capi.core
 			var n:String = node.attributes[ATTRIBUTE_NAME_VALUE];
 			if (n == null || n.length == 0) throw new ParseError("checkName", "Attribute '"+ATTRIBUTE_NAME_VALUE+"' is not defined", node);
 		
-			var a:ApplicationFile = new ApplicationFile(n);
+			var a:ApplicationFile = new ApplicationFile(n, null, applicationContext);
 			
 			var u:String = node.attributes[ATTRIBUTE_URL_VALUE];
 			var t:String = node.attributes[ATTRIBUTE_TYPE_VALUE];
@@ -228,6 +240,21 @@ package ch.capi.core
 		 */
 		private function parseFiles(node:XMLNode):void
 		{
+			//virtual bytes total
+			if (node.attributes[ATTRIBUTE_VIRTUALBYTESTOTAL_VALUE] != null)
+			{
+				var valueVB:int = parseInt(node.attributes[ATTRIBUTE_VIRTUALBYTESTOTAL_VALUE]);
+				if (!isNaN(valueVB)) loadableFileFactory.defaultVirtualBytesTotal = valueVB;
+			}
+			
+			//use cache
+			if (node.attributes[ATTRIBUTE_USECACHE_VALUE] != null)
+			{
+				var valueUC:String = node.attributes[ATTRIBUTE_USECACHE_VALUE];
+				loadableFileFactory.defaultUseCache = !(valueUC.toLowerCase() == "false");
+			}
+			
+			//parse the sub nodes
 			var n:Array = node.childNodes;
 			for each(var cn:XMLNode in n)
 			{
