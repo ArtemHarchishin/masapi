@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<application>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://www.astorm.ch/masapi/masapiFileDependencies.xsd">
 	<files>
 		<file name="fonts" 	url="swf/fonts.swf" global="true" type="swf" 			virtualBytesTotal="35000" />
 		<file name="menu"  	url="swf/menu.swf"  global="true" type="binary" 		virtualBytesTotal="20000" />

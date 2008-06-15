@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified">
+
+            <xsd:element name="application">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="files" type="Files" />
+                        <xsd:element name="dependencies" type="Dependencies" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:complexType name="Files">
+                <xsd:sequence maxOccurs="unbounded">
+                    <xsd:element name="file" type="FileDefinition" />
+                </xsd:sequence>
+                
+                <xsd:attribute name="useCache" type="Boolean" />
+                <xsd:attribute name="virtualBytesTotal" type="xsd:int" />
+            </xsd:complexType>
+            
+            <xsd:complexType name="Dependencies">
+                <xsd:sequence maxOccurs="unbounded">
+                    <xsd:element name="file" type="FileDependency" />
+                </xsd:sequence>
+            </xsd:complexType>
+            
+            <xsd:complexType name="FileDefinition">
+                <xsd:attribute name="name" type="xsd:string" use="required" />
+                <xsd:attribute name="url" type="xsd:string" use="required" />
+                <xsd:attribute name="type" type="FileType" />
+                <xsd:attribute name="global" type="Boolean" />
+                <xsd:attribute name="useCache" type="Boolean" />
+                <xsd:attribute name="virtualBytesTotal" type="xsd:int" />
+                
+                <xsd:anyAttribute processContents="skip" />
+            </xsd:complexType>
+            
+            <xsd:complexType name="FileDependency">
+                <xsd:sequence maxOccurs="unbounded">
+                    <xsd:element name="file" type="FileReference" />
+                </xsd:sequence>
+                
+                <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+            
+            <xsd:complexType name="FileReference">
+                <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+            
+            <xsd:simpleType name="Boolean">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="true|false"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            
+            <xsd:simpleType name="FileType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="swf|text|variables|binary|sound|stream"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+</xsd:schema>
