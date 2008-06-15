@@ -22,9 +22,10 @@
             </xsd:complexType>
             
             <xsd:complexType name="Dependencies">
-                <xsd:sequence maxOccurs="unbounded">
+                <xsd:choice maxOccurs="unbounded">
                     <xsd:element name="file" type="FileDependency" />
-                </xsd:sequence>
+                    <xsd:element name="dependency" type="FileDependency" />
+                </xsd:choice>
             </xsd:complexType>
             
             <xsd:complexType name="FileDefinition">
