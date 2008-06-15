@@ -1,5 +1,7 @@
 package ch.capi.net 
 {
+	import ch.capi.data.ArrayList;	
+	
 	import flash.net.URLRequest;		
 	
 	import ch.capi.net.LoadableFileFactory;
@@ -32,9 +34,19 @@ package ch.capi.net
 		//---------//
 		//Variables//
 		//---------//
+		private var _storage:ArrayList = new ArrayList();
 		private var _factory:LoadableFileFactory;
 		private var _massLoader:IMassLoader;
-		
+
+		/**
+		 * Defines if the <code>CompositeMassLoader</code> must keep references on the created
+		 * <code>ILoadableFile</code> instances. If this is set to <code>false</code>, a reference must
+		 * be kept on the <code>ILoadableFile</code> to prevent the Garbage Collector to delete them.
+		 * 
+		 * @see		#storeFile	storeFile()
+		 */
+		public var keepFiles:Boolean = true;
+
 		//-----------------//
 		//Getters & Setters//
 		//-----------------//
@@ -127,12 +139,83 @@ package ch.capi.net
 											   		   onIOError:Function=null,
 											   		   onSecurityError:Function=null):ILoadableFile
 		{
-			var file:ILoadableFile = getLoadableFile(request, fileType);
+			var file:ILoadableFile = createLoadableFile(request, fileType);
 			_factory.attachListeners(file,onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
 			_massLoader.addFile(file);
+			
+			if (keepFiles) storeFile(file);
+			
 			return file;
 		}
-
+		
+		/**
+		 * Retrieves all the files created by the <code>CompositeMassLoader</code>. Note that the <code>CompositeMassLoader</code>
+		 * register the files only if the <code>keepFiles</code> property is set to <code>true</code>.
+		 * 
+		 * @return	The created <code>ILoadableFile</code>.
+		 */
+		public function getFiles():Array
+		{
+			return _storage.toArray();
+		}
+		
+		/**
+		 * Retrieves the <code>ILoadableFile</code> at the specified index.
+		 * 
+		 * @param	index	The index.
+		 * @return	The <code>ILoadableFile</code>.
+		 */
+		public function getFileAt(index:uint):ILoadableFile
+		{
+			return _storage.getElementAt(index) as ILoadableFile;
+		}
+		
+		/**
+		 * Retrieves the number of <code>ILoadableFile</code> instances that have been stored.
+		 * 
+		 * @return	The number of stored <code>ILoadableFile</code>.
+		 */
+		public function getFileCount():uint
+		{
+			return _storage.length;
+		}
+		
+		/**
+		 * Starts the loading of the massive loader.
+		 * 
+		 * @see	ch.capi.net.ILoadManager#start	ILoadManager.start()
+		 */
+		public function start():void
+		{
+			_massLoader.start();
+		}
+		
+		/**
+		 * Stops the loading of the massive loader.
+		 * 
+		 * @see	ch.capi.net.ILoadManager#stop	ILoadManager.stop()
+		 */
+		public function stop():void
+		{
+			_massLoader.stop();
+		}
+		
+		/**
+		 * Clears the loading queue of the <code>IMassLoader</code> and empty the references to the
+		 * created <code>ILoadableFile</code> instances.
+		 * 
+		 * @see	ch.capi.net.IMassLoader#clear	IMassLoader.clear()
+		 */
+		public function clear():void
+		{
+			_massLoader.clear();
+			_storage.clear();
+		}
+		
+		//-------------------//
+		//Protected functions//
+		//-------------------//
+		
 		/**
 		 * Retrieves a <code>ILoadableFile</code> from a <code>URLRequest</code> and and a specified file type
 		 * issued from the <code>LoadableFileType</code> constants.
@@ -144,7 +227,7 @@ package ch.capi.net
 		 * @return	The <code>ILoadableFile</code> created.
 		 * @throws	ArgumentError	If the <code>fileType</code> is not valid.
 		 */
-		public function getLoadableFile(request:URLRequest, fileType:String=null):ILoadableFile
+		protected function createLoadableFile(request:URLRequest, fileType:String=null):ILoadableFile
 		{
 			switch(fileType)
 			{
@@ -171,33 +254,13 @@ package ch.capi.net
 		}
 		
 		/**
-		 * Starts the loading of the massive loader.
+		 * Stores the specified <code>ILoadableFile</code>.
 		 * 
-		 * @see	ch.capi.net.ILoadManager#start	ILoadManager.start()
+		 * @param file	The file to store.
 		 */
-		public function start():void
+		protected function storeFile(file:ILoadableFile):void
 		{
-			_massLoader.start();
-		}
-		
-		/**
-		 * Stops the loading of the massive loader.
-		 * 
-		 * @see	ch.capi.net.ILoadManager#stop	ILoadManager.stop()
-		 */
-		public function stop():void
-		{
-			_massLoader.stop();
-		}
-		
-		/**
-		 * Clears the loading queue.
-		 * 
-		 * @see	ch.capi.net.IMassLoader#clear	IMassLoader.clear()
-		 */
-		public function clear():void
-		{
-			_massLoader.clear();
+			_storage.addElement(file);
 		}
 	}
 }

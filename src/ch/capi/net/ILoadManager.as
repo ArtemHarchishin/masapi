@@ -36,7 +36,7 @@ package ch.capi.net
 	 * Represents a load manager. This manager should be able to manage all the events
 	 * related to the loading of a file.
 	 * 
-	 * @see			ch.capi.net.CompositeMassLoaer	CompositeMassLoader
+	 * @see			ch.capi.net.CompositeMassLoader	CompositeMassLoader
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		2.1
 	 */
