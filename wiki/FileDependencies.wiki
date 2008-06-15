@@ -24,7 +24,8 @@ In order to tell masapi about the file dependencies, you need to define a XML th
 For the current case, the XML configuration file will look like this :
 {{{
 <?xml version="1.0" encoding="utf-8" ?>
-<application>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://www.astorm.ch/masapi/masapiFileDependencies.xsd">
         <files>
                 <file name="astorm"     url="astorm.swf"     type="swf" />
                 <file name="font"       url="font.swf"       type="swf" />
@@ -44,6 +45,8 @@ For the current case, the XML configuration file will look like this :
         </dependencies>
 </application>
 }}}
+
+The XMLSchema definition can be found [http://www.astorm.ch/masapi/masapiFileDependencies.xsd here]. This is not required for masapi, but it will give you a way to check that your XML structure is correct for the masapi's parser. You can use this [http://www.astorm.ch/masapi/validator.php validator] to check if your XML is valid.
 
 === File listing ===
 
