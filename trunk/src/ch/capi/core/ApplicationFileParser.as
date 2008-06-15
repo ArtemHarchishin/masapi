@@ -61,6 +61,11 @@ package ch.capi.core
 		 */
 		private static const ATTRIBUTE_NETSTATE_VALUE:String = "netState";
 		
+		/**
+		 * Defines the 'basePath' attribute value.
+		 */
+		private static const ATTRIBUTE_BASEPATH_VALUE:String = "basePath";
+		
 		//---------//
 		//Variables//
 		//---------//
@@ -252,6 +257,13 @@ package ch.capi.core
 			{
 				var valueUC:String = node.attributes[ATTRIBUTE_USECACHE_VALUE];
 				loadableFileFactory.defaultUseCache = !(valueUC.toLowerCase() == "false");
+			}
+			
+			//base path
+			if (node.attributes[ATTRIBUTE_BASEPATH_VALUE] != null)
+			{
+				var basePath:String = node.attributes[ATTRIBUTE_BASEPATH_VALUE];
+				loadableFileFactory.basePath = basePath;
 			}
 			
 			//parse the sub nodes

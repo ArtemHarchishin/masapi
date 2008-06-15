@@ -55,6 +55,13 @@
 		private var _fileSelector:ILoadableFileSelector;
 		private var _listenersPriority:int;
 
+		/**
+		 * Defines the base path that will be used as prefix when a <code>URLRequest</code> is created.
+		 * 
+		 * @see	#create()	create()
+		 */
+		public var basePath:String = null;
+
 		//-----------------//
 		//Getters & Setters//
 		//-----------------//
@@ -241,7 +248,7 @@
 		 * create a <code>URLRequest</code> object and return the <code>ILoadableFile</code> retrieved
 		 * by the <code>createFile()</code> method.
 		 * 
-		 * @param	url			The url.
+		 * @param	url			The url. If a <code>basePath</code> is set, then the url will be <code>basePath + url</code>.
 		 * @param	onOpen		The <code>Event.OPEN</code> listener.
 		 * @param	onProgress	The <code>ProgressEvent.PROGRESS</code> listener.
 		 * @param	onComplete	The <code>Event.COMPLETE</code> listener.
@@ -259,6 +266,12 @@
 							   onIOError:Function=null,
 							   onSecurityError:Function=null):ILoadableFile
 		{
+			if (basePath != null)
+			{
+				if (basePath.charAt(basePath.length-1) != "/") basePath += "/";
+				url = basePath + url;
+			}
+			
 			return createFile(new URLRequest(url), onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
 		}
 		

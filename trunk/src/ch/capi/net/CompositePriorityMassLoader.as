@@ -109,9 +109,12 @@ package ch.capi.net
 														   		   onIOError:Function=null,
 														   		   onSecurityError:Function=null):ILoadableFile
 		{
-			var file:ILoadableFile = getLoadableFile(request, fileType);
+			var file:ILoadableFile = createLoadableFile(request, fileType);
 			loadableFileFactory.attachListeners(file,onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
 			(massLoader as PriorityMassLoader).addPrioritizedFile(file, priority);
+			
+			if (keepFiles) storeFile(file);
+			
 			return file;
 		}
 	}
