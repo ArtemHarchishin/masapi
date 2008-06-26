@@ -6,7 +6,7 @@ package ch.capi.data
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		1.0
 	 */
-	public class QueueList extends LinkedList implements IQueue
+	public class QueueList extends ArrayList implements IQueue
 	{
 		//-----------------//
 		//Getters & Setters//
@@ -47,7 +47,7 @@ package ch.capi.data
 		 */
 		public function getFirstElement():*
 		{
-			return getFirstListElement().data;
+			return getElementAt(0).data;
 		}
 		
 		/**
@@ -57,7 +57,7 @@ package ch.capi.data
 		 */
 		public function getLastElement():*
 		{
-			return getLastListElement().data;
+			return getElementAt(length-1).data;
 		}
 		
 		/**

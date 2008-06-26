@@ -1,5 +1,6 @@
 ﻿package ch.capi.net
 {
+	import flash.system.ApplicationDomain;	
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.ProgressEvent;
@@ -50,6 +51,7 @@
 		//---------//
 		//Variables//
 		//---------//
+		private var _defaultLoaderContext:LoaderContext		= new LoaderContext(false, ApplicationDomain.currentDomain);
 		private var _defaultVirtualBytes:uint;
 		private var _useCache:Boolean;
 		private var _fileSelector:ILoadableFileSelector;
@@ -102,6 +104,19 @@
 		public function get defaultVirtualBytesTotal():uint { return _defaultVirtualBytes; }
 		public function set defaultVirtualBytesTotal(value:uint):void { _defaultVirtualBytes = value; }
 		
+		/**
+		 * Defines the default <code>LoaderContext</code> that will be used to create a <code>ILoadableFile</code>
+		 * based on a <code>Loader</code> object.
+		 * 
+		 * @see		#createLoaderFile()		createLoaderFile()
+		 */
+		public function get defaultLoaderContext():LoaderContext { return _defaultLoaderContext; }
+		public function set defaultLoaderContext(value:LoaderContext):void
+		{
+			if (value == null) throw new ArgumentError("value is not defined");
+			_defaultLoaderContext = value;
+		}
+
 		//-----------//
 		//Constructor//
 		//-----------//
@@ -206,7 +221,9 @@
 			var ldb:LLoadableFile = new LLoadableFile(ldr);
 			ldb.urlRequest = request;
 
-			if (context != null) ldb.loaderContext = context;
+			if (context == null) context = _defaultLoaderContext;
+			ldb.loaderContext = context;
+			
 			initializeFile(ldb);
 			
 			return ldb;

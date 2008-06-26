@@ -2,14 +2,13 @@
 {
 	import flash.display.Loader;
 	import flash.system.LoaderContext;
-	import flash.system.ApplicationDomain;
 	import flash.net.URLRequest;
 	import flash.events.IEventDispatcher;
 	import flash.events.Event;
 	import flash.display.DisplayObject;
 	import ch.capi.net.LoadableFileType;
-	import ch.capi.core.IApplicationContext;
-	
+	import ch.capi.display.IRootDocument;
+
 	/**
 	 * Represents a <code>ILoadableFile</code> based on a <code>Loader</code> object.
 	 * 
@@ -27,7 +26,8 @@
 		 * Defines the <code>LoaderContext</code> of the
 		 * <code>Loader</code> object.
 		 */
-		public var loaderContext:LoaderContext 		= new LoaderContext(false, ApplicationDomain.currentDomain);
+		//public var loaderContext:LoaderContext 		= new LoaderContext(false, ApplicationDomain.currentDomain);
+		public var loaderContext:LoaderContext 		= null; //initialized by LoadableFileFactory
 		
 		//-----------//
 		//Constructor//
@@ -111,9 +111,9 @@
 			var cnt:DisplayObject = src.content;
 			
 			//set the linked loadable file
-			if (cnt is IApplicationContext)
+			if (cnt is IRootDocument)
 			{
-				var adc:IApplicationContext = cnt as IApplicationContext;
+				var adc:IRootDocument = cnt as IRootDocument;
 				adc.initializeContext(this);
 			}
 		}

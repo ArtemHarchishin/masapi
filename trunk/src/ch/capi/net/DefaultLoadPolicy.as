@@ -37,7 +37,7 @@ package ch.capi.net
 		 * Defines how many times a file must be reloaded if its download fails. 0 means that
 		 * the file will be reloaded since it is successfully loaded.
 		 */
-		public var reloadTimes:int;
+		public var reloadTimes:uint;
 
 		//-----------------//
 		//Getters & Setters//
@@ -100,7 +100,7 @@ package ch.capi.net
 			if (nbLoaded >= reloadTimes)
 			{
 				if (defaultFiles.containsKey(file)) return defaultFiles.getValue(file);
-				else if (reloadTimes != 0) return null; //if the reloadTimes is 0, then load the files again & again...
+				else if (reloadTimes > 0) return null; //if the reloadTimes is 0, then load the files again & again...
 			}
 			
 			_linkedFiles.put(file, nbLoaded+1);
@@ -113,7 +113,7 @@ package ch.capi.net
 		 * @param	file		The <code>ILoadManager</code>.
 		 * @return	The number of times that the file has been loaded (starts from 1).
 		 */
-		public function getFileLoadedTimes(file:ILoadManager):int
+		public function getFileLoadedTimes(file:ILoadManager):uint
 		{
 			if (!_linkedFiles.containsKey(file)) return 1;
 			

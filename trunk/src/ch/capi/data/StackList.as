@@ -6,7 +6,7 @@ package ch.capi.data
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		1.0
 	 */
-	public class StackList extends LinkedList implements IStack
+	public class StackList extends ArrayList implements IStack
 	{
 		//-----------------//
 		//Getters & Setters//
@@ -47,7 +47,7 @@ package ch.capi.data
 		 */
 		public function getTopElement():*
 		{
-			return getFirstListElement().data;
+			return getElementAt(0).data;
 		}
 		
 		/**

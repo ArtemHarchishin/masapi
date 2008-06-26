@@ -86,8 +86,11 @@ package ch.capi.data
 		public function removeElementAt(index:int):*
 		{
 			checkIndex(index, _data.length-1);
+			var removed:* = _data[index];
+			
 			_data.splice(index, 1);
-			return _data[index];
+			
+			return removed;
 		}
 		
 		/**
