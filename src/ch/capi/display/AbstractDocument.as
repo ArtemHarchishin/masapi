@@ -3,19 +3,19 @@ package ch.capi.display
 	import ch.capi.net.INetStateManager;
 	import ch.capi.net.ILoadableFile;
 	import ch.capi.net.NetState;
-	import ch.capi.core.IApplicationContext;
+	import ch.capi.display.IRootDocument;
 	
 	import flash.display.MovieClip;
 	import flash.display.StageAlign;
 	
 	/**
-	 * Basic implementation of an <code>IApplicationContext</code> and <code>INetStateManager</code>.
+	 * Basic implementation of an <code>IRootDocument</code> and <code>INetStateManager</code>.
 	 * <p>Note that you should <strong>never</strong> use this class directly as a DocumentClass.</p>
 	 * 
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		1.0
 	 */
-	public class AbstractDocument extends MovieClip implements IApplicationContext, INetStateManager
+	public class AbstractDocument extends MovieClip implements IRootDocument, INetStateManager
 	{
 		//---------//
 		//Variables//
@@ -80,7 +80,7 @@ package ch.capi.display
 		}
 		
 		/**
-		 * Callback of the MassLoader (<code>IApplicationContext</code> interface). This method should
+		 * Callback of the MassLoader (<code>IRootDocument</code> interface). This method should
 		 * be overriden to implement the initialization tasks.
 		 * 
 		 * @param	loadableFile	The <code>ILoadableFile</code> source.

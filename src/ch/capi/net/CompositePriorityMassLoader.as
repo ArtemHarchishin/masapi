@@ -50,12 +50,14 @@ package ch.capi.net
 		/**
 		 * Creates a new <code>CompositePriorityMassLoader</code> object.
 		 * 
+		 * @param	keepFiles				If the <code>CompositeMassLoader</code> must keep a reference on the created <code>ILoadableFile</code> instances.
 		 * @param	massLoader				The <code>PriorityMassLoader</code> to use.
 		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code> to use.
+		 * @see		ch.capi.net.CompositeMassLoader#keepFiles	CompositeMassLoader.keepFiles
 		 */
-		public function CompositePriorityMassLoader(massLoader:PriorityMassLoader=null, factory:LoadableFileFactory=null):void
+		public function CompositePriorityMassLoader(keepFiles:Boolean=true, massLoader:PriorityMassLoader=null, factory:LoadableFileFactory=null):void
 		{
-			super((massLoader==null) ? new PriorityMassLoader() : massLoader, factory);
+			super(keepFiles, (massLoader==null) ? new PriorityMassLoader() : massLoader, factory);
 		}
 		
 		//--------------//

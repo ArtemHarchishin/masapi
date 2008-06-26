@@ -11,7 +11,8 @@ package ch.capi.core
 	import flash.net.URLVariables;
 	
 	/**
-	 * Parser of <code>ApplicationFile</code> objects.
+	 * Parser of <code>ApplicationFile</code> objects. The XMLSchema and a XML validator can be found
+	 * <a href="http://www.astorm.ch/masapi/validator.php">here</a>.
 	 * 
 	 * @see		ch.capi.core.ApplicationFile		ApplicationFile
 	 * @see		ch.capi.core.ApplicationMassLoader	ApplicationMassLoader	 * @author 	Cedric Tabin - thecaptain
@@ -128,6 +129,57 @@ package ch.capi.core
 			parseDependencies(node.childNodes[1]);
 		}
 		
+		/**
+		 * Parses the <code>ApplicationFile</code> of the specified <code>XMLNode</code>.
+		 * 
+		 * @param node	The <code>XMLNode</code>.
+		 */
+		public function parseFiles(node:XMLNode):void
+		{
+			//virtual bytes total
+			if (node.attributes[ATTRIBUTE_VIRTUALBYTESTOTAL_VALUE] != null)
+			{
+				var valueVB:int = parseInt(node.attributes[ATTRIBUTE_VIRTUALBYTESTOTAL_VALUE]);
+				if (!isNaN(valueVB)) loadableFileFactory.defaultVirtualBytesTotal = valueVB;
+			}
+			
+			//use cache
+			if (node.attributes[ATTRIBUTE_USECACHE_VALUE] != null)
+			{
+				var valueUC:String = node.attributes[ATTRIBUTE_USECACHE_VALUE];
+				loadableFileFactory.defaultUseCache = !(valueUC.toLowerCase() == "false");
+			}
+			
+			//base path
+			if (node.attributes[ATTRIBUTE_BASEPATH_VALUE] != null)
+			{
+				var basePath:String = node.attributes[ATTRIBUTE_BASEPATH_VALUE];
+				loadableFileFactory.basePath = basePath;
+			}
+			
+			//parse the sub nodes
+			var n:Array = node.childNodes;
+			for each(var cn:XMLNode in n)
+			{
+				createApplicationFile(cn);
+			}
+		}
+		
+		/**
+		 * Parses the <code>ApplicationFile</code> dependencies of the specified <code>XMLNode</code>.
+		 * 
+		 * @param node	The <code>XMLNode</code>.
+		 */
+		public function parseDependencies(node:XMLNode):void
+		{
+			var n:Array = node.childNodes;
+			for each(var cn:XMLNode in n)
+			{
+				var app:ApplicationFile = getApplicationFile(cn);
+				parseFileDependency(app, cn);
+			}
+		}
+		
 		//-----------------//
 		//Protected methods//
 		//-----------------//
@@ -239,53 +291,6 @@ package ch.capi.core
 		//---------------//
 		//Private methods//
 		//---------------//
-		
-		/**
-		 * @private
-		 */
-		private function parseFiles(node:XMLNode):void
-		{
-			//virtual bytes total
-			if (node.attributes[ATTRIBUTE_VIRTUALBYTESTOTAL_VALUE] != null)
-			{
-				var valueVB:int = parseInt(node.attributes[ATTRIBUTE_VIRTUALBYTESTOTAL_VALUE]);
-				if (!isNaN(valueVB)) loadableFileFactory.defaultVirtualBytesTotal = valueVB;
-			}
-			
-			//use cache
-			if (node.attributes[ATTRIBUTE_USECACHE_VALUE] != null)
-			{
-				var valueUC:String = node.attributes[ATTRIBUTE_USECACHE_VALUE];
-				loadableFileFactory.defaultUseCache = !(valueUC.toLowerCase() == "false");
-			}
-			
-			//base path
-			if (node.attributes[ATTRIBUTE_BASEPATH_VALUE] != null)
-			{
-				var basePath:String = node.attributes[ATTRIBUTE_BASEPATH_VALUE];
-				loadableFileFactory.basePath = basePath;
-			}
-			
-			//parse the sub nodes
-			var n:Array = node.childNodes;
-			for each(var cn:XMLNode in n)
-			{
-				createApplicationFile(cn);
-			}
-		}
-		
-		/**
-		 * @private
-		 */
-		private function parseDependencies(node:XMLNode):void
-		{
-			var n:Array = node.childNodes;
-			for each(var cn:XMLNode in n)
-			{
-				var app:ApplicationFile = getApplicationFile(cn);
-				parseFileDependency(app, cn);
-			}
-		}
 		
 		/**
 		 * @private

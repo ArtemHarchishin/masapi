@@ -635,18 +635,15 @@
 		}
 		
 		/**
-		 * Callback method called after the <code>ILoadPolicy</code> has been applied. This method manages if the
-		 * processed file must be reloaded or not. This method is only called when the <code>ILoadPolicy</code> returns
-		 * a non-<code>null</code> value (ie a <code>ILoadManager</code> to reload).
-		 * <p>By default, this method returns <code>true</code>.</p>
+		 * Processes the loading policy on the currently closed file.
 		 * 
-		 * @param	fileSource		The source <code>ILoadManager</code> that has been loaded (successfully or not).
-		 * @param	fileProcessed	The <code>ILoadManager</code> returned by the <code>ILoadPolicy</code> when processing the <code>fileSource</code>.
-		 * @return	<code>true</code> if the processed file must be reloaded, <code>false</code> otherwise.
+		 * @param	file		The <code>ILoadManager</code> just closed.
+		 * @param	closeEvent	The event that occured.
+		 * @return	The <code>ILoadManager</code> that must be reloaded or <code>null</code>.
 		 */
-		protected function reloadFile(fileSource:ILoadManager, fileProcessed:ILoadManager):Boolean
+		protected function processPolicy(file:ILoadManager, closeEvent:Event):ILoadManager
 		{
-			return true;
+			return _loadPolicy.processFile(file, closeEvent);
 		}
 		
 		//---------------//
@@ -733,8 +730,8 @@
 				closeFile(file, evt);
 				
 				//apply the loading policy over the current closed file
-				var f:ILoadManager = _loadPolicy.processFile(file, evt);
-				if (f!=null && !reloadFile(file, f))
+				var f:ILoadManager = processPolicy(file, evt);
+				if (f!=null)
 				{
 					_tempTotalBytes -= file.bytesLoaded; //readjust the bytes loaded
 					_filesToLoad.addElement(f);

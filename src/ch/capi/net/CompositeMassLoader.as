@@ -1,9 +1,8 @@
 package ch.capi.net 
 {
-	import ch.capi.data.ArrayList;	
-	
 	import flash.net.URLRequest;		
 	
+	import ch.capi.data.ArrayList;	
 	import ch.capi.net.LoadableFileFactory;
 	import ch.capi.net.IMassLoader;
 	import ch.capi.net.MassLoader;
@@ -14,12 +13,28 @@ package ch.capi.net
 	 * class simply uses the <code>IMassLoader</code> and <code>LoadableFileFactory</code> to creates
 	 * the <code>ILoadableFile</code> and for the loading management.
 	 *
+	 * <p>The <code>CompositeMassLoader</code> keeps by default a reference to the created <code>ILoadableFile</code>
+	 * (see the <code>keepFiles</code> property).</p>
+	 *
 	 * @example
+	 * The <code>CompositeMassLoader</code> keep a reference to the created files by default :
 	 * <listing version="3.0">
 	 * var cm:CompositeMassLoader = new CompositeMassLoader();
 	 * cm.addFile("myAnimation.swf");
 	 * cm.addFile("otherSWF.swf", LoadableFileType.BINARY);
 	 * cm.addFile("myVariables.txt");
+	 * 
+	 * cm.start();
+	 * </listing>
+	 *
+	 * @example
+	 * The <code>CompositeMassLoader</code> doesn't keep a reference to the created files :
+	 * 
+	 * <listing version="3.0">
+	 * var cm:CompositeMassLoader = new CompositeMassLoader(false);
+	 * var file1:ILoadableFile = cm.addFile("myAnimation.swf");
+	 * var file2:ILoadableFile = cm.addFile("otherSWF.swf", LoadableFileType.BINARY);
+	 * var file3:ILoadableFile = cm.addFile("myVariables.txt");
 	 * 
 	 * cm.start();
 	 * </listing>
@@ -37,7 +52,12 @@ package ch.capi.net
 		private var _storage:ArrayList = new ArrayList();
 		private var _factory:LoadableFileFactory;
 		private var _massLoader:IMassLoader;
+		private var _keepFiles:Boolean;
 
+		//-----------------//
+		//Getters & Setters//
+		//-----------------//
+		
 		/**
 		 * Defines if the <code>CompositeMassLoader</code> must keep references on the created
 		 * <code>ILoadableFile</code> instances. If this is set to <code>false</code>, a reference must
@@ -45,11 +65,7 @@ package ch.capi.net
 		 * 
 		 * @see		#storeFile	storeFile()
 		 */
-		public var keepFiles:Boolean = true;
-
-		//-----------------//
-		//Getters & Setters//
-		//-----------------//
+		public function get keepFiles():Boolean { return _keepFiles; }
 		
 		/**
 		 * Defines the <code>LoadableFileFactory</code> to use.
@@ -78,14 +94,16 @@ package ch.capi.net
 		/**
 		 * Creates a new <code>CompositeMassLoader</code> object.
 		 * 
+		 * @param	keepFiles				If the <code>CompositeMassLoader</code> must keep a reference on the created <code>ILoadableFile</code> instances.
 		 * @param	massLoader				The <code>IMassLoader</code> to use.
 		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code> to use.
 		 */
-		public function CompositeMassLoader(massLoader:IMassLoader=null, loadableFileFactory:LoadableFileFactory=null)
+		public function CompositeMassLoader(keepFiles:Boolean = true, massLoader:IMassLoader=null, loadableFileFactory:LoadableFileFactory=null)
 		{
 			if (massLoader == null) massLoader = new MassLoader();
 			if (loadableFileFactory == null) loadableFileFactory = new LoadableFileFactory();
 			
+			_keepFiles = keepFiles;
 			_massLoader = massLoader;
 			_factory = loadableFileFactory;
 		}
