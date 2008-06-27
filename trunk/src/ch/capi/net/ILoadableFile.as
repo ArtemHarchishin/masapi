@@ -69,13 +69,24 @@ package ch.capi.net
 		
 		/**
 		 * Retrieves the data of the <code>loadManagerObject</code> if the loading
-		 * is complete. If the <code>loadManagerObject</code> is a <code>URLoader</code>
-		 * object, then the <code>data</code> value is returned else the <code>loadManagerObject</code>
-		 * itself is returned.
+		 * is complete. If the asType parameter is specified, then the <code>ILoadableFile</code>
+		 * will try to create an instance of it and parse the content into it.
 		 * 
+		 * @param 	asClass	The class instance that should be returned by the method.
 		 * @return	The data of the <code>loadManagerObject</code>.
+		 * @throws	ArgumentError	If the class type is not supported.
+		 * 
+		 * @see		#isClassSupported()		isClassSupported()
 		 */
-		function getData():*;
+		function getData(asClass:String=null):*;
+		
+		/**
+		 * Retrieves if the specified class type is supported by this <code>ILoadableFile</code> or not.
+		 * 
+		 * @param	type	The class type to check.
+		 * @return	<code>true</code> if the type is supported.
+		 */
+		function isClassSupported(aClass:String):Boolean;
 		
 		/**
 		 * Retrieves the type of the file based on the <code>LoadableFileType</code> constants.

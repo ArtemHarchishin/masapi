@@ -58,7 +58,7 @@
 	 * @eventType	flash.events.ProgressEvent.PROGRESS
 	 */
 	[Event(name="progress", type="flash.events.ProgressEvent")]
-	
+import flash.utils.describeType;import flash.utils.getDefinitionByName;	
 	/**
 	 * Represents a <code>AbstractLoadableFile</code>. This is a basic
 	 * implementation to store the generic data of a <code>ILoadableFile</code>.
@@ -404,6 +404,48 @@
 			
 			var ne:ProgressEvent = new ProgressEvent(evt.type, evt.bubbles, evt.cancelable, _bytesLoaded, _bytesTotal);
 			dispatchEvent(ne);
+		}
+		
+		/**
+		 * Checks if the specified source class is a child of the specified super class.
+		 * 
+		 * @param	source		The source class (child).
+		 * @param	superClass	The super class.
+		 * @return	<code>true</code> if the source class extends the super class.
+		 * 
+		 * @see	#isInstanceOf()	isInstanceOf()
+		 */
+		protected function isInstanceOfClass(source:String, superClass:String):Boolean
+		{
+			return isInstanceOf(source, [superClass]);
+		}
+		
+		/**
+		 * Checks if the specified source class is a child of one of the specified super classes.
+		 * 
+		 * @param	source			The source class.
+		 * @param	superClasses	An <code>Array</code> of <code>String</code> describing a list of classes.
+		 * @return	<code>true</code> if the source class extends one of the super classes.
+		 */
+		protected function isInstanceOf(source:String, superClasses:Array):Boolean
+		{
+			//check if the class doesn't extend
+			for each(var aClass:String in superClasses)
+			{
+				if (aClass == source) return true;
+			}
+			
+			var desc:XML = describeType(getDefinitionByName(source) as Class);
+			for each(var extendsClass:String in desc.factory.extendsClass.@type)
+			{
+				extendsClass = extendsClass.replace("::", ".");
+				for each(var superClass:String in superClasses)
+				{
+					if (superClass == extendsClass) return true;
+				}
+			}
+			
+			return false;
 		}
 	}
 }

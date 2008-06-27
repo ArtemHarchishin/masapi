@@ -51,7 +51,8 @@
 		//---------//
 		//Variables//
 		//---------//
-		private var _defaultLoaderContext:LoaderContext		= new LoaderContext(false, ApplicationDomain.currentDomain);
+		private var _defaultLoaderContext:LoaderContext				= new LoaderContext(false, ApplicationDomain.currentDomain);
+		private var _defaultSoundLoaderContext:SoundLoaderContext	= new SoundLoaderContext();
 		private var _defaultVirtualBytes:uint;
 		private var _useCache:Boolean;
 		private var _fileSelector:ILoadableFileSelector;
@@ -115,6 +116,19 @@
 		{
 			if (value == null) throw new ArgumentError("value is not defined");
 			_defaultLoaderContext = value;
+		}
+		
+		/**
+		 * Defines the defaut <code>SoundLoaderContext</code> that will be used to create a <code>ILoadableFile</code>
+		 * based on a <code>Sound</code> object.
+		 * 
+		 * @see		#createSoundFile()		createSoundFile()
+		 */
+		public function get defaultSoundLoaderContext():SoundLoaderContext { return _defaultSoundLoaderContext; }
+		public function set defaultSoundLoaderContext(value:SoundLoaderContext):void
+		{
+			if (value == null) throw new ArgumentError("value is not defined");
+			_defaultSoundLoaderContext = value;
 		}
 
 		//-----------//
@@ -202,7 +216,9 @@
 			var sld:SLoadableFile = new SLoadableFile(snd);
 			sld.urlRequest = request;
 			
-			if (context != null) sld.soundLoaderContext = context;
+			if (context == null) context = _defaultSoundLoaderContext;
+			sld.soundLoaderContext = context;
+			
 			initializeFile(sld);
 			
 			return sld;
