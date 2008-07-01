@@ -14,6 +14,11 @@ package ch.capi.net
 	public interface ILoadPolicy
 	{
 		/**
+		 * Defines if the massive loading can continue or not.
+		 */
+		function get canContinue():Boolean;
+		
+		/**
 		 * Called by the <code>MassLoader</code> when a file download is complete. This can be due
 		 * to a successful download or not (see the <code>closeEvent</code> parameters).
 		 * 

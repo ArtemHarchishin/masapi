@@ -59,6 +59,8 @@ package ch.capi.net
 		 * 	<li><i>jpeg</i> as <code>LoadableFileType.BINARY</code></li>
 		 * 	<li><i>gif</i> as <code>LoadableFileType.BINARY</code></li>
 		 * 	<li><i>png</i> as <code>LoadableFileType.BINARY</code></li>
+		 * 	<li><i>php</i> as <code>LoadableFileType.TEXT</code></li>
+		 * 	<li><i>asp</i> as <code>LoadableFileType.TEXT</code></li>
 		 * </ul></p>
 		 */
 		public function ExtensionFileSelector():void
@@ -74,8 +76,10 @@ package ch.capi.net
 			_extensions.put("jpeg", LoadableFileType.BINARY);
 			_extensions.put("gif", LoadableFileType.BINARY);
 			_extensions.put("png", LoadableFileType.BINARY);
+			_extensions.put("php", LoadableFileType.TEXT);
+			_extensions.put("asp", LoadableFileType.TEXT);
 		}
-		
+
 		//--------------//
 		//Public methods//
 		//--------------//
