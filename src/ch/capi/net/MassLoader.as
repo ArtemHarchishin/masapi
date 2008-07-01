@@ -149,6 +149,7 @@
 		private var _filesToLoad:IList					= new ArrayList();
 		private var _filesLoading:IList					= new ArrayList();
 		private var _isLoading:Boolean					= false;
+		private var _loadInfo:ILoadInfo;
 		private var _useCache:Boolean;
 		private var _parallelFiles:uint;
 		private var _loadPolicy:ILoadPolicy;
@@ -178,6 +179,11 @@
 		 */
 		public function get bytesTotal():uint { return _realTotalBytes; }
 		
+		/**
+		 * Defines the <code>ILoadInfo</code> object linked to the <code>IMassLoader</code>.
+		 */
+		public function get loadInfo():ILoadInfo { return _loadInfo; }
+
 		/**
 		 * Defines if the <code>MassLoader</code> can use the cache or not. Note that if this property
 		 * is set to <code>false</code>, it will override all the other <code>ILoadManager.useCache</code> value
@@ -275,6 +281,7 @@
 		 */
 		public function MassLoader(parallelFiles:uint=0, useCache:Boolean=true, loadPolicy:ILoadPolicy=null):void
 		{
+			_loadInfo = new MassLoadInfo(this);
 			_parallelFiles = parallelFiles;
 			_useCache = useCache;
 			_loadPolicy = (loadPolicy==null) ? new DefaultLoadPolicy() : loadPolicy;
@@ -388,6 +395,7 @@
 			_currentFilesLoading = 0;
 			_filesLoading.clear(); //empty the files being loaded
 			_filesQueue.clear(); //empty the files queue to load
+			_loadInfo.reset(); //reset the load information
 			
 			//put all the files into the queue
 			var l:uint = _filesToLoad.length;
@@ -406,13 +414,15 @@
 		}
 		
 		/**
-		 * Empty the loading queue. This will not affect the current loading.
+		 * Empty the loading queue. This will not affect the current loading. This method also clears
+		 * the loading information !
 		 */
 		public function clear():void
 		{
 			_filesToLoad.clear();
+			_loadInfo.reset();
 		}
-		
+
 		//-----------------//
 		//Protected methods//
 		//-----------------//
@@ -622,8 +632,11 @@
 			
 			_realLoadedBytes = loaded;
 			_realTotalBytes = total;
+			
+			//update the info
+			_loadInfo.update();
 		}
-		
+
 		/**
 		 * Defines if the massive loading is complete.
 		 * 
@@ -739,6 +752,12 @@
 					
 					return;
 				}
+				else if (!loadPolicy.canContinue)
+				{
+					//oh! the loading policy doesn't allow the massive loading to continue
+					stop();
+					return;
+				}
 			}
 			
 			//start the loading of the files
@@ -763,5 +782,300 @@
 			var evt:Event = new Event(Event.COMPLETE);
 			dispatchEvent(evt);
 		}
+	}
+}
+
+import flash.utils.getTimer;
+import flash.events.Event;
+import flash.utils.setTimeout;
+import flash.utils.clearInterval;
+
+import ch.capi.data.ArrayList;
+import ch.capi.events.MassLoadEvent;
+import ch.capi.net.ILoadInfo;
+import ch.capi.net.IMassLoader;
+import ch.capi.net.ILoadManager;
+
+class MassLoadInfo implements ILoadInfo
+{
+	//---------//
+	//Constants//
+	//---------//
+	private static const TIMEOUT:uint = 1500; //timeout after 1.5 sec (automatic update)
+	private static const BYTES_PER_TIME:uint = 1000; //calculate the bytes per second
+	private static const LISTENER_PRIORITY:int = 50;
+	
+	//---------//
+	//Variables//
+	//---------//
+	private var _listSuccess:ArrayList		= new ArrayList();
+	private var _listError:ArrayList		= new ArrayList();
+	private var _listLoading:ArrayList		= new ArrayList();
+	private var _listIdle:ArrayList			= new ArrayList();
+	private var _massLoader:IMassLoader;
+	private var _startTime:Number;
+	private var _elapsedTime:uint;
+	private var _remainingTime:int;
+	private var _currentSpeed:Number;
+	private var _averageSpeed:Number;
+	
+	private var _lastTimeUpdate:uint;
+	private var _lastTimeBytesLoaded:uint;
+	private var _privateUpdater:uint;
+	
+	//-----------------//
+	//Getters & Setters//
+	//-----------------//
+	
+	/**
+	 * Defines the <code>IMassLoader</code> source.
+	 */
+	public function get massLoader():IMassLoader { return _massLoader; }
+	
+	/**
+	 * Defines the bytes that have been loaded.
+	 */
+	public function get bytesLoaded():uint { return massLoader.bytesLoaded; }
+	
+	/**
+	 * Defines the total bytes to load.
+	 */
+	public function get bytesTotal():uint { return massLoader.bytesTotal; }
+	
+	/**
+	 * Defines the number of bytes to load.
+	 */
+	public function get bytesRemaining():uint { return bytesTotal-bytesLoaded; }
+	
+	/**
+	 * Defines the elapsed time since the loading as begun.
+	 */
+	public function get elapsedTime():uint { return _elapsedTime; }
+
+	/**
+	 * Defines the remaining time, based on the speed and the bytes that left to be loaded.
+	 */
+	public function get remainingTime():int { return _remainingTime; }
+	
+	/**
+	 * Defines the current speed of the download (bytes per seconds).
+	 */
+	public function get currentSpeed():Number { return _currentSpeed; }
+	
+	/**
+	 * Defines the average speed since the loading has begun.
+	 */
+	public function get averageSpeed():Number { return _averageSpeed; }
+	
+	/**
+	 * Defines a Number between 0 and 1 (included) that represents the ratio of the loaded bytes.
+	 * @see	#percentLoaded	percentLoaded
+	 */
+	public function get ratioLoaded():Number { return (bytesTotal==0) ? 0 : bytesLoaded/bytesTotal; }
+	
+	/**
+	 * Defines the percent of bytes loaded.
+	 * @see	#ratioLoaded	ratioLoaded
+	 */
+	public function get percentLoaded():uint { return Math.floor(ratioLoaded*100); }
+	
+	/**
+	 * Defines the files that have been successfully loaded.
+	 */
+	public function get filesSuccess():Array { return _listSuccess.toArray(); }
+	
+	/**
+	 * Defines the files that haven't been successfully loaded.
+	 */
+	public function get filesError():Array { return _listError.toArray(); }
+	
+	/**
+	 * Defines the files that are currently being loaded.
+	 */
+	public function get filesLoading():Array { return _listLoading.toArray(); }
+	
+	/**
+	 * Defines the files that currently not being loaded (waits into the loading queue).
+	 */
+	public function get filesIdle():Array { return _listIdle.toArray(); }
+	
+	//-----------//
+	//Constructor//
+	//-----------//
+	
+	/**
+	 * Creates a new <code>MassLoadInfo</code>.
+	 * 
+	 * @param	source		The source <code>IMassLoader</code>.
+	 */
+	public function MassLoadInfo(source:IMassLoader):void
+	{
+		_massLoader = source;
+		_massLoader.addEventListener(Event.OPEN, onOpen, false, LISTENER_PRIORITY, true);
+		_massLoader.addEventListener(MassLoadEvent.FILE_CLOSE, onFileClose, false, LISTENER_PRIORITY, true);
+		_massLoader.addEventListener(MassLoadEvent.FILE_OPEN, onFileOpen, false, LISTENER_PRIORITY, true);
+		_massLoader.addEventListener(Event.COMPLETE, onMassLoadClose, false, LISTENER_PRIORITY, true);
+		_massLoader.addEventListener(Event.CLOSE, onMassLoadClose, false, LISTENER_PRIORITY, true);
+		
+		reset();
+	}
+
+	//-------------//
+	//Public method//
+	//-------------//
+	
+	/**
+	 * Reset all the information.
+	 */
+	public function reset():void
+	{
+		_startTime = 0;
+		_remainingTime = 0;
+		_elapsedTime = 0;
+		_currentSpeed = 0;
+		_averageSpeed = 0;
+		
+		_lastTimeUpdate = 0;
+		_lastTimeBytesLoaded = 0;
+		
+		_listError.clear();
+		_listSuccess.clear();
+		_listLoading.clear();
+		_listIdle.clear();
+		
+		clearInterval(_privateUpdater);
+	}
+
+	/**
+	 * Update the information.
+	 */
+	public function update():void
+	{
+		var bytesLoadedTemp:uint = bytesLoaded - _lastTimeBytesLoaded;
+		var elapsedTimeTemp:uint = getTimer() - _lastTimeUpdate;
+		
+		if (elapsedTimeTemp > 0)
+		{
+			var toOneSec:Number = BYTES_PER_TIME/elapsedTimeTemp;
+			_currentSpeed = bytesLoadedTemp*toOneSec;
+			_lastTimeBytesLoaded = bytesLoaded;
+			_lastTimeUpdate = getTimer();
+		}
+		
+		_elapsedTime = getTimer() - _startTime;
+		
+		if (_elapsedTime > 0) _averageSpeed = bytesLoaded / _elapsedTime;
+		else _averageSpeed = 0;
+		
+		if (_averageSpeed > 0) _remainingTime = Math.round(bytesRemaining/_averageSpeed);
+		else _remainingTime = -1;
+		
+		//private updater
+		clearInterval(_privateUpdater);
+		if (massLoader.stateLoading) _privateUpdater = setTimeout(doUpdate, TIMEOUT);
+	}
+	
+	/**
+	 * Represents this <code>ILoadInfo</code> into a <code>String</code>.
+	 * 
+	 * @return Useful information into a <code>String</code>.
+	 */
+	public function toString():String
+	{
+		var data:String = "";
+		data += "bytesTotal     : "+bytesTotal+"\n";
+		data += "bytesLoaded    : "+bytesLoaded+"\n";
+		data += "bytesRemaining : "+bytesRemaining+"\n";
+		data += "percentLoaded  : "+percentLoaded+"%\n";
+		data += "radioLoaded    : "+Math.floor(ratioLoaded*100)/100+"\n";
+		data += "currentSpeed   : "+Math.floor(currentSpeed*100)/100+" bytes/sec\n";
+		data += "averageSpeed   : "+Math.floor(averageSpeed*100)/100+" bytes/sec\n";
+		data += "elapsedTime    : "+elapsedTime+" ms\n";
+		data += "remainingTime  : "+remainingTime+" ms\n";
+		data += "filesIdle      : "+_listIdle.length+"\n";
+		data += "filesLoading   : "+_listLoading.length+"\n";
+		data += "filesSuccess   : "+_listSuccess.length+"\n";
+		data += "filesError     : "+_listError.length+"\n";
+		data += "filesIdle      : "+_listIdle.length+"\n";
+		
+		return data;
+	}
+
+	//-----------------//
+	//Protected methods//
+	//-----------------//
+	
+	/**
+	 * Called when the massive loading starts.
+	 * 
+	 * @param evt Event object.
+	 */
+	protected function onOpen(evt:Event):void
+	{
+		_startTime = getTimer();
+		
+		//push all the files into the idle list
+		var files:Array = massLoader.getFiles();
+		for each(var file:ILoadManager in files)
+		{
+			_listIdle.addElement(file);
+		}
+	}
+	
+	/**
+	 * Called when a file is closed.
+	 * 
+	 * @param evt	Event object.
+	 */
+	protected function onFileClose(evt:MassLoadEvent):void
+	{
+		var file:ILoadManager = evt.file;
+		var closeEvent:Event = evt.closeEvent;
+		
+		_listLoading.removeElement(file);
+		
+		if (closeEvent.type == Event.COMPLETE) _listSuccess.addElement(file);
+		else _listError.addElement(file);
+	}
+	
+	/**
+	 * Called when a file is open.
+	 * 
+	 * @param	evt	Event object.
+	 */
+	protected function onFileOpen(evt:MassLoadEvent):void
+	{
+		var file:ILoadManager = evt.file;
+		
+		//removes the file from all lists (if contained)
+		_listIdle.removeElement(file);
+		_listError.removeElement(file);
+		_listSuccess.removeElement(file);
+		
+		_listLoading.addElement(file);
+	}
+
+	/**
+	 * Called when the massive loading is closed or complete
+	 * 
+	 * @param	evt	Event object.
+	 */
+	protected function onMassLoadClose(evt:Event):void
+	{
+		//update(); //do one last update - not needed ?
+		clearInterval(_privateUpdater);
+	}
+
+	//---------------//
+	//Private methods//
+	//---------------//
+	
+	/**
+	 * @private
+	 */
+	private function doUpdate():void
+	{
+		//force the update
+		update();
 	}
 }

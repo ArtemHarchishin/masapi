@@ -32,12 +32,18 @@ package ch.capi.net
 		//---------//
 		private var _linkedFiles:IMap 		= new DictionnaryMap(true);
 		private var _defaultFiles:IMap 		= new DictionnaryMap(true);
+		private var _continue:Boolean		= true;
 
 		/**
 		 * Defines how many times a file must be reloaded if its download fails. 0 means that
 		 * the file will be reloaded since it is successfully loaded.
 		 */
 		public var reloadTimes:uint;
+		
+		/**
+		 * Defines if the massive loading can continue event if a file fails to be downloaded.
+		 */
+		public var continueOnFailure:Boolean;
 
 		//-----------------//
 		//Getters & Setters//
@@ -64,6 +70,11 @@ package ch.capi.net
 		 */
 		public function get defaultFiles():IMap { return _defaultFiles; }
 		
+		/**
+		 * Defines if the massive loading can continue or not when a download has failed.
+		 */
+		public function get canContinue():Boolean { return _continue; }
+		
 		//-----------//
 		//Constructor//
 		//-----------//
@@ -71,12 +82,14 @@ package ch.capi.net
 		/**
 		 * Creates a new <code>DefaultLoadPolicy</code> object.
 		 * 
-		 * @param	reloadTimes		Defines how many times a file must be reloaded if its download fails. 0 means that
-		 * 							the file will be reloaded since it is successfully loaded.
+		 * @param	reloadTimes			Defines how many times a file must be reloaded if its download fails. 0 means that
+		 * 								the file will be reloaded since it is successfully loaded.
+		 * @param	continueOnFailure	Defines if the massive loading can continue event if a file fails to be downlaoded.
 		 */
-		public function DefaultLoadPolicy(reloadTimes:int=3):void
+		public function DefaultLoadPolicy(reloadTimes:uint=3, continueOnFailure:Boolean=true):void
 		{
 			this.reloadTimes = reloadTimes;
+			this.continueOnFailure = continueOnFailure;
 		}
 
 		//--------------//
@@ -100,7 +113,12 @@ package ch.capi.net
 			if (nbLoaded >= reloadTimes)
 			{
 				if (defaultFiles.containsKey(file)) return defaultFiles.getValue(file);
-				else if (reloadTimes > 0) return null; //if the reloadTimes is 0, then load the files again & again...
+				else if (reloadTimes > 0)
+				{
+					//the file is not loaded and there is no default file...
+					if (!continueOnFailure) _continue = false;
+					return null;
+				}
 			}
 			
 			_linkedFiles.put(file, nbLoaded+1);

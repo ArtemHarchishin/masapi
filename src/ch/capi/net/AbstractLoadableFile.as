@@ -1,5 +1,6 @@
 ﻿package ch.capi.net
 {
+	import flash.system.ApplicationDomain;	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
@@ -11,6 +12,7 @@
 	import flash.net.URLVariables;
 	import flash.system.Security;
 	import flash.errors.IllegalOperationError;
+	import flash.utils.describeType;
 	
 	import ch.capi.data.IMap;
 	import ch.capi.data.DictionnaryMap;
@@ -58,7 +60,7 @@
 	 * @eventType	flash.events.ProgressEvent.PROGRESS
 	 */
 	[Event(name="progress", type="flash.events.ProgressEvent")]
-import flash.utils.describeType;import flash.utils.getDefinitionByName;	
+
 	/**
 	 * Represents a <code>AbstractLoadableFile</code>. This is a basic
 	 * implementation to store the generic data of a <code>ILoadableFile</code>.
@@ -300,6 +302,17 @@ import flash.utils.describeType;import flash.utils.getDefinitionByName;
 			dispatchEvent(evt);
 		}
 		
+		/**
+		 * Get the URL of the <code>AbstractLoadableFile</code>.
+		 * 
+		 * @return	The <code>url</code> or <code>null</code> if the urlRequest is not defined.
+		 */
+		public override function toString():String
+		{
+			if (urlRequest==null) return null;
+			return urlRequest.url;
+		}
+		
 		//-----------------//
 		//Protected methods//
 		//-----------------//
@@ -333,10 +346,6 @@ import flash.utils.describeType;import flash.utils.getDefinitionByName;
 			dispatcher.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
 			dispatcher.removeEventListener(IOErrorEvent.IO_ERROR, onIOError);
 		}
-		
-		//-----------------//
-		//Protected methods//
-		//-----------------//
 		
 		/**
 		 * <code>Event.COMPLETE</code> listener.
@@ -411,13 +420,14 @@ import flash.utils.describeType;import flash.utils.getDefinitionByName;
 		 * 
 		 * @param	source		The source class (child).
 		 * @param	superClass	The super class.
+		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the classe.
 		 * @return	<code>true</code> if the source class extends the super class.
 		 * 
 		 * @see	#isInstanceOf()	isInstanceOf()
 		 */
-		protected function isInstanceOfClass(source:String, superClass:String):Boolean
+		protected function isInstanceOfClass(source:String, superClass:String, appDomain:ApplicationDomain=null):Boolean
 		{
-			return isInstanceOf(source, [superClass]);
+			return isInstanceOf(source, [superClass], appDomain);
 		}
 		
 		/**
@@ -425,9 +435,10 @@ import flash.utils.describeType;import flash.utils.getDefinitionByName;
 		 * 
 		 * @param	source			The source class.
 		 * @param	superClasses	An <code>Array</code> of <code>String</code> describing a list of classes.
+		 * @param	appDomain		The <code>ApplicationDomain</code> to retrieve the classes.
 		 * @return	<code>true</code> if the source class extends one of the super classes.
 		 */
-		protected function isInstanceOf(source:String, superClasses:Array):Boolean
+		protected function isInstanceOf(source:String, superClasses:Array, appDomain:ApplicationDomain=null):Boolean
 		{
 			//check if the class doesn't extend
 			for each(var aClass:String in superClasses)
@@ -435,7 +446,9 @@ import flash.utils.describeType;import flash.utils.getDefinitionByName;
 				if (aClass == source) return true;
 			}
 			
-			var desc:XML = describeType(getDefinitionByName(source) as Class);
+			if (appDomain == null) appDomain = ApplicationDomain.currentDomain;
+			
+			var desc:XML = describeType(appDomain.getDefinition(source) as Class);
 			for each(var extendsClass:String in desc.factory.extendsClass.@type)
 			{
 				extendsClass = extendsClass.replace("::", ".");

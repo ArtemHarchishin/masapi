@@ -41,6 +41,11 @@ package ch.capi.net
 		function set parallelFiles(value:uint):void;
 		
 		/**
+		 * Defines the <code>ILoadInfo</code> object linked to the <code>IMassLoader</code>.
+		 */
+		function get loadInfo():ILoadInfo;
+
+		/**
 		 * Add a file to the loading queue.
 		 * 
 		 * @param	file		The file to add.

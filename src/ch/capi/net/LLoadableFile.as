@@ -1,5 +1,6 @@
 ﻿package ch.capi.net
 {
+	import flash.system.ApplicationDomain;	
 	import flash.display.Loader;
 	import flash.system.LoaderContext;
 	import flash.net.URLRequest;
@@ -80,13 +81,15 @@
 		 * is complete. If the asType parameter is specified, then the <code>ILoadableFile</code>
 		 * will try to create an instance of it and parse the content into it.
 		 * 
-		 * @param 	asClass	The class instance that should be returned by the method.
+		 * @param 	asClass		The class instance that should be returned by the method.
+		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
+		 * 						the current domain will be used.
 		 * @return	The data of the <code>loadManagerObject</code>.
 		 * @throws	ArgumentError	If the class type is not supported.
 		 * 
 		 * @see		#isClassSupported()		isClassSupported()
 		 */
-		public function getData(asClass:String=null):*
+		public function getData(asClass:String=null, appDomain:ApplicationDomain=null):*
 		{
 			if (asClass != null && !isClassSupported(asClass)) throw new ArgumentError("The type '"+asClass+"' is not supported");	
 			return (loadManagerObject as Loader);
@@ -96,11 +99,13 @@
 		 * Retrieves if the specified class type is supported by this <code>ILoadableFile</code> or not.
 		 * 
 		 * @param	type	The class type to check.
+		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
+		 * 						the current domain will be used.
 		 * @return	<code>true</code> if the type is supported.
 		 */
-		public function isClassSupported(type:String):Boolean
+		public function isClassSupported(aClass:String, appDomain:ApplicationDomain=null):Boolean
 		{
-			return type == "flash.display.Loader";
+			return aClass == "flash.display.Loader";
 		}
 		
 		/**

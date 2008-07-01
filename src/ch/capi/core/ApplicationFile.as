@@ -1,5 +1,7 @@
 package ch.capi.core 
-{	import ch.capi.net.ILoadableFile;
+{	import flash.system.ApplicationDomain;	
+	
+	import ch.capi.net.ILoadableFile;
 	import ch.capi.errors.DependencyNotSafeError;
 	
 	/**
@@ -186,14 +188,16 @@ package ch.capi.core
 		 * the <code>loadManagerObject</code> is a <code>URLLoader</code>, then the data are returned else the
 		 * <code>loadManagerObject</code> itself is returned.
 		 * 
+		 * @param	asClass		The class that should be returned by the method (cf ILoadableFile implementation).
+		 * @param	appDomain	The <code>ApplicationDomain</code> of the class.	
 		 * @return	The data of the <code>ILoadableFile</code>.
 		 * @see		#loadableFile	loadableFile
 		 * @see		ch.capi.net.ILoadableFile#getData()	ILoadableFile.getData()
 		 */
-		public function getData():*
+		public function getData(asClass:String=null, appDomain:ApplicationDomain=null):*
 		{
 			if (loadableFile == null) return null;
-			return loadableFile.getData();
+			return loadableFile.getData(asClass, appDomain);
 		}
 		
 		//-----------------//

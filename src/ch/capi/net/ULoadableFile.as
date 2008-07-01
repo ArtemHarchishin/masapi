@@ -1,5 +1,6 @@
 package ch.capi.net
 {
+	import flash.system.ApplicationDomain;	
 	import flash.text.StyleSheet;	
 	import flash.xml.XMLDocument;	
 	import flash.net.URLVariables;	
@@ -7,7 +8,7 @@ package ch.capi.net
 	import flash.events.IEventDispatcher;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-import flash.utils.getDefinitionByName;	
+
 	/**
 	 * Represents a <code>ILoadableFile</code> based on a <code>URLLoader</code> object.
 	 * 
@@ -65,21 +66,25 @@ import flash.utils.getDefinitionByName;
 		 * is complete. If the asType parameter is specified, then the <code>ILoadableFile</code>
 		 * will try to create an instance of it and parse the content into it.
 		 * 
-		 * @param 	asClass	The class instance that should be returned by the method.
+		 * @param 	asClass		The class instance that should be returned by the method.
+		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
+		 * 						the current domain will be used.
 		 * @return	The data of the <code>loadManagerObject</code>.
 		 * @throws	ArgumentError	If the class type is not supported.
 		 * 
 		 * @see		#isClassSupported()		isClassSupported()
 		 */
-		public function getData(asClass:String=null):*
+		public function getData(asClass:String=null, appDomain:ApplicationDomain = null):*
 		{
-			if (asClass == null) return (loadManagerObject as URLLoader).data;
-			if (!isClassSupported(asClass)) throw new ArgumentError("The type '"+asClass+"' is not supported for this kind of data ("+getType()+")");
+			if (asClass == null) return loadManagerObject.data;
+			if (appDomain == null) appDomain = ApplicationDomain.currentDomain;
+			if (!isClassSupported(asClass, appDomain)) throw new ArgumentError("The type '"+asClass+"' is not supported for this kind of data ("+getType()+")");
 			
+			if (asClass == "flash.utils.ByteArray") return loadManagerObject.data;
 			if (asClass == "XML") return new XML(loadManagerObject.data);
 			
 			//create the instance
-			var srcClass:Class = getDefinitionByName(asClass) as Class;
+			var srcClass:Class = appDomain.getDefinition(asClass) as Class;
 			var insClass:* = new srcClass();
 			
 			//create the data
@@ -96,18 +101,21 @@ import flash.utils.getDefinitionByName;
 		 * Retrieves if the specified class type is supported by this <code>ILoadableFile</code> or not.
 		 * 
 		 * @param	type	The class type to check.
+		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
+		 * 						the current domain will be used.
 		 * @return	<code>true</code> if the type is supported.
 		 */
-		public function isClassSupported(type:String):Boolean
+		public function isClassSupported(aClass:String, appDomain:ApplicationDomain=null):Boolean
 		{
-			if (getType() == LoadableFileType.BINARY && isInstanceOfClass(type, "flash.display.Loader")) return true;
-			if (getType() == LoadableFileType.VARIABLES && isInstanceOfClass(type, "flash.net.URLVariables")) return true;
+			if (getType() == LoadableFileType.BINARY && (aClass == "flash.utils.ByteArray" ||
+														 isInstanceOfClass(aClass, "flash.display.Loader", appDomain))) return true;
+			if (getType() == LoadableFileType.VARIABLES && isInstanceOfClass(aClass, "flash.net.URLVariables", appDomain)) return true;
 			
 			//get a text data
-			if (isInstanceOf(type, ["XML",
-									"flash.xml.XMLDocument",
-									"flash.text.StyleSheet",
-									"flash.net.URLVariables"])) return true;
+			if (isInstanceOf(aClass, ["XML",
+									  "flash.xml.XMLDocument",
+									  "flash.text.StyleSheet",
+									  "flash.net.URLVariables"], appDomain)) return true;
 			
 			return false;
 		}
