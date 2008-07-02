@@ -45,7 +45,7 @@
 			
 			var dispatcher:IEventDispatcher = getEventDispatcher();
 			registerTo(dispatcher);
-			dispatcher.addEventListener(Event.INIT, onInit);
+			dispatcher.addEventListener(Event.INIT, onInit, false, 10, true);
 		}
 		
 		//--------------//
