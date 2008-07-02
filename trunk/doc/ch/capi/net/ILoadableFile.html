@@ -85,6 +85,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
    Defines the total bytes to load.</div>
 </td><td class="summaryTableOwnerCol"><a href="ILoadManager.html">ILoadManager</a></td>
 </tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="ILoadManager.html#closeEvent">closeEvent</a> : Event<div class="summaryTableDescription">
+   Defines the event that happend to close the file (Event.CLOSE, Event.COMPLETE, ...).</div>
+</td><td class="summaryTableOwnerCol"><a href="ILoadManager.html">ILoadManager</a></td>
+</tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#loadManagerObject">loadManagerObject</a> : Object<div class="summaryTableDescription">[read-only]
    Defines the load manager object.</div>
@@ -148,7 +153,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#getData()">getData</a>(asClass:String = null):*</div>
+<a class="signatureLink" href="#getData()">getData</a>(asClass:String = null, appDomain:ApplicationDomain = null):*</div>
 <div class="summaryTableDescription">
    Retrieves the data of the <code>loadManagerObject</code> if the loading
    is complete.</div>
@@ -174,7 +179,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#isClassSupported()">isClassSupported</a>(aClass:String):Boolean</div>
+<a class="signatureLink" href="#isClassSupported()">isClassSupported</a>(aClass:String, appDomain:ApplicationDomain = null):Boolean</div>
 <div class="summaryTableDescription">
    Retrieves if the specified class type is supported by this <code>ILoadableFile</code> or not.</div>
 </td><td class="summaryTableOwnerCol">ILoadableFile</td>
@@ -354,7 +359,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function getData(asClass:String = null):*</code><p>
+<code>public function getData(asClass:String = null, appDomain:ApplicationDomain = null):*</code><p>
    Retrieves the data of the <code>loadManagerObject</code> if the loading
    is complete. If the asType parameter is specified, then the <code>ILoadableFile</code>
    will try to create an instance of it and parse the content into it.
@@ -362,7 +367,15 @@ showHideInherited();
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">asClass</span>:String</code> (default = <code>null</code>)<code></code> &mdash; asClass The class instance that should be returned by the method.
+<td width="20px"></td><td><code><span class="label">asClass</span>:String</code> (default = <code>null</code>)<code></code> &mdash; asClass  The class instance that should be returned by the method.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">appDomain</span>:ApplicationDomain</code> (default = <code>null</code>)<code></code> &mdash; The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
+         the current domain will be used.
    </td>
 </tr>
 </table>
@@ -443,13 +456,21 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function isClassSupported(aClass:String):Boolean</code><p>
+<code>public function isClassSupported(aClass:String, appDomain:ApplicationDomain = null):Boolean</code><p>
    Retrieves if the specified class type is supported by this <code>ILoadableFile</code> or not.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">aClass</span>:String</code> &mdash; The class type to check.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">appDomain</span>:ApplicationDomain</code> (default = <code>null</code>)<code></code> &mdash; The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
+         the current domain will be used.
    </td>
 </tr>
 </table>

@@ -1,4 +1,5 @@
-package ch.capi.net {
+package ch.capi.net
+{
 	
 	import flash.system.Security;
 	

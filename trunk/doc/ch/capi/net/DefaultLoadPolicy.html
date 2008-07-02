@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="DefaultLoadPolicy,ch.capi.net.DefaultLoadPolicy,reloadTimes,defaultFiles,getFileLoadedTimes,processFile" name="keywords">
+<meta content="DefaultLoadPolicy,ch.capi.net.DefaultLoadPolicy,continueOnFailure,reloadTimes,canContinue,defaultFiles,getFileLoadedTimes,processFile" name="keywords">
 <title>ch.capi.net.DefaultLoadPolicy</title>
 </head>
 <body>
@@ -72,6 +72,16 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#canContinue">canContinue</a> : Boolean<div class="summaryTableDescription">[read-only]
+   Defines if the massive loading can continue or not when a download has failed.</div>
+</td><td class="summaryTableOwnerCol">DefaultLoadPolicy</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#continueOnFailure">continueOnFailure</a> : Boolean<div class="summaryTableDescription">
+   Defines if the massive loading can continue event if a file fails to be downloaded.</div>
+</td><td class="summaryTableOwnerCol">DefaultLoadPolicy</td>
+</tr>
+<tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#defaultFiles">defaultFiles</a> : <a href="../data/IMap.html">IMap</a>
 <div class="summaryTableDescription">[read-only]
    Defines the <code>IMap</code> that links the loaded files within a default file to load
@@ -95,7 +105,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#DefaultLoadPolicy()">DefaultLoadPolicy</a>(reloadTimes:int = 3)</div>
+<a class="signatureLink" href="#DefaultLoadPolicy()">DefaultLoadPolicy</a>(reloadTimes:uint = 3, continueOnFailure:Boolean = true)</div>
 <div class="summaryTableDescription">
    Creates a new <code>DefaultLoadPolicy</code> object.</div>
 </td><td class="summaryTableOwnerCol">DefaultLoadPolicy</td>
@@ -126,10 +136,34 @@ showHideInherited();
 <div class="MainContent">
 <a name="propertyDetail"></a>
 <div class="detailSectionHeader">Property detail</div>
+<a name="canContinue"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">canContinue</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>canContinue:Boolean</code>&nbsp;&nbsp;[read-only]<p>
+   Defines if the massive loading can continue or not when a download has failed.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get canContinue():Boolean</code>
+<br>
+</div>
+<a name="continueOnFailure"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">continueOnFailure</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var continueOnFailure:Boolean</code><p>
+   Defines if the massive loading can continue event if a file fails to be downloaded.
+   </p></div>
 <a name="defaultFiles"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">defaultFiles</td><td class="detailHeaderType">property</td>
+<td class="detailHeaderName">defaultFiles</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">
@@ -178,14 +212,21 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function DefaultLoadPolicy(reloadTimes:int = 3)</code><p>
+<code>public function DefaultLoadPolicy(reloadTimes:uint = 3, continueOnFailure:Boolean = true)</code><p>
    Creates a new <code>DefaultLoadPolicy</code> object.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">reloadTimes</span>:int</code> (default = <code>3</code>)<code></code> &mdash;  Defines how many times a file must be reloaded if its download fails. 0 means that
-          the file will be reloaded since it is successfully loaded.
+<td width="20px"></td><td><code><span class="label">reloadTimes</span>:uint</code> (default = <code>3</code>)<code></code> &mdash;   Defines how many times a file must be reloaded if its download fails. 0 means that
+           the file will be reloaded since it is successfully loaded.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">continueOnFailure</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; Defines if the massive loading can continue event if a file fails to be downlaoded.
    </td>
 </tr>
 </table>

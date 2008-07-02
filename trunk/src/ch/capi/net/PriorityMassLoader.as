@@ -1,7 +1,6 @@
 package ch.capi.net 
 {	import ch.capi.net.MassLoader;
 	import ch.capi.data.tree.ArrayHeap;
-	import ch.capi.net.ILoadableFile;
 	import ch.capi.events.PriorityEvent;
 	import ch.capi.net.IMassLoader;
 	import ch.capi.data.IMap;
@@ -47,7 +46,8 @@ package ch.capi.net
 	 * ml.start();
 	 * </listing>
 	 * 
-	 * @see		ch.capi.data.tree.ArrayHeap		ArrayHeap	 * @author	Cedric Tabin - thecaptain
+	 * @see		ch.capi.net.CompositePriorityMassLoader	CompositePriorityMassLoader
+	 * @see		ch.capi.data.tree.ArrayHeap				ArrayHeap	 * @author	Cedric Tabin - thecaptain
 	 * @version	1.0	 */	public class PriorityMassLoader extends MassLoader implements IMassLoader
 	{
 		//---------//
@@ -153,6 +153,35 @@ package ch.capi.net
 			return _filePriority.getValue(file) as int;	
 		}
 		
+		/**
+		 * Lists all the files contained into this <code>PriorityMassLoader</code> into a <code>String</code>.
+		 * 
+		 * @return A <code>String</code> containing all the files.
+		 */
+		public override function toString():String
+		{
+			var data:String = "PriorityMassLoader[";
+			var files:Array = super.getFiles();
+			
+			if (files.length > 0)
+			{
+				for (var i:int=0 ; i<files.length-1 ; i++)
+				{
+					var file:ILoadManager = files[i];
+					var priority:int = getFilePriority(file);
+					data += file+"("+priority+"),";
+				}
+				
+				var lastFile:ILoadManager = files[files.length-1];
+				var lastPriority:int = getFilePriority(lastFile);
+				data += lastFile+"("+lastPriority+")";
+			}
+			
+			data += "]";
+			
+			return data;
+		}
+		
 		//-----------------//
 		//Protected methods//
 		//-----------------//
@@ -170,10 +199,10 @@ package ch.capi.net
 		 */
 		protected function sortFiles(a:ILoadManager, b:ILoadManager):int
 		{
-			if (!(a is ILoadableFile) || !(b is ILoadableFile)) return 0; //no comparison possible
+			if (!(a is ILoadManager) || !(b is ILoadManager)) return 0; //no comparison possible
 			
-			var al:ILoadableFile = a as ILoadableFile;
-			var bl:ILoadableFile = b as ILoadableFile;
+			var al:ILoadManager = a as ILoadManager;
+			var bl:ILoadManager = b as ILoadManager;
 
 			var ad:int = getFilePriority(al);
 			var bd:int = getFilePriority(bl);
@@ -204,11 +233,7 @@ package ch.capi.net
 		
 			//defines the next priority
 			var ne:ILoadManager = super.nextFileToLoad;
-			if (ne is ILoadableFile)
-			{
-				var ni:ILoadableFile = ne as ILoadableFile;
-				_currentPriority = getFilePriority(ni);
-			}
+			_currentPriority = getFilePriority(ne);
 			
 			//dispatch the priority event
 			var evt:PriorityEvent = new PriorityEvent(PriorityEvent.PRIORITY_CHANGED, _currentPriority);
@@ -218,15 +243,12 @@ package ch.capi.net
 			do
 			{
 				ne = super.nextFileToLoad;
-				if (ne is ILoadableFile)
-				{
-					var ai:ILoadableFile = ne as ILoadableFile;
-					var cr:int = getFilePriority(ai);
+				var cr:int = getFilePriority(ne);
 					
-					//the file has a lower priority
-					if (cr != _currentPriority) break;
-				}
+				//the file has a lower priority
+				if (cr != _currentPriority) break;
 				
+				//no more file to download and loading complete
 				if (loadNextFile() == null && isComplete()) break;
 			}
 			while(!filesQueue.isEmpty());		}

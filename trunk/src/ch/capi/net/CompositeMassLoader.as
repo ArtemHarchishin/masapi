@@ -113,6 +113,36 @@ package ch.capi.net
 		//--------------//
 		
 		/**
+		 * Creates a <code>ILoadableFile</code> from a url. This method doesn't register the file to the <code>IMassLoader</code> but
+		 * it stores it into the <code>CompositeMassLoader</code>.
+		 * 
+		 * @param 	url			The url of the file.
+		 * @param	fileType	The type of the file.
+		 * @param	onOpen		The <code>Event.OPEN</code> listener.
+		 * @param	onProgress	The <code>ProgressEvent.PROGRESS</code> listener.
+		 * @param	onComplete	The <code>Event.COMPLETE</code> listener.
+		 * @param	onClose		The <code>Event.CLOSE</code> listener.
+		 * @param	onIOError	The <code>IOErrorEvent.IO_ERROR</code> listener.
+		 * @param	onSecurityError The <code>SecurityErrorEvent.SECURITY_ERROR</code> listener.
+		 * @return	The created <code>ILoadableFile</code>.
+		 */
+		public function createFile(url:String, fileType:String = null,
+											onOpen:Function=null, 
+								   			onProgress:Function=null, 
+								   			onComplete:Function=null, 
+								   			onClose:Function=null,
+								   			onIOError:Function=null,
+								   			onSecurityError:Function=null):ILoadableFile
+		{
+			var file:ILoadableFile = createLoadableFile(new URLRequest(url), fileType);
+			_factory.attachListeners(file,onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
+			
+			if (keepFiles) storeFile(file);
+			
+			return file;
+		}
+		
+		/**
 		 * Creates a <code>ILoadableFile</code> from a url and add it to the current loading queue.
 		 * 
 		 * @param 	url			The url of the file.

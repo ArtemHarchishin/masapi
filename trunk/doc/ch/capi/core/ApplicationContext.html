@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="ApplicationContext,ch.capi.core.ApplicationContext,addFile,clear,enumerateFiles,getFile,getGlobalContext,removeFile" name="keywords">
+<meta content="ApplicationContext,ch.capi.core.ApplicationContext,addFile,clear,enumerateContexts,enumerateFiles,getFile,getGlobalContext,removeFile" name="keywords">
 <title>ch.capi.core.ApplicationContext</title>
 </head>
 <body>
@@ -39,8 +39,15 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </tr>
 </table>
 <p></p>
+  Represents a context for the <code>ApplicationFile</code>.
   
   <p></p>
+<p>
+<span class="classHeaderTableLabel">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../core/ApplicationFile.html" target="">ApplicationFile</a>
+</div>
 <br>
 <hr>
 </div>
@@ -73,6 +80,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#clear()">clear</a>():void</div>
 <div class="summaryTableDescription">
    Clear all the <code>ApplicationFile</code> of the <code>ApplicationContext</code>.</div>
+</td><td class="summaryTableOwnerCol">ApplicationContext</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#enumerateContexts()">enumerateContexts</a>():Array</div>
+<div class="summaryTableDescription">[static]
+   Enumerates all <code>ApplicationContext</code> instances.</div>
 </td><td class="summaryTableOwnerCol">ApplicationContext</td>
 </tr>
 <tr class="">
@@ -142,7 +157,7 @@ showHideInherited();
    the context of the <code>ApplicationFile</code> is already specified, this method will throw an error. 
    </p><p>This method will also check that all dependencies of the specified <code>ApplicationFile</code> are
    already into the current <code>ApplicationContext</code>. If they are in no <code>ApplicationContext</code>
-   they will be added into the current one, otherwise an error will be thrown.
+   they will be added into the current one, otherwise an error will be thrown.</p>
    
    <span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
@@ -186,6 +201,25 @@ showHideInherited();
    <code>ApplicationFile</code> instances are reset to <code>null</code> to let the Garbate Collector take care of
    the <code>ApplicationContext</code> instance.
    </p></div>
+<a name="enumerateContexts()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">enumerateContexts</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function enumerateContexts():Array</code><p>
+   Enumerates all <code>ApplicationContext</code> instances.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; An <code>Array</code> containing all <code>ApplicationContext</code>.
+   </td>
+</tr>
+</table>
+</div>
 <a name="enumerateFiles()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>

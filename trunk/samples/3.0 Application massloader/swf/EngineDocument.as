@@ -12,7 +12,7 @@
 		public static function loadFile(file:String):ApplicationFile
 		{
 			var f:ApplicationFile = ApplicationFile.getFile(file);
-			if (f == null) throw new TypeError("File '"+file+"' is not defined");
+			if (f == null) throw new ArgumentError("File '"+file+"' is not defined");
 			
 			lastApplicationFileLoaded = f;
 			

@@ -140,7 +140,7 @@
 		 * 
 		 * @see		#registerTo()		registerTo()
 		 */
-		private static const LISTENER_PRIORITY:int = -10;
+		private static const LISTENER_PRIORITY:int = -100;
 		
 		//---------//
 		//Variables//
@@ -149,6 +149,7 @@
 		private var _filesToLoad:IList					= new ArrayList();
 		private var _filesLoading:IList					= new ArrayList();
 		private var _isLoading:Boolean					= false;
+		private var _closeEvent:Event					= null;
 		private var _loadInfo:ILoadInfo;
 		private var _useCache:Boolean;
 		private var _parallelFiles:uint;
@@ -232,6 +233,11 @@
 		 * <code>MassLoadEvent.FILE_OPEN</code> event.
 		 */
 		public function get numFilesLoading():uint { return _currentFilesLoading; }
+		
+		/**
+		 * Defines the event that happend to close the file (Event.CLOSE, Event.COMPLETE, ...).
+		 */
+		public function get closeEvent():Event { return _closeEvent; }
 		
 		/**
 		 * Defines the data structure to use for the file enqueuing. By default, a
@@ -377,6 +383,7 @@
 			
 			//dispatch the close event
 			var evt:Event = new Event(Event.CLOSE);
+			_closeEvent = evt;
 			dispatchEvent(evt);
 		}
 		
@@ -389,6 +396,7 @@
 		{
 			if (_isLoading) throw new IllegalOperationError("State already loading");
 			_isLoading = true;
+			_closeEvent = null;
 			
 			//init
 			_tempTotalBytes = 0;
@@ -414,16 +422,23 @@
 		}
 		
 		/**
-		 * Empty the loading queue. This will not affect the current loading. This method also clears
-		 * the loading information !
+		 * Empty the loading queue. This will not affect the current loading.
 		 */
 		public function clear():void
 		{
 			_filesToLoad.clear();
-			_loadInfo.reset();
 		}
-
-		//-----------------//
+		
+		/**
+		 * Lists all the files contained into this <code>MassLoader</code> into a <code>String</code>.
+		 * 
+		 * @return A <code>String</code> containing all the files.
+		 */
+		public override function toString():String
+		{
+			return "MassLoader["+_filesToLoad.toArray()+"]";
+		}
+		//-----------------//
 		//Protected methods//
 		//-----------------//
 		
@@ -638,9 +653,11 @@
 		}
 
 		/**
-		 * Defines if the massive loading is complete.
+		 * Defines if the massive loading is complete. This method will return <code>true</code> if there is no more
+		 * file into the loading queue and there is currently no file loading.
 		 * 
 		 * @return	<code>true</code> if all the files are loaded.
+		 * @see		#filesQueue	filesQueue
 		 */
 		protected function isComplete():Boolean
 		{
@@ -681,7 +698,7 @@
 			var trg:ILoadManager = evt.target as ILoadManager;
 			if (!_isLoading)
 			{
-				closeEvent(trg, evt);
+				sendCloseEvent(trg, evt);
 				 return; //loading closed, stop propagation
 			}
 			
@@ -720,13 +737,13 @@
 			removeFile(file);
 			
 			//close event
-			closeEvent(file, evt);
+			sendCloseEvent(file, evt);
 		}
 		
 		/**
 		 * @private
 		 */
-		private function closeEvent(file:ILoadManager, evt:Event=null):void
+		private function sendCloseEvent(file:ILoadManager, evt:Event=null):void
 		{
 			var op:MassLoadEvent = new MassLoadEvent(MassLoadEvent.FILE_CLOSE, file, evt);
 			dispatchEvent(op); 
@@ -780,6 +797,7 @@
 			
 			//complete event
 			var evt:Event = new Event(Event.COMPLETE);
+			_closeEvent = evt;
 			dispatchEvent(evt);
 		}
 	}
@@ -803,7 +821,7 @@ class MassLoadInfo implements ILoadInfo
 	//---------//
 	private static const TIMEOUT:uint = 1500; //timeout after 1.5 sec (automatic update)
 	private static const BYTES_PER_TIME:uint = 1000; //calculate the bytes per second
-	private static const LISTENER_PRIORITY:int = 50;
+	private static const LISTENER_PRIORITY:int = 100;
 	
 	//---------//
 	//Variables//
@@ -858,7 +876,7 @@ class MassLoadInfo implements ILoadInfo
 	public function get remainingTime():int { return _remainingTime; }
 	
 	/**
-	 * Defines the current speed of the download (bytes per seconds).
+	 * Defines the current speed of the download (kilobytes per seconds).
 	 */
 	public function get currentSpeed():Number { return _currentSpeed; }
 	
@@ -988,8 +1006,8 @@ class MassLoadInfo implements ILoadInfo
 		data += "bytesRemaining : "+bytesRemaining+"\n";
 		data += "percentLoaded  : "+percentLoaded+"%\n";
 		data += "radioLoaded    : "+Math.floor(ratioLoaded*100)/100+"\n";
-		data += "currentSpeed   : "+Math.floor(currentSpeed*100)/100+" bytes/sec\n";
-		data += "averageSpeed   : "+Math.floor(averageSpeed*100)/100+" bytes/sec\n";
+		data += "currentSpeed   : "+Math.floor(currentSpeed*100)/100+" ko/sec\n";
+		data += "averageSpeed   : "+Math.floor(averageSpeed*100)/100+" ko/sec\n";
 		data += "elapsedTime    : "+elapsedTime+" ms\n";
 		data += "remainingTime  : "+remainingTime+" ms\n";
 		data += "filesIdle      : "+_listIdle.length+"\n";
@@ -1028,13 +1046,13 @@ class MassLoadInfo implements ILoadInfo
 	 * @param evt	Event object.
 	 */
 	protected function onFileClose(evt:MassLoadEvent):void
-	{
+	{ 
 		var file:ILoadManager = evt.file;
 		var closeEvent:Event = evt.closeEvent;
 		
 		_listLoading.removeElement(file);
 		
-		if (closeEvent.type == Event.COMPLETE) _listSuccess.addElement(file);
+		if (closeEvent == null || closeEvent.type == Event.COMPLETE) _listSuccess.addElement(file);
 		else _listError.addElement(file);
 	}
 	
