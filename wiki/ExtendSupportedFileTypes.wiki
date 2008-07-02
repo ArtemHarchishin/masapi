@@ -98,3 +98,5 @@ If you don't want/can extend the AbstractLoadableFile class, you'll need to redi
  * Event.OPEN
  * Event.COMPLETE
  * ProgressEvent.PROGRESS
+
+[http://code.google.com/p/masapi/wiki/UserGuide Back to the user guide]

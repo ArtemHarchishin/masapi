@@ -37,3 +37,5 @@ myFont.applyFormat(myTextField);
 }}}
 
 [http://www.astorm.ch/blog/index.php?post/2008/02/24/gestion-de-polices-integrees-embedded-fonts Here] is another french tutorial about the embedded fonts !
+
+[http://code.google.com/p/masapi/wiki/UserGuide Back to the user guide]

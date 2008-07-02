@@ -50,3 +50,4 @@ massLoader.stop(); //like a pause()
 massLoader.clear(); //no more file into the loading queue
 }}}
 
+[http://code.google.com/p/masapi/wiki/UserGuide Back to the user guide]

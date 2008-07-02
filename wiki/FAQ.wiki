@@ -1,0 +1,23 @@
+#summary Frequently asked questions
+
+= Frequently asked questions =
+
+There is a list of frequently asked questions. [http://groups.google.com/group/masapi Participate] !
+
+== What about the API compatiblity ? ==
+This is a full AS3 API (unusable in AS2). It is fully compatible with Flex, Flash and AIR. There my be some unsupported load managers but you can Extend the [http://code.google.com/p/masapi/wiki/ExtendSupportedLoadManagers add them].
+
+== What's the size of the API ? ==
+If you use all the features of masapi, the size of the SWF will be about 17ko. If you use only the CompositeMassLoader, then it will approach 13ko. If you use only the ApplicationMassLoader, then it will be less thant 11ko.
+
+== How can I ask about features, updates, report bugs, ... ? ==
+Just come on the [http://groups.google.com/group/masapi Google group] :)
+
+== What are the constraints of the LGPL ? ==
+None. You can use masapi in any project you want ! A [http://groups.google.com/group/masapi feedback] would be very appreciated.
+
+== Is there a spec for the file dependencies XML ==
+Yes. There is this [http://www.astorm.ch/masapi/validator.php validator].
+
+
+[http://code.google.com/p/masapi/wiki/UserGuide Back to the user guide]

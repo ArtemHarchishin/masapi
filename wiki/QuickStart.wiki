@@ -24,21 +24,25 @@ import ch.capi.net.*;
 var cml:CompositeMassLoader = new CompositeMassLoader();
 
 //creates & add the files to the MassLoader
-var file1:ILoadableFile = cml.addFile("myFile.txt"); // will use a URLLoader object with the URLLoaderDataFormat.VARIABLES property
-var file2:ILoadableFile = cml.addFile("myFile.xml"); // will use a URLLoader object with the URLLoaderDataFormat.TEXT property
-var file3:ILoadableFile = cml.addFile("myFile.css"); // will use a URLLoader object with the URLLoaderDataFormat.TEXT property
-var file4:ILoadableFile = cml.addFile("myFile.png"); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
-var file5:ILoadableFile = cml.addFile("myFile.png", LoadableFileType.SWF); // will use a Loader object
-var file6:ILoadableFile = cml.addFile("myFile.jpg"); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
-var file7:ILoadableFile = cml.addFile("myFile.swf"); // will use a Loader object
-var file8:ILoadableFile = cml.addFile("myFile.swf", LoadableFileType.BINARY); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
+cml.addFile("myFile.txt"); // will use a URLLoader object with the URLLoaderDataFormat.VARIABLES property
+cml.addFile("myFile.xml"); // will use a URLLoader object with the URLLoaderDataFormat.TEXT property
+cml.addFile("myFile.css"); // will use a URLLoader object with the URLLoaderDataFormat.TEXT property
+cml.addFile("myFile.png"); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
+cml.addFile("myFile.png", LoadableFileType.SWF); // will use a Loader object
+cml.addFile("myFile.jpg"); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
+cml.addFile("myFile.swf"); // will use a Loader object
+cml.addFile("myFile.swf", LoadableFileType.BINARY); // will use a URLLoader object with the URLLoaderDataFormat.BINARY property
 
 //starts the loading
 cml.start();
+
+//useful information for debugging
+//trace(cml.massLoader);
 }}}
-Note that it is important to keep a reference to the created ILoadableFile !
 
 You can also read how to [http://code.google.com/p/masapi/wiki/ExtendSupportedFileTypes extend the supported file types] ! There is also a page that show [http://code.google.com/p/masapi/wiki/PauseResume how to pause/resume a MassLoader].
+
+In some cases, you will need to add your own [http://code.google.com/p/masapi/wiki/ExtendSupportedLoadManagers ILoadableFile types].
 
 === Listen to the massive loading events ===
 
@@ -81,6 +85,36 @@ cml.massLoader.addEventListener(Event.COMPLETE, completeHandler);
 cml.start();
 }}}
 
+=== Get progression information ===
+
+A Massloader provides a ILoadInfo object that has very useful information (speed, elapsed time, remaining time, ...).
+
+{{{
+import ch.capi.net.*;
+import ch.capi.events.*;
+
+//creates the MassLoader
+var cml:CompositeMassLoader = new CompositeMassLoader();
+cml.massLoader.addEventListener(ProgressEvent.PROGRESS, onProgress);
+//...
+
+function onProgress(evt:ProgressEvent):void
+{
+	var info:ILoadInfo = evt.target.loadInfo;
+	//var info:ILoadInfo = cml.loadInfo;
+	
+	trace(info.currentSpeed);
+	trace(info.averageSpeed);
+	trace(info.elapsedTime);
+	trace(info.remainingTime);
+	trace(info.percentLoaded);
+	trace(info.ratioLoaded);
+	trace(info.bytesLoaded+" / "+info.bytesTotal);
+}
+}}}
+
+Here is more about the [http://code.google.com/p/masapi/wiki/ProgressionInfo progression information].
+
 === Retrieves the data of the loaded files ===
 
 There are many ways to retrieve the data of the loaded files. This depends of which type of file you are loading and which variant you choose. Be aware that Masapi will not keep any reference on the ILoadableFile that have been loaded !
@@ -92,68 +126,103 @@ The easiest way is to use the getData() method of the ILoadableFile interface :
 import ch.capi.net.*;
 
 var cml:CompositeMassLoader = new CompositeMassLoader();
-var file:ILoadableFile = cml.addFile("test.swf"); //use a Loader object
+var file1:ILoadableFile = cml.addFile("test.swf", LoadableFileType.BINARY); //use a URLLoader object with the URLLoaderDataFormat.BINARY property
+var file2:ILoadableFile = cml.addFile("test2.swf"); //use a Loader object
 
 //... (waits for the massive loading complete)
 
-var ldr:Loader = file.getData() as Loader;
-//or var ldr:Loader = file.loadManagerObject as Loader;
+var loaderData:ByteArray = file1.getData();
+var loader1:Loader = file1.getData("flash.display.Loader");
+var loader2:Loader = file2.getData();
 }}}
 
-Below, the method to retrieve the data of any binary (LoadableFileType.BINARY) loaded data :
+Some more samples :
 {{{
-import ch.capi.net.*;
 
-var cml:CompositeMassLoader = new CompositeMassLoader();
-var file:ILoadableFile = cml.addFile("test.swf", LoadableFileType.BINARY); //use a URLLoader object with the URLLoaderDataFormat.BINARY property
+var file:ILoadableFile = cml.addFile("dataFile");
 
-//... (waits for the massive loading complete)
+//if dataFile contains a XML
+var asString:String = file.getData();
+var asXml:XML = file.getData("XML");
+var asXmlDocument:XMLDocument = file.getData("flash.xml.XMLDocument");
 
-var data:ByteArray = file.getData() as ByteArray;
-var ldr:Loader = new Loader();
-ldr.loadBytes(data);
+//if dataFile contains a CSS
+var asStyleSheet:StyleSheet = file.getData("flash.text.StyleSheet");
+
+//if dataFile contains variables
+var asVariables:URLVariables = file.getData("flash.net.URLVariables"); //file.getData() also works
+
+//if dataFile contains binary values
+var asByteArray:ByteArray = file.getData("flash.utils.ByteArray"); //file.getData() also works
+var asLoader:Loader = file.getData("flash.display.Loader");
 }}}
 
-Below, the method to retrieve the data of any text (LoadableFileType.TEXT) loaded data :
+== Avoid some basic problems ==
+
+If you're working with masapi using AS3 classes, just keep in mind that you must have an explicit reference to your CompositeMassLoader or MassLoader in order that it won't be collected by the Garbage Collector.
+
 {{{
-import ch.capi.net.*;
-import flash.xml.*;
+package
+{
+	import ch.capi.net.*;
 
-var cml:CompositeMassLoader = new CompositeMassLoader();
-var file:ILoadableFile = cml.addFile("test.xml"); //use a URLLoader object with the URLLoaderDataFormat.TEXT property
-
-//... (waits for the massive loading complete)
-
-var data:String = file.getData() as String;
-var myXML:XMLDocument = new XMLDocument();
-myXML.parseXML(data);
+	public class BadWayClass
+	{
+		public function myLoadMethod():void
+		{
+			var cml:CompositeMassLoader = new CompositeMassLoader();
+			
+			cml.addFile("file.swf");
+			cml.addFile("file.txt");
+			cml.addFile("file.xml");
+			
+			cml.addEventListener(Event.COMPLETE, onLoadComplete);
+			
+			cml.start();
+		}
+		
+		protected function onLoadComplete(evt:Event):void
+		{
+			trace("okay !");
+		}
+	}
+}
 }}}
+In that case, the onLoadComplete function will probably never be called because when the Flash Player quits the myLoadMethod, it will say to the Garbage Collector something like 'okay you can delete all this stuff'.
 
-Below, the method to retrieve the data of any variables (LoadableFileType.VARIABLES) loaded data :
+The solution is right simple : just keep a reference into your class !
 {{{
-import ch.capi.net.*;
+package
+{
+	import ch.capi.net.*;
 
-var cml:CompositeMassLoader = new CompositeMassLoader();
-var file:ILoadableFile = cml.addFile("test.txt"); //use a URLLoader object with the URLLoaderDataFormat.VARIABLES property
-
-//... (waits for the massive loading complete)
-
-var data:URLVariables = file.getData() as URLVariables;
+	public class RightWayClass
+	{
+		private var _massLoader:CompositeMassLoader;
+	
+		public function myLoadMethod():void
+		{
+			var cml:CompositeMassLoader = new CompositeMassLoader();
+			
+			cml.addFile("file.swf");
+			cml.addFile("file.txt");
+			cml.addFile("file.xml");
+			
+			cml.addEventListener(Event.COMPLETE, onLoadComplete);
+			
+			cml.start();
+			
+			_massLoader = cml;
+		}
+		
+		protected function onLoadComplete(evt:Event):void
+		{
+			trace("okay !");
+		}
+	}
+}
 }}}
 
-Below, the method to retrieve the data of any sound (LoadableFileType.SOUND) loaded data :
-{{{
-import ch.capi.net.*;
+== Samples ==
 
-var cml:CompositeMassLoader = new CompositeMassLoader();
-var file:ILoadableFile = cml.addFile("test.mp3"); //use a Sound object
-
-//... (waits for the massive loading complete)
-
-var data:Sound = file.getData() as Sound;
-}}}
-
-
-== Sample ==
-
-You will find a complete sample into the [http://code.google.com/p/masapi/source/browse/trunk/bundles/ bundles]. And you're now ready to have a look to the [http://code.google.com/p/masapi/wiki/UserGuide User Guide] !
+You will find complete samples into the [http://code.google.com/p/masapi/source/browse/trunk/bundles/ bundles]. And you're now ready to have a look to the [http://code.google.com/p/masapi/wiki/UserGuide User Guide] !

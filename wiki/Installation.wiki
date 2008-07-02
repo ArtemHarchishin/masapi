@@ -30,3 +30,5 @@ function onFileOpen(evt:MassLoadEvent):void { trace("open"); }
 }}}
 
 If it works correctly, then your installation is well done !
+
+[http://code.google.com/p/masapi/wiki/UserGuide Back to the user guide]

@@ -156,12 +156,8 @@ It is very easy to use the files specified into the configuration. Simply call t
 import ch.capi.core.*;
 
 var animationFile:ApplicationFile = ApplicationFile.getFile("animation");
-
-var data:ByteArray = animationFile.getData() as ByteArray;
-var ldr:Loader = new Loader();
-ldr.loadBytes(data);
-
+var ldr:Loader = animationFile.getData("flash.display.Loader");
 addChild(ldr);
 }}}
 
-Note that instead of using a CompositeMassLoader (or either the MassLoader), you don't need to keep a reference to the files you need to load !
+[http://code.google.com/p/masapi/wiki/UserGuide Back to the user guide]
