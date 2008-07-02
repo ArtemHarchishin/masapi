@@ -1,5 +1,11 @@
 package ch.capi.net
 {
+	import flash.display.LoaderInfo;	
+	
+	import ch.capi.display.IRootDocument;	
+	
+	import flash.display.DisplayObject;	
+	import flash.events.Event;	
 	import flash.system.ApplicationDomain;	
 	import flash.text.StyleSheet;	
 	import flash.xml.XMLDocument;	
@@ -89,7 +95,7 @@ package ch.capi.net
 			
 			//create the data
 			var loadedData:* = loadManagerObject.data;
-			if (insClass is Loader) insClass.loadBytes(loadedData);
+			if (insClass is Loader){ insClass.contentLoaderInfo.addEventListener(Event.INIT, onInit, false, 10, true); insClass.loadBytes(loadedData); }
 			else if (insClass is URLVariables){ insClass.decode(loadedData); }
 			else if (insClass is XMLDocument){ insClass.ignoreWhite=true; insClass.parseXML(loadedData); }
 			else if (insClass is StyleSheet){ insClass.parseCSS(loadedData); }
@@ -128,6 +134,28 @@ package ch.capi.net
 		public function getType():String
 		{
 			return (loadManagerObject as URLLoader).dataFormat;
+		}
+		
+		//-----------------//
+		//Protected methods//
+		//-----------------//
+		
+		/**
+		 * <code>Event.INIT</code> listener.
+		 * 
+		 * @param	evt		The event object.
+		 */
+		protected function onInit(evt:Event):void
+		{
+			var src:LoaderInfo = evt.target as LoaderInfo;
+			var cnt:DisplayObject = src.content;
+			
+			//set the linked loadable file
+			if (cnt is IRootDocument)
+			{
+				var adc:IRootDocument = cnt as IRootDocument;
+				adc.initializeContext(this);
+			}
 		}
 	}
 }
