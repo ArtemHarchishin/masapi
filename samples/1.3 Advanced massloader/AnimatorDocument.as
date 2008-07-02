@@ -18,19 +18,15 @@
 			super.initializeContext(loadableFile);
 			
 			//Retrieves the data
-			var dataXml:URLLoader = loadableFile.properties.getValue("data");
-			var picture:URLLoader = loadableFile.properties.getValue("picture");
+			var dataXml:ILoadableFile = loadableFile.properties.getValue("data");
+			var picture:ILoadableFile = loadableFile.properties.getValue("picture");
 			
 			//Creates the picture
-			var ldr:Loader = new Loader();
-			ldr.loadBytes(picture.data);
+			var ldr:Loader = picture.getData("flash.display.Loader");
 			addChild(ldr);
 			
 			//Creates the XMLDocument for the motion
-			var xmlDoc:XMLDocument = new XMLDocument();
-			xmlDoc.ignoreWhite = true;
-			xmlDoc.parseXML(dataXml.data);
-			var xml:XML = new XML(xmlDoc);
+			var xml:XML = dataXml.getData("XML");
 			
 			//Creates the Animator
 			animator = new Animator(xml, ldr);

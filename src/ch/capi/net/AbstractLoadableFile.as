@@ -86,7 +86,7 @@
 		 * 
 		 * @see		#registerEvent()		registerEvent()
 		 */
-		private static const LISTENER_PRIORITY:int = 50;
+		private static const LISTENER_PRIORITY:int = 100;
 		
 		//---------//
 		//Variables//
@@ -100,6 +100,7 @@
 		private var _online:String					= NetState.DYNAMIC;
 		private var _stateLoading:Boolean			= false;
 		private var _properties:IMap				= new DictionnaryMap();
+		private var _closeEvent:Event				= null;
 		private var _loadManagerObject:*;
 		
 		//-----------------//
@@ -177,6 +178,11 @@
 		 * Defines the load manager object.
 		 */
 		public function get loadManagerObject():Object { return _loadManagerObject; }
+		
+		/**
+		 * Defines the event that happend to close the file (Event.CLOSE, Event.COMPLETE, ...).
+		 */
+		public function get closeEvent():Event { return _closeEvent; }
 		
 		//-----------//
 		//Constructor//
@@ -283,6 +289,7 @@
 		{
 			if (_stateLoading) throw new IllegalOperationError("State already loading");
 			_stateLoading = true;
+			_closeEvent = null;
 		}
 		
 		/**
@@ -296,9 +303,12 @@
 			if (bytesLoaded == bytesTotal) return; //nothing to do
 			
 			_stateLoading = false;
+			
 			loadManagerObject.close();
 			
 			var evt:Event = new Event(Event.CLOSE, false, false);
+			_closeEvent = evt;
+			
 			dispatchEvent(evt);
 		}
 		
@@ -355,6 +365,7 @@
 		protected function onComplete(evt:Event):void
 		{
 			_stateLoading = false;
+			_closeEvent = evt;
 			
 			_bytesTotalRetrieved = true;
 			_bytesTotal = _bytesLoaded;
@@ -371,6 +382,7 @@
 		protected function onSecurityError(evt:SecurityErrorEvent):void
 		{
 			_stateLoading = false;
+			_closeEvent = evt;
 			
 			var nevt:Event = evt.clone();
 			dispatchEvent(nevt);
@@ -384,6 +396,7 @@
 		protected function onIOError(evt:IOErrorEvent):void
 		{
 			_stateLoading = false;
+			_closeEvent = evt;
 			
 			var nevt:Event = evt.clone();
 			dispatchEvent(nevt);

@@ -4,7 +4,7 @@
 	import ch.capi.display.AbstractDocument;
 	import ch.capi.net.*;
 	
-	public class LoadedDocumentClass extends AbstractDocument //you should alos simply implement ch.capi.core.IApplicationContext
+	public class LoadedDocumentClass extends AbstractDocument //you should also simply implement ch.capi.display.IRootDocument
 	{
 		public override function initializeContext(file:ILoadableFile):void
 		{

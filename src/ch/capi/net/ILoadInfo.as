@@ -40,7 +40,7 @@ package ch.capi.net
 		function get remainingTime():int;
 		
 		/**
-		 * Defines the current speed of the download (bytes per seconds).
+		 * Defines the current speed of the download (kilobytes per seconds).
 		 */
 		function get currentSpeed():Number;
 		

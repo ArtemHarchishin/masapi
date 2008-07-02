@@ -123,7 +123,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#getData()">getData</a>():*</div>
+<a class="signatureLink" href="#getData()">getData</a>(asClass:String = null, appDomain:ApplicationDomain = null):*</div>
 <div class="summaryTableDescription">
    Retrieves the data of the <code>ILoadableFile</code> linked to the <code>ApplicationFile</code>.</div>
 </td><td class="summaryTableOwnerCol">ApplicationFile</td>
@@ -367,12 +367,26 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function getData():*</code><p>
+<code>public function getData(asClass:String = null, appDomain:ApplicationDomain = null):*</code><p>
    Retrieves the data of the <code>ILoadableFile</code> linked to the <code>ApplicationFile</code>. If
    the <code>loadManagerObject</code> is a <code>URLLoader</code>, then the data are returned else the
    <code>loadManagerObject</code> itself is returned.
    
-   </p><p></p>
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">asClass</span>:String</code> (default = <code>null</code>)<code></code> &mdash;  The class that should be returned by the method (cf ILoadableFile implementation).
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">appDomain</span>:ApplicationDomain</code> (default = <code>null</code>)<code></code> &mdash; The <code>ApplicationDomain</code> of the class. 
+   </td>
+</tr>
+</table>
+<p></p>
 <span class="label">Returns</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>

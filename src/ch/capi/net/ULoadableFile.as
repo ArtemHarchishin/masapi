@@ -90,9 +90,9 @@ package ch.capi.net
 			//create the data
 			var loadedData:* = loadManagerObject.data;
 			if (insClass is Loader) insClass.loadBytes(loadedData);
-			else if (insClass is URLVariables) insClass.decode(loadedData);
-			else if (insClass is XMLDocument) insClass.parseXML(loadedData);
-			else if (insClass is StyleSheet) insClass.parseCSS(loadedData);
+			else if (insClass is URLVariables){ insClass.decode(loadedData); }
+			else if (insClass is XMLDocument){ insClass.ignoreWhite=true; insClass.parseXML(loadedData); }
+			else if (insClass is StyleSheet){ insClass.parseCSS(loadedData); }
 			
 			return insClass;
 		}

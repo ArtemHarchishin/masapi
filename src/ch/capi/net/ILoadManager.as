@@ -1,5 +1,6 @@
 package ch.capi.net
 {
+	import flash.events.Event;	
 	import flash.events.IEventDispatcher;
 	
 	/**
@@ -68,6 +69,11 @@ package ch.capi.net
 		 */
 		function get bytesTotal():uint;
 		
+		/**
+		 * Defines the event that happend to close the file (Event.CLOSE, Event.COMPLETE, ...).
+		 */
+		function get closeEvent():Event;
+
 		/**
 		 * Stops the load operation in progress.
 		 * Any load operation in progress is immediately terminated.
