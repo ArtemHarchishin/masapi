@@ -5,7 +5,7 @@
 There is a list of frequently asked questions. [http://groups.google.com/group/masapi Participate] !
 
 == What about the API compatiblity ? ==
-This is a full AS3 API (unusable in AS2). It is fully compatible with Flex, Flash and AIR. There my be some unsupported load managers but you can Extend the [http://code.google.com/p/masapi/wiki/ExtendSupportedLoadManagers add them].
+This is a full AS3 API (unusable in AS2). It is fully compatible with Flex, Flash and AIR. There my be some unsupported load managers but you can [http://code.google.com/p/masapi/wiki/ExtendSupportedLoadManagers add them].
 
 == What's the size of the API ? ==
 If you use all the features of masapi, the size of the SWF will be about 17ko. If you use only the CompositeMassLoader, then it will approach 13ko. If you use only the ApplicationMassLoader, then it will be less thant 11ko.
