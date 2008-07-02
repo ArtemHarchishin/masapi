@@ -12,7 +12,7 @@ The only incompatible update is the class ch.capi.core.IApplicationContext that 
 
 Here are the main updates for this new version :
   * You have now advanced progression information (see IMassLoader.loadInfo property or ILoadInfo interface).
-  * The data can be dynamically transformed by a ILoadableFile/ApplicationFile ( getData(aClassName):* ).
+  * The data can be dynamically transformed by a ILoadableFile/ApplicationFile ( getData(aClassName) ).
   * The LoadableFileFactory now supports a default LoaderContext and a default SoundLoaderContext.
   * There is no more need to keep references on the created ILoadableFile if you use a CompositeMassLoader.
   * A ILoadManager stores its close Event (so you can know its final state).
