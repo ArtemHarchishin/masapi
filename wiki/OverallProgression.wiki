@@ -6,7 +6,7 @@ In order to provide an interessting value for the IMassLoader.bytesTotal propert
   * if the bytesTotal value isn't known, then the virtualBytesTotal property is used to provide de ILoadableFile.bytesTotal.
   * as soon as the real bytesTotal value is used, then this one is used to provide the ILoadableFile.bytesTotal.
 
-This kind of management can do strange behavior of the size of the loaded files are greather than the specified virtualBytesTotal. You will find two demos [http://www.astorm.ch/blog/index.php?post/2008/06/11/Masapi-overall-pro here] (fr) about that.
+This kind of management can do strange behavior of the size of the loaded files are greather than the specified virtualBytesTotal. You will find two demos [http://www.astorm.ch/blog/index.php?post/2008/06/11/Masapi-overall-progression here] (fr) about that.
 
 == Dealing with virtualBytesTotal ==
 
