@@ -34,7 +34,7 @@ cml.start();
 === the other way ===
 {{{
 var cml:CompositeMassLoader = new CompositeMassLoader();
-cml.addFile("aFile.xml", handleOpen, handleProgress, handleComplete); //weak references to the listeners !
+cml.addFile("aFile.xml", LoadableFileType.TEXT, handleOpen, handleProgress, handleComplete); //weak references to the listeners !
 
 function handleOpen(evt:Event):void { trace("open"); }
 function handleProgress(evt:ProgressEvent):void { trace("progress"); }
