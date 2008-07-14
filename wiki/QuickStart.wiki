@@ -54,6 +54,10 @@ import ch.capi.events.*;
 //creates the MassLoader
 var cml:CompositeMassLoader = new CompositeMassLoader();
 
+cml.massLoader.addEventListener(ProgressEvent.PROGRESS, onOverallProgress); //overall progression
+cml.massLoader.addEventListener(MassLoadEvent.FILE_OPEN, onOpenHandler); //a file download starts
+cml.massLoader.addEventListener(Event.COMPLETE, completeHandler); //massload complete
+
 //... (creates the files and so on)
 
 //listen to the overall progression
@@ -62,24 +66,25 @@ function onOverallProgress(evt:ProgressEvent):void
     var percent:Number = Math.round(evt.bytesLoaded / evt.bytesTotal * 100);
     trace("Loaded at "+percent+"%");
 }
-cml.massLoader.addEventListener(ProgressEvent.PROGRESS, onOverallProgress);
 
-//listen to a specific file
-function onFileProgress(evt:ProgressEvent):void { trace("file progress"); }
-
+//listen when a file begins to be loaded
 function onOpenHandler(evt:MassLoadEvent):void
 {
 	var file:ILoadableFile = evt.file as ILoadableFile;
 	file.addEventListener(ProgressEvent.PROGRESS, onFileProgress);
 }
-cml.massLoader.addEventListener(MassLoadEvent.FILE_OPEN, onOpenHandler);
+
+//listen to a specific file
+function onFileProgress(evt:ProgressEvent):void
+{
+	trace("file progress");
+}
 
 //listen to the complete event
 function completeHandler(evt:Event):void
 {
     trace("MassLoad complete");
 }
-cml.massLoader.addEventListener(Event.COMPLETE, completeHandler);
 
 //starts the loading
 cml.start();

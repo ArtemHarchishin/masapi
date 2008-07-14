@@ -19,5 +19,9 @@ None. You can use masapi in any project you want ! A [http://groups.google.com/g
 == Is there a spec for the file dependencies XML ==
 Yes. There is this [http://www.astorm.ch/masapi/validator.php validator].
 
+== How can I reload a File ? ==
+
+Just re-call the start method on the ILoadableFile. If the useCache attribute is set to false, then the file will be reloaded.
+
 
 [http://code.google.com/p/masapi/wiki/UserGuide Back to the user guide]
