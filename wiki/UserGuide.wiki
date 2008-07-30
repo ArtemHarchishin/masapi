@@ -19,6 +19,7 @@ You'll find here interesting links to use masapi into your application. You can 
 
 == Masapi's advanced topics ==
 
+  * About the [http://code.google.com/p/masapi/wiki/LoaderContext LoaderContext management]
   * Manage the [http://code.google.com/p/masapi/wiki/FileDependencies file dependencies]
   * Extend the [http://code.google.com/p/masapi/wiki/ExtendSupportedFileTypes supported file types]
   * Extend the [http://code.google.com/p/masapi/wiki/ExtendSupportedLoadManagers supported load managers]
