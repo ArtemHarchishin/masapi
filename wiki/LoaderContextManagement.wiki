@@ -52,7 +52,7 @@ package ch.demo
 
 	public class SpecificContextLoader extends Loader
 	{
-		public function loadBytes(url:URLRequest, context:LoaderContext=null):void
+		public override function loadBytes(url:URLRequest, context:LoaderContext=null):void
 		{
 			if (context == null) context = new LoaderContext(false, new ApplicationDomain());
 			super.loadBytes(url, context);
@@ -72,6 +72,17 @@ var file:ILoadableFile = cml.addFile("data.swf", LoadableFileType.BINARY);
 
 //...
 var ldr:Loader = file.getData("ch.demo.SpecificContextLoader");
+}}}
+
+You can also use the easiest way :
+{{{
+var cml:CompositeMassLoader = new CompositeMassLoader();
+var file:ILoadableFile = cml.addFile("data.swf", LoadableFileType.BINARY);
+
+//...
+var data:ByteArray = file.getData();
+var ldr:Loader = new Loader();
+ldr.loadBytes(data, new LoaderContext(false, new ApplicationDomain());
 }}}
 
 [http://code.google.com/p/masapi/wiki/UserGuide Back to the user guide]
