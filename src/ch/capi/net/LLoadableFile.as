@@ -78,7 +78,7 @@
 		
 		/**
 		 * Retrieves the data of the <code>loadManagerObject</code> if the loading
-		 * is complete. If the asType parameter is specified, then the <code>ILoadableFile</code>
+		 * is complete. If the asClass parameter is specified, then the <code>ILoadableFile</code>
 		 * will try to create an instance of it and parse the content into it.
 		 * 
 		 * @param 	asClass		The class instance that should be returned by the method.

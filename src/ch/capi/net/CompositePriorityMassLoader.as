@@ -78,7 +78,7 @@ package ch.capi.net
 		 * @param	onSecurityError The <code>SecurityErrorEvent.SECURITY_ERROR</code> listener.
 		 * @return	The created <code>ILoadableFile</code>.
 		 */
-		public function addPrioritizedFile(url:String, priority:int, fileType:String = null,
+		public function addPrioritizedFile(url:Object, priority:int, fileType:String = null,
 														onOpen:Function=null, 
 											   			onProgress:Function=null, 
 											   			onComplete:Function=null, 
@@ -86,31 +86,7 @@ package ch.capi.net
 											   			onIOError:Function=null,
 											   			onSecurityError:Function=null):ILoadableFile
 		{
-			return addPrioritizedRequest(new URLRequest(url), priority, fileType, onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
-		}
-		
-		/**
-		 * Creates a <code>ILoadableFile</code> from a <code>URLRequest</code> and add it to the current loading queue.
-		 * 
-		 * @param	request		The <code>URLRequest</code>.
-		 * @param	priority	The priority of the file.
-		 * @param	fileType	The type of the file.
-		 * @param	onOpen		The <code>Event.OPEN</code> listener.
-		 * @param	onProgress	The <code>ProgressEvent.PROGRESS</code> listener.
-		 * @param	onComplete	The <code>Event.COMPLETE</code> listener.
-		 * @param	onClose		The <code>Event.CLOSE</code> listener.
-		 * @param	onIOError	The <code>IOErrorEvent.IO_ERROR</code> listener.
-		 * @param	onSecurityError The <code>SecurityErrorEvent.SECURITY_ERROR</code> listener.
-		 * @return	The created <code>ILoadableFile</code>.
-		 */
-		public function addPrioritizedRequest(request:URLRequest, priority:int, fileType:String=null,
-																   onOpen:Function=null, 
-														   		   onProgress:Function=null, 
-														   		   onComplete:Function=null, 
-														   		   onClose:Function=null,
-														   		   onIOError:Function=null,
-														   		   onSecurityError:Function=null):ILoadableFile
-		{
+			var request:URLRequest = LoadableFileFactory.getRequest(url);
 			var file:ILoadableFile = createLoadableFile(request, fileType);
 			loadableFileFactory.attachListeners(file,onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
 			(massLoader as PriorityMassLoader).addPrioritizedFile(file, priority);
