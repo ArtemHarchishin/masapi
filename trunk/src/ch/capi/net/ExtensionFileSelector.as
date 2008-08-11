@@ -70,6 +70,7 @@ package ch.capi.net
 			_extensions.put("txt", LoadableFileType.VARIABLES);
 			_extensions.put("xml", LoadableFileType.TEXT);
 			_extensions.put("css", LoadableFileType.TEXT);
+			_extensions.put("html", LoadableFileType.TEXT);
 			_extensions.put("mp3", LoadableFileType.SOUND);
 			_extensions.put("wav", LoadableFileType.SOUND);
 			_extensions.put("jpg", LoadableFileType.BINARY); 
@@ -92,7 +93,6 @@ package ch.capi.net
 		 * @return	The created <code>ILoadableFile</code> object.
 		 * @throws	ch.capi.errors.ExtensionNotDefinedError	If the extensions into the specified request was
 		 * 			not found into the extensions map.
-		 * @throws	flash.errors.ArgumentError	If the file type is invalid.
 		 * @see		ch.capi.net.LoadableFileType	LoadableFileType.
 		 */
 		public function create(request:URLRequest, factory:LoadableFileFactory):ILoadableFile
@@ -102,24 +102,9 @@ package ch.capi.net
 			
 			if (type == null) throw new ExtensionNotDefinedError(ext);
 			
-			switch (type)
-			{
-				case LoadableFileType.TEXT:
-				case LoadableFileType.VARIABLES:
-				case LoadableFileType.BINARY:
-					return factory.createURLLoaderFile(request, type);
-					
-				case LoadableFileType.SWF:
-					return factory.createLoaderFile(request);
-				
-				case LoadableFileType.SOUND:
-					return factory.createSoundFile(request);
-					
-				case LoadableFileType.STREAM:
-					return factory.createURLStreamFile(request);
-			}
-			
-			throw new ArgumentError("The file type '"+type+"' is invalid");
+			var method:Function = factory.getMethod(type);
+			var file:ILoadableFile = method(request); //should never return the createFile method since the type is known
+			return file;
 		}
 		
 		/**

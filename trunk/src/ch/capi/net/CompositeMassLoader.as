@@ -125,8 +125,9 @@ package ch.capi.net
 		 * @param	onIOError	The <code>IOErrorEvent.IO_ERROR</code> listener.
 		 * @param	onSecurityError The <code>SecurityErrorEvent.SECURITY_ERROR</code> listener.
 		 * @return	The created <code>ILoadableFile</code>.
+		 * @see ch.capi.net.LoadableFileFactory#getRequest()	LoadableFileFactory.getRequest()
 		 */
-		public function createFile(url:String, fileType:String = null,
+		public function createFile(url:Object, fileType:String = null,
 											onOpen:Function=null, 
 								   			onProgress:Function=null, 
 								   			onComplete:Function=null, 
@@ -134,7 +135,8 @@ package ch.capi.net
 								   			onIOError:Function=null,
 								   			onSecurityError:Function=null):ILoadableFile
 		{
-			var file:ILoadableFile = createLoadableFile(new URLRequest(url), fileType);
+			var request:URLRequest = LoadableFileFactory.getRequest(url);
+			var file:ILoadableFile = createLoadableFile(request, fileType);
 			_factory.attachListeners(file,onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
 			
 			if (keepFiles) storeFile(file);
@@ -154,8 +156,9 @@ package ch.capi.net
 		 * @param	onIOError	The <code>IOErrorEvent.IO_ERROR</code> listener.
 		 * @param	onSecurityError The <code>SecurityErrorEvent.SECURITY_ERROR</code> listener.
 		 * @return	The created <code>ILoadableFile</code>.
+		 * @see ch.capi.net.LoadableFileFactory#getRequest()	LoadableFileFactory.getRequest()
 		 */
-		public function addFile(url:String, fileType:String = null,
+		public function addFile(url:Object, fileType:String = null,
 											onOpen:Function=null, 
 								   			onProgress:Function=null, 
 								   			onComplete:Function=null, 
@@ -163,30 +166,7 @@ package ch.capi.net
 								   			onIOError:Function=null,
 								   			onSecurityError:Function=null):ILoadableFile
 		{
-			return addRequest(new URLRequest(url), fileType, onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
-		}
-		
-		/**
-		 * Creates a <code>ILoadableFile</code> from a <code>URLRequest</code> and add it to the current loading queue.
-		 * 
-		 * @param	request		The <code>URLRequest</code>.
-		 * @param	fileType	The type of the file.
-		 * @param	onOpen		The <code>Event.OPEN</code> listener.
-		 * @param	onProgress	The <code>ProgressEvent.PROGRESS</code> listener.
-		 * @param	onComplete	The <code>Event.COMPLETE</code> listener.
-		 * @param	onClose		The <code>Event.CLOSE</code> listener.
-		 * @param	onIOError	The <code>IOErrorEvent.IO_ERROR</code> listener.
-		 * @param	onSecurityError The <code>SecurityErrorEvent.SECURITY_ERROR</code> listener.
-		 * @return	The created <code>ILoadableFile</code>.
-		 */
-		public function addRequest(request:URLRequest, fileType:String=null,
-													   onOpen:Function=null, 
-											   		   onProgress:Function=null, 
-											   		   onComplete:Function=null, 
-											   		   onClose:Function=null,
-											   		   onIOError:Function=null,
-											   		   onSecurityError:Function=null):ILoadableFile
-		{
+			var request:URLRequest = LoadableFileFactory.getRequest(url);
 			var file:ILoadableFile = createLoadableFile(request, fileType);
 			_factory.attachListeners(file,onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
 			_massLoader.addFile(file);
@@ -268,37 +248,17 @@ package ch.capi.net
 		 * Retrieves a <code>ILoadableFile</code> from a <code>URLRequest</code> and and a specified file type
 		 * issued from the <code>LoadableFileType</code> constants.
 		 * 
-		 * @see	ch.capi.net.LoadableFileType	LoadableFileType
-		 * @see	ch.capi.net.IFileSelector		IFileSelector
 		 * @param	request		The <code>URLRequest</code>.
 		 * @param	fileType	The type of the file.
 		 * @return	The <code>ILoadableFile</code> created.
 		 * @throws	ArgumentError	If the <code>fileType</code> is not valid.
+		 * @see ch.capi.net.LoadableFileFactory#getRequest()	LoadableFileFactory.getRequest()
 		 */
 		protected function createLoadableFile(request:URLRequest, fileType:String=null):ILoadableFile
 		{
-			switch(fileType)
-			{
-				case LoadableFileType.BINARY:
-				case LoadableFileType.TEXT:
-				case LoadableFileType.VARIABLES:
-					return _factory.createURLLoaderFile(request, fileType);
-				
-				case LoadableFileType.SWF:
-					return _factory.createLoaderFile(request);
-					
-				case LoadableFileType.SOUND:
-					return _factory.createSoundFile(request);
-					
-				case LoadableFileType.STREAM:
-					return _factory.createURLStreamFile(request);
-					
-				case null:
-					return _factory.createFile(request);
-					
-				default:
-					throw new ArgumentError("File type '"+fileType+"' is not valid");
-			}
+			var method:Function = _factory.getMethod(fileType);
+			var file:ILoadableFile = method(request);
+			return file;
 		}
 		
 		/**

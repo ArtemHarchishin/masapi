@@ -17,26 +17,12 @@
 	 * Factory of <code>ILoadableFile</code> objects.
 	 * 
 	 * @example
-	 * Basic usage of the <code>LoableFileFactory</code> :
 	 * <listing version="3.0">
-	 * var factory:LoadableFileFactory = new LoadableFileFactory();
-	 * var file:ILoadableFile = factory.create("myFile.swf"); //creates a Loader-based ILoadableFile
+	 * var file1:ILoadableFile = LoadableFileFactory.create("file.swf"); //use a Loader
+	 * var file2:ILoadableFile = LoadableFileFactory.create("file.swf", LoadableFileType.BINARY); //use a URLLoader with URLLoaderDataFormat.BINARY 
 	 * 
-	 * //retrieves the load manager object
-	 * var lo:Loader = file.loadManagerObject as Loader;
-	 * </listing>
-	 * 
-	 * @example
-	 * Advanced usage of the <code>LoableFileFactory</code> :
-	 * <listing version="3.0">
-	 * var selector:ExtensionFileSelector = new ExtensionFileSelector();
-	 * selector.extensions.put("swf", LoadableFileType.BINARY);
-	 * 
-	 * var factory:LoadableFileFactory = new LoadableFileFactory(selector);
-	 * var file:ILoadableFile = factory.create("myFile.swf"); //creates a binary URLLoader-based ILoadableFile
-	 * 
-	 * //retrieves the load manager object
-	 * var ulo:URLLoader = file.loadManagerObject as URLLoader;
+	 * var myRequest:URLRequest = new URLRequest("file.txt");
+	 * var file3:ILoadableFile = LoadableFileFactory.create(myRequest);
 	 * </listing>
 	 * 
 	 * @see			ch.capi.net.ILoadableFile 			ILoadableFile
@@ -51,6 +37,7 @@
 		//---------//
 		//Variables//
 		//---------//
+		private static var __defaultFactory:LoadableFileFactory		= new LoadableFileFactory();
 		private var _defaultLoaderContext:LoaderContext				= new LoaderContext(false, ApplicationDomain.currentDomain);
 		private var _defaultSoundLoaderContext:SoundLoaderContext	= new SoundLoaderContext();
 		private var _defaultVirtualBytes:uint;
@@ -70,6 +57,13 @@
 		//-----------------//
 		
 		/**
+		 * Defines the default <code>LoadableFileFactory</code>.
+		 * 
+		 * @see		#create()	create()
+		 */
+		public static function get defaultLoadableFileFactory():LoadableFileFactory { return __defaultFactory; }
+		
+		/**
 		 * Defines the listeners priority when the <code>attachListeners</code> method is used.
 		 * 
 		 * @param	#attachListeners()		attachListeners()
@@ -79,10 +73,9 @@
 		
 		/**
 		 * Defines the <code>ILoadableFileSelector</code> that will be used when the
-		 * <code>create</code> or <code>createFile</code> method is called.
+		 * <code>createFile</code> method is called.
 		 * 
-		 * @see		#create()		create()
-		 * @see		#createFile()	createFile()
+		 * @see		#createFile()		createFile()
 		 */
 		public function get loadableFileSelector():ILoadableFileSelector { return _fileSelector; }
 		public function set loadableFileSelector(value:ILoadableFileSelector):void { _fileSelector = value; }
@@ -163,6 +156,47 @@
 		//--------------//
 		//Public methods//
 		//--------------//
+		
+		/**
+		 * Creates a <code>ILoadableFile</code> object.
+		 * 
+		 * @param	url		The url of the file.
+		 * @param	type	The file type issued from the <code>LoadableFileType</code> constants.
+		 * @param	onOpen		The <code>Event.OPEN</code> listener.
+		 * @param	onProgress	The <code>ProgressEvent.PROGRESS</code> listener.
+		 * @param	onComplete	The <code>Event.COMPLETE</code> listener.
+		 * @param	onClose		The <code>Event.CLOSE</code> listener.
+		 * @param	onIOError	The <code>IOErrorEvent.IO_ERROR</code> listener.
+		 * @param	onSecurityError The <code>SecurityErrorEvent.SECURITY_ERROR</code> listener.
+		 * @return	The created <code>ILoadableFile</code> object.
+		 * 
+		 * @see	#getRequest()				getRequest()
+		 * @see	#defaultLoadableFileFactory	defaultLoadableFileFactory
+		 */
+		public static function create(url:Object,
+								      type:String=null,
+								      onOpen:Function=null, 
+								      onProgress:Function=null, 
+								      onComplete:Function=null, 
+								      onClose:Function=null,
+								      onIOError:Function=null,
+								      onSecurityError:Function=null):ILoadableFile
+		{
+			return __defaultFactory.createFile(url, type, onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
+		}
+
+		/**
+		 * Creates a <code>URLRequest</code> from a url object. If the url is a <code>URLRequest</code>, then it is simply
+		 * returned. If the url is an object of any sort, a new <code>URLRequest</code> object is created with the value returned by
+		 * the <code>toString()</code> method as url.
+		 * 
+		 * @param	url		The url object.
+		 * @return	The created <code>URLRequest</code> object.
+		 */
+		public static function getRequest(url:Object):URLRequest
+		{
+			return (url is URLRequest) ? url as URLRequest : new URLRequest(url.toString());
+		}
 		
 		/**
 		 * Creates a <code>ILoadableFile</code> associated to a <code>URLLoader</code>
@@ -246,42 +280,10 @@
 		}
 		
 		/**
-		 * Creates a <code>ILoadableFile</code> using the defined <code>ILoadableFileSelector</code> to determine
-		 * which type of <code>ILoadableFile</code> to create.
-		 * 
-		 * @param	request		The url request.
-		 * @param	onOpen		The <code>Event.OPEN</code> listener.
-		 * @param	onProgress	The <code>ProgressEvent.PROGRESS</code> listener.
-		 * @param	onComplete	The <code>Event.COMPLETE</code> listener.
-		 * @param	onClose		The <code>Event.CLOSE</code> listener.
-		 * @param	onIOError	The <code>IOErrorEvent.IO_ERROR</code> listener.
-		 * @param	onSecurityError The <code>SecurityErrorEvent.SECURITY_ERROR</code> listener.
-		 * @return	The <code>ILoadableFile</code> object created or <code>null</code> if the
-		 * 			<code>ILoadableFile</code> has not been created.
-		 * @see		#attachListeners	attachListeners
-		 */
-		public function createFile(request:URLRequest,
-								   onOpen:Function=null, 
-								   onProgress:Function=null, 
-								   onComplete:Function=null, 
-								   onClose:Function=null,
-								   onIOError:Function=null,
-								   onSecurityError:Function=null):ILoadableFile
-		{
-			var file:ILoadableFile = loadableFileSelector.create(request, this);
-			if (file == null) return null;
-			
-			attachListeners(file, onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
-			
-			return file;
-		}
-		
-		/**
-		 * Creates a <code>ILoadableFile</code> directly from an url. This method will simply
-		 * create a <code>URLRequest</code> object and return the <code>ILoadableFile</code> retrieved
-		 * by the <code>createFile()</code> method.
+		 * Creates a <code>ILoadableFile</code> directly from an url.
 		 * 
 		 * @param	url			The url. If a <code>basePath</code> is set, then the url will be <code>basePath + url</code>.
+		 * @param	type	The file type issued from the <code>LoadableFileType</code> constants.
 		 * @param	onOpen		The <code>Event.OPEN</code> listener.
 		 * @param	onProgress	The <code>ProgressEvent.PROGRESS</code> listener.
 		 * @param	onComplete	The <code>Event.COMPLETE</code> listener.
@@ -290,22 +292,31 @@
 		 * @param	onSecurityError The <code>SecurityErrorEvent.SECURITY_ERROR</code> listener.
 		 * @return	The <code>ILoadableFile</code> object created.
 		 * @see		#attachListeners()	attachListeners()
+		 * @see		#getRequest()		getRequest()
 		 */
-		public function create(url:String,
-							   onOpen:Function=null, 
-							   onProgress:Function=null, 
-							   onComplete:Function=null, 
-							   onClose:Function=null,
-							   onIOError:Function=null,
-							   onSecurityError:Function=null):ILoadableFile
+		public function createFile(url:Object,
+								   type:String=null,
+								   onOpen:Function=null, 
+								   onProgress:Function=null, 
+								   onComplete:Function=null, 
+								   onClose:Function=null,
+								   onIOError:Function=null,
+								   onSecurityError:Function=null):ILoadableFile
 		{
+			var method:Function = getMethod(type);
+			var request:URLRequest = getRequest(url);
 			if (basePath != null)
 			{
 				if (basePath.charAt(basePath.length-1) != "/") basePath += "/";
-				url = basePath + url;
+				request.url = basePath + request.url;
 			}
 			
-			return createFile(new URLRequest(url), onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
+			//if the method is the current one, then call the loadableFileSelector
+			var file:ILoadableFile = (method == createFile) ? loadableFileSelector.create(request, this) : method(request);
+			if (file == null) return null;
+			
+			attachListeners(file, onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
+			return file;
 		}
 		
 		/**
@@ -349,6 +360,48 @@
 		{
 			file.virtualBytesTotal = _defaultVirtualBytes;
 			file.useCache = _useCache;
+		}
+		
+		//----------------//
+		//Internal methods//
+		//----------------//
+		
+		/**
+		 * Retrieves the method to call within the specified type to create a <code>ILoadableFile</code>. All functions
+		 * returned by this method take a <code>URLRequest</code> as first argument.
+		 * 
+		 * @param	type	The type issued from the <code>LoadableFileType</code> constants.
+		 * @return	The method to call.
+		 */
+		internal function getMethod(type:String):Function
+		{
+			switch(type)
+			{
+				case LoadableFileType.BINARY:
+				case LoadableFileType.TEXT:
+				case LoadableFileType.VARIABLES:
+				
+					//create a closure to send the right dataFormat to the method
+					return function(request:URLRequest, fileType:String=null):ILoadableFile
+					{
+						if (fileType == null) fileType = type;
+						return createURLLoaderFile(request, fileType);
+					};
+				
+				case LoadableFileType.SWF:
+					return createLoaderFile;
+					
+				case LoadableFileType.SOUND:
+					return createSoundFile;
+					
+				case LoadableFileType.STREAM:
+					return createURLStreamFile;
+					
+				case null: //be careful with that (recursive problems can appear)
+					return createFile;
+			}
+			
+			throw new ArgumentError("File type '"+type+"' is not valid");
 		}
 		
 		//---------------//

@@ -311,7 +311,7 @@
 			
 			dispatchEvent(evt);
 		}
-		
+
 		/**
 		 * Get the URL of the <code>AbstractLoadableFile</code>.
 		 * 
@@ -320,7 +320,9 @@
 		public override function toString():String
 		{
 			if (urlRequest==null) return null;
-			return urlRequest.url;
+			
+			var trg:Object = this; //trick to by-pass the compilation
+			return urlRequest.url+" ("+trg.getType()+")";
 		}
 		
 		//-----------------//

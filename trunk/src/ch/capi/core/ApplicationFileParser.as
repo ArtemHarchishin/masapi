@@ -4,7 +4,6 @@ package ch.capi.core
 	import ch.capi.core.ApplicationFile;
 	import ch.capi.net.LoadableFileFactory;
 	import ch.capi.net.ILoadableFile;
-	import ch.capi.net.LoadableFileType;
 	
 	import flash.xml.XMLNode;
 	import flash.net.URLRequest;
@@ -245,28 +244,7 @@ package ch.capi.core
 		protected function createLoadableFile(url:String, type:String=null):ILoadableFile
 		{
 			var lf:LoadableFileFactory = _loadableFileFactory;
-			if (type == null) return lf.create(url);
-			
-			var ur:URLRequest = new URLRequest(url);
-			switch (type)
-			{
-				case LoadableFileType.BINARY:
-				case LoadableFileType.TEXT:
-				case LoadableFileType.VARIABLES:
-					return lf.createURLLoaderFile(ur, type);
-					
-				case LoadableFileType.SWF:
-					return lf.createLoaderFile(ur);
-					
-				case LoadableFileType.SOUND:
-					return lf.createSoundFile(ur);
-					
-				case LoadableFileType.STREAM:
-					return lf.createURLStreamFile(ur);
-			}
-			
-			//the type is unkown, we create a loadable file by default
-			return lf.create(url);
+			return lf.createFile(url, type);
 		}
 		
 		/**
