@@ -1,0 +1,258 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="ExtensionFileSelector,ch.capi.net.ExtensionFileSelector,extensions,create,getExtension" name="keywords">
+<title>ch.capi.net.ExtensionFileSelector</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'ExtensionFileSelector - API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?ch/capi/net/ExtensionFileSelector.html&amp;ch/capi/net/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;ExtensionFileSelector</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class ExtensionFileSelector"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">ch.capi.net</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class ExtensionFileSelector</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Implements</td><td><a href="ILoadableFileSelector.html">ILoadableFileSelector</a></td>
+</tr>
+</table>
+<p></p>
+  Selector of <code>ILoadableFile</code> based on the extension.
+  
+  <p></p>
+<br>
+<span class="label">Example</span>
+<br>  Add/Modify an extension :
+  <div class='listing'><pre>
+  var selector:ExtensionFileSelector = new ExtensionFileSelector();
+  selector.extensions.put("zip", LoadableFileType.BINARY);
+  
+  var factory:LoadableFileFactory = new LoadableFileFactory(selector);
+  var file:ILoadableFile = factory.create("myFile.zip"); //creates a binary URLLoader-based ILoadableFile
+  </pre></div>
+  
+  <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#extensions">extensions</a> : <a href="../data/IMap.html">IMap</a>
+<div class="summaryTableDescription">[read-only]
+   Defines the mapping between the extensions and the file type issued from
+   the <code>LoadableFileType</code> class constants.</div>
+</td><td class="summaryTableOwnerCol">ExtensionFileSelector</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#ExtensionFileSelector()">ExtensionFileSelector</a>()</div>
+<div class="summaryTableDescription">
+   Creates a new <code>ExtensionFileSelector</code> object.</div>
+</td><td class="summaryTableOwnerCol">ExtensionFileSelector</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#create()">create</a>(request:URLRequest, factory:<a href="LoadableFileFactory.html">LoadableFileFactory</a>):<a href="../net/ILoadableFile.html">ILoadableFile</a>
+</div>
+<div class="summaryTableDescription">
+   Creates a <code>ILoadableFile</code> using the specified <code>LoadableFileFactory</code>.</div>
+</td><td class="summaryTableOwnerCol">ExtensionFileSelector</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getExtension()">getExtension</a>(request:URLRequest):String</div>
+<div class="summaryTableDescription">
+   Retrieves the extension.</div>
+</td><td class="summaryTableOwnerCol">ExtensionFileSelector</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="extensions"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">extensions</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>extensions:<a href="../data/IMap.html">IMap</a></code>&nbsp;&nbsp;[read-only]<p>
+   Defines the mapping between the extensions and the file type issued from
+   the <code>LoadableFileType</code> class constants.
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get extensions():<a href="../data/IMap.html">IMap</a></code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../net/LoadableFileType.html" target="">LoadableFileType</a>
+</div>
+</div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="ExtensionFileSelector()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">ExtensionFileSelector</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function ExtensionFileSelector()</code><p>
+   Creates a new <code>ExtensionFileSelector</code> object.
+   </p><p>The following extensions are defined by default :<br />
+   <ul>
+    <li><i>swf</i> as <code>LoadableFileType.SWF</code></li>
+    <li><i>txt</i> as <code>LoadableFileType.VARIABLES</code></li>
+    <li><i>xml</i> as <code>LoadableFileType.TEXT</code></li>
+    <li><i>css</i> as <code>LoadableFileType.TEXT</code></li>
+    <li><i>mp3</i> as <code>LoadableFileType.SOUND</code></li>
+    <li><i>wav</i> as <code>LoadableFileType.SOUND</code></li>
+    <li><i>jpg</i> as <code>LoadableFileType.BINARY</code></li>
+    <li><i>jpeg</i> as <code>LoadableFileType.BINARY</code></li>
+    <li><i>gif</i> as <code>LoadableFileType.BINARY</code></li>
+    <li><i>png</i> as <code>LoadableFileType.BINARY</code></li>
+    <li><i>php</i> as <code>LoadableFileType.TEXT</code></li>
+    <li><i>asp</i> as <code>LoadableFileType.TEXT</code></li>
+   </ul></p>
+   </div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="create()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">create</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function create(request:URLRequest, factory:<a href="LoadableFileFactory.html">LoadableFileFactory</a>):<a href="../net/ILoadableFile.html">ILoadableFile</a></code><p>
+   Creates a <code>ILoadableFile</code> using the specified <code>LoadableFileFactory</code>.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">request</span>:URLRequest</code> &mdash;  The <code>URLRequest</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">factory</span>:<a href="LoadableFileFactory.html">LoadableFileFactory</a></code> &mdash;  The <code>LoadableFileFactory</code>.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../net/ILoadableFile.html">ILoadableFile</a></code> &mdash; 
+                        The created <code>ILoadableFile</code> object.
+   
+                        
+                     </td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../errors/ExtensionNotDefinedError.html">ExtensionNotDefinedError</a> </code> &mdash; If the extensions into the specified request was
+      not found into the extensions map.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../net/LoadableFileType.html" target="">LoadableFileType.</a>
+</div>
+</div>
+<a name="getExtension()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getExtension</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getExtension(request:URLRequest):String</code><p>
+   Retrieves the extension.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">request</span>:URLRequest</code> &mdash;  The <code>URLRequest</code>.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>String</code> &mdash; The extension of the file specified by the url.
+   </td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->
