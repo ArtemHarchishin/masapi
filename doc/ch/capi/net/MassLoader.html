@@ -1,0 +1,1398 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="MassLoader,ch.capi.net.MassLoader,alwaysDispatchProgressEvent,bytesLoaded,bytesTotal,closeEvent,files,filesLoading,filesQueue,loadInfo,loadPolicy,nextFileToLoad,numFilesLoading,parallelFiles,stateIdle,stateLoading,useCache,addFile,clear,getFileCount,getFiles,hasFile,isComplete,loadFile,loadNextFile,onClose,onComplete,onIOError,onOpen,onProgress,onSecurityError,processPolicy,registerTo,removeFile,start,startLoading,stop,toString,unregisterFrom,updateBytes" name="keywords">
+<title>ch.capi.net.MassLoader</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'MassLoader - API Documentation';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?ch/capi/net/MassLoader.html&amp;ch/capi/net/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;MassLoader</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class MassLoader"); titleBar_setSubNav(false,true,false,false,true,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">ch.capi.net</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class MassLoader</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">MassLoader <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> flash.events.EventDispatcher</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Implements</td><td><a href="IMassLoader.html">IMassLoader</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Subclasses</td><td><a href="../net/PriorityMassLoader.html">PriorityMassLoader</a></td>
+</tr>
+</table>
+<p></p>
+  This is a basic implementation of a <code>IMassLoader</code> object. The files will be loaded
+  into the order of they have been added into the loading queue. In order to create some <code>ILoadableFile</code>,
+  use the <code>LoadableFileFactory</code> class. If you want to specify some priority
+  to the loaded files, check the <code>PriorityMassLoader</code> class.
+  <p>It is important to note that the files won't be stored anymore after they have been completely loaded. You should
+  have anoter reference to the created <code>ILoadManager</code> objects to access them and prevent that the Garbage Collector
+  destroy them.</p>
+  
+  <p></p>
+<br>
+<span class="label">Example</span>
+<br>  Basic usage (limited verbose code) :
+  <div class='listing'><pre>
+  var cl:CompositeMassLoader = new CompositeMassLoader();
+  cl.addFile("myFile.txt");
+  cl.addFile("myAnim.swf");
+  
+  var ml:IMassLoader = cl.massLoader;
+  var eventFile:Function = function(evt:MassLoadEvent):void
+  {
+     var src:ILoadableFile = (evt.file as ILoadableFile);
+     trace(evt.type+" => "+src.urlRequest.url);
+  }
+  ml.addEventListener(MassLoadEvent.FILE_OPEN, eventFile);
+  ml.addEventListener(MassLoadEvent.FILE_CLOSE, eventFile);
+  
+  var onMassLoadComplete:Function = function(evt:Event):void
+  {
+     trace("massload complete");
+  }
+  ml.addEventListener(Event.COMPLETE, onMassLoadComplete);
+  
+  cl.start();
+  //ml.start() also works
+  </pre></div>
+  
+  Advanced usage :
+  <div class='listing'><pre>
+  var lf:LoadableFileFactory = new LoadableFileFactory();
+  var file1:ILoadableFile = lf.create("myFile.txt");
+  var file2:ILoadableFile = lf.create("myAnim.swf");
+  
+  var ml:MassLoader = new MassLoader();
+  ml.addFile(file1);
+  ml.addFile(file2);
+  
+  var eventFile:Function = function(evt:MassLoadEvent):void
+  {
+     var src:ILoadableFile = (evt.file as ILoadableFile);
+     trace(evt.type+" => "+src.urlRequest.url);
+  }
+  ml.addEventListener(MassLoadEvent.FILE_OPEN, eventFile);
+  ml.addEventListener(MassLoadEvent.FILE_CLOSE, eventFile);
+  
+  var onMassLoadComplete:Function = function(evt:Event):void
+  {
+     trace("massload complete");
+  }
+  ml.addEventListener(Event.COMPLETE, onMassLoadComplete);
+  
+  ml.start();
+  </pre></div>
+  
+  <p></p>
+<p>
+<span class="classHeaderTableLabel">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../net/LoadableFileFactory.html" target="">LoadableFileFactory</a>
+<br>
+<a href="../net/CompositeMassLoader.html" target="">CompositeMassLoader</a>
+<br>
+<a href="../net/PriorityMassLoader.html" target="">PriorityMassLoader</a>
+</div>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#alwaysDispatchProgressEvent">alwaysDispatchProgressEvent</a> : Boolean = false<div class="summaryTableDescription">
+   Defines if the progress event should be dispatched each time or
+   only when all the number of specified parallel files are being
+   loaded.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#bytesLoaded">bytesLoaded</a> : uint<div class="summaryTableDescription">[read-only]
+   Defines the bytes that have been loaded.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#bytesTotal">bytesTotal</a> : uint<div class="summaryTableDescription">[read-only]
+   Defines the total bytes to load.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#closeEvent">closeEvent</a> : Event<div class="summaryTableDescription">[read-only]
+   Defines the event that happend to close the file (Event.CLOSE, Event.COMPLETE, ...).</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#loadInfo">loadInfo</a> : <a href="../net/ILoadInfo.html">ILoadInfo</a>
+<div class="summaryTableDescription">[read-only]
+   Defines the <code>ILoadInfo</code> object linked to the <code>IMassLoader</code>.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#loadPolicy">loadPolicy</a> : <a href="../net/ILoadPolicy.html">ILoadPolicy</a>
+<div class="summaryTableDescription">
+   Defines the <code>ILoadPolicy</code> to use.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#nextFileToLoad">nextFileToLoad</a> : <a href="../net/ILoadManager.html">ILoadManager</a>
+<div class="summaryTableDescription">[read-only]
+   Defines the next file that will be extracted from the queue to be loaded.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#numFilesLoading">numFilesLoading</a> : uint<div class="summaryTableDescription">[read-only]
+   Defines the number of files being currently loaded.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#parallelFiles">parallelFiles</a> : uint<div class="summaryTableDescription">
+   Defines the number of files that will be loaded simultaneously.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#stateIdle">stateIdle</a> : Boolean<div class="summaryTableDescription">[read-only]
+   Defines if the <code>MassLoader</code> is idle.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#stateLoading">stateLoading</a> : Boolean<div class="summaryTableDescription">[read-only]
+   Defines if the <code>MassLoader</code> is loading.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#useCache">useCache</a> : Boolean<div class="summaryTableDescription">
+   Defines if the <code>MassLoader</code> can use the cache or not.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+</table>
+</div>
+<a name="protectedPropertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Protected Properties</div>
+<table id="summaryTableProtectedProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#files">files</a> : <a href="../data/IList.html">IList</a>
+<div class="summaryTableDescription">[read-only]
+   Defines all the files that must be loaded.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#filesLoading">filesLoading</a> : <a href="../data/IList.html">IList</a>
+<div class="summaryTableDescription">[read-only]
+   Defines the files that are currently being loaded.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#filesQueue">filesQueue</a> : <a href="../data/IDataStructure.html">IDataStructure</a>
+<div class="summaryTableDescription">
+   Defines the data structure to use for the file enqueuing.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#MassLoader()">MassLoader</a>(parallelFiles:uint = 0, useCache:Boolean = true, loadPolicy:<a href="ILoadPolicy.html">ILoadPolicy</a> = null)</div>
+<div class="summaryTableDescription">
+   Creates a new <code>MassLoader</code> object.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#addFile()">addFile</a>(file:<a href="ILoadManager.html">ILoadManager</a>):void</div>
+<div class="summaryTableDescription">
+   Add a file to the loading queue.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#clear()">clear</a>():void</div>
+<div class="summaryTableDescription">
+   Empty the loading queue.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getFileCount()">getFileCount</a>():uint</div>
+<div class="summaryTableDescription">
+   Get the number of files to be loaded.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getFiles()">getFiles</a>():Array</div>
+<div class="summaryTableDescription">
+   Get the files that will be loaded.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#hasFile()">hasFile</a>(file:<a href="ILoadManager.html">ILoadManager</a>):Boolean</div>
+<div class="summaryTableDescription">
+   Retrieves if a file is contained into the loading queue.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#removeFile()">removeFile</a>(file:<a href="ILoadManager.html">ILoadManager</a>):void</div>
+<div class="summaryTableDescription">
+   Removes a file from the loading queue.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#start()">start</a>():void</div>
+<div class="summaryTableDescription">
+   Starts downloading data from the specified <code>ILoadableFile</code> objects.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#stop()">stop</a>():void</div>
+<div class="summaryTableDescription">
+   Stops the load operation in progress.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#toString()">toString</a>():String</div>
+<div class="summaryTableDescription">
+   Lists all the files contained into this <code>MassLoader</code> into a <code>String</code>.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+</table>
+</div>
+<a name="protectedMethodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Protected Methods</div>
+<table id="summaryTableProtectedMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#isComplete()">isComplete</a>():Boolean</div>
+<div class="summaryTableDescription">
+   Defines if the massive loading is complete.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#loadFile()">loadFile</a>(file:<a href="ILoadManager.html">ILoadManager</a>):Boolean</div>
+<div class="summaryTableDescription">
+   Start the loading of a file.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#loadNextFile()">loadNextFile</a>():<a href="../net/ILoadManager.html">ILoadManager</a>
+</div>
+<div class="summaryTableDescription">
+   Start the loading of the next file.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onClose()">onClose</a>(evt:Event):void</div>
+<div class="summaryTableDescription">
+   <code>Event.CLOSE</code> listener.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onComplete()">onComplete</a>(evt:Event):void</div>
+<div class="summaryTableDescription">
+   <code>Event.COMPLETE</code> listener.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onIOError()">onIOError</a>(evt:IOErrorEvent):void</div>
+<div class="summaryTableDescription">
+   <code>IOErrorEvent.IO_ERROR</code> listener.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onOpen()">onOpen</a>(evt:Event):void</div>
+<div class="summaryTableDescription">
+   <code>Event.OPEN</code> listener.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onProgress()">onProgress</a>(evt:ProgressEvent):void</div>
+<div class="summaryTableDescription">
+   <code>ProgressEvent.PROGRESS</code> listener.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onSecurityError()">onSecurityError</a>(evt:SecurityErrorEvent):void</div>
+<div class="summaryTableDescription">
+   <code>SecurityError.SECURITY_ERROR</code> listener.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#processPolicy()">processPolicy</a>(file:<a href="ILoadManager.html">ILoadManager</a>, closeEvent:Event):<a href="../net/ILoadManager.html">ILoadManager</a>
+</div>
+<div class="summaryTableDescription">
+   Processes the loading policy on the currently closed file.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#registerTo()">registerTo</a>(file:<a href="ILoadManager.html">ILoadManager</a>):void</div>
+<div class="summaryTableDescription">
+   Register the <code>MassLoader</code> to the specified <code>ILoadManager</code>
+   object's events.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#startLoading()">startLoading</a>():void</div>
+<div class="summaryTableDescription">
+   Start the loading of the files.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#unregisterFrom()">unregisterFrom</a>(file:<a href="ILoadManager.html">ILoadManager</a>):void</div>
+<div class="summaryTableDescription">
+   Unregister the <code>MassLoader</code> from the specified <code>ILoadManager</code>
+   object's events.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#updateBytes()">updateBytes</a>():void</div>
+<div class="summaryTableDescription">
+   Updates the <code>bytesLoaded</code> and <code>bytesTotal</code> values.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+</table>
+</div>
+<a name="eventSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Events</div>
+<table id="summaryTableEvent" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Event</th><th>Summary</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:close">close</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the download operation stops.</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:complete">complete</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched after all the data is received.</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:fileClose">fileClose</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the loading of a <code>ILoadManager</code> is closed (eg when the loading is complete or
+  an error has occured).</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:fileOpen">fileOpen</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the <code>MassLoader</code> starts the loading of a file.</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:open">open</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the download operation commences following a call to the <code>MassLoader.load()</code>
+  method.</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:progress">progress</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when data is received as the download operation progresses.</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="alwaysDispatchProgressEvent"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">alwaysDispatchProgressEvent</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var alwaysDispatchProgressEvent:Boolean = false</code><p>
+   Defines if the progress event should be dispatched each time or
+   only when all the number of specified parallel files are being
+   loaded.
+   </p></div>
+<a name="bytesLoaded"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">bytesLoaded</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>bytesLoaded:uint</code>&nbsp;&nbsp;[read-only]<p>
+   Defines the bytes that have been loaded.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get bytesLoaded():uint</code>
+<br>
+</div>
+<a name="bytesTotal"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">bytesTotal</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>bytesTotal:uint</code>&nbsp;&nbsp;[read-only]<p>
+   Defines the total bytes to load.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get bytesTotal():uint</code>
+<br>
+</div>
+<a name="closeEvent"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">closeEvent</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>closeEvent:Event</code>&nbsp;&nbsp;[read-only]<p>
+   Defines the event that happend to close the file (Event.CLOSE, Event.COMPLETE, ...).
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get closeEvent():Event</code>
+<br>
+</div>
+<a name="files"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">files</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>files:<a href="../data/IList.html">IList</a></code>&nbsp;&nbsp;[read-only]<p>
+   Defines all the files that must be loaded.
+   </p><p>Note that a file can be in the files list and not in the queue list. It means
+   that the file is currently being loaded. After being loaded, the file is totally
+   removed from the <code>MassLoader</code>.</p>
+   <span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;protected function get files():<a href="../data/IList.html">IList</a></code>
+<br>
+</div>
+<a name="filesLoading"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">filesLoading</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>filesLoading:<a href="../data/IList.html">IList</a></code>&nbsp;&nbsp;[read-only]<p>
+   Defines the files that are currently being loaded. This list conaints only the files
+   that dispatches the <code>Event.OPEN</code> event.
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;protected function get filesLoading():<a href="../data/IList.html">IList</a></code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../net/MassLoader.html#files" target="">files</a>
+<br>
+<a href="../net/MassLoader.html#filesQueue" target="">filesQueue</a>
+<br>
+<a href="../net/MassLoader.html#onOpen()" target="">onOpen()</a>
+</div>
+</div>
+<a name="filesQueue"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">filesQueue</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>filesQueue:<a href="../data/IDataStructure.html">IDataStructure</a></code>&nbsp;&nbsp;[read-write]<p>
+   Defines the data structure to use for the file enqueuing. By default, a
+   <code>QueueList</code> is used. The <code>MassLoader</code> will use this
+   <code>IDataStructure</code> to retrieves the next file to load. All the objects
+   contained into the list must implement the <code>ILoadManager</code> interface.
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;protected function get filesQueue():<a href="../data/IDataStructure.html">IDataStructure</a></code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;protected function set filesQueue(value:<a href="../data/IDataStructure.html">IDataStructure</a>):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../net/MassLoader.html#files" target="">files</a>
+<br>
+<a href="../net/MassLoader.html#filesLoading" target="">filesLoading</a>
+<br>
+<a href="../net/ILoadManager.html" target="">ILoadManager</a>
+</div>
+</div>
+<a name="loadInfo"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">loadInfo</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>loadInfo:<a href="../net/ILoadInfo.html">ILoadInfo</a></code>&nbsp;&nbsp;[read-only]<p>
+   Defines the <code>ILoadInfo</code> object linked to the <code>IMassLoader</code>.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get loadInfo():<a href="../net/ILoadInfo.html">ILoadInfo</a></code>
+<br>
+</div>
+<a name="loadPolicy"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">loadPolicy</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>loadPolicy:<a href="../net/ILoadPolicy.html">ILoadPolicy</a></code>&nbsp;&nbsp;[read-write]<p>
+   Defines the <code>ILoadPolicy</code> to use. If the specified <code>ILoadPolicy</code> returns a 
+   <code>ILoadManager</code>, then the loaded bytes of the current file are decremented from the 
+   <code>bytesLoaded</code> and <code>bytesTotal</code> properties !
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get loadPolicy():<a href="../net/ILoadPolicy.html">ILoadPolicy</a></code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set loadPolicy(value:<a href="../net/ILoadPolicy.html">ILoadPolicy</a>):void</code>
+<br>
+</div>
+<a name="nextFileToLoad"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">nextFileToLoad</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>nextFileToLoad:<a href="../net/ILoadManager.html">ILoadManager</a></code>&nbsp;&nbsp;[read-only]<p>
+   Defines the next file that will be extracted from the queue to be loaded.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get nextFileToLoad():<a href="../net/ILoadManager.html">ILoadManager</a></code>
+<br>
+</div>
+<a name="numFilesLoading"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">numFilesLoading</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>numFilesLoading:uint</code>&nbsp;&nbsp;[read-only]<p>
+   Defines the number of files being currently loaded. This value does not take care if the
+   <code>Event.OPEN</code> event of each file has been launched. It is based on the
+   <code>MassLoadEvent.FILE_OPEN</code> event.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get numFilesLoading():uint</code>
+<br>
+</div>
+<a name="parallelFiles"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">parallelFiles</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>parallelFiles:uint</code>&nbsp;&nbsp;[read-write]<p>
+   Defines the number of files that will be loaded simultaneously. If the value is changed
+   during a load process, this won't affect it.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get parallelFiles():uint</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set parallelFiles(value:uint):void</code>
+<br>
+</div>
+<a name="stateIdle"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">stateIdle</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>stateIdle:Boolean</code>&nbsp;&nbsp;[read-only]<p>
+   Defines if the <code>MassLoader</code> is idle.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get stateIdle():Boolean</code>
+<br>
+</div>
+<a name="stateLoading"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">stateLoading</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>stateLoading:Boolean</code>&nbsp;&nbsp;[read-only]<p>
+   Defines if the <code>MassLoader</code> is loading.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get stateLoading():Boolean</code>
+<br>
+</div>
+<a name="useCache"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">useCache</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>useCache:Boolean</code>&nbsp;&nbsp;[read-write]<p>
+   Defines if the <code>MassLoader</code> can use the cache or not. Note that if this property
+   is set to <code>false</code>, it will override all the other <code>ILoadManager.useCache</code> value
+   and reload them.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get useCache():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set useCache(value:Boolean):void</code>
+<br>
+</div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="MassLoader()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">MassLoader</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function MassLoader(parallelFiles:uint = 0, useCache:Boolean = true, loadPolicy:<a href="ILoadPolicy.html">ILoadPolicy</a> = null)</code><p>
+   Creates a new <code>MassLoader</code> object.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">parallelFiles</span>:uint</code> (default = <code>0</code>)<code></code> &mdash; The number of files to be loaded simultaneously.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">useCache</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash;  Defines if the <code>MassLoader</code> must use the static cache or not.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">loadPolicy</span>:<a href="ILoadPolicy.html">ILoadPolicy</a></code> (default = <code>null</code>)<code></code> &mdash;  The <code>ILoadPolicy</code> to use.
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="addFile()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">addFile</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function addFile(file:<a href="ILoadManager.html">ILoadManager</a>):void</code><p>
+   Add a file to the loading queue. A file added while the <code>MassLoader<code>
+   is already running will not be added to the current loading queue. You should stop
+   and restart the <code>MassLoader</code> in order to include the file into the loading.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">file</span>:<a href="ILoadManager.html">ILoadManager</a></code> &mdash;  The file to add.
+   </td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; If the file is already into the loading queue.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../net/MassLoader.html#hasFile()" target="">hasFile()</a>
+<br>
+<a href="../net/ILoadableFile.html" target="">ILoadableFile</a>
+<br>
+<a href="../net/LoadableFileFactory.html" target="">LoadableFileFactory</a>
+</div>
+</div>
+<a name="clear()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">clear</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function clear():void</code><p>
+   Empty the loading queue. This will not affect the current loading.
+   </p></div>
+<a name="getFileCount()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getFileCount</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getFileCount():uint</code><p>
+   Get the number of files to be loaded.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>uint</code> &mdash; The number of file to load.
+   </td>
+</tr>
+</table>
+</div>
+<a name="getFiles()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getFiles</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getFiles():Array</code><p>
+   Get the files that will be loaded.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; An <code>Array</code> containing the files to load.
+   </td>
+</tr>
+</table>
+</div>
+<a name="hasFile()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">hasFile</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function hasFile(file:<a href="ILoadManager.html">ILoadManager</a>):Boolean</code><p>
+   Retrieves if a file is contained into the loading queue.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">file</span>:<a href="ILoadManager.html">ILoadManager</a></code> &mdash; The <code>ILoadManager</code>.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; <code>true</code> if the file is into the loading queue.
+   </td>
+</tr>
+</table>
+</div>
+<a name="isComplete()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">isComplete</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function isComplete():Boolean</code><p>
+   Defines if the massive loading is complete. This method will return <code>true</code> if there is no more
+   file into the loading queue and there is currently no file loading.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; <code>true</code> if all the files are loaded.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../net/MassLoader.html#filesQueue" target="">filesQueue</a>
+</div>
+</div>
+<a name="loadFile()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">loadFile</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected final function loadFile(file:<a href="ILoadManager.html">ILoadManager</a>):Boolean</code><p>
+   Start the loading of a file. The file specified will not be removed from the loading queue !
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">file</span>:<a href="ILoadManager.html">ILoadManager</a></code> &mdash;  The <code>ILoadManager</code> to load.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; <code>true</code> if the loading has been started.
+   </td>
+</tr>
+</table>
+</div>
+<a name="loadNextFile()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">loadNextFile</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function loadNextFile():<a href="../net/ILoadManager.html">ILoadManager</a></code><p>
+   Start the loading of the next file. If there is no more file to load,
+   then a <code>null</code> value is returned. Before the next file is being loaded,
+   it is removed from the loading queue.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../net/ILoadManager.html">ILoadManager</a></code> &mdash; 
+                        The <code>ILoadManager</code> object being loaded or <code>null</code>.
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="onClose()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onClose</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected final function onClose(evt:Event):void</code><p>
+   <code>Event.CLOSE</code> listener.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">evt</span>:Event</code> &mdash;  The event object.
+   </td>
+</tr>
+</table>
+</div>
+<a name="onComplete()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onComplete</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected final function onComplete(evt:Event):void</code><p>
+   <code>Event.COMPLETE</code> listener.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">evt</span>:Event</code> &mdash;  The event object.
+   </td>
+</tr>
+</table>
+</div>
+<a name="onIOError()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onIOError</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected final function onIOError(evt:IOErrorEvent):void</code><p>
+   <code>IOErrorEvent.IO_ERROR</code> listener.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">evt</span>:IOErrorEvent</code> &mdash;  The event object.
+   </td>
+</tr>
+</table>
+</div>
+<a name="onOpen()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onOpen</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected final function onOpen(evt:Event):void</code><p>
+   <code>Event.OPEN</code> listener. If the <code>MassLoader</code> has not been closed,
+   the current file being open will be added to the <code>filesLoading</code> list.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">evt</span>:Event</code> &mdash;  The event object.
+   </td>
+</tr>
+</table>
+</div>
+<a name="onProgress()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onProgress</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected final function onProgress(evt:ProgressEvent):void</code><p>
+   <code>ProgressEvent.PROGRESS</code> listener.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">evt</span>:ProgressEvent</code> &mdash;  The event object.
+   </td>
+</tr>
+</table>
+</div>
+<a name="onSecurityError()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onSecurityError</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected final function onSecurityError(evt:SecurityErrorEvent):void</code><p>
+   <code>SecurityError.SECURITY_ERROR</code> listener.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">evt</span>:SecurityErrorEvent</code> &mdash;  The event object.
+   </td>
+</tr>
+</table>
+</div>
+<a name="processPolicy()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">processPolicy</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function processPolicy(file:<a href="ILoadManager.html">ILoadManager</a>, closeEvent:Event):<a href="../net/ILoadManager.html">ILoadManager</a></code><p>
+   Processes the loading policy on the currently closed file.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">file</span>:<a href="ILoadManager.html">ILoadManager</a></code> &mdash;  The <code>ILoadManager</code> just closed.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">closeEvent</span>:Event</code> &mdash; The event that occured.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../net/ILoadManager.html">ILoadManager</a></code> &mdash; 
+                        The <code>ILoadManager</code> that must be reloaded or <code>null</code>.
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="registerTo()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">registerTo</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function registerTo(file:<a href="ILoadManager.html">ILoadManager</a>):void</code><p>
+   Register the <code>MassLoader</code> to the specified <code>ILoadManager</code>
+   object's events.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">file</span>:<a href="ILoadManager.html">ILoadManager</a></code> &mdash; The file to register to.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../net/MassLoader.html#unregisterFrom()" target="">unregisterFrom()</a>
+</div>
+</div>
+<a name="removeFile()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">removeFile</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function removeFile(file:<a href="ILoadManager.html">ILoadManager</a>):void</code><p>
+   Removes a file from the loading queue.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">file</span>:<a href="ILoadManager.html">ILoadManager</a></code> &mdash;  The file to remove.
+   </td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; If the file is not into the loading queue.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../net/MassLoader.html#hasFile()" target="">hasFile()</a>
+<br>
+<a href="../net/ILoadableFile.html" target="">ILoadableFile</a>
+<br>
+<a href="../net/LoadableFileFactory.html" target="">LoadableFileFactory</a>
+</div>
+</div>
+<a name="start()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">start</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public final function start():void</code><p>
+   Starts downloading data from the specified <code>ILoadableFile</code> objects.
+   
+   </p><br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; If the <code>MassLoader</code> is already loading.
+   </td>
+</tr>
+</table>
+</div>
+<a name="startLoading()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">startLoading</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function startLoading():void</code><p>
+   Start the loading of the files. This method will launch the loading of the files (using
+   the <code>loadNextFile()</code> method). The number of loading launched is determined by
+   the <code>parallelFiles</code> value.
+   
+   </p><p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../net/MassLoader.html#parallelFiles" target="">parallelFiles</a>
+</div>
+</div>
+<a name="stop()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">stop</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public final function stop():void</code><p>
+   Stops the load operation in progress.
+   Any load operation in progress is immediately terminated.
+   
+   </p><br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; If the <code>MassLoader</code> is not loading.
+   </td>
+</tr>
+</table>
+</div>
+<a name="toString()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">toString</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function toString():String</code><p>
+   Lists all the files contained into this <code>MassLoader</code> into a <code>String</code>.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>String</code> &mdash; A <code>String</code> containing all the files.
+   </td>
+</tr>
+</table>
+</div>
+<a name="unregisterFrom()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">unregisterFrom</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function unregisterFrom(file:<a href="ILoadManager.html">ILoadManager</a>):void</code><p>
+   Unregister the <code>MassLoader</code> from the specified <code>ILoadManager</code>
+   object's events.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">file</span>:<a href="ILoadManager.html">ILoadManager</a></code> &mdash; The file to unregister from.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../net/MassLoader.html#registerTo()" target="">registerTo()</a>
+</div>
+</div>
+<a name="updateBytes()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">updateBytes</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected final function updateBytes():void</code><p>
+   Updates the <code>bytesLoaded</code> and <code>bytesTotal</code> values.
+   </p></div>
+<div class="detailSectionHeader">Event detail</div>
+<a name="event:close"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">close</td><td class="detailHeaderType">event&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.Event</code></a>
+<br>
+<p></p><p>
+  Dispatched when the download operation stops. This is following a call to the <code>MassLoader.stop()</code>
+  method.
+  
+  </p></div>
+<a name="event:complete"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">complete</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.Event</code></a>
+<br>
+<p></p><p>
+  Dispatched after all the data is received.
+  
+  </p></div>
+<a name="event:fileClose"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">fileClose</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/MassLoadEvent.html"><code>ch.capi.events.MassLoadEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched when the loading of a <code>ILoadManager</code> is closed (eg when the loading is complete or
+  an error has occured).
+  
+  </p></div>
+<a name="event:fileOpen"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">fileOpen</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/MassLoadEvent.html"><code>ch.capi.events.MassLoadEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched when the <code>MassLoader</code> starts the loading of a file. This event
+  is dispatched just before the <code>ILoadManager.start()</code> method is called.
+  
+  </p></div>
+<a name="event:open"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">open</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.Event</code></a>
+<br>
+<p></p><p>
+  Dispatched when the download operation commences following a call to the <code>MassLoader.load()</code>
+  method.
+  
+  </p></div>
+<a name="event:progress"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">progress</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.ProgressEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched when data is received as the download operation progresses. The <code>bytesTotal</code> and <code>bytesLoaded</code>
+  value are based on the overall progressing of the files stored into the loading queue. If the <code>bytesTotal</code> of a
+  <code>ILoadableFile</code> has not been retrieved, then the <code>virtualBytesTotal</code> value will be used.
+  
+  </p></div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->
