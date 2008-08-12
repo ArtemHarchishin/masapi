@@ -256,9 +256,7 @@ package ch.capi.net
 		 */
 		protected function createLoadableFile(request:URLRequest, fileType:String=null):ILoadableFile
 		{
-			var method:Function = _factory.getMethod(fileType);
-			var file:ILoadableFile = method(request);
-			return file;
+			return _factory.createFile(request, fileType);
 		}
 		
 		/**

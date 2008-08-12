@@ -102,8 +102,7 @@ package ch.capi.net
 			
 			if (type == null) throw new ExtensionNotDefinedError(ext);
 			
-			var method:Function = factory.getMethod(type);
-			var file:ILoadableFile = method(request); //should never return the createFile method since the type is known
+			var file:ILoadableFile = factory.createFile(request, type);
 			return file;
 		}
 		

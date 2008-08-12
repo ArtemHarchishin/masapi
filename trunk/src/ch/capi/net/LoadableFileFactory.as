@@ -362,18 +362,15 @@
 			file.useCache = _useCache;
 		}
 		
-		//----------------//
-		//Internal methods//
-		//----------------//
-		
 		/**
 		 * Retrieves the method to call within the specified type to create a <code>ILoadableFile</code>. All functions
 		 * returned by this method take a <code>URLRequest</code> as first argument.
 		 * 
 		 * @param	type	The type issued from the <code>LoadableFileType</code> constants.
 		 * @return	The method to call.
+		 * @throws	ArgumentError	If the type is invalid.
 		 */
-		internal function getMethod(type:String):Function
+		protected function getMethod(type:String):Function
 		{
 			switch(type)
 			{
