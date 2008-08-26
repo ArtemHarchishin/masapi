@@ -15,6 +15,7 @@ var policy:DefaultLoadPolicy = cml.massLoader.loadPolicy as DefaultLoadPolicy;
 
 policy.reloadTimes = 5; //will try to load 5 times a file before bypassing it
 policy.reloadTimes = 0; //will try again and again...
+policy.reloadTimes = 1; //won't try to reload the file if it fails
 
 //...
 }}}
