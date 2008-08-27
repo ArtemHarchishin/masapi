@@ -4,13 +4,13 @@
 
 There is a list of frequently asked questions. [http://groups.google.com/group/masapi Participate] !
 
-1. What about the API compatibility ?
-2. What's the size of the API ?
-3. How can I ask about features, updates, report bugs, ... ?
-4. What are the constraints of the LGPL ?
-5. Is there a spec for the file dependencies XML ?
-6. How can I reload a File ?
-7. If a file fails to load, masapi try to reload it. Why ?
+  # What about the API compatibility ?
+  # What's the size of the API ?
+  # How can I ask about features, updates, report bugs, ... ?
+  # What are the constraints of the LGPL ?
+  # Is there a spec for the file dependencies XML ?
+  # How can I reload a File ?
+  # If a file fails to load, masapi try to reload it. Why ?
 
 
 == What about the API compatiblity ? ==
