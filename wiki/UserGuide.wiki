@@ -9,6 +9,7 @@ You'll find here interesting links to use masapi into your application. You can 
 
   * [http://code.google.com/p/masapi/wiki/Installation Install] the masapi library
   * Manage the [http://code.google.com/p/masapi/wiki/EventsHandling masapi's events]
+  * How to handle the [http://code.google.com/p/masapi/wiki/ErrorsHandling download errors]
   * How to get the [http://code.google.com/p/masapi/wiki/ProgressionInfo progression information]
   * Manage the [http://code.google.com/p/masapi/wiki/OverallProgression overall progression]
   * [http://code.google.com/p/masapi/wiki/RetrieveData Retrieve the data] of the loaded files
