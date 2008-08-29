@@ -33,7 +33,7 @@ function fileClose(evt:MassLoadEvent):void
    {
      var errorEvent:Event = evt.closeEvent;
      var message:String = errorEvent.message;
-     trace("The file "+file+" hasn't been loaded successfully : "+message);
+     trace("The file "+file+" hasn't been loaded successfully : "+message+" ("+errorEvent.type+")");
    }
    else
    {
@@ -41,3 +41,5 @@ function fileClose(evt:MassLoadEvent):void
    }
 }
 }}}
+
+[http://code.google.com/p/masapi/wiki/UserGuide Back to the user guide]

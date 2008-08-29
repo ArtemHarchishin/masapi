@@ -90,6 +90,8 @@ function completeHandler(evt:Event):void
 cml.start();
 }}}
 
+Here is another page about [http://code.google.com/p/masapi/wiki/ErrorsHandling download errors] !
+
 === Get progression information ===
 
 A Massloader provides a ILoadInfo object that has very useful information (speed, elapsed time, remaining time, ...).
