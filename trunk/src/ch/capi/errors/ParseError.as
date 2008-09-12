@@ -29,13 +29,13 @@ package ch.capi.errors
 		/**
 		 * Creates a new <code>ParseError</code> object.
 		 * 
-		 * @param	part			The part of the parsing where the error occured.
+		 * @param	method			The part of the parsing where the error occured (essentially the method).
 		 * @param	message			The error message.
 		 * @param	source			The source of the error.
 		 */
-		public function ParseError(part:String=null, message:String=null, source:Object=null):void
+		public function ParseError(method:String=null, message:String=null, source:Object=null):void
 		{
-			super("["+part+"] "+message, 0);
+			super("["+method+"] "+message, 0);
 			
 			_source = source;
 		}

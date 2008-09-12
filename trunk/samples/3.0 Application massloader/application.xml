@@ -16,6 +16,17 @@
 		<file name="menu">
 			<file name="menuMotion" />
 			<file name="menuData" />
+
+		<!-- sub-dependencies are now fully supported
+			<file name="otherFile">
+				<file name="file1" />
+				<file name="file2" />
+				<file name="file3">	
+					<file name="file4" />
+					<file name="file5" />
+				</file>
+			</file>
+		-->
 		</file>
 		<file name="page1">
 			<file name="fontsTexte" />

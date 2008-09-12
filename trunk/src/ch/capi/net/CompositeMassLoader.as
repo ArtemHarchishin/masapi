@@ -34,7 +34,7 @@ package ch.capi.net
 	 * var cm:CompositeMassLoader = new CompositeMassLoader(false);
 	 * var file1:ILoadableFile = cm.addFile("myAnimation.swf");
 	 * var file2:ILoadableFile = cm.addFile("otherSWF.swf", LoadableFileType.BINARY);
-	 * var file3:ILoadableFile = cm.addFile("myVariables.txt");
+	 * var file3:ILoadableFile = cm.addFile(new URLRequest("anotherFile.txt"));
 	 * 
 	 * cm.start();
 	 * </listing>
