@@ -26,7 +26,7 @@ package ch.capi.display
 		//-----------------//
 		//Getters & Setters//
 		//-----------------//
-		
+		public static function main():void { }
 		/**
 		 * Defines the <code>NetState</code> value. The value available can
 		 * be retrieved from the <code>NetState</code> class.

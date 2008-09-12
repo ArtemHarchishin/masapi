@@ -820,7 +820,6 @@ class MassLoadInfo implements ILoadInfo
 	//Constants//
 	//---------//
 	private static const TIMEOUT:uint = 1500; //timeout after 1.5 sec (automatic update)
-	private static const BYTES_PER_TIME:uint = 1000; //calculate the bytes per second
 	private static const LISTENER_PRIORITY:int = 100;
 	
 	//---------//
@@ -974,18 +973,17 @@ class MassLoadInfo implements ILoadInfo
 		
 		if (elapsedTimeTemp > 0)
 		{
-			var toOneSec:Number = BYTES_PER_TIME/elapsedTimeTemp;
-			_currentSpeed = bytesLoadedTemp*toOneSec;
+			_currentSpeed = (bytesLoadedTemp/1024) / (elapsedTimeTemp/1000);
 			_lastTimeBytesLoaded = bytesLoaded;
 			_lastTimeUpdate = getTimer();
 		}
 		
 		_elapsedTime = getTimer() - _startTime;
 		
-		if (_elapsedTime > 0) _averageSpeed = bytesLoaded / _elapsedTime;
+		if (_elapsedTime > 0) _averageSpeed = (bytesLoaded/1024) / (_elapsedTime/1000);
 		else _averageSpeed = 0;
 		
-		if (_averageSpeed > 0) _remainingTime = Math.round(bytesRemaining/_averageSpeed);
+		if (_averageSpeed > 0) _remainingTime = Math.round(bytesRemaining/_currentSpeed);
 		else _remainingTime = -1;
 		
 		//private updater
@@ -1001,10 +999,12 @@ class MassLoadInfo implements ILoadInfo
 	public function toString():String
 	{
 		var data:String = "";
+		data += "summary        : " + (_listSuccess.length+_listError.length) + "/"
+								    + (_listSuccess.length+_listError.length + _listIdle.length+_listLoading.length) + "\n";
 		data += "bytesTotal     : "+bytesTotal+"\n";
 		data += "bytesLoaded    : "+bytesLoaded+"\n";
 		data += "bytesRemaining : "+bytesRemaining+"\n";
-		data += "percentLoaded  : "+percentLoaded+"%\n";
+		data += "percentLoaded  : "+percentLoaded+"% ("+Math.floor(bytesLoaded/bytesTotal*10000)/100+"%)\n";
 		data += "radioLoaded    : "+Math.floor(ratioLoaded*100)/100+"\n";
 		data += "currentSpeed   : "+Math.floor(currentSpeed*100)/100+" ko/sec\n";
 		data += "averageSpeed   : "+Math.floor(averageSpeed*100)/100+" ko/sec\n";
@@ -1014,7 +1014,6 @@ class MassLoadInfo implements ILoadInfo
 		data += "filesLoading   : "+_listLoading.length+"\n";
 		data += "filesSuccess   : "+_listSuccess.length+"\n";
 		data += "filesError     : "+_listError.length+"\n";
-		data += "filesIdle      : "+_listIdle.length+"\n";
 		
 		return data;
 	}

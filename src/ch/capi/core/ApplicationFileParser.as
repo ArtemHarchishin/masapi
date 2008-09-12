@@ -22,6 +22,11 @@ package ch.capi.core
 		//---------//
 		
 		/**
+		 * Defines the 'file' node name.
+		 */
+		private static const NODE_FILE:String = "file";
+		
+		/**
 		 * Defines the 'name' attribute value.
 		 */
 		private static const ATTRIBUTE_NAME_VALUE:String = "name";
@@ -278,8 +283,18 @@ package ch.capi.core
 			var n:Array = node.childNodes;
 			for each(var cn:XMLNode in n)
 			{
-				var app:ApplicationFile = getApplicationFile(cn);
-				file.addDependency(app);
+				if (cn.nodeName == NODE_FILE)
+				{
+					var app:ApplicationFile = getApplicationFile(cn);
+					file.addDependency(app);
+					
+					//recursive parsing
+					if (cn.hasChildNodes()) parseFileDependency(app, cn);
+				}
+				else
+				{
+					throw new ParseError("parseFileDependency", "The node is invalid (only '"+NODE_FILE+"' allowed) : " + cn);
+				}
 			}
 		}
 		
@@ -292,7 +307,7 @@ package ch.capi.core
 			if (name == null || name.length == 0) throw new ParseError("checkName", "Attribute '"+ATTRIBUTE_NAME_VALUE+"' not defined", node);
 			
 			var app:ApplicationFile = ApplicationFile.getFile(name);
-			if (app == null) throw new TypeError("The file named '"+name+"' does not exist");
+			if (app == null) throw new ParseError("getApplicationFile", "The file named '"+name+"' does not exist");
 			
 			return app;
 		}	}}
