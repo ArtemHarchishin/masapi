@@ -30,27 +30,27 @@
             </xsd:complexType>
             
             <xsd:complexType name="FileDefinition">
-                <xsd:attribute name="name" type="xsd:string" use="required" />
-                <xsd:attribute name="url" type="xsd:string" use="required" />
+            	<xsd:attribute name="url" type="xsd:string" use="required" />
+                <xsd:attribute name="name" type="xsd:string" />
                 <xsd:attribute name="type" type="FileType" />
                 <xsd:attribute name="global" type="Boolean" />
                 <xsd:attribute name="useCache" type="Boolean" />
                 <xsd:attribute name="netStage" type="NetState" />
                 <xsd:attribute name="virtualBytesTotal" type="xsd:int" />
+                <xsd:attribute name="priority" type="xsd:int" />
+                <xsd:attribute name="requestMethod" type="RequestMethod" />
+                <xsd:attribute name="requestData" type="xsd:string" />
                 
                 <xsd:anyAttribute processContents="skip" />
             </xsd:complexType>
             
             <xsd:complexType name="FileDependency">
-                <xsd:sequence maxOccurs="unbounded">
-                    <xsd:element name="file" type="FileReference" />
-                </xsd:sequence>
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="file" type="FileDependency" />
+                    <xsd:element name="dependency" type="FileDependency" />
+                </xsd:choice>
                 
-                <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-            
-            <xsd:complexType name="FileReference">
-                <xsd:attribute name="name" type="xsd:string" />
+                <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
             
             <xsd:simpleType name="Boolean">
@@ -68,6 +68,12 @@
             <xsd:simpleType name="NetState">
                 <xsd:restriction base="xsd:string">
                     <xsd:pattern value="online|offline|dynamic"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            
+            <xsd:simpleType name="RequestMethod">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="GET|POST"/>
                 </xsd:restriction>
             </xsd:simpleType>
 </xsd:schema>
