@@ -14,6 +14,7 @@
 	import flash.events.SecurityErrorEvent;
 	import flash.events.IOErrorEvent;
 	import flash.errors.IllegalOperationError;
+	import flash.utils.setTimeout;
 	
 	/**
 	 * Dispatched after all the data is received.
@@ -448,8 +449,12 @@
 			var evt:Event = new Event(Event.OPEN);
 			dispatchEvent(evt);
 			
-			//check the number of files
-			if (_filesQueue.isEmpty()) doComplete();
+			/*
+			 * Checks the number of files.
+			 * If there is no file to load, then wait some milliseconds before launch the complete
+			 * event so the listeners can register to the MassLoader !
+			 */
+			if (_filesQueue.isEmpty()) setTimeout(doComplete, 20);
 			else loadNext();
 		}
 		
@@ -472,7 +477,8 @@
 		{
 			return "MassLoader["+_filesToLoad.toArray()+"]";
 		}
-		//-----------------//
+
+		//-----------------//
 		//Protected methods//
 		//-----------------//
 		
@@ -1047,7 +1053,7 @@ class MassLoadInfo implements ILoadInfo
 	public function toString():String
 	{
 		var data:String = "";
-		data += "summary        : " + (_listSuccess.length+_listError.length) + "/"
+		data += "loaded / total : " + (_listSuccess.length+_listError.length) + "/"
 								    + (_listSuccess.length+_listError.length + _listIdle.length+_listLoading.length) + "\n";
 		data += "bytesTotal     : "+bytesTotal+"\n";
 		data += "bytesLoaded    : "+bytesLoaded+"\n";

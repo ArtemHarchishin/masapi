@@ -1,7 +1,6 @@
 package ch.capi.net 
 {	import ch.capi.data.QueueList;	
-	import ch.capi.data.IDataStructure;	
-	import ch.capi.data.tree.IHeap;		import ch.capi.net.MassLoader;
+	import ch.capi.data.IDataStructure;		import ch.capi.net.MassLoader;
 	import ch.capi.data.tree.ArrayHeap;
 	import ch.capi.events.PriorityEvent;
 	import ch.capi.net.IMassLoader;
@@ -40,7 +39,7 @@ package ch.capi.net
 	 * var eventFile:Function = function(evt:MassLoadEvent):void
 	 * {
 	 *    var src:ILoadableFile = (evt.file as ILoadableFile);
-	 *    trace(evt.type+" => "+src.urlRequest.url);
+	 *    trace(evt.type+" => "+src);
 	 * }
 	 * ml.addEventListener(MassLoadEvent.FILE_OPEN, eventFile);
 	 * ml.addEventListener(MassLoadEvent.FILE_CLOSE, eventFile);
@@ -48,8 +47,7 @@ package ch.capi.net
 	 * ml.start();
 	 * </listing>
 	 * 
-	 * @see		ch.capi.net.CompositePriorityMassLoader	CompositePriorityMassLoader
-	 * @see		ch.capi.data.tree.ArrayHeap				ArrayHeap	 * @author	Cedric Tabin - thecaptain
+	 * @see		ch.capi.net.CompositePriorityMassLoader	CompositePriorityMassLoader	 * @author	Cedric Tabin - thecaptain
 	 * @version	1.0	 */	public class PriorityMassLoader extends MassLoader implements IMassLoader
 	{
 		//---------//
@@ -98,6 +96,8 @@ package ch.capi.net
 			
 			while (!currentStructure.isEmpty()) newStructure.add(currentStructure.remove());
 			filesQueue = newStructure;
+			
+			_loadByPriority = value;
 		}
 
 		//-----------//
@@ -106,12 +106,17 @@ package ch.capi.net
 		
 		/**
 		 * Creates a new <code>PriorityMassLoader</code> object.
+		 * 
+		 * @param	loadByPriority		Defines if the <code>PriorityMassLoader</code> must load the files by priority.
+		 * @param	prallelFiles		Defines how many file to load at the same time. This value will affect the loading only if the
+		 * 								<code>loadByPriority</code> property is <code>false</code>.
 		 */
-		public function PriorityMassLoader():void 
+		public function PriorityMassLoader(loadByPriority:Boolean=true, parallelFiles:uint=0):void 
 		{
-			super.filesQueue = new ArrayHeap(sortFiles); 
+			super(parallelFiles);
+			this.loadByPriority = loadByPriority;
 		}
-		
+
 		//--------------//
 		//Public methods//
 		//--------------//

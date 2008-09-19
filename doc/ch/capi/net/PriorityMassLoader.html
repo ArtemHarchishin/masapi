@@ -71,7 +71,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
   var eventFile:Function = function(evt:MassLoadEvent):void
   {
      var src:ILoadableFile = (evt.file as ILoadableFile);
-     trace(evt.type+" => "+src.urlRequest.url);
+     trace(evt.type+" => "+src);
   }
   ml.addEventListener(MassLoadEvent.FILE_OPEN, eventFile);
   ml.addEventListener(MassLoadEvent.FILE_CLOSE, eventFile);
@@ -85,8 +85,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </p>
 <div class="seeAlso">
 <a href="../net/CompositePriorityMassLoader.html" target="">CompositePriorityMassLoader</a>
-<br>
-<a href="../data/tree/ArrayHeap.html" target="">ArrayHeap</a>
 </div>
 <br>
 <hr>
@@ -246,7 +244,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#PriorityMassLoader()">PriorityMassLoader</a>()</div>
+<a class="signatureLink" href="#PriorityMassLoader()">PriorityMassLoader</a>(loadByPriority:Boolean = true, parallelFiles:uint = 0)</div>
 <div class="summaryTableDescription">
    Creates a new <code>PriorityMassLoader</code> object.</div>
 </td><td class="summaryTableOwnerCol">PriorityMassLoader</td>
@@ -642,9 +640,25 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function PriorityMassLoader()</code><p>
+<code>public function PriorityMassLoader(loadByPriority:Boolean = true, parallelFiles:uint = 0)</code><p>
    Creates a new <code>PriorityMassLoader</code> object.
-   </p></div>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">loadByPriority</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash;  Defines if the <code>PriorityMassLoader</code> must load the files by priority.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">parallelFiles</span>:uint</code> (default = <code>0</code>)<code></code> &mdash;  Defines how many file to load at the same time. This value will affect the loading only if the
+           <code>loadByPriority</code> property is <code>false</code>.
+   </td>
+</tr>
+</table>
+</div>
 <a name="methodDetail"></a>
 <div class="detailSectionHeader">Method detail</div>
 <a name="addFile()"></a>

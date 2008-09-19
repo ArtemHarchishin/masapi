@@ -63,8 +63,8 @@
 			_loader.x = (MAX_WIDTH-_loader.x)/2;
 			_loader.y = (MAX_HEIGHT-_loader.y)/2;
 			
-			var tx:Tween = new Tween(this, "x", Elastic.easeOut, -MAX_WIDTH-MARGIN_X, x, 0.4, true);
-			var ty:Tween = new Tween(this, "y", Elastic.easeOut, -MAX_HEIGHT-MARGIN_Y, y, 0.6, true);
+			//var tx:Tween = new Tween(this, "x", Elastic.easeOut, -MAX_WIDTH-MARGIN_X, x, 0.4, true);
+			//var ty:Tween = new Tween(this, "y", Elastic.easeOut, -MAX_HEIGHT-MARGIN_Y, y, 0.6, true);
 		}
 	}
 }

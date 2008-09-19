@@ -214,7 +214,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#ApplicationMassLoader()">ApplicationMassLoader</a>()</div>
+<a class="signatureLink" href="#ApplicationMassLoader()">ApplicationMassLoader</a>(loadByPriority:Boolean = true, parallelFiles:uint = 0)</div>
 <div class="summaryTableDescription">
    Creates a new <code>ApplicationMassLoader</code> object.</div>
 </td><td class="summaryTableOwnerCol">ApplicationMassLoader</td>
@@ -231,7 +231,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#addApplicationFile()">addApplicationFile</a>(file:<a href="ApplicationFile.html">ApplicationFile</a>, priority:int = 0):void</div>
+<a class="signatureLink" href="#addApplicationFile()">addApplicationFile</a>(file:<a href="ApplicationFile.html">ApplicationFile</a>):void</div>
 <div class="summaryTableDescription">
    Add the specified <code>ApplicationFile</code> and its dependencies.</div>
 </td><td class="summaryTableOwnerCol">ApplicationMassLoader</td>
@@ -247,7 +247,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#addGlobalFiles()">addGlobalFiles</a>(priority:int = 50, context:<a href="ApplicationContext.html">ApplicationContext</a> = null):void</div>
+<a class="signatureLink" href="#addGlobalFiles()">addGlobalFiles</a>(context:<a href="ApplicationContext.html">ApplicationContext</a> = null):void</div>
 <div class="summaryTableDescription">
    Add the global <code>ApplicationFile</code> into the loading queue.</div>
 </td><td class="summaryTableOwnerCol">ApplicationMassLoader</td>
@@ -580,9 +580,25 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function ApplicationMassLoader()</code><p>
+<code>public function ApplicationMassLoader(loadByPriority:Boolean = true, parallelFiles:uint = 0)</code><p>
    Creates a new <code>ApplicationMassLoader</code> object.
-   </p></div>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">loadByPriority</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash;  Defines if the <code>ApplicationMassLoader</code> must load the files by priority.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">parallelFiles</span>:uint</code> (default = <code>0</code>)<code></code> &mdash;  Defines how many file to load at the same time. This value will affect the loading only if the
+           <code>loadByPriority</code> property is <code>false</code>.
+   </td>
+</tr>
+</table>
+</div>
 <a name="methodDetail"></a>
 <div class="detailSectionHeader">Method detail</div>
 <a name="addAll()"></a>
@@ -625,21 +641,13 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function addApplicationFile(file:<a href="ApplicationFile.html">ApplicationFile</a>, priority:int = 0):void</code><p>
+<code>public function addApplicationFile(file:<a href="ApplicationFile.html">ApplicationFile</a>):void</code><p>
    Add the specified <code>ApplicationFile</code> and its dependencies.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">file</span>:<a href="ApplicationFile.html">ApplicationFile</a></code> &mdash;  The <code>ApplicationFile</code> to add.
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
-<td width="20px"></td><td><code><span class="label">priority</span>:int</code> (default = <code>0</code>)<code></code> &mdash; The priority of the <code>ApplicationFile</code>. All the dependencies will have a
-         higher priority (+1). 
    </td>
 </tr>
 </table>
@@ -651,19 +659,11 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function addGlobalFiles(priority:int = 50, context:<a href="ApplicationContext.html">ApplicationContext</a> = null):void</code><p>
+<code>public function addGlobalFiles(context:<a href="ApplicationContext.html">ApplicationContext</a> = null):void</code><p>
    Add the global <code>ApplicationFile</code> into the loading queue.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20px"></td><td><code><span class="label">priority</span>:int</code> (default = <code>50</code>)<code></code> &mdash; The priority of the global files. In order to have a logical behavior, this priority
-         should be greather than a simple <code>ApplicationFile</code> and its dependencies.
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
 <tr>
 <td width="20px"></td><td><code><span class="label">context</span>:<a href="ApplicationContext.html">ApplicationContext</a></code> (default = <code>null</code>)<code></code> &mdash;  The <code>ApplicationContext</code>. If not specified, the global context will be used.
    </td>
