@@ -30,6 +30,7 @@ package ch.capi.net.app
 		private var _name:String;
 		private var _loadableFile:ILoadableFile;
 		private var _applicationContext:ApplicationContext;
+		private var _priority:int					= 0;
 		
 		//-----------------//
 		//Getters & Setters//
@@ -40,8 +41,10 @@ package ch.capi.net.app
 		 */
 		public function get applicationContext():ApplicationContext { return _applicationContext; }
 		
-		//this method is just used to communicate the context between the ApplicationFile and ApplicationContext classes
-		//and shouldn't be used !
+		/**
+		 * this method is just used to communicate the context between the ApplicationFile and ApplicationContext classes
+		 * and shouldn't be used !
+		 */
 		internal function setContext(value:ApplicationContext):void { _applicationContext = value; }
 		
 		/**
@@ -66,6 +69,15 @@ package ch.capi.net.app
 		 */
 		public function get global():Boolean { return _global; }
 		public function set global(value:Boolean):void { _global = value; }		
+		/**
+		 * Defines the priority of the <code>ApplicationFile</code>. This value is only used if the <code>ApplicationFile</code>
+		 * is directly added into the <code>ApplicationMassLoader</code>.
+		 * 
+		 * @see	ch.capi.net.app.ApplicationMassLoader#addApplicationFile()	ApplicationMassLoader.addApplicationFile()
+		 */
+		public function get priority():int { return _priority; }
+		public function set priority(value:int):void { _priority = value; }
+		
 		//-----------//
 		//Constructor//
 		//-----------//

@@ -18,8 +18,15 @@ package ch.capi.net.app
 		
 		/**
 		 * Creates a new <code>ApplicationMassLoader</code> object.
+		 * 
+		 * @param	loadByPriority		Defines if the <code>ApplicationMassLoader</code> must load the files by priority.
+		 * @param	prallelFiles		Defines how many file to load at the same time. This value will affect the loading only if the
+		 * 								<code>loadByPriority</code> property is <code>false</code>.
 		 */
-		public function ApplicationMassLoader():void {}
+		public function ApplicationMassLoader(loadByPriority:Boolean=true, parallelFiles:uint=0):void 
+		{
+			super(loadByPriority, parallelFiles);
+		}
 		
 		//--------------//
 		//Public methods//
@@ -28,17 +35,15 @@ package ch.capi.net.app
 		/**
 		 * Add the global <code>ApplicationFile</code> into the loading queue.
 		 * 
-		 * @param	priority	The priority of the global files. In order to have a logical behavior, this priority
-		 * 						should be greather than a simple <code>ApplicationFile</code> and its dependencies.
 		 * @param	context		The <code>ApplicationContext</code>. If not specified, the global context will be used.
 		 */
-		public function addGlobalFiles(priority:int=50, context:ApplicationContext=null):void
+		public function addGlobalFiles(context:ApplicationContext=null):void
 		{
 			if (context == null) context = ApplicationContext.getGlobalContext();
 			var f:Array = context.enumerateAll(true);
 			for each(var a:ApplicationFile in f)
 			{
-				addApplicationFile(a, priority);
+				addApplicationFile(a);
 			}
 		}
 		
@@ -49,9 +54,9 @@ package ch.capi.net.app
 		 * @param	priority	The priority of the <code>ApplicationFile</code>. All the dependencies will have a
 		 * 						higher priority (+1). 
 		 */
-		public function addApplicationFile(file:ApplicationFile, priority:int=0):void
+		public function addApplicationFile(file:ApplicationFile):void
 		{
-			addApplicationFileRecursively(file, priority);
+			addApplicationFileRecursively(file, file.priority);
 		}
 		
 		/**
@@ -69,7 +74,7 @@ package ch.capi.net.app
 			var files:Array = context.enumerateRoots();
 			for each(var appFile:ApplicationFile in files)
 			{
-				addFile(appFile.loadableFile);
+				addApplicationFile(appFile);
 			}
 			
 			return files;

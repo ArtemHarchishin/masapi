@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
-<meta content="ApplicationFileParser,ch.capi.net.app.ApplicationFileParser,applicationContext,loadableFileFactory,createApplicationFile,createLoadableFile,initializeLoadableFile,parse,parseDependencies,parseFiles" name="keywords">
+<meta content="ApplicationFileParser,ch.capi.net.app.ApplicationFileParser,applicationContext,loadableFileFactory,createApplicationFile,createLoadableFile,initializeApplicationFile,parse,parseDependencies,parseFiles" name="keywords">
 <title>ch.capi.net.app.ApplicationFileParser</title>
 </head>
 <body>
@@ -144,9 +144,9 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#initializeLoadableFile()">initializeLoadableFile</a>(file:<a href="../ILoadableFile.html">ILoadableFile</a>):void</div>
+<a class="signatureLink" href="#initializeApplicationFile()">initializeApplicationFile</a>(appFile:<a href="ApplicationFile.html">ApplicationFile</a>):void</div>
 <div class="summaryTableDescription">
-   Initialize the <code>ILoadableFile</code>.</div>
+   Initialize the <code>ApplicationFile</code>.</div>
 </td><td class="summaryTableOwnerCol">ApplicationFileParser</td>
 </tr>
 </table>
@@ -248,6 +248,14 @@ showHideInherited();
                      </td>
 </tr>
 </table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../../errors/ParseError.html">ParseError</a> </code> &mdash; If the url attribute is not defined.
+   </td>
+</tr>
+</table>
 </div>
 <a name="createLoadableFile()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -285,22 +293,29 @@ showHideInherited();
 </tr>
 </table>
 </div>
-<a name="initializeLoadableFile()"></a>
+<a name="initializeApplicationFile()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">initializeLoadableFile</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+<td class="detailHeaderName">initializeApplicationFile</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>protected function initializeLoadableFile(file:<a href="../ILoadableFile.html">ILoadableFile</a>):void</code><p>
-   Initialize the <code>ILoadableFile</code>. This method initialize the <code>virtualBytesTotal</code>,
-   <code>useCache</code> and <code>netState</code> values if they are defined into the <code>properties</code>
-   map of the <code>ILoadableFile</code>.
+<code>protected function initializeApplicationFile(appFile:<a href="ApplicationFile.html">ApplicationFile</a>):void</code><p>
+   Initialize the <code>ApplicationFile</code>. This method initialize the main properties of the 
+   specified <code>ApplicationFile</code> and its <code>ILoadableFile</code>.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">file</span>:<a href="../ILoadableFile.html">ILoadableFile</a></code> &mdash; The <code>ILoadableFile</code> to initialize.
+<td width="20px"></td><td><code><span class="label">appFile</span>:<a href="ApplicationFile.html">ApplicationFile</a></code> &mdash; The <code>ApplicationFile</code> to initialize.
+   </td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../../errors/ParseError.html">ParseError</a> </code> &mdash; If there is a parse error.
    </td>
 </tr>
 </table>

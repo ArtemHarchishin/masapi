@@ -1,6 +1,6 @@
 package ch.capi.net.app 
 {
-	import ch.capi.errors.ParseError;
+	import ch.capi.utils.ParseUtils;		import ch.capi.errors.ParseError;
 	import ch.capi.net.LoadableFileFactory;
 	import ch.capi.net.ILoadableFile;
 	
@@ -74,6 +74,11 @@ package ch.capi.net.app
 		 * Defines the 'basePath' attribute value.
 		 */
 		private static const ATTRIBUTE_BASEPATH_VALUE:String = "basePath";
+		
+		/**
+		 * Defines the 'priority' attribute value.
+		 */
+		private static const ATTRIBUTE_PRIORITY_VALUE:String = "priority";
 		
 		//---------//
 		//Variables//
@@ -202,57 +207,38 @@ package ch.capi.net.app
 		 * 
 		 * @param	node		The <code>XMLNode</code> to parse.
 		 * @return	The created <code>ApplicationFile</code>.
+		 * @throws	ch.capi.errors.ParseError	If the url attribute is not defined.
 		 */
 		protected function createApplicationFile(node:XMLNode):ApplicationFile
 		{
-			var n:String = node.attributes[ATTRIBUTE_NAME_VALUE];
-			if (n == null || n.length == 0) n="$appFile_"+_currentIndex+"$";
+			var name:String = node.attributes[ATTRIBUTE_NAME_VALUE];
+			if (name == null || name.length == 0) name="$appFile_"+_currentIndex+"$";
 		
-			var a:ApplicationFile = new ApplicationFile(n, null, applicationContext);
+			var appFile:ApplicationFile = new ApplicationFile(name, null, applicationContext);
 			
-			var u:String = node.attributes[ATTRIBUTE_URL_VALUE];
-			var t:String = node.attributes[ATTRIBUTE_TYPE_VALUE];
-			if (u != null && u.length > 0)
+			var url:String = node.attributes[ATTRIBUTE_URL_VALUE];
+			var type:String = node.attributes[ATTRIBUTE_TYPE_VALUE];
+			if (url != null && url.length > 0)
 			{
-				var lf:ILoadableFile = createLoadableFile(u, t);
-				a.loadableFile = lf;
+				var loadableFile:ILoadableFile = createLoadableFile(url, type);
+				appFile.loadableFile = loadableFile;
 				
 				//attach the properties to the ILoadableFile
 				for(var prop:String in node.attributes)
 				{
 					var dt:String = node.attributes[prop];
-					lf.properties.put(prop, dt);
-					
-					//if this is the 'requestData' property, then attribute it to the data property of the URLRequest object
-					if (prop == ATTRIBUTE_REQUEST_DATA_VALUE)
-					{
-						try
-						{
-							var rv:URLVariables = new URLVariables(dt);
-							lf.urlRequest.data = rv;
-						}
-						catch(e:Error)
-						{
-							//oh ! the value couldn't be parsed as URLVariables...
-							lf.urlRequest.data = dt;
-						}
-					}
-					
-					//if this is the 'requestMethod' property, then attribute it to the method property of the URLRequest object
-					if (prop == ATTRIBUTE_REQUEST_METHOD_VALUE)
-					{
-						lf.urlRequest.method = dt.toUpperCase();
-					}
+					loadableFile.properties.put(prop, dt);
 				}
-				
-				//initialization
-				initializeLoadableFile(lf);
 			}
-			
-			var g:String = node.attributes[ATTRIBUTE_GLOBAL_VALUE];
-			a.global = (g == true.toString());
+			else
+			{
+				throw new ParseError("createApplicationFile", "The specified url is invalid for the file '"+name+"'");
+			}
+				
+			//initialization
+			initializeApplicationFile(appFile);
 		
-			return a;
+			return appFile;
 		}
 		
 		/**
@@ -269,22 +255,54 @@ package ch.capi.net.app
 		}
 		
 		/**
-		 * Initialize the <code>ILoadableFile</code>. This method initialize the <code>virtualBytesTotal</code>,
-		 * <code>useCache</code> and <code>netState</code> values if they are defined into the <code>properties</code>
-		 * map of the <code>ILoadableFile</code>.
+		 * Initialize the <code>ApplicationFile</code>. This method initialize the main properties of the 
+		 * specified <code>ApplicationFile</code> and its <code>ILoadableFile</code>.
 		 * 
-		 * @param	file	The <code>ILoadableFile</code> to initialize.
+		 * @param	appFile	The <code>ApplicationFile</code> to initialize.
+		 * @throws	ch.capi.errors.ParseError	If there is a parse error.
 		 */
-		protected function initializeLoadableFile(file:ILoadableFile):void
+		protected function initializeApplicationFile(appFile:ApplicationFile):void
 		{
-			var p:* = file.properties.getValue(ATTRIBUTE_VIRTUALBYTESTOTAL_VALUE);
-			if (p != null && !isNaN(p)) file.virtualBytesTotal = parseInt(p);
+			var loadableFile:ILoadableFile = appFile.loadableFile;
 			
-			var c:* = file.properties.getValue(ATTRIBUTE_USECACHE_VALUE);
-			if (c != null) file.useCache = (c==false.toString());
+			/*
+			 * Initialize the ApplicationFile properties
+			 */
+			var g:String = loadableFile.properties.getValue(ATTRIBUTE_GLOBAL_VALUE);
+			if (g != null) appFile.global = ParseUtils.parseBoolean(g);
 			
-			var n:* = file.properties.getValue(ATTRIBUTE_NETSTATE_VALUE);
-			if (n != null) file.netState = n;
+			var y:String = loadableFile.properties.getValue(ATTRIBUTE_PRIORITY_VALUE);
+			if (y != null) appFile.priority = ParseUtils.parseInteger(y);
+			
+			/*
+			 * Initialize the ILoadableFile properties
+			 */
+			var p:String = loadableFile.properties.getValue(ATTRIBUTE_VIRTUALBYTESTOTAL_VALUE);
+			if (p != null) loadableFile.virtualBytesTotal = ParseUtils.parseUnsigned(p);
+			
+			var c:String = loadableFile.properties.getValue(ATTRIBUTE_USECACHE_VALUE);
+			if (c != null) loadableFile.useCache = ParseUtils.parseBoolean(c);
+			
+			var n:String = loadableFile.properties.getValue(ATTRIBUTE_NETSTATE_VALUE);
+			if (n != null) loadableFile.netState = n;
+			
+			var rm:String = loadableFile.properties.getValue(ATTRIBUTE_REQUEST_METHOD_VALUE);
+			if (rm != null) loadableFile.urlRequest.method = rm.toUpperCase();
+			
+			var rd:String = loadableFile.properties.getValue(ATTRIBUTE_REQUEST_DATA_VALUE);
+			if (rd != null)
+			{
+				try
+				{
+					var rv:URLVariables = new URLVariables(rd);
+					loadableFile.urlRequest.data = rv;
+				}
+				catch(e:Error)
+				{
+					//oh ! the value couldn't be parsed as URLVariables...
+					loadableFile.urlRequest.data = rd;
+				}
+			}
 		}
 		
 		//---------------//

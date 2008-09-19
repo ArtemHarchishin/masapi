@@ -55,7 +55,7 @@
             
             <xsd:simpleType name="Boolean">
                 <xsd:restriction base="xsd:string">
-                    <xsd:pattern value="true|false"/>
+                    <xsd:pattern value="true|false|yes|no|-?[0-9]+"/>
                 </xsd:restriction>
             </xsd:simpleType>
             
