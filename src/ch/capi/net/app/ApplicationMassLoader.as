@@ -52,7 +52,8 @@ package ch.capi.net.app
 		 * 
 		 * @param	file		The <code>ApplicationFile</code> to add.
 		 * @param	priority	The priority of the <code>ApplicationFile</code>. All the dependencies will have a
-		 * 						higher priority (+1). 
+		 * 						higher priority (+1). The priority of the <code>ApplicationFile</code> is stored into the
+		 * 						<code>ApplicationMassLoader</code>, so it won't be affected, even if you change it.
 		 */
 		public function addApplicationFile(file:ApplicationFile):void
 		{

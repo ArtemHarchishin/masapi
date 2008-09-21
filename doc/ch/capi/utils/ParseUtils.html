@@ -103,7 +103,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#parseInteger()">parseInteger</a>(str:String):int</div>
+<a class="signatureLink" href="#parseInteger()">parseInteger</a>(str:String, radix:int = 0):int</div>
 <div class="summaryTableDescription">[static]
    Parses the specified <code>String</code> to a <code>Integer</code>.</div>
 </td><td class="summaryTableOwnerCol">ParseUtils</td>
@@ -314,13 +314,20 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function parseInteger(str:String):int</code><p>
+<code>public static function parseInteger(str:String, radix:int = 0):int</code><p>
    Parses the specified <code>String</code> to a <code>Integer</code>.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">str</span>:String</code> &mdash;  The <code>String</code> to parse.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">radix</span>:int</code> (default = <code>0</code>)<code></code> &mdash; The base for the attribute parsing.
    </td>
 </tr>
 </table>
