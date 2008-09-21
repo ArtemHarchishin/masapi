@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
-<meta content="XMLDescriptor,ch.capi.data.xml.XMLDescriptor,node,clone,create,getAttribute,getAttributeAsBoolean,getAttributeAsInt,getAttributeAsNumber,getAttributes,getChild,getChildren,getName,getText,getTextAsInt,getTextAsNumber,getTextNode,getTextTrim,hasAttribute,hasText,hasTextTrim,isTextEnough,parseSource,setAttribute,setName,setText,toString,toXML,toXMLDocument,toXMLNode,toXMLString" name="keywords">
+<meta content="XMLDescriptor,ch.capi.data.xml.XMLDescriptor,node,clone,create,getAttribute,getAttributeAsBoolean,getAttributeAsInt,getAttributeAsNumber,getAttributes,getChild,getChildren,getName,getText,getTextAsBoolean,getTextAsInt,getTextAsNumber,getTextNode,getTextTrim,hasAttribute,hasText,hasTextTrim,isTextEnough,parseSource,setAttribute,setName,setText,toString,toXML,toXMLDocument,toXMLNode,toXMLString" name="keywords">
 <title>ch.capi.data.xml.XMLDescriptor</title>
 </head>
 <body>
@@ -173,6 +173,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#getText()">getText</a>(strict:Boolean = false):String</div>
 <div class="summaryTableDescription">
    Retrieves the text of the <code>XMLDescriptor</code> node.</div>
+</td><td class="summaryTableOwnerCol">XMLDescriptor</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getTextAsBoolean()">getTextAsBoolean</a>(defaultValue:Boolean = false, strict:Boolean = false):Boolean</div>
+<div class="summaryTableDescription">
+   Retrieves the text node as <code>Boolean</code>.</div>
 </td><td class="summaryTableOwnerCol">XMLDescriptor</td>
 </tr>
 <tr class="">
@@ -485,6 +493,12 @@ showHideInherited();
    </td>
 </tr>
 </table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../../utils/ParseUtils.html#parseBoolean" target="">ParseUtils.parseBoolean()</a>
+</div>
 </div>
 <a name="getAttributeAsInt()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -529,6 +543,12 @@ showHideInherited();
    </td>
 </tr>
 </table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../../utils/ParseUtils.html#parseInteger" target="">ParseUtils.parseInteger()</a>
+</div>
 </div>
 <a name="getAttributeAsNumber()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -564,6 +584,12 @@ showHideInherited();
    </td>
 </tr>
 </table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../../utils/ParseUtils.html#parseNumber" target="">ParseUtils.parseNumber()</a>
+</div>
 </div>
 <a name="getAttributes()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -694,6 +720,46 @@ showHideInherited();
 <a href="../xml/XMLDescriptor.html#getTextNode()" target="">getTextNode()</a>
 </div>
 </div>
+<a name="getTextAsBoolean()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getTextAsBoolean</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getTextAsBoolean(defaultValue:Boolean = false, strict:Boolean = false):Boolean</code><p>
+   Retrieves the text node as <code>Boolean</code>. If the node has no text, then the
+   <code>defaultValue</code> is returned.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">defaultValue</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; The default value.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">strict</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash;   Indicates if the text should be retrieved on the first text node if the <code>nodeValue</code> is <code>null</code>.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; The value parsed as a <code>Boolean</code> or the <code>defaultValue</code> (attribute not found).
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../../utils/ParseUtils.html#parseBoolean" target="">ParseUtils.parseBoolean()</a>
+</div>
+</div>
 <a name="getTextAsInt()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -703,8 +769,7 @@ showHideInherited();
 <div class="detailBody">
 <code>public function getTextAsInt(defaultValue:int = 0, radix:int = 0, strict:Boolean = false):int</code><p>
    Retrieves the node text as integer. If the node has no text, then the
-   <code>defaultValue</code> is returned. Elste the specified <code>radix</code> is used to
-   parse the value with the <code>parseInt</code> global function.
+   <code>defaultValue</code> is returned.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
@@ -740,6 +805,8 @@ showHideInherited();
 </p>
 <div class="seeAlso">
 <a href="../xml/XMLDescriptor.html#getTextNode()" target="">getTextNode()</a>
+<br>
+<a href="../../utils/ParseUtils.html#parseInteger" target="">ParseUtils.parseInteger()</a>
 </div>
 </div>
 <a name="getTextAsNumber()"></a>
@@ -751,8 +818,7 @@ showHideInherited();
 <div class="detailBody">
 <code>public function getTextAsNumber(defaultValue:Number = 0, strict:Boolean = false):Number</code><p>
    Retrieves the text node as <code>Number</code>. If the node has no text, then the
-   <code>defaultValue</code> is returned. Else the value is parsed using the <code>parseFloat</code>
-   global function.
+   <code>defaultValue</code> is returned.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
@@ -772,7 +838,7 @@ showHideInherited();
 <span class="label">Returns</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20"></td><td><code>Number</code> &mdash; The value parsed as a <code>Number</code> or the <code>defaultValue</code> (attribute not found) or <code>NaN</code> (not parsable value).
+<td width="20"></td><td><code>Number</code> &mdash; The value parsed as a <code>Number</code> or the <code>defaultValue</code> (attribute not found).
    </td>
 </tr>
 </table>
@@ -781,6 +847,8 @@ showHideInherited();
 </p>
 <div class="seeAlso">
 <a href="../xml/XMLDescriptor.html#getTextNode()" target="">getTextNode()</a>
+<br>
+<a href="../../utils/ParseUtils.html#parseNumber" target="">ParseUtils.parseNumber()</a>
 </div>
 </div>
 <a name="getTextNode()"></a>

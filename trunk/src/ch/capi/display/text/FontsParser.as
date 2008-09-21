@@ -1,6 +1,6 @@
 package ch.capi.display.text
 {
-	import ch.capi.errors.ParseError;
+	import ch.capi.utils.ParseUtils;		import ch.capi.errors.ParseError;
 	import flash.xml.XMLNode;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
@@ -104,11 +104,11 @@ package ch.capi.display.text
 			
 			var att:Object = node.attributes;
 			fo.align = (att.align == null) ? defaultAlign : att.align;
-			fo.bold = (att.bold == true.toString());
-			fo.color = (att.color == null) ? defaultColor : att.color;
-			fo.italic = (att.italic == true.toString());
-			fo.size = (att.size == null) ? defaultSize : att.size;
-			fo.underline = (att.align == true.toString());
+			fo.bold = ParseUtils.parseBoolean(att.bold);
+			fo.color = (att.color == null) ? defaultColor : ParseUtils.parseUnsigned(att.color);
+			fo.italic = ParseUtils.parseBoolean(att.italic);
+			fo.size = (att.size == null) ? defaultSize : ParseUtils.parseUnsigned(att.size);
+			fo.underline = ParseUtils.parseBoolean(att.underline);
 		}
 		
 		//---------------//
