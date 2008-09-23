@@ -90,13 +90,13 @@ package ch.capi.net
 		public function get loadByPriority():Boolean { return _loadByPriority; }
 		public function set loadByPriority(value:Boolean):void
 		{
-			if (_loadByPriority == value) return;
 			var newStructure:IDataStructure = (value) ? new ArrayHeap(sortFiles) : new QueueList();
 			var currentStructure:IDataStructure = filesQueue;
 			
+			//retrieves old files into the loading queue
 			while (!currentStructure.isEmpty()) newStructure.add(currentStructure.remove());
-			filesQueue = newStructure;
 			
+			filesQueue = newStructure;
 			_loadByPriority = value;
 		}
 

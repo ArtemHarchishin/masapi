@@ -122,7 +122,7 @@ package ch.capi.net.app
 		{
 			_loadableFileFactory = (loadableFileFactory==null) ? new LoadableFileFactory() : loadableFileFactory;
 			
-			if (context == null) context = ApplicationContext.getGlobalContext();
+			if (context == null) context = ApplicationContext.globalContext;
 			_applicationContext = context;
 		}
 

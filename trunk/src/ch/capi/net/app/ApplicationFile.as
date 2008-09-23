@@ -95,7 +95,7 @@ package ch.capi.net.app
 			_loadableFile = loadableFile;
 			_name = name;
 			
-			if (context == null) context = ApplicationContext.getGlobalContext();
+			if (context == null) context = ApplicationContext.globalContext;
 			context.addFile(this);
 		}
 		
@@ -113,10 +113,32 @@ package ch.capi.net.app
 		 */
 		public static function get(name:String, context:ApplicationContext=null):ApplicationFile
 		{
-			if (context == null) context = ApplicationContext.getGlobalContext();
+			if (context == null) context = ApplicationContext.globalContext;
 			return context.getFile(name);
 		}
 		
+		/**
+		 * Retrieves the <code>ApplicationFile</code> that holds the specified <code>ILoadableFile</code>.
+		 * 
+		 * @param	file		The <code>ILoadableFile</code>.
+		 * @param	context		The <code>ApplicationContext</code>. If not specified, the global context will be used.
+		 * @return	The <code>ApplicationFile</code> or <code>null</code> if there is no <code>ApplicationFile</code> that holds
+		 * 			the specified <code>ILoadableFile</code>.
+		 */
+		public static function getByLoadableFile(file:ILoadableFile, context:ApplicationContext=null):ApplicationFile
+		{
+			if (context == null) context = ApplicationContext.globalContext;
+			
+			var files:Array = context.enumerateAll();
+			for (var i:int=0 ; i<files.length ; i++)
+			{
+				var apf:ApplicationFile = files[i];
+				if (apf.loadableFile == file) return apf;
+			}
+			
+			return null;
+		}
+
 		/**
 		 * Add an <code>ApplicationFile</code> as dependency for this file. It means that the specified
 		 * <code>file</code> is necessary to be loaded before the current <code>ApplicationFile</code> can
