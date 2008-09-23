@@ -12,6 +12,10 @@ package ch.capi.net.app
 	 * @see		ch.capi.net.app.ApplicationFileParser	ApplicationFileParser	 * @author 	Cedric Tabin - thecaptain
 	 * @version	1.0	 */	public class ApplicationMassLoader extends PriorityMassLoader implements IMassLoader
 	{
+		//---------//
+		//Variables//
+		//---------//
+		
 		//-----------//
 		//Constructor//
 		//-----------//
@@ -39,7 +43,7 @@ package ch.capi.net.app
 		 */
 		public function addGlobalFiles(context:ApplicationContext=null):void
 		{
-			if (context == null) context = ApplicationContext.getGlobalContext();
+			if (context == null) context = ApplicationContext.globalContext;
 			var f:Array = context.enumerateAll(true);
 			for each(var a:ApplicationFile in f)
 			{
@@ -70,7 +74,7 @@ package ch.capi.net.app
 		 */
 		public function addAll(context:ApplicationContext=null):Array
 		{
-			if (context == null) context = ApplicationContext.getGlobalContext();
+			if (context == null) context = ApplicationContext.globalContext;
 			
 			var files:Array = context.enumerateRoots();
 			for each(var appFile:ApplicationFile in files)
