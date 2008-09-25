@@ -12,6 +12,7 @@ There is a list of frequently asked questions. [http://groups.google.com/group/m
   # How can I reload a File ?
   # If a file fails to load, masapi try to reload it. Why ?
   # How to know if a file has been successfully downloaded or not ?
+  # My download starts only after a lot amount of percentage. Why ?
 
 
 == 1. What about the API compatiblity ? ==
@@ -37,5 +38,8 @@ That's the default behavior of the LoadPolicy contained into a MassLoader. If yo
 
 == 8. How to know if a file has been successfully downloaded or not ? ==
 Just take a look at this page : [http://code.google.com/p/masapi/wiki/ErrorsHandling How to handle the download errors]
+
+== 9. My download starts only after a lot amount of percentage. Why ? ==
+The default behavior of the MassLoader is to wait that the specified number of parallelFiles are open before dispatching the first ProgressEvent. If there are many files to load, it can take a lot of time before all the files are open. To avoid that, you can simple put the alwaysDispatchProgressEvent property of MassLoader to true.
 
 [http://code.google.com/p/masapi/wiki/UserGuide Back to the user guide]

@@ -18,7 +18,7 @@ var file:ILoadableFile = compositeML.addFile("content.xml");
 
 var rawData:String = file.getData();
 var asXml:XML = file.getData("XML");
-var asXmlDocument:XMLDocument = file.getData("flash.utils.XMLDocument");
+var asXmlDocument:XMLDocument = file.getData("flash.xml.XMLDocument");
 }}}
 As you see, you don't need to have some extra-lines to parse the data. You just need to specify the full class name of the class that you want to use (yes, that means that you can specify you own one, see below).
 
