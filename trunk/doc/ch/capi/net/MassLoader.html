@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="MassLoader,ch.capi.net.MassLoader,alwaysDispatchProgressEvent,bytesLoaded,bytesTotal,closeEvent,files,filesLoading,filesQueue,loadInfo,loadPolicy,nextFileToLoad,numFilesLoading,numFilesOpen,parallelFiles,stateIdle,stateLoading,useCache,addFile,clear,getFileCount,getFileIndex,getFiles,hasFile,isComplete,loadFile,loadNextFile,onClose,onComplete,onIOError,onOpen,onProgress,onSecurityError,processPolicy,registerTo,removeFile,start,startLoading,stop,toString,unregisterFrom,updateBytes" name="keywords">
+<meta content="MassLoader,ch.capi.net.MassLoader,alwaysDispatchProgressEvent,bytesLoaded,bytesTotal,closeEvent,files,filesLoading,filesQueue,loadInfo,loadPolicy,nextFileToLoad,numFilesLoading,numFilesOpen,parallelFiles,stateIdle,stateLoading,useCache,addFile,clear,createMassLoadEvent,getFileCount,getFileStaticIndex,getFiles,hasFile,isComplete,loadFile,loadNextFile,onClose,onComplete,onIOError,onOpen,onProgress,onSecurityError,processPolicy,registerTo,removeFile,start,startLoading,stop,toString,unregisterFrom,updateBytes" name="keywords">
 <title>ch.capi.net.MassLoader</title>
 </head>
 <body>
@@ -283,6 +283,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
+<a class="signatureLink" href="#getFileStaticIndex()">getFileStaticIndex</a>(file:<a href="ILoadManager.html">ILoadManager</a>):int</div>
+<div class="summaryTableDescription">
+   Retrieves the static index of the specified <code>ILoadManager</code>.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
 <a class="signatureLink" href="#hasFile()">hasFile</a>(file:<a href="ILoadManager.html">ILoadManager</a>):Boolean</div>
 <div class="summaryTableDescription">
    Retrieves if a file is contained into the loading queue.</div>
@@ -332,9 +340,10 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#getFileIndex()">getFileIndex</a>(file:<a href="ILoadManager.html">ILoadManager</a>):int</div>
+<a class="signatureLink" href="#createMassLoadEvent()">createMassLoadEvent</a>(file:<a href="ILoadManager.html">ILoadManager</a>, type:String, evt:Event = null):<a href="../events/MassLoadEvent.html">MassLoadEvent</a>
+</div>
 <div class="summaryTableDescription">
-   Retrieves the index of a file.</div>
+   Creates a <code>MassLoadEvent</code> based on the specified <code>ILoadManager</code>.</div>
 </td><td class="summaryTableOwnerCol">MassLoader</td>
 </tr>
 <tr class="">
@@ -903,6 +912,50 @@ showHideInherited();
 <code>public function clear():void</code><p>
    Empty the loading queue. This will not affect the current loading.
    </p></div>
+<a name="createMassLoadEvent()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">createMassLoadEvent</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function createMassLoadEvent(file:<a href="ILoadManager.html">ILoadManager</a>, type:String, evt:Event = null):<a href="../events/MassLoadEvent.html">MassLoadEvent</a></code><p>
+   Creates a <code>MassLoadEvent</code> based on the specified <code>ILoadManager</code>.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">file</span>:<a href="ILoadManager.html">ILoadManager</a></code> &mdash; The <code>ILoadManager</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">type</span>:String</code> &mdash; The <code>MassLoadEvent</code> type. This value can be <code>MassLoadEvent.FILE_OPEN</code>
+        or <code>MassLoadEvent.FILE_CLOSE</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">evt</span>:Event</code> (default = <code>null</code>)<code></code> &mdash;  The close event, if any.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../events/MassLoadEvent.html">MassLoadEvent</a></code> &mdash; 
+                        The created <code>MassLoadEvent</code>.
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
 <a name="getFileCount()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -922,32 +975,6 @@ showHideInherited();
 </tr>
 </table>
 </div>
-<a name="getFileIndex()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">getFileIndex</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>protected function getFileIndex(file:<a href="ILoadManager.html">ILoadManager</a>):int</code><p>
-   Retrieves the index of a file.
-   
-   </p><span class="label">Parameters</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20px"></td><td><code><span class="label">file</span>:<a href="ILoadManager.html">ILoadManager</a></code> &mdash; The file to get the index.
-   </td>
-</tr>
-</table>
-<p></p>
-<span class="label">Returns</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20"></td><td><code>int</code> &mdash; The file index or -1 if the index is not known.
-   </td>
-</tr>
-</table>
-</div>
 <a name="getFiles()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -963,6 +990,34 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20"></td><td><code>Array</code> &mdash; An <code>Array</code> containing the files to load.
+   </td>
+</tr>
+</table>
+</div>
+<a name="getFileStaticIndex()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getFileStaticIndex</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getFileStaticIndex(file:<a href="ILoadManager.html">ILoadManager</a>):int</code><p>
+   Retrieves the static index of the specified <code>ILoadManager</code>. This index is attached to the <code>ILoadManager</code>
+   when it is added to the loading queue and won't change even if files are removed. In order to reset the static index list, you
+   must call the <code>clear()</code> method.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">file</span>:<a href="ILoadManager.html">ILoadManager</a></code> &mdash; The <code>ILoadManager</code>.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>int</code> &mdash; The static index of the file or -1 if the file is not into the loading queue.
    </td>
 </tr>
 </table>

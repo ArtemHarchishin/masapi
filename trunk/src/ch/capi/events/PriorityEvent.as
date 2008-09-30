@@ -19,6 +19,7 @@ package ch.capi.events
 		//Variables//
 		//---------//
 		private var _currentPriority:int;
+		private var _files:Array;
 		
 		//-----------------//
 		//Getters & Setters//
@@ -29,6 +30,11 @@ package ch.capi.events
 		 */
 		public function get currentPriority():int { return _currentPriority; }
 		
+		/**
+		 * Defines the file to load at the current priority.
+		 */
+		public function get files():Array { return _files; }
+		
 		//-----------//
 		//Constructor//
 		//-----------//
@@ -38,11 +44,13 @@ package ch.capi.events
 		 * 
 		 * @param	type		The type.
 		 * @param	newPriority	The new priority.
+		 * @param	files		The files to load.
 		 */
-		public function PriorityEvent(type:String, newPriority:int=0):void
+		public function PriorityEvent(type:String, newPriority:int=0, files:Array=null):void
 		{
 			super(type, false, false);
 			
+			_files = files;
 			_currentPriority = newPriority;
 		}
 		

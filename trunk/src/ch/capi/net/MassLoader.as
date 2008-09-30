@@ -329,6 +329,21 @@
 		//--------------//
 		
 		/**
+		 * Retrieves the static index of the specified <code>ILoadManager</code>. This index is attached to the <code>ILoadManager</code>
+		 * when it is added to the loading queue and won't change even if files are removed. In order to reset the static index list, you
+		 * must call the <code>clear()</code> method.
+		 * 
+		 * @param	file	The <code>ILoadManager</code>.
+		 * @return	The static index of the file or -1 if the file is not into the loading queue.
+		 */
+		public function getFileStaticIndex(file:ILoadManager):int
+		{
+			if (! _filesIndex.containsKey(file)) return -1;
+			var nb:int = _filesIndex.getValue(file);
+			return nb;
+		}
+
+		/**
 		 * Add a file to the loading queue. A file added while the <code>MassLoader<code>
 		 * is already running will not be added to the current loading queue. You should stop
 		 * and restart the <code>MassLoader</code> in order to include the file into the loading.
@@ -361,7 +376,6 @@
 			if (!hasFile(file)) throw new IllegalOperationError("The file is not into the loading queue");
 			
 			_filesToLoad.removeElement(file);
-			if (_filesToLoad.length == 0) _currentFileIndex = 0;
 		}
 
 		/**
@@ -454,8 +468,8 @@
 			 * If there is no file to load, then wait some milliseconds before launch the complete
 			 * event so the listeners can register to the MassLoader !
 			 */
-			if (_filesQueue.isEmpty()) setTimeout(doComplete, 20);
-			else loadNext();
+			if (_filesQueue.isEmpty()) setTimeout(doComplete, 10);
+			else setTimeout(loadNext, 10);
 		}
 		
 		/**
@@ -514,9 +528,7 @@
 			registerTo(file);
 			
 			//open event
-			var index:int = getFileIndex(file);
-			var op:MassLoadEvent = new MassLoadEvent(MassLoadEvent.FILE_OPEN, file, null, index);
-			dispatchEvent(op);
+			dispatchOpenEvent(file);
 			
 			//try to start the loading
 			try
@@ -718,20 +730,42 @@
 		}
 		
 		/**
-		 * Retrieves the index of a file.
+		 * Creates a <code>MassLoadEvent</code> based on the specified <code>ILoadManager</code>.
 		 * 
-		 * @param	file	The file to get the index.
-		 * @return	The file index or -1 if the index is not known.
+		 * @param	file	The <code>ILoadManager</code>.
+		 * @param	type	The <code>MassLoadEvent</code> type. This value can be <code>MassLoadEvent.FILE_OPEN</code>
+		 * 					or <code>MassLoadEvent.FILE_CLOSE</code>.
+		 * @param	evt		The close event, if any.
+		 * @return	The created <code>MassLoadEvent</code>.
 		 */
-		protected function getFileIndex(file:ILoadManager):int
+		protected function createMassLoadEvent(file:ILoadManager, type:String, evt:Event=null):MassLoadEvent
 		{
-			if (_filesIndex.containsKey(file)) return _filesIndex.getValue(file);
-			return -1;
+			var index:int = getFileStaticIndex(file);
+			var op:MassLoadEvent = new MassLoadEvent(type, file, null, index);
+			return op;
 		}
 
 		//---------------//
 		//Private methods//
 		//---------------//
+		
+		/**
+		 * @private
+		 */
+		protected function dispatchCloseEvent(file:ILoadManager, evt:Event=null):void
+		{
+			var op:MassLoadEvent = createMassLoadEvent(file, MassLoadEvent.FILE_CLOSE, evt);
+			dispatchEvent(op); 
+		}
+		
+		/**
+		 * @private
+		 */
+		protected function dispatchOpenEvent(file:ILoadManager):void
+		{
+			var op:MassLoadEvent = createMassLoadEvent(file, MassLoadEvent.FILE_OPEN);
+			dispatchEvent(op);
+		}
 		
 		/**
 		 * @private
@@ -751,7 +785,7 @@
 			var trg:ILoadManager = evt.target as ILoadManager;
 			if (!_isLoading)
 			{
-				sendCloseEvent(trg, evt);
+				dispatchCloseEvent(trg, evt);
 				 return; //loading closed, stop propagation
 			}
 			
@@ -786,21 +820,11 @@
 			*/
 			_tempTotalBytes += file.bytesLoaded;
 			
-			//removes the file
-			removeFile(file);
+			//removes the file from the loading queue
+			_filesToLoad.removeElement(file);
 			
 			//close event
-			sendCloseEvent(file, evt);
-		}
-		
-		/**
-		 * @private
-		 */
-		private function sendCloseEvent(file:ILoadManager, evt:Event=null):void
-		{
-			var index:int = getFileIndex(file);
-			var op:MassLoadEvent = new MassLoadEvent(MassLoadEvent.FILE_CLOSE, file, evt, index);
-			dispatchEvent(op); 
+			dispatchCloseEvent(file, evt);
 		}
 		
 		/**
