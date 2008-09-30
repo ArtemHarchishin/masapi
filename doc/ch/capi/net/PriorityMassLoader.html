@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="PriorityMassLoader,ch.capi.net.PriorityMassLoader,defaultPriority,currentPriority,loadByPriority,addFile,addPrioritizedFile,getFilePriority,removeFile,sortFiles,startLoading,toString" name="keywords">
+<meta content="PriorityMassLoader,ch.capi.net.PriorityMassLoader,defaultPriority,currentPriority,loadByPriority,addFile,addPrioritizedFile,clear,createMassLoadEvent,getFilePriority,getFilesAtPriority,removeFile,sortFiles,startLoading,toString" name="keywords">
 <title>ch.capi.net.PriorityMassLoader</title>
 </head>
 <body>
@@ -265,13 +265,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
    Add a file with a specific priority into the loading queue.</div>
 </td><td class="summaryTableOwnerCol">PriorityMassLoader</td>
 </tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="MassLoader.html#clear()">clear</a>():void</div>
+<a class="signatureLink" href="#clear()">clear</a>():void</div>
 <div class="summaryTableDescription">
-   Empty the loading queue.</div>
-</td><td class="summaryTableOwnerCol"><a href="MassLoader.html">MassLoader</a></td>
+   Clear the loading queues and files priorities.</div>
+</td><td class="summaryTableOwnerCol">PriorityMassLoader</td>
 </tr>
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
@@ -295,6 +295,22 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="MassLoader.html#getFiles()">getFiles</a>():Array</div>
 <div class="summaryTableDescription">
    Get the files that will be loaded.</div>
+</td><td class="summaryTableOwnerCol"><a href="MassLoader.html">MassLoader</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getFilesAtPriority()">getFilesAtPriority</a>(priority:int):Array</div>
+<div class="summaryTableDescription">
+   Defines the files to be loaded at the specified priority.</div>
+</td><td class="summaryTableOwnerCol">PriorityMassLoader</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="MassLoader.html#getFileStaticIndex()">getFileStaticIndex</a>(file:<a href="../net/ILoadManager.html">ILoadManager</a>):int</div>
+<div class="summaryTableDescription">
+   Retrieves the static index of the specified <code>ILoadManager</code>.</div>
 </td><td class="summaryTableOwnerCol"><a href="MassLoader.html">MassLoader</a></td>
 </tr>
 <tr class="hideInheritedMethod">
@@ -354,13 +370,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr>
 <th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
-<tr class="hideInheritedProtectedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="MassLoader.html#getFileIndex()">getFileIndex</a>(file:<a href="../net/ILoadManager.html">ILoadManager</a>):int</div>
+<a class="signatureLink" href="#createMassLoadEvent()">createMassLoadEvent</a>(file:<a href="ILoadManager.html">ILoadManager</a>, type:String, evt:Event = null):<a href="../events/MassLoadEvent.html">MassLoadEvent</a>
+</div>
 <div class="summaryTableDescription">
-   Retrieves the index of a file.</div>
-</td><td class="summaryTableOwnerCol"><a href="MassLoader.html">MassLoader</a></td>
+   Creates a <code>MassLoadEvent</code> based on the specified <code>ILoadManager</code>.</div>
+</td><td class="summaryTableOwnerCol">PriorityMassLoader</td>
 </tr>
 <tr class="hideInheritedProtectedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
@@ -710,6 +727,61 @@ showHideInherited();
 </tr>
 </table>
 </div>
+<a name="clear()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">clear</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function clear():void</code><p>
+   Clear the loading queues and files priorities.
+   </p></div>
+<a name="createMassLoadEvent()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">createMassLoadEvent</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected override function createMassLoadEvent(file:<a href="ILoadManager.html">ILoadManager</a>, type:String, evt:Event = null):<a href="../events/MassLoadEvent.html">MassLoadEvent</a></code><p>
+   Creates a <code>MassLoadEvent</code> based on the specified <code>ILoadManager</code>. This method also add
+   the priority to the <code>MassLoadEvent</code>.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">file</span>:<a href="ILoadManager.html">ILoadManager</a></code> &mdash; The <code>ILoadManager</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">type</span>:String</code> &mdash; The <code>MassLoadEvent</code> type. This value can be <code>MassLoadEvent.FILE_OPEN</code>
+        or <code>MassLoadEvent.FILE_CLOSE</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">evt</span>:Event</code> (default = <code>null</code>)<code></code> &mdash;  The close event, if any.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../events/MassLoadEvent.html">MassLoadEvent</a></code> &mdash; 
+                        The created <code>MassLoadEvent</code>.
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
 <a name="getFilePriority()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -745,6 +817,32 @@ showHideInherited();
 <br>
 <a href="../net/PriorityMassLoader.html#addPriorizedFile()" target="">addPriorizedFile()</a>
 </div>
+</div>
+<a name="getFilesAtPriority()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getFilesAtPriority</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getFilesAtPriority(priority:int):Array</code><p>
+   Defines the files to be loaded at the specified priority.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">priority</span>:int</code> &mdash; The priority.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; The files that will be loaded at the specified priority.
+   </td>
+</tr>
+</table>
 </div>
 <a name="removeFile()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">

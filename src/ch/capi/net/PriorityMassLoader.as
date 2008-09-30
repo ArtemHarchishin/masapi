@@ -1,5 +1,8 @@
 package ch.capi.net 
-{	import ch.capi.data.QueueList;	
+{	import flash.events.Event;	
+	
+	import ch.capi.events.MassLoadEvent;	
+	import ch.capi.data.QueueList;	
 	import ch.capi.data.IDataStructure;		import ch.capi.net.MassLoader;
 	import ch.capi.data.tree.ArrayHeap;
 	import ch.capi.events.PriorityEvent;
@@ -57,7 +60,7 @@ package ch.capi.net
 		//---------//
 		//Variables//
 		//---------//
-		private var _filePriority:IMap				= new DictionnaryMap(false);
+		private var _filePriority:IMap				= new DictionnaryMap(true);
 		private var _currentPriority:int			= 0;
 		private var _loadByPriority:Boolean			= true;
 		/**
@@ -171,7 +174,37 @@ package ch.capi.net
 		{
 			return _filePriority.getValue(file) as int;	
 		}
-		
+
+		/**
+		 * Defines the files to be loaded at the specified priority.
+		 * 
+		 * @param	priority	The priority.
+		 * @return	The files that will be loaded at the specified priority.
+		 */
+		public function getFilesAtPriority(priority:int):Array
+		{
+			var files:Array = new Array();
+			
+			var storedFiles:Array = _filePriority.keys();
+			for each(var file:ILoadManager in storedFiles)
+			{
+				var filePriority:int = getFilePriority(file);
+				if (filePriority == priority) files.push(file);
+			}
+			
+			return files;
+		}
+
+		/**
+		 * Clear the loading queues and files priorities.
+		 */
+		override public function clear():void
+		{
+			super.clear();
+			
+			_filePriority.clear();
+		}
+
 		/**
 		 * Lists all the files contained into this <code>PriorityMassLoader</code> into a <code>String</code>.
 		 * 
@@ -255,7 +288,8 @@ package ch.capi.net
 			_currentPriority = getFilePriority(ne);
 			
 			//dispatch the priority event
-			var evt:PriorityEvent = new PriorityEvent(PriorityEvent.PRIORITY_CHANGED, _currentPriority);
+			var filesByPriority:Array = getFilesAtPriority(_currentPriority);
+			var evt:PriorityEvent = new PriorityEvent(PriorityEvent.PRIORITY_CHANGED, _currentPriority, filesByPriority);
 			dispatchEvent(evt);
 			
 			//start the loading of all the files with the new priority
@@ -271,4 +305,21 @@ package ch.capi.net
 				if (loadNextFile() == null && isComplete()) break;
 			}
 			while(!filesQueue.isEmpty());		}
+		
+		/**
+		 * Creates a <code>MassLoadEvent</code> based on the specified <code>ILoadManager</code>. This method also add
+		 * the priority to the <code>MassLoadEvent</code>.
+		 * 
+		 * @param	file	The <code>ILoadManager</code>.
+		 * @param	type	The <code>MassLoadEvent</code> type. This value can be <code>MassLoadEvent.FILE_OPEN</code>
+		 * 					or <code>MassLoadEvent.FILE_CLOSE</code>.
+		 * @param	evt		The close event, if any.
+		 * @return	The created <code>MassLoadEvent</code>.
+		 */
+		protected override function createMassLoadEvent(file:ILoadManager, type:String, evt:Event = null):MassLoadEvent
+		{
+			var op:MassLoadEvent = super.createMassLoadEvent(file, type, evt);
+			op.priority = getFilePriority(file);
+			return op;
+		}
 	}}
