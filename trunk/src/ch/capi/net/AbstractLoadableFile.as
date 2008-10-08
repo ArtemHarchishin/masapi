@@ -1,5 +1,6 @@
 ﻿package ch.capi.net
 {
+	import flash.events.HTTPStatusEvent;	
 	import flash.system.ApplicationDomain;	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -60,6 +61,21 @@
 	 * @eventType	flash.events.ProgressEvent.PROGRESS
 	 */
 	[Event(name="progress", type="flash.events.ProgressEvent")]
+	
+	/**
+	 * Dispatched when the http headers are received. This event isn't sent by the all the load manager objects.
+	 * 
+	 * @eventType	flash.events.HTTPStatusEvent.HTTP_STATUS
+	 */
+	[Event(name="httpStatus", type="flash.events.HTTPStatusEvent")]
+	
+	/**
+	 * Dispatched when the content of the <code>loadManagerObject</code> is displayed. This event is only dispatched if the
+	 * type of <code>ILoadableFile</code> is <code>LoadableFileType.SWF</code>.
+	 * 
+	 * @eventType	flash.events.Event.INIT
+	 */
+	[Event(name="init", type="flash.events.Event")]
 
 	/**
 	 * Represents a <code>AbstractLoadableFile</code>. This is a basic
@@ -187,34 +203,23 @@
 		 */
 		public function get closeEvent():Event { return _closeEvent; }
 		
-		/*
-		 * This method is use into the toString() method, but must be overriden
-		 * into the sub-classes. This allow to have a default implementation that will force the 
-		 * sub-classes to implement it.
-		 * 
-		 * @example
-		 * <listing version="3.0">
-		 * var ab:AbstractLoadableFile = new AbstractLoadableFile(null);
-		 * var type:String = ab["getType"]();
-		 * trace(type);
-	     * </listing>
-		 */
-		prototype.getType = function():String { return "!!! AbstractLoadableFile.getType() - not overriden !!!"; };
-		
 		//-----------//
 		//Constructor//
 		//-----------//
 		
 		/**
-		 * Creates a new <code>AbstractLoadableFile</code> object.
+		 * Creates a new <code>AbstractLoadableFile</code> object. This method throws an error if
+		 * it is directly called or if a sub-class doesn't implement the <code>ILoadableFile</code> interface.
 		 * 
 		 * @param	loadManagerObject		The <code>loadManagerObject</code>.
 		 */
 		public function AbstractLoadableFile(loadManagerObject:Object):void
-		{			
+		{		
 			_loadManagerObject = loadManagerObject;
+			
+			if (! (this is ILoadableFile)) throw new IllegalOperationError("ILoableFile interface not implemented : "+this);
 		}
-		
+
 		//--------------//
 		//Public methods//
 		//--------------//
@@ -374,9 +379,7 @@
 		public override function toString():String
 		{
 			if (urlRequest==null) return null;
-			
-			var trg:Object = this; //trick to by-pass the compilation
-			return urlRequest.url+" ("+trg.getType()+")";
+			return urlRequest.url+" ("+getType()+")";
 		}
 		
 		//-----------------//
@@ -391,11 +394,13 @@
 		 */
 		protected function registerTo(dispatcher:IEventDispatcher):void
 		{
+			dispatcher.addEventListener(Event.INIT, onInit, false, LISTENER_PRIORITY, true);
 			dispatcher.addEventListener(Event.OPEN, onOpen, false, LISTENER_PRIORITY, true);
 			dispatcher.addEventListener(Event.COMPLETE, onComplete, false, LISTENER_PRIORITY, true);
 			dispatcher.addEventListener(ProgressEvent.PROGRESS, onProgress, false, LISTENER_PRIORITY, true);
 			dispatcher.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError, false, LISTENER_PRIORITY, true);
 			dispatcher.addEventListener(IOErrorEvent.IO_ERROR, onIOError, false, LISTENER_PRIORITY, true);
+			dispatcher.addEventListener(HTTPStatusEvent.HTTP_STATUS, onHttpStatus, false, LISTENER_PRIORITY, true);
 		}
 		
 		/** 
@@ -406,11 +411,24 @@
 		 */
 		protected function unregisterFrom(dispatcher:IEventDispatcher):void
 		{
+			dispatcher.removeEventListener(Event.INIT, onInit);
 			dispatcher.removeEventListener(Event.OPEN, onOpen);
 			dispatcher.removeEventListener(Event.COMPLETE, onComplete);
 			dispatcher.removeEventListener(ProgressEvent.PROGRESS, onProgress);
 			dispatcher.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
 			dispatcher.removeEventListener(IOErrorEvent.IO_ERROR, onIOError);
+			dispatcher.removeEventListener(HTTPStatusEvent.HTTP_STATUS, onHttpStatus);
+		}
+		
+		/**
+		 * <code>Event.INIT</code> listener.
+		 * 
+		 * @param	evt		The event object.
+		 */
+		protected function onInit(evt:Event):void
+		{
+			var ne:Event = evt.clone();
+			dispatchEvent(ne);
 		}
 		
 		/**
@@ -485,6 +503,17 @@
 		}
 		
 		/**
+		 * <code>HTTPStatusEvent.HTTP_STATUS</code> listener.
+		 * 
+		 * @param	evt		The event object.
+		 */
+		protected function onHttpStatus(evt:HTTPStatusEvent):void
+		{
+			var ne:Event = evt.clone();
+			dispatchEvent(ne);
+		}
+
+		/**
 		 * Checks if the specified source class is a child of the specified super class.
 		 * 
 		 * @param	source		The source class (child).
@@ -538,6 +567,18 @@
 		protected function checkDestroyed():void
 		{
 			if (isDestroyed()) throw new IllegalOperationError("The file "+this+" has been destroyed");
+		}
+		
+		//---------------//
+		//Private methods//
+		//---------------//
+		
+		/**
+		 * @private
+		 */
+		private function getType():String
+		{
+			return (this as ILoadableFile).getType();
 		}
 	}
 }
