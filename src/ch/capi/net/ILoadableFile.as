@@ -20,6 +20,21 @@ package ch.capi.net
 	[Event(name="securityError", type="flash.events.SecurityErrorEvent")]
 	
 	/**
+	 * Dispatched when the http headers are received. This event isn't sent by the all the load manager objects.
+	 * 
+	 * @eventType	flash.events.HTTPStatusEvent.HTTP_STATUS
+	 */
+	[Event(name="httpStatus", type="flash.events.HTTPStatusEvent")]
+	
+	/**
+	 * Dispatched when the content of the <code>loadManagerObject</code> is displayed. This event is only dispatched if the
+	 * type of <code>ILoadableFile</code> is <code>LoadableFileType.SWF</code>.
+	 * 
+	 * @eventType	flash.events.Event.INIT
+	 */
+	[Event(name="init", type="flash.events.Event")]
+	
+	/**
 	 * Represents a loadable file.
 	 * 
 	 * @see			ch.capi.net.AbstractLoadableFile	AbstractLoadableFile
@@ -54,8 +69,9 @@ package ch.capi.net
 		function set virtualBytesTotal(value:uint):void;
 		
 		/**
-		 * Defines the load manager object. This object can be a
-		 * <code>Loader</code> or a </code>URLLoader</code>.
+		 * Defines the load manager object. This object represents the object that
+		 * manages the loading, i.e. a <code>Loader</code>, <code>URLLoader</code>, 
+		 * <code>Sound</code>, ...
 		 */
 		function get loadManagerObject():Object;
 		

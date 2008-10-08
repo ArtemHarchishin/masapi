@@ -155,7 +155,7 @@ package ch.capi.net.app
 			//virtual bytes total
 			if (node.attributes[ATTRIBUTE_VIRTUALBYTESTOTAL_VALUE] != null)
 			{
-				var valueVB:int = parseInt(node.attributes[ATTRIBUTE_VIRTUALBYTESTOTAL_VALUE]);
+				var valueVB:int = ParseUtils.parseUnsigned(node.attributes[ATTRIBUTE_VIRTUALBYTESTOTAL_VALUE]);
 				if (!isNaN(valueVB)) loadableFileFactory.defaultVirtualBytesTotal = valueVB;
 			}
 			
@@ -163,7 +163,7 @@ package ch.capi.net.app
 			if (node.attributes[ATTRIBUTE_USECACHE_VALUE] != null)
 			{
 				var valueUC:String = node.attributes[ATTRIBUTE_USECACHE_VALUE];
-				loadableFileFactory.defaultUseCache = !(valueUC.toLowerCase() == "false");
+				loadableFileFactory.defaultUseCache = ParseUtils.parseBoolean(valueUC);
 			}
 			
 			//base path

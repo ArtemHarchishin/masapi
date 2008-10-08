@@ -152,7 +152,7 @@ package ch.capi.net.app
 		public function addDependency(file:ApplicationFile):void
 		{
 			if (file.applicationContext != applicationContext) throw new ArgumentError("The ApplicationContext is not the same");
-			if (!isDependencySafe(file)) throw new DependencyNotSafeError("Dependency not safe for file '"+file+"'");
+			if (!isDependencyRecursive(file)) throw new DependencyNotSafeError("Dependency not safe for file '"+file+"' (recursive dependency)");
 			
 			_dependencies.push(file);
 		}
@@ -268,12 +268,12 @@ package ch.capi.net.app
 		 * @param	file	The file to add as a dependency.
 		 * @return	<code>true</code> is the dependency is safe.
 		 */
-		protected function isDependencySafe(file:ApplicationFile):Boolean
+		protected function isDependencyRecursive(file:ApplicationFile):Boolean
 		{
 			for each(var ap:ApplicationFile in _dependencies)
 			{
 				if (ap == file) return false;
-				if (!ap.isDependencySafe(file)) return false;
+				if (!ap.isDependencyRecursive(file)) return false;
 			}
 			
 			return true;

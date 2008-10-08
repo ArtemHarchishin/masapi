@@ -27,7 +27,6 @@
 		 * Defines the <code>LoaderContext</code> of the
 		 * <code>Loader</code> object.
 		 */
-		//public var loaderContext:LoaderContext 		= new LoaderContext(false, ApplicationDomain.currentDomain);
 		public var loaderContext:LoaderContext 		= null; //initialized by LoadableFileFactory
 		
 		//-----------//
@@ -45,12 +44,11 @@
 			
 			var dispatcher:IEventDispatcher = getEventDispatcher();
 			registerTo(dispatcher);
-			dispatcher.addEventListener(Event.INIT, onInit, false, 10, true);
 		}
 		
 		//--------------//
 		//Public methods//
-		//--------------//
+		//--------------// 
 		
 		/**
 		 * Starts the loading of the data.
@@ -141,7 +139,7 @@
 		 * 
 		 * @param	evt		The event object.
 		 */
-		protected function onInit(evt:Event):void
+		protected override function onInit(evt:Event):void
 		{
 			var src:Loader = loadManagerObject as Loader;
 			var cnt:DisplayObject = src.content;
@@ -152,6 +150,8 @@
 				var adc:IRootDocument = cnt as IRootDocument;
 				adc.initializeContext(this);
 			}
+			
+			super.onInit(evt);
 		}
 	}
 }

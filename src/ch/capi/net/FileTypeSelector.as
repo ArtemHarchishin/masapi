@@ -46,7 +46,7 @@ package ch.capi.net
 		//-----------//
 		
 		/**
-		 * Creates a new <code>ExtensionFileSelector</code> object.
+		 * Creates a new <code>FileTypeSelector</code> object.
 		 * <p>The following extensions are defined by default :<br />
 		 * <ul>
 		 * 	<li><i>swf</i> as <code>LoadableFileType.SWF</code></li>

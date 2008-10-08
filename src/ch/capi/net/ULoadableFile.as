@@ -147,7 +147,7 @@ package ch.capi.net
 		 * 
 		 * @param	evt		The event object.
 		 */
-		protected function onInit(evt:Event):void
+		protected override function onInit(evt:Event):void
 		{
 			var src:LoaderInfo = evt.target as LoaderInfo;
 			var cnt:DisplayObject = src.content;
@@ -158,6 +158,12 @@ package ch.capi.net
 				var adc:IRootDocument = cnt as IRootDocument;
 				adc.initializeContext(this);
 			}
+			
+			/*
+			 * DO NOT CALL THE SUPER onInit METHOD !!!
+			 * This method is only called to retrieve the data with the getData() method, so
+			 * there would be conceptually wrong that this ILoadableFile dispatches a Event.INIT event !
+			 */
 		}
 	}
 }
