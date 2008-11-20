@@ -130,6 +130,16 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </td><td class="summaryTableOwnerCol"><a href="../MassLoader.html">MassLoader</a></td>
 </tr>
 <tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="../MassLoader.html#numFiles">numFiles</a> : uint<div class="summaryTableDescription">
+   Defines the total of the files into the <code>MassLoader</code>.</div>
+</td><td class="summaryTableOwnerCol"><a href="../MassLoader.html">MassLoader</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="../MassLoader.html#numFilesLoaded">numFilesLoaded</a> : uint<div class="summaryTableDescription">
+   Defines the number of files loaded.</div>
+</td><td class="summaryTableOwnerCol"><a href="../MassLoader.html">MassLoader</a></td>
+</tr>
+<tr class="hideInheritedProperty">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="../MassLoader.html#numFilesLoading">numFilesLoading</a> : uint<div class="summaryTableDescription">
    Defines the number of files being currently loaded.</div>
 </td><td class="summaryTableOwnerCol"><a href="../MassLoader.html">MassLoader</a></td>
@@ -137,6 +147,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedProperty">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="../MassLoader.html#numFilesOpen">numFilesOpen</a> : uint<div class="summaryTableDescription">
    Defines the number of files being currently open.</div>
+</td><td class="summaryTableOwnerCol"><a href="../MassLoader.html">MassLoader</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="../MassLoader.html#numFilesToLoad">numFilesToLoad</a> : uint<div class="summaryTableDescription">
+   Defines the number of files to load.</div>
 </td><td class="summaryTableOwnerCol"><a href="../MassLoader.html">MassLoader</a></td>
 </tr>
 <tr class="hideInheritedProperty">
@@ -327,6 +342,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
+<a class="signatureLink" href="../PriorityMassLoader.html#setFilePriority()">setFilePriority</a>(file:<a href="../../net/ILoadManager.html">ILoadManager</a>, priority:int):void</div>
+<div class="summaryTableDescription">
+   Set a file priority of a <code>ILoadManager</code> object.</div>
+</td><td class="summaryTableOwnerCol"><a href="../PriorityMassLoader.html">PriorityMassLoader</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
 <a class="signatureLink" href="../MassLoader.html#start()">start</a>():void</div>
 <div class="summaryTableDescription">
    Starts downloading data from the specified <code>ILoadableFile</code> objects.</div>
@@ -381,6 +404,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summaryTableDescription">
    Creates a <code>MassLoadEvent</code> based on the specified <code>ILoadManager</code>.</div>
 </td><td class="summaryTableOwnerCol"><a href="../PriorityMassLoader.html">PriorityMassLoader</a></td>
+</tr>
+<tr class="hideInheritedProtectedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="../MassLoader.html#getFileQueueIndex()">getFileQueueIndex</a>(file:<a href="../../net/ILoadManager.html">ILoadManager</a>):int</div>
+<div class="summaryTableDescription">
+   Retrieves the index of a file into the loading queue (if the loading of the specified file has been started).</div>
+</td><td class="summaryTableOwnerCol"><a href="../MassLoader.html">MassLoader</a></td>
 </tr>
 <tr class="hideInheritedProtectedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">

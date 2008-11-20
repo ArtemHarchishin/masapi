@@ -137,8 +137,9 @@ package ch.capi.data.tree
 		public function clear():void
 		{
 			_elements = new Array();
+			_nextElement = null;
 		}
-		
+
 		/**
 		 * Get if the structure is empty or not.
 		 * 

@@ -33,6 +33,7 @@
 		private var _file:ILoadManager;
 		private var _closeEvent:Event;
 		private var _staticIndex:int;
+		private var _queueIndex:int;
 		private var _priority:int;
 		
 		//-----------------//
@@ -48,6 +49,11 @@
 		 * Defines the event that occured when the file was closed.
 		 */
 		public function get closeEvent():Event { return _closeEvent; }
+		
+		/**
+		 * Defines the index of the file into the loading queue.
+		 */
+		public function get queueIndex():int { return _queueIndex; }
 		
 		/**
 		 * Defines the index of the file. The index is unique for a <code>ILoadableFile</code>
@@ -77,15 +83,17 @@
 		 * @param	file			The file being loaded.
 		 * @param	closeEvent		The <code>Event</code> dispatched to close the file. This event is cloned before beeing stored.
 		 * @param	staticIndex		The static index of the file into the loading queue.
+		 * @param	queueIndex		The index of the file into the loading queue.
 		 * @param	priority		The file priority.
 		 */
-		public function MassLoadEvent(type:String, file:ILoadManager=null, closeEvent:Event=null, staticIndex:int=-1, priority:int=0):void
+		public function MassLoadEvent(type:String, file:ILoadManager=null, closeEvent:Event=null, staticIndex:int=-1, queueIndex:int=0, priority:int=0):void
 		{
 			super(type, false, false);
 			
 			_file = file;
 			_closeEvent = (closeEvent==null) ? null : closeEvent.clone();
 			_staticIndex = staticIndex;
+			_queueIndex = queueIndex;
 			_priority = priority;
 		}
 		

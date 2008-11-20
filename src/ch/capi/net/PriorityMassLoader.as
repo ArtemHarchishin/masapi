@@ -1,8 +1,8 @@
 package ch.capi.net 
-{	import flash.events.Event;	
+{	import flash.errors.IllegalOperationError;	
+	import flash.events.Event;	
 	
 	import ch.capi.events.MassLoadEvent;	
-	import ch.capi.data.QueueList;	
 	import ch.capi.data.IDataStructure;		import ch.capi.net.MassLoader;
 	import ch.capi.data.tree.ArrayHeap;
 	import ch.capi.events.PriorityEvent;
@@ -91,17 +91,7 @@ package ch.capi.net
 		 * @see	ch.capi.net.MassLoader#filesQueue	MassLoader.filesQueue
 		 */
 		public function get loadByPriority():Boolean { return _loadByPriority; }
-		public function set loadByPriority(value:Boolean):void
-		{
-			var newStructure:IDataStructure = (value) ? new ArrayHeap(sortFiles) : new QueueList();
-			var currentStructure:IDataStructure = filesQueue;
-			
-			//retrieves old files into the loading queue
-			while (!currentStructure.isEmpty()) newStructure.add(currentStructure.remove());
-			
-			filesQueue = newStructure;
-			_loadByPriority = value;
-		}
+		public function set loadByPriority(value:Boolean):void { _loadByPriority = value; }
 
 		//-----------//
 		//Constructor//
@@ -117,7 +107,9 @@ package ch.capi.net
 		public function PriorityMassLoader(loadByPriority:Boolean=true, parallelFiles:uint=0):void 
 		{
 			super(parallelFiles);
-			this.loadByPriority = loadByPriority;
+			super.filesQueue = new ArrayHeap(sortFiles);
+			
+			_loadByPriority = loadByPriority;
 		}
 
 		//--------------//
@@ -161,18 +153,30 @@ package ch.capi.net
 		}
 		
 		/**
-		 * Retreives the priority of a <code>ILoadManager</code> object. In order to change the
-		 * priority of a file, simple remove it and readd it using the <code>addPriorizedFile</code>
-		 * method.
+		 * Retreives the priority of a <code>ILoadManager</code> object.
 		 * 
 		 * @param	file		The file to get the priority.
 		 * @return	The priority or 0 if the file isn't into the loading queue.
-		 * @see		#removeFile()		removeFile()
 		 * @see		#addPriorizedFile()	addPriorizedFile()
+		 * @see		#setFilePriority()	setFilePriority()
 		 */
 		public function getFilePriority(file:ILoadManager):int
 		{
 			return _filePriority.getValue(file) as int;	
+		}
+		
+		/**
+		 * Set a file priority of a <code>ILoadManager</code> object. Note that changing the priority
+		 * of a file if the <code>PriorityMassLoader</code> is already loading won't affect it.
+		 * 
+		 * @param	file		The file to set the priority.
+		 * @param	priority	The new priority of the file.
+		 * @throws	IllegalOperationError	If the file is not into the loading queue.
+		 */
+		public function setFilePriority(file:ILoadManager, priority:int):void
+		{
+			if (!hasFile(file)) throw new IllegalOperationError("The specified file "+file+" is not into the loading queue");
+			_filePriority.put(file, priority);
 		}
 
 		/**

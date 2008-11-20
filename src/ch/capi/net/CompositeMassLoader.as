@@ -1,11 +1,11 @@
 package ch.capi.net 
 {
+	import flash.errors.IllegalOperationError;	
 	import flash.net.URLRequest;		
 	
 	import ch.capi.data.ArrayList;	
 	import ch.capi.net.LoadableFileFactory;
 	import ch.capi.net.IMassLoader;
-	import ch.capi.net.MassLoader;
 	import ch.capi.net.ILoadableFile;
 	
 	/**
@@ -100,7 +100,7 @@ package ch.capi.net
 		 */
 		public function CompositeMassLoader(keepFiles:Boolean = true, massLoader:IMassLoader=null, loadableFileFactory:LoadableFileFactory=null)
 		{
-			if (massLoader == null) massLoader = new MassLoader();
+			if (massLoader == null) massLoader = new PriorityMassLoader();
 			if (loadableFileFactory == null) loadableFileFactory = new LoadableFileFactory();
 			
 			_keepFiles = keepFiles;
@@ -168,8 +168,45 @@ package ch.capi.net
 		{
 			var request:URLRequest = LoadableFileFactory.getRequest(url);
 			var file:ILoadableFile = createLoadableFile(request, fileType);
-			_factory.attachListeners(file,onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
+			_factory.attachListeners(file, onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
 			_massLoader.addFile(file);
+			
+			if (keepFiles) storeFile(file);
+			
+			return file;
+		}
+		
+		/**
+		 * Creates a <code>ILoadableFile</code> from a url and add it to the current loading queue.
+		 * 
+		 * @param 	url			The url of the file.
+		 * @param	priority	The priority of the file.
+		 * @param	fileType	The type of the file.
+		 * @param	onOpen		The <code>Event.OPEN</code> listener.
+		 * @param	onProgress	The <code>ProgressEvent.PROGRESS</code> listener.
+		 * @param	onComplete	The <code>Event.COMPLETE</code> listener.
+		 * @param	onClose		The <code>Event.CLOSE</code> listener.
+		 * @param	onIOError	The <code>IOErrorEvent.IO_ERROR</code> listener.
+		 * @param	onSecurityError The <code>SecurityErrorEvent.SECURITY_ERROR</code> listener.
+		 * @return	The created <code>ILoadableFile</code>.
+		 * @throws	IllegalOperationError	If the <code>IMassLoader</code> is not a <code>PriorityMassLoader</code>.
+		 * @see ch.capi.net.LoadableFileFactory#getRequest()	LoadableFileFactory.getRequest()
+		 * @see	ch.capi.net.PriorityMassLoader	PriorityMassLoader
+		 */
+		public function addPrioritizedFile(url:Object, priority:int = 0, fileType:String = null, 
+											onOpen:Function=null, 
+								   			onProgress:Function=null, 
+								   			onComplete:Function=null, 
+								   			onClose:Function=null,
+								   			onIOError:Function=null,
+								   			onSecurityError:Function=null):ILoadableFile
+		{
+			if (!(_massLoader is PriorityMassLoader)) throw new IllegalOperationError("The IMassLoader is not a PrioritzedMassLoader");
+			
+			var request:URLRequest = LoadableFileFactory.getRequest(url);
+			var file:ILoadableFile = createLoadableFile(request, fileType);
+			_factory.attachListeners(file, onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
+			(_massLoader as PriorityMassLoader).addPrioritizedFile(file, priority);
 			
 			if (keepFiles) storeFile(file);
 			
