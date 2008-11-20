@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
-<meta content="ApplicationFile,ch.capi.net.app.ApplicationFile,applicationContext,dependencies,global,loadableFile,name,priority,addDependency,clearDependencies,getByLoadableFile,getData,getParents,isDependencyOf,isDependencySafe,removeDependency,setContext,toString,get" name="keywords">
+<meta content="ApplicationFile,ch.capi.net.app.ApplicationFile,applicationContext,dependencies,global,loadableFile,name,priority,addDependency,clearDependencies,getByLoadableFile,getData,getParents,isDependencyOf,isDependencyRecursive,removeDependency,setContext,toString,get" name="keywords">
 <title>ch.capi.net.app.ApplicationFile</title>
 </head>
 <body>
@@ -220,7 +220,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#isDependencySafe()">isDependencySafe</a>(file:<a href="ApplicationFile.html">ApplicationFile</a>):Boolean</div>
+<a class="signatureLink" href="#isDependencyRecursive()">isDependencyRecursive</a>(file:<a href="ApplicationFile.html">ApplicationFile</a>):Boolean</div>
 <div class="summaryTableDescription">
    Check if the dependency is safe for a <code>ApplicationFile</code>.</div>
 </td><td class="summaryTableOwnerCol">ApplicationFile</td>
@@ -585,14 +585,14 @@ showHideInherited();
 </tr>
 </table>
 </div>
-<a name="isDependencySafe()"></a>
+<a name="isDependencyRecursive()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">isDependencySafe</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+<td class="detailHeaderName">isDependencyRecursive</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>protected function isDependencySafe(file:<a href="ApplicationFile.html">ApplicationFile</a>):Boolean</code><p>
+<code>protected function isDependencyRecursive(file:<a href="ApplicationFile.html">ApplicationFile</a>):Boolean</code><p>
    Check if the dependency is safe for a <code>ApplicationFile</code>.
    
    </p><span class="label">Parameters</span>

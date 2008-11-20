@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="MassLoader,ch.capi.net.MassLoader,alwaysDispatchProgressEvent,bytesLoaded,bytesTotal,closeEvent,files,filesLoading,filesQueue,loadInfo,loadPolicy,nextFileToLoad,numFilesLoading,numFilesOpen,parallelFiles,stateIdle,stateLoading,useCache,addFile,clear,createMassLoadEvent,getFileCount,getFileStaticIndex,getFiles,hasFile,isComplete,loadFile,loadNextFile,onClose,onComplete,onIOError,onOpen,onProgress,onSecurityError,processPolicy,registerTo,removeFile,start,startLoading,stop,toString,unregisterFrom,updateBytes" name="keywords">
+<meta content="MassLoader,ch.capi.net.MassLoader,alwaysDispatchProgressEvent,bytesLoaded,bytesTotal,closeEvent,files,filesLoading,filesQueue,loadInfo,loadPolicy,nextFileToLoad,numFiles,numFilesLoaded,numFilesLoading,numFilesOpen,numFilesToLoad,parallelFiles,stateIdle,stateLoading,useCache,addFile,clear,createMassLoadEvent,getFileCount,getFileQueueIndex,getFileStaticIndex,getFiles,hasFile,isComplete,loadFile,loadNextFile,onClose,onComplete,onIOError,onOpen,onProgress,onSecurityError,processPolicy,registerTo,removeFile,start,startLoading,stop,toString,unregisterFrom,updateBytes" name="keywords">
 <title>ch.capi.net.MassLoader</title>
 </head>
 <body>
@@ -175,6 +175,16 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </td><td class="summaryTableOwnerCol">MassLoader</td>
 </tr>
 <tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#numFiles">numFiles</a> : uint<div class="summaryTableDescription">[read-only]
+   Defines the total of the files into the <code>MassLoader</code>.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#numFilesLoaded">numFilesLoaded</a> : uint<div class="summaryTableDescription">[read-only]
+   Defines the number of files loaded.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#numFilesLoading">numFilesLoading</a> : uint<div class="summaryTableDescription">[read-only]
    Defines the number of files being currently loaded.</div>
 </td><td class="summaryTableOwnerCol">MassLoader</td>
@@ -182,6 +192,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#numFilesOpen">numFilesOpen</a> : uint<div class="summaryTableDescription">[read-only]
    Defines the number of files being currently open.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#numFilesToLoad">numFilesToLoad</a> : uint<div class="summaryTableDescription">[read-only]
+   Defines the number of files to load.</div>
 </td><td class="summaryTableOwnerCol">MassLoader</td>
 </tr>
 <tr class="">
@@ -344,6 +359,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </div>
 <div class="summaryTableDescription">
    Creates a <code>MassLoadEvent</code> based on the specified <code>ILoadManager</code>.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getFileQueueIndex()">getFileQueueIndex</a>(file:<a href="ILoadManager.html">ILoadManager</a>):int</div>
+<div class="summaryTableDescription">
+   Retrieves the index of a file into the loading queue (if the loading of the specified file has been started).</div>
 </td><td class="summaryTableOwnerCol">MassLoader</td>
 </tr>
 <tr class="">
@@ -718,6 +741,36 @@ showHideInherited();
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get nextFileToLoad():<a href="../net/ILoadManager.html">ILoadManager</a></code>
 <br>
 </div>
+<a name="numFiles"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">numFiles</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>numFiles:uint</code>&nbsp;&nbsp;[read-only]<p>
+   Defines the total of the files into the <code>MassLoader</code>. This value will remain correct even
+   if files are added during the loading.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get numFiles():uint</code>
+<br>
+</div>
+<a name="numFilesLoaded"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">numFilesLoaded</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>numFilesLoaded:uint</code>&nbsp;&nbsp;[read-only]<p>
+   Defines the number of files loaded. This value contains also the files that have not been
+   loaded successfully.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get numFilesLoaded():uint</code>
+<br>
+</div>
 <a name="numFilesLoading"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -762,6 +815,21 @@ showHideInherited();
 <div class="seeAlso">
 <a href="../net/MassLoader.html#numFilesLoading" target="">numFilesLoading</a>
 </div>
+</div>
+<a name="numFilesToLoad"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">numFilesToLoad</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>numFilesToLoad:uint</code>&nbsp;&nbsp;[read-only]<p>
+   Defines the number of files to load. Once a file start its loading, it is no considered
+   in this value anymore.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get numFilesToLoad():uint</code>
+<br>
 </div>
 <a name="parallelFiles"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -971,6 +1039,32 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20"></td><td><code>uint</code> &mdash; The number of file to load.
+   </td>
+</tr>
+</table>
+</div>
+<a name="getFileQueueIndex()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getFileQueueIndex</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function getFileQueueIndex(file:<a href="ILoadManager.html">ILoadManager</a>):int</code><p>
+   Retrieves the index of a file into the loading queue (if the loading of the specified file has been started).
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">file</span>:<a href="ILoadManager.html">ILoadManager</a></code> &mdash;  The <code>ILoadManager</code>.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>int</code> &mdash; The index into the loading queue or -1.
    </td>
 </tr>
 </table>

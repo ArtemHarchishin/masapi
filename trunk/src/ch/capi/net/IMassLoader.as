@@ -61,6 +61,24 @@ package ch.capi.net
 		 * @see	#numFilesLoading	numFilesLoading
 		 */
 		function get numFilesOpen():uint;
+		
+		/**
+		 * Defines the number of files to load. Once a file start its loading, it is no considered
+		 * in this value anymore.
+		 */
+		function get numFilesToLoad():uint;
+
+		/**
+		 * Defines the number of files loaded. This value contains also the files that have not been
+		 * loaded successfully.
+		 */
+		function get numFilesLoaded():uint;
+		
+		/**
+		 * Defines the total of the files into the <code>IMassLoader</code>. This value will remain correct even
+		 * if files are added during the loading.
+		 */
+		function get numFiles():uint;
 
 		/**
 		 * Add a file to the loading queue.

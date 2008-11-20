@@ -153,6 +153,7 @@
 		private var _filesToLoad:IList					= new ArrayList();
 		private var _filesLoading:IList					= new ArrayList();
 		private var _filesIndex:IMap 					= new DictionnaryMap(true);
+		private var _filesOrder:IMap					= new DictionnaryMap(true);
 		private var _currentFileIndex:int				= 0;
 		private var _isLoading:Boolean					= false;
 		private var _closeEvent:Event					= null;
@@ -164,6 +165,8 @@
 		private var _tempTotalBytes:uint				= 0; //used to manage the total bytes
 		private var _realTotalBytes:uint 				= 0;
 		private var _realLoadedBytes:uint				= 0;
+		private var _totalFilesToLoad:uint				= 0;
+		private var _totalFilesLoaded:uint				= 0;
 		
 		/**
 		 * Defines if the progress event should be dispatched each time or
@@ -263,6 +266,24 @@
 		 * @see	#numFilesLoading	numFilesLoading
 		 */
 		public function get numFilesOpen():uint { return _filesLoading.length; }
+		
+		/**
+		 * Defines the number of files to load. Once a file start its loading, it is no considered
+		 * in this value anymore.
+		 */
+		public function get numFilesToLoad():uint { return _totalFilesToLoad; }
+		
+		/**
+		 * Defines the number of files loaded. This value contains also the files that have not been
+		 * loaded successfully.
+		 */
+		public function get numFilesLoaded():uint { return _totalFilesLoaded; }
+		
+		/**
+		 * Defines the total of the files into the <code>MassLoader</code>. This value will remain correct even
+		 * if files are added during the loading.
+		 */
+		public function get numFiles():uint { return numFilesToLoad+numFilesLoaded+numFilesLoading; }
 		
 		/**
 		 * Defines the event that happend to close the <code>MassLoader</code> (Event.CLOSE or Event.COMPLETE). This
@@ -454,6 +475,8 @@
 			
 			//put all the files into the queue
 			var l:uint = _filesToLoad.length;
+			_totalFilesToLoad = l;
+			_totalFilesLoaded = 0;
 			for (var i:uint=0 ; i<l ; i++) _filesQueue.add(_filesToLoad.getElementAt(i));
 			
 			//update the current loaded values
@@ -462,7 +485,7 @@
 			//open event
 			var evt:Event = new Event(Event.OPEN);
 			dispatchEvent(evt);
-			
+				
 			/*
 			 * Checks the number of files.
 			 * If there is no file to load, then wait some milliseconds before launch the complete
@@ -479,6 +502,7 @@
 		{
 			_filesToLoad.clear();
 			_filesIndex.clear();
+			_filesOrder.clear();
 			_currentFileIndex = 0;
 		}
 		
@@ -510,6 +534,10 @@
 			
 			//retrieve the next file
 			var nextFile:ILoadManager = extractNextFile();
+			
+			//set the order index of the file
+			var queueIndex:int = numFiles-numFilesToLoad;
+			_filesOrder.put(nextFile, queueIndex);
 			
 			//launch the loading of the file
 			return (loadFile(nextFile) ? nextFile : null);
@@ -740,9 +768,23 @@
 		 */
 		protected function createMassLoadEvent(file:ILoadManager, type:String, evt:Event=null):MassLoadEvent
 		{
-			var index:int = getFileStaticIndex(file);
-			var op:MassLoadEvent = new MassLoadEvent(type, file, null, index);
+			var staticIndex:int = getFileStaticIndex(file);
+			var queueIndex:int = getFileQueueIndex(file);
+			var op:MassLoadEvent = new MassLoadEvent(type, file, evt, staticIndex, queueIndex);
 			return op;
+		}
+		
+		/**
+		 * Retrieves the index of a file into the loading queue (if the loading of the specified file has been started).
+		 * 
+		 * @param	file		The <code>ILoadManager</code>.
+		 * @return	The index into the loading queue or -1.
+		 */
+		protected function getFileQueueIndex(file:ILoadManager):int
+		{
+			if (!_filesOrder.containsKey(file)) return -1;
+			var nb:int = _filesOrder.getValue(file);
+			return nb;
 		}
 
 		//---------------//
@@ -754,6 +796,7 @@
 		 */
 		protected function dispatchCloseEvent(file:ILoadManager, evt:Event=null):void
 		{
+			_totalFilesLoaded++;
 			var op:MassLoadEvent = createMassLoadEvent(file, MassLoadEvent.FILE_CLOSE, evt);
 			dispatchEvent(op); 
 		}
@@ -763,6 +806,7 @@
 		 */
 		protected function dispatchOpenEvent(file:ILoadManager):void
 		{
+			_totalFilesToLoad--;
 			var op:MassLoadEvent = createMassLoadEvent(file, MassLoadEvent.FILE_OPEN);
 			dispatchEvent(op);
 		}
