@@ -13,7 +13,8 @@ package ch.capi.net.app
 	 * <a href="http://www.astorm.ch/masapi/validator.php">here</a>.
 	 * 
 	 * @see		ch.capi.net.app.ApplicationFile			ApplicationFile
-	 * @see		ch.capi.net.app.ApplicationMassLoader	ApplicationMassLoader	 * @author 	Cedric Tabin - thecaptain
+	 * @see		ch.capi.net.app.ApplicationMassLoader	ApplicationMassLoader
+	 * @see		ch.capi.net.app.ApplicationConfigLoader	ApplicationConfigLoader	 * @author 	Cedric Tabin - thecaptain
 	 * @version	1.0	 */	public class ApplicationFileParser 
 	{
 		//---------//
@@ -86,6 +87,13 @@ package ch.capi.net.app
 		private var _loadableFileFactory:LoadableFileFactory;
 		private var _applicationContext:ApplicationContext;
 		private var _currentIndex:int;
+		
+		/**
+		 * Defines a callback method that is called when an <code>ApplicationFile</code> is created. If this property is
+		 * not <code>null</code> it will be called after the properties have initialized, but before the dependencies have been added.
+		 * The signature of the method should be the following : <code>function(appFile:ApplicationFile, fileNode:XMLNode):void</code>.
+		 */
+		public var initializeFile:Function = null;
 		
 		//-----------------//
 		//Getters & Setters//
@@ -237,6 +245,9 @@ package ch.capi.net.app
 				
 			//initialization
 			initializeApplicationFile(appFile);
+		
+			//manual init
+			if (initializeFile != null) initializeFile(appFile, node);
 		
 			return appFile;
 		}

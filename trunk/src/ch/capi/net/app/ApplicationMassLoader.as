@@ -1,5 +1,7 @@
 package ch.capi.net.app 
 {
+	import flash.errors.IllegalOperationError;	
+	
 	import ch.capi.net.PriorityMassLoader;
 	import ch.capi.net.IMassLoader;
 	import ch.capi.net.ILoadableFile;
@@ -9,13 +11,10 @@ package ch.capi.net.app
 	 * Manages the massive loading of <code>ApplicationFile</code>.
 	 * 
 	 * @see		ch.capi.net.app.ApplicationFile			ApplicationFile
-	 * @see		ch.capi.net.app.ApplicationFileParser	ApplicationFileParser	 * @author 	Cedric Tabin - thecaptain
+	 * @see		ch.capi.net.app.ApplicationFileParser	ApplicationFileParser
+	 * @see		ch.capi.net.app.ApplicationConfigLoader	ApplicationConfigLoader	 * @author 	Cedric Tabin - thecaptain
 	 * @version	1.0	 */	public class ApplicationMassLoader extends PriorityMassLoader implements IMassLoader
 	{
-		//---------//
-		//Variables//
-		//---------//
-		
 		//-----------//
 		//Constructor//
 		//-----------//
@@ -83,6 +82,35 @@ package ch.capi.net.app
 			}
 			
 			return files;
+		}
+		
+		/**
+		 * Starts the loading of the specified file. If the file isn't an <code>ApplicationFile</code> then the toString() method
+		 * will be used to retrieve it from the specified <code>ApplicationContext</code>.
+		 * 
+		 * @param	load			The <code>ApplicationFile</code> object or the name of the <code>ApplicationFile</code>.
+		 * @param	context			The <code>ApplicationContext</code> to retrieve the <code>ApplicationFile</code> and global files.
+		 * @param	withGlobalFiles	Tells the <code>ApplicationMassLoader</code> to automatically add the <code>ApplicationFile</code>
+		 * 							that are noted as global.
+		 * @return	The <code>ApplicationFile</code> being loaded.
+		 * @throws	IllegalOperationError	If the <code>ApplicationmassLoader</code> is currently loading.
+		 */
+		public function load(file:Object, context:ApplicationContext=null, withGlobalFiles:Boolean=false):ApplicationFile
+		{
+			if (stateLoading) throw new IllegalOperationError("The ApplicationMassLoader is already loading (adding file "+file+")");
+			if (context == null) context = ApplicationContext.globalContext;
+			
+			//retrieves the specified file
+			var appFile:ApplicationFile = (file is ApplicationFile) ? (file as ApplicationFile) : ApplicationFile.get(file.toString(), context);
+			
+			//add the global files
+			if (withGlobalFiles) addGlobalFiles(context);
+			
+			//load the specified file
+			addApplicationFile(appFile);
+			start();
+			
+			return appFile;	 
 		}
 		
 		//-----------------//
