@@ -133,7 +133,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#createApplicationFile()">createApplicationFile</a>(node:XMLNode):<a href="../app/ApplicationFile.html">ApplicationFile</a>
+<a class="signatureLink" href="#createApplicationFile()">createApplicationFile</a>(node:XMLNode, folderPath:String):<a href="../app/ApplicationFile.html">ApplicationFile</a>
 </div>
 <div class="summaryTableDescription">
    Creates a <code>ApplicationFile</code> from the <code>XMLNode</code>.</div>
@@ -246,13 +246,20 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>protected function createApplicationFile(node:XMLNode):<a href="../app/ApplicationFile.html">ApplicationFile</a></code><p>
+<code>protected function createApplicationFile(node:XMLNode, folderPath:String):<a href="../app/ApplicationFile.html">ApplicationFile</a></code><p>
    Creates a <code>ApplicationFile</code> from the <code>XMLNode</code>.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">node</span>:XMLNode</code> &mdash;  The <code>XMLNode</code> to parse.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">folderPath</span>:String</code> &mdash; The path to be added as prefix for the file URL.
    </td>
 </tr>
 </table>

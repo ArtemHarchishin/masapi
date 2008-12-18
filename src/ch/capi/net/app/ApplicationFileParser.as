@@ -81,6 +81,21 @@ package ch.capi.net.app
 		 */
 		private static const ATTRIBUTE_PRIORITY_VALUE:String = "priority";
 		
+		/**
+		 * Defines the 'folder' node name.
+		 */
+		private static const NODE_FOLDER:String = "folder";
+		
+		/**
+		 * Defines the 'path' attribute value.
+		 */
+		private static const ATTRIBUTE_FOLDER_PATH:String = "path";
+		
+		/**
+		 * Defines the 'absolute' attribute value.
+		 */
+		private static const ATTRIBUTE_FOLDER_ABSOLUTE:String = "absolutePath";
+		
 		//---------//
 		//Variables//
 		//---------//
@@ -181,14 +196,17 @@ package ch.capi.net.app
 				loadableFileFactory.basePath = basePath;
 			}
 			
+			//root folder path
+			var rootPath:String = "";
+			if (node.attributes[ATTRIBUTE_FOLDER_PATH] != null)
+			{
+				rootPath = node.attributes[ATTRIBUTE_FOLDER_PATH];
+				if (rootPath.length > 0 && rootPath.charAt(rootPath.length-1) != "/") rootPath += "/";
+			}
+			
 			//parse the sub nodes
 			_currentIndex = 0;
-			var n:Array = node.childNodes;
-			for each(var cn:XMLNode in n)
-			{
-				createApplicationFile(cn);
-				_currentIndex++;
-			}
+			parseApplicationFiles(node, rootPath);
 		}
 		
 		/**
@@ -214,10 +232,11 @@ package ch.capi.net.app
 		 * Creates a <code>ApplicationFile</code> from the <code>XMLNode</code>.
 		 * 
 		 * @param	node		The <code>XMLNode</code> to parse.
+		 * @param	folderPath	The path to be added as prefix for the file URL.
 		 * @return	The created <code>ApplicationFile</code>.
 		 * @throws	ch.capi.errors.ParseError	If the url attribute is not defined.
 		 */
-		protected function createApplicationFile(node:XMLNode):ApplicationFile
+		protected function createApplicationFile(node:XMLNode, folderPath:String):ApplicationFile
 		{
 			var name:String = node.attributes[ATTRIBUTE_NAME_VALUE];
 			if (name == null || name.length == 0) name="$appFile_"+_currentIndex+"$";
@@ -228,6 +247,13 @@ package ch.capi.net.app
 			var type:String = node.attributes[ATTRIBUTE_TYPE_VALUE];
 			if (url != null && url.length > 0)
 			{
+				//checks if the path is absolute
+				var isAbsolutePath:Boolean = false;
+				if (node.attributes[ATTRIBUTE_FOLDER_ABSOLUTE] != null) isAbsolutePath = ParseUtils.parseBoolean(node.attributes[ATTRIBUTE_FOLDER_ABSOLUTE]);
+				
+				//update the url with the folder (if the path is not absolute)
+				if (!isAbsolutePath) url = folderPath+url;
+
 				var loadableFile:ILoadableFile = createLoadableFile(url, type);
 				appFile.loadableFile = loadableFile;
 				
@@ -319,6 +345,41 @@ package ch.capi.net.app
 		//---------------//
 		//Private methods//
 		//---------------//
+		
+		/**
+		 * @private
+		 */
+		private function parseApplicationFiles(node:XMLNode, folderPath:String):void
+		{
+			var n:Array = node.childNodes;
+			for each(var cn:XMLNode in n)
+			{
+				if (cn.nodeName == NODE_FOLDER)
+				{
+					//there is a folder ! Retrieve the path and loop recursively over it.
+					var subPath:String = cn.attributes[ATTRIBUTE_FOLDER_PATH];
+					if (subPath != null && subPath.length > 0)
+					{
+						//put the '/' at the end of the subPath
+						if (subPath.charAt(subPath.length-1) != "/") subPath += "/";
+						
+						//check if the path must be considered as absolute
+						var isAbsolutePath:Boolean = false;
+						if (cn.attributes[ATTRIBUTE_FOLDER_ABSOLUTE] != null) isAbsolutePath = ParseUtils.parseBoolean(cn.attributes[ATTRIBUTE_FOLDER_ABSOLUTE]);
+						if (!isAbsolutePath) subPath = folderPath+subPath;
+		
+						//creates the application files recursively
+						parseApplicationFiles(cn, subPath); 
+					}
+				}
+				else
+				{
+					//the node is a file, so create it !
+					createApplicationFile(cn, folderPath);
+					_currentIndex++;
+				}
+			}
+		}
 		
 		/**
 		 * @private
