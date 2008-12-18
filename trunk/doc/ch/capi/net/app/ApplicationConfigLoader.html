@@ -84,7 +84,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#ApplicationConfigLoader()">ApplicationConfigLoader</a>()</div>
+<a class="signatureLink" href="#ApplicationConfigLoader()">ApplicationConfigLoader</a>(parser:<a href="ApplicationFileParser.html">ApplicationFileParser</a> = null)</div>
 <div class="summaryTableDescription">
    Creates a new <code>ApplicationConfigLoader</code>.</div>
 </td><td class="summaryTableOwnerCol">ApplicationConfigLoader</td>
@@ -139,9 +139,17 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function ApplicationConfigLoader()</code><p>
+<code>public function ApplicationConfigLoader(parser:<a href="ApplicationFileParser.html">ApplicationFileParser</a> = null)</code><p>
    Creates a new <code>ApplicationConfigLoader</code>.
-   </p></div>
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">parser</span>:<a href="ApplicationFileParser.html">ApplicationFileParser</a></code> (default = <code>null</code>)<code></code> &mdash; The <code>ApplicationFileParser</code> to use.
+   </td>
+</tr>
+</table>
+</div>
 <a name="methodDetail"></a>
 <div class="detailSectionHeader">Method detail</div>
 <a name="onFileLoaded()"></a>
