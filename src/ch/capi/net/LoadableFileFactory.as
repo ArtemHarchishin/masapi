@@ -1,5 +1,8 @@
 ﻿package ch.capi.net
-{	
+{
+	import ch.capi.data.DictionnaryMap;	
+	import ch.capi.data.IMap;	
+
 	import flash.system.ApplicationDomain;	
 	import flash.display.Loader;
 	import flash.events.Event;
@@ -38,6 +41,7 @@
 		//Variables//
 		//---------//
 		private static var __defaultFactory:LoadableFileFactory		= new LoadableFileFactory();
+		private var _defaultVariables:IMap 							= new DictionnaryMap(true);
 		private var _defaultLoaderContext:LoaderContext				= new LoaderContext(false, ApplicationDomain.currentDomain);
 		private var _defaultSoundLoaderContext:SoundLoaderContext	= new SoundLoaderContext();
 		private var _defaultVirtualBytes:uint;
@@ -80,6 +84,14 @@
 		public function get fileTypeSelector():FileTypeSelector { return _fileSelector; }
 		public function set fileTypeSelector(value:FileTypeSelector):void { _fileSelector = value; }
 		
+		/**
+		 * Defines the default variables that will be used by the created <code>ILoadableFile</code> by default.
+		 * The factory will put a reference of this <code>IMap</code> into <code>ILoadableFile.urlVariables</code>.
+		 * 
+		 * @see		ch.capi.net.ILoadableFile#urlVariables ILoadableFile.urlVariables	
+		 */
+		public function get defaultVariables():IMap { return _defaultVariables; }
+
 		/**
 		 * Defines if the <code>ILoadableFile</code> created will use the
 		 * cache or not.
@@ -360,6 +372,7 @@
 		 */
 		protected function initializeFile(file:ILoadableFile):void
 		{
+			file.urlVariables = _defaultVariables;
 			file.virtualBytesTotal = _defaultVirtualBytes;
 			file.useCache = _useCache;
 		}

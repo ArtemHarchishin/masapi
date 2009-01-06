@@ -27,6 +27,11 @@ package ch.capi.net.app
 		private static const NODE_FILE:String = "file";
 		
 		/**
+		 * Defines the 'variables' node name.
+		 */
+		private static const NODE_VARIABLES:String = "variables";
+		
+		/**
 		 * Defines the 'name' attribute value.
 		 */
 		private static const ATTRIBUTE_NAME_VALUE:String = "name";
@@ -162,10 +167,37 @@ package ch.capi.net.app
 		 */
 		public function parse(node:XMLNode):void
 		{
-			if(node.childNodes.length < 1 || node.childNodes.length > 2) throw new ParseError("parse", "Invalid node count : "+node.childNodes.length, node);
+			if(node.childNodes.length < 1 || node.childNodes.length > 3) throw new ParseError("parse", "Invalid node count : "+node.childNodes.length, node);
 			
-			parseFiles(node.childNodes[0]); //files are always parsed.
-			if(node.childNodes.length == 2) parseDependencies(node.childNodes[1]);
+			var firstNode:XMLNode = node.firstChild;
+			if (firstNode.nodeName == NODE_VARIABLES)
+			{
+				parseVariables(firstNode); //parses the variables
+				parseFiles(node.childNodes[1]); //files are always parsed.
+				if(node.childNodes.length == 3) parseDependencies(node.childNodes[2]);
+			}
+			else
+			{
+				parseFiles(node.childNodes[0]); //files are always parsed.
+				if(node.childNodes.length == 2) parseDependencies(node.childNodes[1]);
+			}
+		}
+		
+		/**
+		 * Parses the variables of the specified <code>XMLNode</code>.
+		 * 
+		 * @param	node		The <code>XMLNode</code>.
+		 */
+		public function parseVariables(node:XMLNode):void
+		{
+			for each(var child:XMLNode in node.childNodes)
+			{
+				var name:String = child.attributes[ATTRIBUTE_NAME_VALUE];
+				if (name == null) throw new ParseError("parseVariables", "The attribute '"+ATTRIBUTE_NAME_VALUE+"' is not defined", child);
+				
+				var value:String = child.firstChild.nodeValue;
+				putVariable(name, value);
+			}
 		}
 		
 		/**
@@ -227,6 +259,17 @@ package ch.capi.net.app
 		//-----------------//
 		//Protected methods//
 		//-----------------//
+		
+		/**
+		 * Put the specified variable and its value into the <code>LoadableFileFactory</code>.
+		 * 
+		 * @param	name	The variable name.
+		 * @param	value	The variable value.
+		 */
+		protected function putVariable(name:String, value:String):void
+		{
+			loadableFileFactory.defaultVariables.put(name, value);
+		}
 		
 		/**
 		 * Creates a <code>ApplicationFile</code> from the <code>XMLNode</code>.

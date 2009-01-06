@@ -53,6 +53,16 @@ package ch.capi.net
 		function get properties():IMap;
 		
 		/**
+		 * Defines the variables key/values to be replaced
+		 * into the url before the loading is launched.
+		 * 
+		 * @see	ch.capi.net.LoadableFileFactory#defaultVariables		LoadableFileFactory.defaultVariables
+		 * @see	ch.capi.utils.VariableReplacer#defaultVariableRegexp	VariableReplacer.defaultVariableRegexp
+		 */
+		function get urlVariables():IMap;
+		function set urlVariables(value:IMap):void;
+		
+		/**
 		 * Defines the <code>URLRequest</code> object that specify the
 		 * URL to load.
 		 */
