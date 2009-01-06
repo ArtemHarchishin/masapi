@@ -1,5 +1,9 @@
 ﻿package ch.capi.net
 {
+	import flash.utils.ByteArray;	
+	
+	import ch.capi.utils.VariableReplacer;	
+	
 	import flash.events.HTTPStatusEvent;	
 	import flash.system.ApplicationDomain;	
 	import flash.events.Event;
@@ -116,6 +120,7 @@
 		private var _online:String					= NetState.DYNAMIC;
 		private var _stateLoading:Boolean			= false;
 		private var _properties:IMap				= new DictionnaryMap();
+		private var _urlVariables:IMap				= new DictionnaryMap();
 		private var _closeEvent:Event				= null;
 		private var _destroyed:Boolean				= false;
 		private var _loadManagerObject:*;
@@ -139,6 +144,13 @@
 		 * Defines if the <code>AbstractLoadableFile</code> is idle.
 		 */
 		public function get stateIdle():Boolean { return !_stateLoading; }
+		
+		/**
+		 * Defines the variables key/values to be replaced
+		 * into the url before the loading is launched.
+		 */
+		public function get urlVariables():IMap { return _urlVariables; }
+		public function set urlVariables(value:IMap):void { _urlVariables = value; }
 		
 		/**
 		 * Defines the <code>NetState</code> value. The value available can
@@ -239,33 +251,30 @@
 		public function getURLRequest():URLRequest
 		{
 			checkDestroyed();
-			if (useCache || !isOnline()) return urlRequest;
 			
-			var re:URLRequest = new URLRequest(urlRequest.url);
-			re.method = urlRequest.method;
-			re.data = urlRequest.data;
-			re.requestHeaders = urlRequest.requestHeaders;
-			re.contentType = urlRequest.contentType;
+			//creates a clone of the URLRequest and replaces the variables
+			var newRequest:URLRequest = getUpdatedUrlRequest();
+			if (useCache || !isOnline()) return newRequest;
 			
 			//this is a unique time value
 			var ncValue:Number = (new Date()).getTime();
 			
-			if (re.method == URLRequestMethod.POST || re.data == null) re.url += "?"+NO_CACHE_VARIABLE_NAME+"="+ncValue;
-			else if (re.data is URLVariables)
+			if (newRequest.method == URLRequestMethod.POST || newRequest.data == null) newRequest.url += "?"+NO_CACHE_VARIABLE_NAME+"="+ncValue;
+			else if (newRequest.data is URLVariables)
 			{
-				var uv:URLVariables = re.data as URLVariables;
+				var uv:URLVariables = newRequest.data as URLVariables;
 				uv[NO_CACHE_VARIABLE_NAME] = ncValue;
 			}
 			else 
 			{
-				var ts:String = re.data.toString();
+				var ts:String = newRequest.data.toString();
 				ts += "&"+NO_CACHE_VARIABLE_NAME+"="+ncValue;
 				
-				re.url += "?"+ts;
-				re.data = null;
+				newRequest.url += "?"+ts;
+				newRequest.data = null;
 			}
 			
-			return re;
+			return newRequest;
 		}
 		
 		/**
@@ -566,7 +575,35 @@
 		 */
 		protected function checkDestroyed():void
 		{
-			if (isDestroyed()) throw new IllegalOperationError("The file "+this+" has been destroyed");
+			if (isDestroyed()) throw new IllegalOperationError("The file [ "+this+" ] has been destroyed");
+		}
+		
+		/**
+		 * Creates a clone of the current <code>URLRequest</code> and put the variables values into its data.
+		 * 
+		 * @return	The new <code>URLRequest</code>.
+		 */
+		protected function getUpdatedUrlRequest():URLRequest
+		{
+			var replacer:VariableReplacer = new VariableReplacer(_urlVariables);
+			
+			var newRequest:URLRequest = new URLRequest();
+			newRequest.url = replacer.replaceVars(urlRequest.url); //perform variable replacement
+			newRequest.method = urlRequest.method;
+			newRequest.requestHeaders = urlRequest.requestHeaders;
+			newRequest.contentType = urlRequest.contentType;
+			
+			//replaces the variable into the data
+			var data:Object = urlRequest.data;
+			if (data != null && !(data is ByteArray))
+			{
+				var strData:String = data.toString();
+				strData = replacer.replaceVars(strData);
+				data = strData;
+			}
+			newRequest.data = data;
+			
+			return newRequest;
 		}
 		
 		//---------------//
