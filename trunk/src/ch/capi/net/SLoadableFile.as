@@ -1,10 +1,10 @@
 package ch.capi.net
 {
+	import flash.net.URLRequest;	
 	import flash.system.ApplicationDomain;	
 	import flash.events.IEventDispatcher;
 	import flash.media.Sound;
 	import flash.media.SoundLoaderContext;
-	import flash.net.URLRequest;
 	
 	import ch.capi.net.LoadableFileType;
 	
@@ -45,18 +45,6 @@ package ch.capi.net
 		//--------------//
 		//Public methods//
 		//--------------//
-		
-		/**
-		 * Starts the loading of the data.
-		 */
-		public override function start():void
-		{
-			super.start();
-			
-			var re:URLRequest = getURLRequest();
-			var sd:Sound = loadManagerObject as Sound;
-			sd.load(re, soundLoaderContext);
-		}
 		
 		/**
 		 * Retrieves the <code>IEventDispatcher</code> of all the sub-events
@@ -123,6 +111,19 @@ package ch.capi.net
 		{
 			soundLoaderContext = null;
 			super.destroy();
+		}
+		
+		//-----------------//
+		//Protected methods//
+		//-----------------//
+		
+		/**
+		 * Starts the loading of the <code>Sound</code>.
+		 */
+		protected override function processLoading(request:URLRequest):void
+		{
+			var sd:Sound = loadManagerObject as Sound;
+			sd.load(request, soundLoaderContext);
 		}
 	}
 }

@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="AbstractLoadableFile,ch.capi.net.AbstractLoadableFile,NO_CACHE_VARIABLE_NAME,bytesLoaded,bytesTotal,bytesTotalRetrieved,closeEvent,loadManagerObject,netState,properties,stateIdle,stateLoading,urlRequest,urlVariables,useCache,virtualBytesTotal,checkDestroyed,destroy,getURLRequest,getUpdatedUrlRequest,isDestroyed,isInstanceOf,isInstanceOfClass,isOnline,onComplete,onHttpStatus,onIOError,onInit,onOpen,onProgress,onSecurityError,registerTo,start,stop,toString,unregisterFrom" name="keywords">
+<meta content="AbstractLoadableFile,ch.capi.net.AbstractLoadableFile,NO_CACHE_VARIABLE_NAME,bytesLoaded,bytesTotal,bytesTotalRetrieved,closeEvent,fixedRequest,loadManagerObject,netState,properties,stateIdle,stateLoading,urlRequest,urlVariables,useCache,virtualBytesTotal,checkDestroyed,destroy,getURLRequest,getUpdatedUrlRequest,invalidateFixedRequest,isDestroyed,isInstanceOf,isInstanceOfClass,isOnline,onComplete,onHttpStatus,onIOError,onInit,onOpen,onProgress,onSecurityError,prepareFixedRequest,processLoading,registerTo,start,stop,toString,unregisterFrom" name="keywords">
 <title>ch.capi.net.AbstractLoadableFile</title>
 </head>
 <body>
@@ -85,6 +85,12 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#closeEvent">closeEvent</a> : Event<div class="summaryTableDescription">[read-only]
    Defines the event that happend to close the file (Event.CLOSE, Event.COMPLETE, ...).</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#fixedRequest">fixedRequest</a> : URLRequest<div class="summaryTableDescription">[read-only]
+   Defines the <code>URLRequest</code> that has been loaded by the
+   <code>ILoadableFile</code>.</div>
 </td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
 </tr>
 <tr class="">
@@ -174,6 +180,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
+<a class="signatureLink" href="#invalidateFixedRequest()">invalidateFixedRequest</a>():void</div>
+<div class="summaryTableDescription">
+   Invalidate the current <code>fixedRequest</code>.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
 <a class="signatureLink" href="#isDestroyed()">isDestroyed</a>():Boolean</div>
 <div class="summaryTableDescription">
    Retrieves if this <code>ILoadableFile</code> has been destroyed.</div>
@@ -190,9 +204,18 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
+<a class="signatureLink" href="#prepareFixedRequest()">prepareFixedRequest</a>():void</div>
+<div class="summaryTableDescription">
+   Tells the <code>ILoadableFile</code> to update the <code>fixedRequest</code> value that
+   will be used to load the file.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
 <a class="signatureLink" href="#start()">start</a>():void</div>
 <div class="summaryTableDescription">
-   Stet the state as loading.</div>
+   Set the state as loading.</div>
 </td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
 </tr>
 <tr class="">
@@ -306,6 +329,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#onSecurityError()">onSecurityError</a>(evt:SecurityErrorEvent):void</div>
 <div class="summaryTableDescription">
    <code>SecurityErrorEvent</code> listener.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#processLoading()">processLoading</a>(request:URLRequest):void</div>
+<div class="summaryTableDescription">
+   Tell the <code>ILoadableFile</code> to start the loading process.</div>
 </td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
 </tr>
 <tr class="">
@@ -475,6 +506,21 @@ showHideInherited();
    </p><span class="label">Implementation</span>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get closeEvent():Event</code>
+<br>
+</div>
+<a name="fixedRequest"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">fixedRequest</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>fixedRequest:URLRequest</code>&nbsp;&nbsp;[read-only]<p>
+   Defines the <code>URLRequest</code> that has been loaded by the
+   <code>ILoadableFile</code>.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get fixedRequest():URLRequest</code>
 <br>
 </div>
 <a name="loadManagerObject"></a>
@@ -701,6 +747,7 @@ showHideInherited();
 <div class="detailBody">
 <code>protected function getUpdatedUrlRequest():URLRequest</code><p>
    Creates a clone of the current <code>URLRequest</code> and put the variables values into its data.
+   If there is some 
    
    </p><p></p>
 <span class="label">Returns</span>
@@ -734,6 +781,14 @@ showHideInherited();
    </td>
 </tr>
 </table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; flash.errors.IllegalOperationError If the <code>AbstractLoadableFile</code> has been destroyed.
+   </td>
+</tr>
+</table>
 <p>
 <span class="label">See also</span>
 </p>
@@ -741,6 +796,25 @@ showHideInherited();
 <a href="../net/AbstractLoadableFile.html#useCache" target="">useCache</a>
 <br>
 <a href="../net/AbstractLoadableFile.html#isOnline()" target="">isOnline()</a>
+</div>
+</div>
+<a name="invalidateFixedRequest()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">invalidateFixedRequest</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function invalidateFixedRequest():void</code><p>
+   Invalidate the current <code>fixedRequest</code>. It means that the next time
+   the <code>start()</code> method will be launched, the <code>ILoadableFile</code>
+   will relaunch the loading of the data, without taking care of the cache.
+   
+   </p><p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../net/AbstractLoadableFile.html#fixedRequest" target="">fixedRequest</a>
 </div>
 </div>
 <a name="isDestroyed()"></a>
@@ -867,6 +941,14 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20"></td><td><code>Boolean</code> &mdash; <code>true</code> if the <code>AbstractLoadableFile</code> is online.
+   </td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; flash.errors.IllegalOperationError If the <code>AbstractLoadableFile</code> has been destroyed.
    </td>
 </tr>
 </table>
@@ -1003,6 +1085,44 @@ showHideInherited();
 </tr>
 </table>
 </div>
+<a name="prepareFixedRequest()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">prepareFixedRequest</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function prepareFixedRequest():void</code><p>
+   Tells the <code>ILoadableFile</code> to update the <code>fixedRequest</code> value that
+   will be used to load the file. By default, this method is automatically called when the <code>start()<code>
+   method is executed and the <code>fixedRequest</code> hasn't been updated.
+   
+   </p><br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; flash.errors.IllegalOperationError If the <code>AbstractLoadableFile</code> has been destroyed.
+   </td>
+</tr>
+</table>
+</div>
+<a name="processLoading()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">processLoading</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function processLoading(request:URLRequest):void</code><p>
+   Tell the <code>ILoadableFile</code> to start the loading process. This method
+   is supposed to be overriden by the sub-classes.
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">request</span>:URLRequest</code></td>
+</tr>
+</table>
+</div>
 <a name="registerTo()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -1034,8 +1154,10 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function start():void</code><p>
-   Stet the state as loading.
+<code>public final function start():void</code><p>
+   Set the state as loading. This method also update the <code>fixedRequest</code> if it hasn't been done before. In any cases,
+   the <code>fixedRequest</code> is invalidated right after the loading is started (just to ensure that the <code>fixedRequest</code>
+   will be update the next time the <code>start()</code> method is called).
    
    </p><br>
 <span class="label">Throws</span>
@@ -1060,7 +1182,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function stop():void</code><p>
+<code>public final function stop():void</code><p>
    Set the state as idle.
    
    </p><br>

@@ -63,6 +63,23 @@ package ch.capi.net
 		function set urlVariables(value:IMap):void;
 		
 		/**
+		 * Defines the <code>URLRequest</code> that will be loaded by the <code>ILoadableFile</code>. This
+		 * <code>URLRequest</code> has no more variables. If for some reason you need to modify the fixed
+		 * request before starting the loading you should call the <code>prepareFixedRequest()</code> before,
+		 * otherwise all your changes will be lost.
+		 * 
+		 * @see	#invalidateFixedRequest()	invalidateFixedRequest()
+		 * @see	#prepareFixedRequest()		prepareFixedRequest()
+		 */
+		function get fixedRequest():URLRequest;
+		
+		/**
+		 * Defines if the <code>ILoadableFile</code> can use the cache or not.
+		 */
+		function get useCache():Boolean;
+		function set useCache(value:Boolean):void;
+		
+		/**
 		 * Defines the <code>URLRequest</code> object that specify the
 		 * URL to load.
 		 */
@@ -84,6 +101,25 @@ package ch.capi.net
 		 * <code>Sound</code>, ...
 		 */
 		function get loadManagerObject():Object;
+		
+		/**
+		 * Invalidate the current <code>fixedRequest</code>. It means that the next time
+		 * the <code>start()</code> method will be launched, the <code>ILoadableFile</code>
+		 * will relaunch the loading of the data, without taking care of the cache.
+		 * 
+		 * @see	#fixedRequest	fixedRequest
+		 * @see	#prepareFixedRequest()	prepareFixedRequest()
+		 */
+		function invalidateFixedRequest():void;
+		
+		/**
+		 * Tells the <code>ILoadableFile</code> to update the <code>fixedRequest</code> value that
+		 * will be used to load the file.
+		 * 
+		 * @see		#fixedRequest				fixedRequest
+		 * @see		#invalidateFixedRequest()	invalidateFixedRequest
+		 */
+		function prepareFixedRequest():void;
 		
 		/**
 		 * Retrieves the <code>IEventDispatcher</code> of all the sub-events

@@ -1,9 +1,6 @@
 ﻿package ch.capi.net
 {
 	import flash.utils.ByteArray;	
-	
-	import ch.capi.utils.VariableReplacer;	
-	
 	import flash.events.HTTPStatusEvent;	
 	import flash.system.ApplicationDomain;	
 	import flash.events.Event;
@@ -13,14 +10,13 @@
 	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.net.URLRequest;
-	import flash.net.URLRequestMethod;
-	import flash.net.URLVariables;
 	import flash.system.Security;
 	import flash.errors.IllegalOperationError;
 	import flash.utils.describeType;
 	
 	import ch.capi.data.IMap;
 	import ch.capi.data.DictionnaryMap;
+	import ch.capi.utils.VariableReplacer;
 	
 	/**
 	 * Dispatched after all the received data is received.
@@ -123,6 +119,8 @@
 		private var _urlVariables:IMap				= new DictionnaryMap();
 		private var _closeEvent:Event				= null;
 		private var _destroyed:Boolean				= false;
+		private var _fixedRequest:URLRequest		= null;
+		private var _fixedRequestUpdated:Boolean	= false;
 		private var _loadManagerObject:*;
 		
 		//-----------------//
@@ -151,6 +149,12 @@
 		 */
 		public function get urlVariables():IMap { return _urlVariables; }
 		public function set urlVariables(value:IMap):void { _urlVariables = value; }
+		
+		/**
+		 * Defines the <code>URLRequest</code> that has been loaded by the
+		 * <code>ILoadableFile</code>.
+		 */
+		public function get fixedRequest():URLRequest { return _fixedRequest; }
 		
 		/**
 		 * Defines the <code>NetState</code> value. The value available can
@@ -237,6 +241,33 @@
 		//--------------//
 		
 		/**
+		 * Tells the <code>ILoadableFile</code> to update the <code>fixedRequest</code> value that
+		 * will be used to load the file. By default, this method is automatically called when the <code>start()<code>
+		 * method is executed and the <code>fixedRequest</code> hasn't been updated.
+		 * 
+		 * @throws  flash.errors.IllegalOperationError	If the <code>AbstractLoadableFile</code> has been destroyed.
+		 */
+		public function prepareFixedRequest():void
+		{
+			checkDestroyed();
+
+			_fixedRequest = getURLRequest();
+			_fixedRequestUpdated = true;
+		}
+		
+		/**
+		 * Invalidate the current <code>fixedRequest</code>. It means that the next time
+		 * the <code>start()</code> method will be launched, the <code>ILoadableFile</code>
+		 * will relaunch the loading of the data, without taking care of the cache.
+		 * 
+		 * @see	#fixedRequest	fixedRequest
+		 */
+		public function invalidateFixedRequest():void
+		{
+			_fixedRequestUpdated = false;
+		}
+		
+		/**
 		 * Retrieves the <code>URLRequest</code> that is created depending of
 		 * the <code>useCache</code> property value. The creation of the <code>URLRequest</code>
 		 * is based on the <code>netState</code>. If the <code>isOnline()</code> method returns
@@ -247,6 +278,7 @@
 		 * @return		The <code>URLRequest</code>
 		 * @see			#useCache 	useCache
 		 * @see			#isOnline()	isOnline()
+		 * @throws  flash.errors.IllegalOperationError	If the <code>AbstractLoadableFile</code> has been destroyed.
 		 */
 		public function getURLRequest():URLRequest
 		{
@@ -256,23 +288,17 @@
 			var newRequest:URLRequest = getUpdatedUrlRequest();
 			if (useCache || !isOnline()) return newRequest;
 			
-			//this is a unique time value
+			//retrieves the url data and create a unique value
 			var ncValue:Number = (new Date()).getTime();
+			var currentUrl:String = newRequest.url;
+			var noCacheValue:String = NO_CACHE_VARIABLE_NAME+"="+ncValue;
 			
-			if (newRequest.method == URLRequestMethod.POST || newRequest.data == null) newRequest.url += "?"+NO_CACHE_VARIABLE_NAME+"="+ncValue;
-			else if (newRequest.data is URLVariables)
-			{
-				var uv:URLVariables = newRequest.data as URLVariables;
-				uv[NO_CACHE_VARIABLE_NAME] = ncValue;
-			}
-			else 
-			{
-				var ts:String = newRequest.data.toString();
-				ts += "&"+NO_CACHE_VARIABLE_NAME+"="+ncValue;
-				
-				newRequest.url += "?"+ts;
-				newRequest.data = null;
-			}
+			//add the no-cache variable at the end of the url
+			if (currentUrl.indexOf("?") == -1) currentUrl += "?" + noCacheValue;
+			else currentUrl += "&" + noCacheValue;
+			
+			//put the new request
+			newRequest.url = currentUrl;
 			
 			return newRequest;
 		}
@@ -285,10 +311,12 @@
 		 * @return	<code>true</code> if the <code>AbstractLoadableFile</code> is online.
 		 * @see		#netState	netState
 		 * @see		flash.system.Security#sandboxType	Security.sandboxType
+		 * @throws  flash.errors.IllegalOperationError	If the <code>AbstractLoadableFile</code> has been destroyed.
 		 */
 		public function isOnline():Boolean
 		{
 			checkDestroyed();
+			
 			if (_online == NetState.DYNAMIC)
 			{
 				//try to retrieve the state from the protocol
@@ -311,17 +339,34 @@
 		}
 		
 		/**
-		 * Stet the state as loading.
+		 * Set the state as loading. This method also update the <code>fixedRequest</code> if it hasn't been done before. In any cases,
+		 * the <code>fixedRequest</code> is invalidated right after the loading is started (just to ensure that the <code>fixedRequest</code>
+		 * will be update the next time the <code>start()</code> method is called).
 		 * 
 		 * @throws  flash.errors.IllegalOperationError	If the <code>AbstractLoadableFile</code> has been destroyed.
 		 * @throws	flash.errors.IllegalOperationError	If the <code>AbstractLoadableFile</code> is already loading.
 		 */
-		public function start():void
+		public final function start():void
 		{
 			checkDestroyed();
 			if (_stateLoading) throw new IllegalOperationError("State already loading");
-			_stateLoading = true;
-			_closeEvent = null;
+			
+			//generate the new fixed request
+			var oldFixedRequest:URLRequest = fixedRequest;
+			if (!_fixedRequestUpdated) prepareFixedRequest();
+				
+			//check if the new generated URL is different. If not and the bytes are already loaded, then
+			//the data won't be reloaded (static cache)
+			if (!useCache || !isEqual(oldFixedRequest, fixedRequest) || bytesTotal <= 0 || bytesLoaded < bytesTotal)
+			{
+				_stateLoading = true;
+				_closeEvent = null;
+				
+				processLoading(fixedRequest); 	
+			}
+			
+			//automatically invalidate the request after the loading is started
+			invalidateFixedRequest();
 		}
 		
 		/**
@@ -330,14 +375,20 @@
 		 * @throws  flash.errors.IllegalOperationError	If the <code>AbstractLoadableFile</code> has been destroyed.
 		 * @throws	flash.errors.IllegalOperationError	If the <code>ILoadManager</code> is not loading.
 		 */
-		public function stop():void
+		public final function stop():void
 		{
 			checkDestroyed();
 			if (!_stateLoading) throw new IllegalOperationError("State not loading");
-			if (bytesLoaded == bytesTotal) return; //nothing to do
+			
+			/*
+			 * Nothing to do !!
+			 * It is a hack, because the Event.COMPLETE hasn't been launched at this
+			 * time, so if the data is completly loaded and this method is called, then
+			 * nothing is done, because the Event.COMPLETE will be sended soon.
+			 */
+			if (bytesLoaded == bytesTotal) return;
 			
 			_stateLoading = false;
-			
 			loadManagerObject.close();
 			
 			var evt:Event = new Event(Event.CLOSE, false, false);
@@ -373,11 +424,14 @@
 			_bytesTotalRetrieved = false;
 			_online = null;
 			_properties = null;
+			_urlVariables = null;
 			_stateLoading = false;
 			_useCache = false;
 			_virtualBytesTotal = 0;
 			_request = new URLRequest(_request.url);
 			_destroyed = true;
+			_fixedRequest = null;
+			_fixedRequestUpdated = false;
 		}
 
 		/**
@@ -394,6 +448,15 @@
 		//-----------------//
 		//Protected methods//
 		//-----------------//
+		
+		/**
+		 * Tell the <code>ILoadableFile</code> to start the loading process. This method
+		 * is supposed to be overriden by the sub-classes.
+		 */
+		protected function processLoading(request:URLRequest):void 
+		{
+			//nothing	
+		}
 		
 		/**
 		 * Register the events of the <code>AbstractLoadableFile</code>.
@@ -580,13 +643,14 @@
 		
 		/**
 		 * Creates a clone of the current <code>URLRequest</code> and put the variables values into its data.
+		 * If there is some 
 		 * 
 		 * @return	The new <code>URLRequest</code>.
 		 */
 		protected function getUpdatedUrlRequest():URLRequest
 		{
 			var replacer:VariableReplacer = new VariableReplacer(_urlVariables);
-			
+
 			var newRequest:URLRequest = new URLRequest();
 			newRequest.url = replacer.replaceVars(urlRequest.url); //perform variable replacement
 			newRequest.method = urlRequest.method;
@@ -616,6 +680,15 @@
 		private function getType():String
 		{
 			return (this as ILoadableFile).getType();
+		}
+		
+		/**
+		 * @private
+		 */
+		private function isEqual(a:URLRequest, b:URLRequest):Boolean
+		{
+			if (a == null || b == null) return false;
+			return a.url == b.url;
 		}
 	}
 }

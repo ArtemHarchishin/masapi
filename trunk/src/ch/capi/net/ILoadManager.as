@@ -54,12 +54,6 @@ package ch.capi.net
 		function get stateIdle():Boolean;
 		
 		/**
-		 * Defines if the <code>ILoadManager</code> can use the cache or not.
-		 */
-		function get useCache():Boolean;
-		function set useCache(value:Boolean):void;
-		
-		/**
 		 * Defines the bytes that have been loaded.
 		 */
 		function get bytesLoaded():uint;
