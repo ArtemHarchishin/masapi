@@ -1,9 +1,9 @@
 ﻿package ch.capi.net
 {
+	import flash.net.URLRequest;	
 	import flash.system.ApplicationDomain;	
 	import flash.display.Loader;
 	import flash.system.LoaderContext;
-	import flash.net.URLRequest;
 	import flash.events.IEventDispatcher;
 	import flash.events.Event;
 	import flash.display.DisplayObject;
@@ -49,18 +49,6 @@
 		//--------------//
 		//Public methods//
 		//--------------// 
-		
-		/**
-		 * Starts the loading of the data.
-		 */
-		public override function start():void
-		{
-			super.start();
-			
-			var re:URLRequest = getURLRequest();
-			var ul:Loader = loadManagerObject as Loader;
-			ul.load(re, loaderContext);
-		}
 		
 		/**
 		 * Retrieves the <code>IEventDispatcher</code> of all the sub-events
@@ -133,6 +121,15 @@
 		//-----------------//
 		//Protected methods//
 		//-----------------//
+
+		/**
+		 * Starts the loading of the <code>Loader</code>.
+		 */
+		protected override function processLoading(request:URLRequest):void
+		{
+			var ul:Loader = loadManagerObject as Loader;
+			ul.load(request, loaderContext);
+		}
 
 		/**
 		 * <code>Event.INIT</code> listener.

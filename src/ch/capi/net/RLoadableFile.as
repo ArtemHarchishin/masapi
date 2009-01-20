@@ -1,8 +1,8 @@
 package ch.capi.net
 {
+	import flash.net.URLRequest;	
 	import flash.system.ApplicationDomain;	
 	import flash.events.IEventDispatcher;
-	import flash.net.URLRequest;
 	import flash.net.URLStream;
 	
 	import ch.capi.net.LoadableFileType;
@@ -34,18 +34,6 @@ package ch.capi.net
 		//--------------//
 		//Public methods//
 		//--------------//
-		
-		/**
-		 * Starts the loading of the data.
-		 */
-		public override function start():void
-		{
-			super.start();
-			
-			var re:URLRequest = getURLRequest();
-			var ul:URLStream = loadManagerObject as URLStream;
-			ul.load(re);
-		}
 		
 		/**
 		 * Retrieves the <code>IEventDispatcher</code> of all the sub-events
@@ -101,6 +89,19 @@ package ch.capi.net
 		public function getType():String
 		{
 			return LoadableFileType.STREAM;
+		}
+		
+		//-----------------//
+		//Protected methods//
+		//-----------------//
+		
+		/**
+		 * Starts the loading of the <code>URLStream</code>.
+		 */
+		protected override function processLoading(request:URLRequest):void
+		{
+			var ul:URLStream = loadManagerObject as URLStream;
+			ul.load(request);
 		}
 	}
 }

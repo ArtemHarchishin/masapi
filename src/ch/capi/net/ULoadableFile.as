@@ -1,9 +1,7 @@
 package ch.capi.net
 {
+	import flash.net.URLRequest;	
 	import flash.display.LoaderInfo;	
-	
-	import ch.capi.display.IRootDocument;	
-	
 	import flash.display.DisplayObject;	
 	import flash.events.Event;	
 	import flash.system.ApplicationDomain;	
@@ -13,7 +11,8 @@ package ch.capi.net
 	import flash.display.Loader;	
 	import flash.events.IEventDispatcher;
 	import flash.net.URLLoader;
-	import flash.net.URLRequest;
+
+	import ch.capi.display.IRootDocument;	
 
 	/**
 	 * Represents a <code>ILoadableFile</code> based on a <code>URLLoader</code> object.
@@ -42,18 +41,6 @@ package ch.capi.net
 		//--------------//
 		//Public methods//
 		//--------------//
-		
-		/**
-		 * Starts the loading of the data.
-		 */
-		public override function start():void
-		{
-			super.start();
-			
-			var re:URLRequest = getURLRequest();
-			var ul:URLLoader = loadManagerObject as URLLoader;
-			ul.load(re);
-		}
 		
 		/**
 		 * Retrieves the <code>IEventDispatcher</code> of all the sub-events
@@ -141,7 +128,16 @@ package ch.capi.net
 		//-----------------//
 		//Protected methods//
 		//-----------------//
-		
+
+		/**
+		 * Starts the loading of the <code>URLLoader</code>.
+		 */
+		protected override function processLoading(request:URLRequest):void
+		{
+			var ul:URLLoader = loadManagerObject as URLLoader;
+			ul.load(request);
+		}
+
 		/**
 		 * <code>Event.INIT</code> listener.
 		 * 
@@ -162,7 +158,7 @@ package ch.capi.net
 			/*
 			 * DO NOT CALL THE SUPER onInit METHOD !!!
 			 * This method is only called to retrieve the data with the getData() method, so
-			 * there would be conceptually wrong that this ILoadableFile dispatches a Event.INIT event !
+			 * there would be conceptually wrong that a ULoadableFile dispatches a Event.INIT event !
 			 */
 		}
 	}

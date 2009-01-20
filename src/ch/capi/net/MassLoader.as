@@ -158,7 +158,6 @@
 		private var _isLoading:Boolean					= false;
 		private var _closeEvent:Event					= null;
 		private var _loadInfo:ILoadInfo;
-		private var _useCache:Boolean;
 		private var _parallelFiles:uint;
 		private var _loadPolicy:ILoadPolicy;
 		private var _currentFilesLoading:uint			= 0;
@@ -205,16 +204,6 @@
 		 * </listing>
 		 */
 		public function get loadInfo():ILoadInfo { return _loadInfo; }
-
-		/**
-		 * Defines if the <code>MassLoader</code> can use the cache or not. Note that if this property
-		 * is set to <code>false</code>, it will call the <code>ILoadManager.start()</code> method on 
-		 * all the files. If <code>true</code>, it will test if the file is already loaded 
-		 * (<code>bytesLoaded</code> == <code>bytesTotal</code>) and call the <code>ILoadManager.start()</code>
-		 * if not.
-		 */
-		public function get useCache():Boolean { return _useCache; }
-		public function set useCache(value:Boolean):void { _useCache = value; }
 		
 		/**
 		 * Defines if the <code>MassLoader</code> is loading.
@@ -334,14 +323,12 @@
 		 * Creates a new <code>MassLoader</code> object.
 		 * 
 		 * @param	parallelFiles	The number of files to be loaded simultaneously.
-		 * @param	useCache		Defines if the <code>MassLoader</code> must use the static cache or not.
 		 * @param	loadPolicy		The <code>ILoadPolicy</code> to use.
 		 */
-		public function MassLoader(parallelFiles:uint=0, useCache:Boolean=true, loadPolicy:ILoadPolicy=null):void
+		public function MassLoader(parallelFiles:uint=0, loadPolicy:ILoadPolicy=null):void
 		{
 			_loadInfo = new MassLoadInfo(this);
 			_parallelFiles = parallelFiles;
-			_useCache = useCache;
 			_loadPolicy = (loadPolicy==null) ? new DefaultLoadPolicy() : loadPolicy;
 		}
 
@@ -558,27 +545,20 @@
 			//open event
 			dispatchOpenEvent(file);
 			
-			//try to start the loading
 			try
 			{
-				/*
-				Here we use a "static" cache. It only checks whenever the bytesLoaded
-				and bytesTotal value are equal or not and if not, it simply add the file
-				to the loading queue. This check is do only if the MassLoader useCache=true
-				and the file.useCache=true.
-				*/
-				if (!useCache || !file.useCache || file.bytesTotal == 0 || file.bytesLoaded < file.bytesTotal)
-				{
-					file.start();
-					return true;
-				}
+				//try to start the loading
+				file.start();
+				
+				//if the file is loading, return true, else continue
+				if (file.stateLoading) return true;
 			}
 			catch(e:Error)
 			{
-				//do nothing :)
+				//do nothing, the file will automatically get discarded
 			}
 			
-			//problem during the launching => stop it !
+			//problem during the launching (or already in cache) => stop it !
 			closeFile(file, null);
 			return false;
 		}

@@ -216,7 +216,7 @@ package ch.capi.net
 		 */
 		public override function toString():String
 		{
-			var data:String = "PriorityMassLoader[";
+			var data:String = "PriorityMassLoader[\n";
 			var files:Array = super.getFiles();
 			
 			if (files.length > 0)
@@ -225,12 +225,12 @@ package ch.capi.net
 				{
 					var file:ILoadManager = files[i];
 					var priority:int = getFilePriority(file);
-					data += file+"("+priority+"),";
+					data += "  "+file+"("+priority+")\n";
 				}
 				
 				var lastFile:ILoadManager = files[files.length-1];
 				var lastPriority:int = getFilePriority(lastFile);
-				data += lastFile+"("+lastPriority+")";
+				data += "  "+lastFile+"("+lastPriority+")\n";
 			}
 			
 			data += "]";
