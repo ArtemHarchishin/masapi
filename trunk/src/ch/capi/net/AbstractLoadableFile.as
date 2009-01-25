@@ -362,7 +362,7 @@
 				_stateLoading = true;
 				_closeEvent = null;
 				
-				processLoading(fixedRequest); 	
+				processLoading(fixedRequest);
 			}
 			
 			//automatically invalidate the request after the loading is started

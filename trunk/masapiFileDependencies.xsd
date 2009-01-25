@@ -41,6 +41,7 @@
                 <xsd:choice maxOccurs="unbounded">
                     <xsd:element name="file" type="FileDependency" />
                     <xsd:element name="dependency" type="FileDependency" />
+					<xsd:element name="group" type="FileDependency" />
                 </xsd:choice>
             </xsd:complexType>
             
@@ -63,6 +64,7 @@
                 <xsd:choice maxOccurs="unbounded">
                     <xsd:element name="file" type="FileDependency" />
                     <xsd:element name="dependency" type="FileDependency" />
+					<xsd:element name="group" type="FileDependency" />
                 </xsd:choice>
                 
                 <xsd:attribute name="name" type="xsd:string" use="required" />

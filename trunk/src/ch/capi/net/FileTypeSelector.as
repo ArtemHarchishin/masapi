@@ -27,12 +27,18 @@ package ch.capi.net
 		//---------//
 		//Variables//
 		//---------//
-		private var _extensions:IMap		= new DictionnaryMap(false);
+		private static var __defaultFileTypeSelector:FileTypeSelector 	= new FileTypeSelector();
+		private var _extensions:IMap									= new DictionnaryMap(false);
 		
 		//-----------------//
 		//Getters & Setters//
 		//-----------------//
 		
+		/**
+		 * Defines a default simple <code>FileTypeSelector</code> object.
+		 */
+		public static function get defaultFileTypeSelector():FileTypeSelector { return __defaultFileTypeSelector; }
+
 		/**
 		 * Defines the mapping between the extensions and the file type issued from
 		 * the <code>LoadableFileType</code> class constants.

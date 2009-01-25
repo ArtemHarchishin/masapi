@@ -75,8 +75,8 @@ package ch.capi.net
 			if (appDomain == null) appDomain = ApplicationDomain.currentDomain;
 			if (!isClassSupported(asClass, appDomain)) throw new ArgumentError("The type '"+asClass+"' is not supported for this kind of data ("+getType()+")");
 			
-			if (asClass == "flash.utils.ByteArray") return loadManagerObject.data;
-			if (asClass == "XML") return new XML(loadManagerObject.data);
+			if (asClass == DataType.BYTE_ARRAY) return loadManagerObject.data;
+			if (asClass == DataType.XML) return new XML(loadManagerObject.data);
 			
 			//create the instance
 			var srcClass:Class = appDomain.getDefinition(asClass) as Class;
@@ -102,15 +102,15 @@ package ch.capi.net
 		 */
 		public function isClassSupported(aClass:String, appDomain:ApplicationDomain=null):Boolean
 		{
-			if (getType() == LoadableFileType.BINARY && (aClass == "flash.utils.ByteArray" ||
-														 isInstanceOfClass(aClass, "flash.display.Loader", appDomain))) return true;
-			if (getType() == LoadableFileType.VARIABLES && isInstanceOfClass(aClass, "flash.net.URLVariables", appDomain)) return true;
+			if (getType() == LoadableFileType.BINARY && (aClass == DataType.BYTE_ARRAY
+														 || isInstanceOfClass(aClass, DataType.LOADER, appDomain))) return true;
+			if (getType() == LoadableFileType.VARIABLES && isInstanceOfClass(aClass, DataType.URL_VARIABLES, appDomain)) return true;
 			
 			//get a text data
-			if (isInstanceOf(aClass, ["XML",
-									  "flash.xml.XMLDocument",
-									  "flash.text.StyleSheet",
-									  "flash.net.URLVariables"], appDomain)) return true;
+			if (isInstanceOf(aClass, [DataType.XML,
+									  DataType.XML_DOCUMENT,
+									  DataType.STYLE_SHEET,
+									  DataType.URL_VARIABLES], appDomain)) return true;
 			
 			return false;
 		}

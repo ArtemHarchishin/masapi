@@ -92,6 +92,11 @@ package ch.capi.net.app
 		private static const NODE_FOLDER:String = "folder";
 		
 		/**
+		 * Defines the 'group' node name.
+		 */
+		private static const NODE_GROUP:String = "group";
+		
+		/**
 		 * Defines the 'path' attribute value.
 		 */
 		private static const ATTRIBUTE_FOLDER_PATH:String = "path";
@@ -454,9 +459,11 @@ package ch.capi.net.app
 		{
 			var name:String = node.attributes[ATTRIBUTE_NAME_VALUE];
 			if (name == null || name.length == 0) throw new ParseError("getApplicationFile", "Attribute '"+ATTRIBUTE_NAME_VALUE+"' not defined", node);
-			
-			var app:ApplicationFile = ApplicationFile.get(name);
-			if (app == null) throw new ParseError("getApplicationFile", "The file named '"+name+"' does not exist");
+		
+			var app:ApplicationFile = applicationContext.getFile(name);
+			if (node.nodeName == NODE_GROUP && app != null) throw new ParseError("getApplicationFile", "There is already a group/file with the name '"+name+"'");
+			else if (node.nodeName != NODE_GROUP && app == null) throw new ParseError("getApplicationFile", "The file named '"+name+"' does not exist");
+			else if (app == null) app = new ApplicationFile(name, null, applicationContext); //this is a group => create an empty ApplicationFile
 			
 			return app;
 		}	}}

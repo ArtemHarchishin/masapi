@@ -156,6 +156,7 @@ package ch.capi.net.app
 				addApplicationFileRecursively(af, level+1);
 			}
 			
+			//add the ILoadableFile into the queue only if it exists
 			var lf:ILoadableFile = file.loadableFile;
-			addLoadableFile(lf, level);
+			if (lf != null) addLoadableFile(lf, level);
 		}	}}

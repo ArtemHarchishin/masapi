@@ -479,7 +479,7 @@
 			 * event so the listeners can register to the MassLoader !
 			 */
 			if (_filesQueue.isEmpty()) setTimeout(doComplete, 10);
-			else setTimeout(loadNext, 10);
+			else setTimeout(loadNext, 10); //also wait before starting the massive loading
 		}
 		
 		/**

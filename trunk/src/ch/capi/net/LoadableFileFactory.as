@@ -91,6 +91,11 @@
 		 * @see		ch.capi.net.ILoadableFile#urlVariables ILoadableFile.urlVariables	
 		 */
 		public function get defaultVariables():IMap { return _defaultVariables; }
+		public function set defaultVariables(value:IMap):void
+		{
+			if (value == null) throw new ArgumentError("The value is not defined");
+			_defaultVariables = value;
+		}
 
 		/**
 		 * Defines if the <code>ILoadableFile</code> created will use the
@@ -157,7 +162,7 @@
 											defaultVirtualBytesTotal:uint = 204800,
 											listenersPriority:int = 0):void
 		{
-			_fileSelector = (fileSelector==null) ? new FileTypeSelector() : fileSelector;
+			_fileSelector = (fileSelector==null) ? FileTypeSelector.defaultFileTypeSelector : fileSelector;
 			_defaultVirtualBytes = defaultVirtualBytesTotal;
 			_useCache = defaultUseCache;
 			_listenersPriority = listenersPriority;

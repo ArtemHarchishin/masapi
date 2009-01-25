@@ -22,11 +22,11 @@
 			var picture:ILoadableFile = loadableFile.properties.getValue("picture");
 			
 			//Creates the picture
-			var ldr:Loader = picture.getData("flash.display.Loader");
+			var ldr:Loader = picture.getData(DataType.LOADER);
 			addChild(ldr);
 			
 			//Creates the XMLDocument for the motion
-			var xml:XML = dataXml.getData("XML");
+			var xml:XML = dataXml.getData(DataType.XML);
 			
 			//Creates the Animator
 			animator = new Animator(xml, ldr);

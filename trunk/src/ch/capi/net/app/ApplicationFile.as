@@ -161,7 +161,7 @@ package ch.capi.net.app
 		 * Removes a dependency from the <code>ApplicationFile</code>.
 		 * 
 		 * @param	file				The dependency to remove.
-		 * @param	recursiveSearch		Defines if the search of the dependency must recursive trought the dependency tree.
+		 * @param	recursiveSearch		Defines if the search of the dependency must recursive through the dependency tree.
 		 * 								The removal will be stopped after the first instance of the dependency has been found.
 		 */
 		public function removeDependency(file:ApplicationFile, recursiveSearch:Boolean=false):void
@@ -191,25 +191,31 @@ package ch.capi.net.app
 		}
 		
 		/**
-		 * Retrieves if the <code>ApplicationFile</code> is a direct dependency of the specified
+		 * Retrieves if the <code>ApplicationFile</code> is a dependency of the specified
 		 * <code>ApplicationFile</code>.
 		 * 
 		 * @param	file	The parent <code>ApplicationFile</code>.
+		 * @param	recursiveSearch	Defines if the dependency must be searched recursively.
 		 * @param	<code>true</code> if the current file is a dependency of the specified file.
 		 */
-		public function isDependencyOf(file:ApplicationFile):Boolean
+		public function isDependencyOf(file:ApplicationFile, recursiveSearch:Boolean=true):Boolean
 		{
 			var dependencies:Array = file.dependencies;
 			for each(var dependency:ApplicationFile in dependencies)
 			{
 				if (dependency == this) return true;
+				if (recursiveSearch)
+				{
+					var result:Boolean = isDependencyOf(dependency, true);
+					if (result == true) return true;
+				}
 			}
 			
 			return false;
 		}
 		
 		/**
-		 * Get all the <code>ApplicationFile</code> that have this file as directed dependency.
+		 * Get all the <code>ApplicationFile</code> that have this file as direct dependency.
 		 * 
 		 * @return	The parents.
 		 */
@@ -243,6 +249,19 @@ package ch.capi.net.app
 		{
 			if (loadableFile == null) return null;
 			return loadableFile.getData(asClass, appDomain);
+		}
+		
+		/**
+		 * Retrieves the value of the specified key from the <code>properties</code> of the <code>ILoadableFile</code>. If 
+		 * the <code>ILoadableFile</code> is not defined, <code>null</code> is returned.
+		 * 
+		 * @param	key		The key.
+		 * @return	The value or <code>null</code>.
+		 */
+		public function getProperty(key:*):*
+		{
+			if (loadableFile == null) return null;
+			return loadableFile.properties.getValue(key);
 		}
 		
 		/**
