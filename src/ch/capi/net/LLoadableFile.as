@@ -93,7 +93,7 @@
 		 */
 		public function isClassSupported(aClass:String, appDomain:ApplicationDomain=null):Boolean
 		{
-			return aClass == "flash.display.Loader";
+			return aClass == DataType.LOADER;
 		}
 		
 		/**

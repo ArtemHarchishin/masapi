@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="FileTypeSelector,ch.capi.net.FileTypeSelector,extensions,getExtension,getType" name="keywords">
+<meta content="FileTypeSelector,ch.capi.net.FileTypeSelector,defaultFileTypeSelector,extensions,getExtension,getType" name="keywords">
 <title>ch.capi.net.FileTypeSelector</title>
 </head>
 <body>
@@ -65,6 +65,12 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#defaultFileTypeSelector">defaultFileTypeSelector</a> : <a href="../net/FileTypeSelector.html">FileTypeSelector</a>
+<div class="summaryTableDescription">[static][read-only]
+   Defines a default simple <code>FileTypeSelector</code> object.</div>
+</td><td class="summaryTableOwnerCol">FileTypeSelector</td>
+</tr>
+<tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#extensions">extensions</a> : <a href="../data/IMap.html">IMap</a>
 <div class="summaryTableDescription">[read-only]
    Defines the mapping between the extensions and the file type issued from
@@ -113,10 +119,24 @@ showHideInherited();
 <div class="MainContent">
 <a name="propertyDetail"></a>
 <div class="detailSectionHeader">Property detail</div>
+<a name="defaultFileTypeSelector"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">defaultFileTypeSelector</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>defaultFileTypeSelector:<a href="../net/FileTypeSelector.html">FileTypeSelector</a></code>&nbsp;&nbsp;[read-only]<p>
+   Defines a default simple <code>FileTypeSelector</code> object.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public static function get defaultFileTypeSelector():<a href="../net/FileTypeSelector.html">FileTypeSelector</a></code>
+<br>
+</div>
 <a name="extensions"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">extensions</td><td class="detailHeaderType">property</td>
+<td class="detailHeaderName">extensions</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">

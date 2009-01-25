@@ -141,6 +141,7 @@ package ch.capi.net
 		 * @return	The data of the <code>loadManagerObject</code>.
 		 * @throws	ArgumentError	If the class type is not supported.
 		 * 
+		 * @see		ch.capi.net.DataType	DataType class
 		 * @see		#isClassSupported()		isClassSupported()
 		 */
 		function getData(asClass:String=null, appDomain:ApplicationDomain=null):*;
@@ -152,6 +153,7 @@ package ch.capi.net
 		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
 		 * 						the current domain will be used.
 		 * @return	<code>true</code> if the type is supported.
+		 * @see		ch.capi.net.DataType	DataType class
 		 */
 		function isClassSupported(aClass:String, appDomain:ApplicationDomain=null):Boolean;
 		

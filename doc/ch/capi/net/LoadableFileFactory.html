@@ -106,7 +106,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#defaultVariables">defaultVariables</a> : <a href="../data/IMap.html">IMap</a>
-<div class="summaryTableDescription">[read-only]
+<div class="summaryTableDescription">
    Defines the default variables that will be used by the created <code>ILoadableFile</code> by default.</div>
 </td><td class="summaryTableOwnerCol">LoadableFileFactory</td>
 </tr>
@@ -369,13 +369,15 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>defaultVariables:<a href="../data/IMap.html">IMap</a></code>&nbsp;&nbsp;[read-only]<p>
+<code>defaultVariables:<a href="../data/IMap.html">IMap</a></code>&nbsp;&nbsp;[read-write]<p>
    Defines the default variables that will be used by the created <code>ILoadableFile</code> by default.
    The factory will put a reference of this <code>IMap</code> into <code>ILoadableFile.urlVariables</code>.
    
    </p><span class="label">Implementation</span>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get defaultVariables():<a href="../data/IMap.html">IMap</a></code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set defaultVariables(value:<a href="../data/IMap.html">IMap</a>):void</code>
 <br>
 <p>
 <span class="label">See also</span>

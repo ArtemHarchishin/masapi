@@ -89,7 +89,7 @@ package ch.capi.net
 		 */
 		public function isClassSupported(aClass:String, appDomain:ApplicationDomain=null):Boolean
 		{
-			return aClass == "flash.media.Sound";
+			return aClass == DataType.SOUND;
 		}
 		
 		/**
