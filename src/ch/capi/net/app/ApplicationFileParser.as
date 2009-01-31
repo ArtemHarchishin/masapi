@@ -147,13 +147,14 @@ package ch.capi.net.app
 		/**
 		 * Creates a new <code>ApplicationFileParser</code> object.
 		 * 
-		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code>.
+		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code>. If not defined, then the 
+		 * 									<code>LoadableFileFactory.defaultLoadableFileFactory</code> will be used.
 		 * @param	context					The <code>ApplicationContext</code>. If not defined, then the global <code>ApplicationContext</code>
 		 * 									will be used.
 		 */
 		public function ApplicationFileParser(loadableFileFactory:LoadableFileFactory=null, context:ApplicationContext=null):void
 		{
-			_loadableFileFactory = (loadableFileFactory==null) ? new LoadableFileFactory() : loadableFileFactory;
+			_loadableFileFactory = (loadableFileFactory==null) ? LoadableFileFactory.defaultLoadableFileFactory : loadableFileFactory;
 			
 			if (context == null) context = ApplicationContext.globalContext;
 			_applicationContext = context;
@@ -164,7 +165,7 @@ package ch.capi.net.app
 		//--------------//
 		
 		/**
-		 * Parse the specified <code>XMLNode</code>. The specified node must contains at least one subnode will al
+		 * Parse the specified <code>XMLNode</code>. The specified node must contains at least one subnode with all
 		 * the files declaration. The second subnode will contains the dependencies.
 		 * 
 		 * @param	node	The <code>XMLNode</code> to parse.

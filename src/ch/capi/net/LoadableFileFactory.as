@@ -148,8 +148,8 @@
 		/**
 		 * Creates a new <code>LoadableFileFactory</code> object.
 		 * 
-		 * @param	fileSelector				The <code>FileTypeSelector</code>. By default, a <code>FileTypeSelector</code>
-		 * 										will be created.
+		 * @param	fileSelector				The <code>FileTypeSelector</code>. If not defined, the 
+		 * 										<code>FileTypeSelector.defaultFileTypeSelector</code> will be used.
 		 * @param	defaultUseCache				Indicates if the <code>ILoadableFile</code>
 		 * 										will use the cache or not.
 		 * @param	defaultVirtualBytesTotal	The virtual bytes to set by default to the
