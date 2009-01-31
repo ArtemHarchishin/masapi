@@ -104,7 +104,7 @@ package ch.capi.display.text
 			//apply only the font
 			if (!allProperties) 
 			{
-				tf = new TextFormat();
+				tf = field.defaultTextFormat;
 				tf.font = textFormat.font;
 			}
 			

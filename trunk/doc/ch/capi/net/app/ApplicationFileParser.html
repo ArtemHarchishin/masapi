@@ -240,7 +240,8 @@ showHideInherited();
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">loadableFileFactory</span>:<a href="../LoadableFileFactory.html">LoadableFileFactory</a></code> (default = <code>null</code>)<code></code> &mdash;  The <code>LoadableFileFactory</code>.
+<td width="20px"></td><td><code><span class="label">loadableFileFactory</span>:<a href="../LoadableFileFactory.html">LoadableFileFactory</a></code> (default = <code>null</code>)<code></code> &mdash;  The <code>LoadableFileFactory</code>. If not defined, then the 
+            <code>LoadableFileFactory.defaultLoadableFileFactory</code> will be used.
    </td>
 </tr>
 <tr>
@@ -370,7 +371,7 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public function parse(node:XMLNode):void</code><p>
-   Parse the specified <code>XMLNode</code>. The specified node must contains at least one subnode will al
+   Parse the specified <code>XMLNode</code>. The specified node must contains at least one subnode with all
    the files declaration. The second subnode will contains the dependencies.
    
    </p><span class="label">Parameters</span>
