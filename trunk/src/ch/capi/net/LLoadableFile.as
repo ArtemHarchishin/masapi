@@ -1,5 +1,7 @@
 ﻿package ch.capi.net
 {
+	import flash.display.BitmapData;	
+	import flash.display.Bitmap;	
 	import flash.net.URLRequest;	
 	import flash.system.ApplicationDomain;	
 	import flash.display.Loader;
@@ -80,7 +82,16 @@
 		{
 			checkDestroyed();
 			if (asClass != null && !isClassSupported(asClass)) throw new ArgumentError("The type '"+asClass+"' is not supported");	
-			return (loadManagerObject as Loader);
+			
+			//simply returns the Loader
+			if (asClass == DataType.LOADER) return (loadManagerObject as Loader);
+			
+			//creates a new detached bitmap
+			var sourceBitmap:Bitmap = Bitmap(loadManagerObject.content);
+			var clonedBitmapData:BitmapData = sourceBitmap.bitmapData.clone();
+			
+			if (asClass == DataType.BITMAP_DATA) return clonedBitmapData;
+			return new Bitmap(clonedBitmapData);
 		}
 		
 		/**
@@ -93,7 +104,11 @@
 		 */
 		public function isClassSupported(aClass:String, appDomain:ApplicationDomain=null):Boolean
 		{
-			return aClass == DataType.LOADER;
+			if (isInstanceOf(aClass, [DataType.LOADER,
+									  DataType.BITMAP,
+									  DataType.BITMAP_DATA], appDomain)) return true;
+									  
+			return false;
 		}
 		
 		/**

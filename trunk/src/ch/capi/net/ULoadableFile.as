@@ -1,5 +1,7 @@
 package ch.capi.net
 {
+	import flash.display.BitmapData;	
+	import flash.display.Bitmap;	
 	import flash.net.URLRequest;	
 	import flash.display.LoaderInfo;	
 	import flash.display.DisplayObject;	
@@ -75,15 +77,28 @@ package ch.capi.net
 			if (appDomain == null) appDomain = ApplicationDomain.currentDomain;
 			if (!isClassSupported(asClass, appDomain)) throw new ArgumentError("The type '"+asClass+"' is not supported for this kind of data ("+getType()+")");
 			
-			if (asClass == DataType.BYTE_ARRAY) return loadManagerObject.data;
-			if (asClass == DataType.XML) return new XML(loadManagerObject.data);
+			var loadedData:* = loadManagerObject.data;
+			if (asClass == DataType.BYTE_ARRAY) return loadedData;
+			if (asClass == DataType.XML) return new XML(loadedData);
+			
+			if (asClass == DataType.BITMAP || asClass == DataType.BITMAP_DATA)
+			{
+				var tmpLoader:Loader = new Loader();
+				tmpLoader.loadBytes(loadedData);
+				
+				//clone the content into a bitmap data
+				var sourceBitmap:Bitmap = Bitmap(tmpLoader.content);
+				var clonedBitmapData:BitmapData = sourceBitmap.bitmapData.clone();
+				
+				if (asClass == DataType.BITMAP_DATA) return clonedBitmapData;
+				return new Bitmap(clonedBitmapData); 
+			}
 			
 			//create the instance
 			var srcClass:Class = appDomain.getDefinition(asClass) as Class;
 			var insClass:* = new srcClass();
 			
 			//create the data
-			var loadedData:* = loadManagerObject.data;
 			if (insClass is Loader){ insClass.contentLoaderInfo.addEventListener(Event.INIT, onInit, false, 10, true); insClass.loadBytes(loadedData); }
 			else if (insClass is URLVariables){ insClass.decode(loadedData); }
 			else if (insClass is XMLDocument){ insClass.ignoreWhite=true; insClass.parseXML(loadedData); }
@@ -103,7 +118,9 @@ package ch.capi.net
 		public function isClassSupported(aClass:String, appDomain:ApplicationDomain=null):Boolean
 		{
 			if (getType() == LoadableFileType.BINARY && (aClass == DataType.BYTE_ARRAY
-														 || isInstanceOfClass(aClass, DataType.LOADER, appDomain))) return true;
+														 || isInstanceOf(aClass, [DataType.LOADER, 
+														 						  DataType.BITMAP, 
+														 						  DataType.BITMAP_DATA], appDomain))) return true;
 			if (getType() == LoadableFileType.VARIABLES && isInstanceOfClass(aClass, DataType.URL_VARIABLES, appDomain)) return true;
 			
 			//get a text data
