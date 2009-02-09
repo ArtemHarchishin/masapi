@@ -27,9 +27,19 @@ package ch.capi.net.app
 		private static const NODE_FILE:String = "file";
 		
 		/**
+		 * Defines the 'files' node name.
+		 */
+		private static const NODE_FILES:String = "files";
+		
+		/**
 		 * Defines the 'variables' node name.
 		 */
 		private static const NODE_VARIABLES:String = "variables";
+		
+		/**
+		 * Defines the 'dependencies' node name.
+		 */
+		private static const NODE_DEPENDENCIES:String = "dependencies";
 		
 		/**
 		 * Defines the 'name' attribute value.
@@ -196,6 +206,7 @@ package ch.capi.net.app
 		 */
 		public function parseVariables(node:XMLNode):void
 		{
+			if (node.nodeName != NODE_VARIABLES) throw new ArgumentError("Invalid node name '"+node.nodeName+"'");
 			for each(var child:XMLNode in node.childNodes)
 			{
 				var name:String = child.attributes[ATTRIBUTE_NAME_VALUE];
@@ -213,6 +224,8 @@ package ch.capi.net.app
 		 */
 		public function parseFiles(node:XMLNode):void
 		{
+			if (node.nodeName != NODE_FILES) throw new ArgumentError("Invalid node name '"+node.nodeName+"'");
+			
 			//virtual bytes total
 			if (node.attributes[ATTRIBUTE_VIRTUALBYTESTOTAL_VALUE] != null)
 			{
@@ -254,6 +267,7 @@ package ch.capi.net.app
 		 */
 		public function parseDependencies(node:XMLNode):void
 		{
+			if (node.nodeName != NODE_DEPENDENCIES) throw new ArgumentError("Invalid node name '"+node.nodeName+"'");
 			var n:Array = node.childNodes;
 			for each(var cn:XMLNode in n)
 			{

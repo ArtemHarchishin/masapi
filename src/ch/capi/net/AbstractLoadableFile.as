@@ -354,7 +354,7 @@
 			//generate the new fixed request
 			var oldFixedRequest:URLRequest = fixedRequest;
 			if (!_fixedRequestUpdated) prepareFixedRequest();
-				
+			
 			//check if the new generated URL is different. If not and the bytes are already loaded, then
 			//the data won't be reloaded (static cache)
 			if (!useCache || !isEqual(oldFixedRequest, fixedRequest) || bytesTotal <= 0 || bytesLoaded < bytesTotal)
