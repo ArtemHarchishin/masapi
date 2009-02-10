@@ -61,10 +61,10 @@ package ch.capi.net
 		 * 	<li><i>css</i> as <code>LoadableFileType.TEXT</code></li>
 		 * 	<li><i>mp3</i> as <code>LoadableFileType.SOUND</code></li>
 		 * 	<li><i>wav</i> as <code>LoadableFileType.SOUND</code></li>
-		 * 	<li><i>jpg</i> as <code>LoadableFileType.BINARY</code></li>
-		 * 	<li><i>jpeg</i> as <code>LoadableFileType.BINARY</code></li>
-		 * 	<li><i>gif</i> as <code>LoadableFileType.BINARY</code></li>
-		 * 	<li><i>png</i> as <code>LoadableFileType.BINARY</code></li>
+		 * 	<li><i>jpg</i> as <code>LoadableFileType.SWF</code></li>
+		 * 	<li><i>jpeg</i> as <code>LoadableFileType.SWF</code></li>
+		 * 	<li><i>gif</i> as <code>LoadableFileType.SWF</code></li>
+		 * 	<li><i>png</i> as <code>LoadableFileType.SWF</code></li>
 		 * 	<li><i>php</i> as <code>LoadableFileType.TEXT</code></li>
 		 * 	<li><i>asp</i> as <code>LoadableFileType.TEXT</code></li>
 		 * </ul></p>
@@ -79,10 +79,10 @@ package ch.capi.net
 			_extensions.put("html", LoadableFileType.TEXT);
 			_extensions.put("mp3", LoadableFileType.SOUND);
 			_extensions.put("wav", LoadableFileType.SOUND);
-			_extensions.put("jpg", LoadableFileType.BINARY); 
-			_extensions.put("jpeg", LoadableFileType.BINARY);
-			_extensions.put("gif", LoadableFileType.BINARY);
-			_extensions.put("png", LoadableFileType.BINARY);
+			_extensions.put("jpg", LoadableFileType.SWF); 
+			_extensions.put("jpeg", LoadableFileType.SWF);
+			_extensions.put("gif", LoadableFileType.SWF);
+			_extensions.put("png", LoadableFileType.SWF);
 			_extensions.put("php", LoadableFileType.TEXT);
 			_extensions.put("asp", LoadableFileType.TEXT);
 		}
@@ -134,7 +134,7 @@ package ch.capi.net
 			var d:int = u.lastIndexOf(".");
 			if (d == -1 || d == u.length-1) return ""; //no extension
 			
-			return u.substring(d+1, u.length);
+			return u.substring(d+1, u.length).toLowerCase();
 		}
 	}
 }

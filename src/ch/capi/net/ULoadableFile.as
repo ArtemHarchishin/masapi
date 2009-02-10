@@ -1,7 +1,5 @@
 package ch.capi.net
-{
-	import flash.display.BitmapData;	
-	import flash.display.Bitmap;	
+{	
 	import flash.net.URLRequest;	
 	import flash.display.LoaderInfo;	
 	import flash.display.DisplayObject;	
@@ -81,6 +79,8 @@ package ch.capi.net
 			if (asClass == DataType.BYTE_ARRAY) return loadedData;
 			if (asClass == DataType.XML) return new XML(loadedData);
 			
+			/*
+			//NOT SUPPORTED - The Loader.loadBytes method is asynchronous, so the content will be null
 			if (asClass == DataType.BITMAP || asClass == DataType.BITMAP_DATA)
 			{
 				var tmpLoader:Loader = new Loader();
@@ -93,6 +93,7 @@ package ch.capi.net
 				if (asClass == DataType.BITMAP_DATA) return clonedBitmapData;
 				return new Bitmap(clonedBitmapData); 
 			}
+			*/
 			
 			//create the instance
 			var srcClass:Class = appDomain.getDefinition(asClass) as Class;
@@ -118,9 +119,7 @@ package ch.capi.net
 		public function isClassSupported(aClass:String, appDomain:ApplicationDomain=null):Boolean
 		{
 			if (getType() == LoadableFileType.BINARY && (aClass == DataType.BYTE_ARRAY
-														 || isInstanceOf(aClass, [DataType.LOADER, 
-														 						  DataType.BITMAP, 
-														 						  DataType.BITMAP_DATA], appDomain))) return true;
+														 || isInstanceOfClass(aClass, DataType.LOADER, appDomain))) return true;
 			if (getType() == LoadableFileType.VARIABLES && isInstanceOfClass(aClass, DataType.URL_VARIABLES, appDomain)) return true;
 			
 			//get a text data
