@@ -1,5 +1,6 @@
 ﻿package ch.capi.net
 {
+	import ch.capi.data.TreeMap;	
 	import ch.capi.data.DictionnaryMap;	
 	import ch.capi.data.IMap;	
 
@@ -85,10 +86,12 @@
 		public function set fileTypeSelector(value:FileTypeSelector):void { _fileSelector = value; }
 		
 		/**
-		 * Defines the default variables that will be used by the created <code>ILoadableFile</code> by default.
-		 * The factory will put a reference of this <code>IMap</code> into <code>ILoadableFile.urlVariables</code>.
+		 * Defines the default variables that will be used by the created <code>ILoadableFile</code> instances as
+		 * parent <code>IMap</code>. The <code>LoadableFileFactory</code> will create a <code>TreeMap</code> for each
+		 * <code>ILoadableFile</code> with this <code>IMap</code> as parent. 
 		 * 
-		 * @see		ch.capi.net.ILoadableFile#urlVariables ILoadableFile.urlVariables	
+		 * @see		ch.capi.net.ILoadableFile#urlVariables ILoadableFile.urlVariables
+		 * @see		ch.capi.dataTreeMap	TreeMap	
 		 */
 		public function get defaultVariables():IMap { return _defaultVariables; }
 		public function set defaultVariables(value:IMap):void
@@ -377,7 +380,7 @@
 		 */
 		protected function initializeFile(file:ILoadableFile):void
 		{
-			file.urlVariables = _defaultVariables;
+			file.urlVariables = new TreeMap(_defaultVariables);
 			file.virtualBytesTotal = _defaultVirtualBytes;
 			file.useCache = _useCache;
 		}
