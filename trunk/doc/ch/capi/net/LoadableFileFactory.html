@@ -107,7 +107,8 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#defaultVariables">defaultVariables</a> : <a href="../data/IMap.html">IMap</a>
 <div class="summaryTableDescription">
-   Defines the default variables that will be used by the created <code>ILoadableFile</code> by default.</div>
+   Defines the default variables that will be used by the created <code>ILoadableFile</code> instances as
+   parent <code>IMap</code>.</div>
 </td><td class="summaryTableOwnerCol">LoadableFileFactory</td>
 </tr>
 <tr class="">
@@ -370,8 +371,9 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>defaultVariables:<a href="../data/IMap.html">IMap</a></code>&nbsp;&nbsp;[read-write]<p>
-   Defines the default variables that will be used by the created <code>ILoadableFile</code> by default.
-   The factory will put a reference of this <code>IMap</code> into <code>ILoadableFile.urlVariables</code>.
+   Defines the default variables that will be used by the created <code>ILoadableFile</code> instances as
+   parent <code>IMap</code>. The <code>LoadableFileFactory</code> will create a <code>TreeMap</code> for each
+   <code>ILoadableFile</code> with this <code>IMap</code> as parent. 
    
    </p><span class="label">Implementation</span>
 <br>
@@ -384,7 +386,7 @@ showHideInherited();
 </p>
 <div class="seeAlso">
 <a href="../net/ILoadableFile.html#urlVariables" target="">ILoadableFile.urlVariables</a>
-</div>
+<br>TreeMap</div>
 </div>
 <a name="defaultVirtualBytesTotal"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
