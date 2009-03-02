@@ -112,18 +112,25 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PÂ
    Parses the <code>ApplicationFile</code> of the specified <code>XMLNode</code>.</td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/ParseUtils.html#parseFloat()">parseFloat</a>(str) &mdash; Static method in class ch.capi.utils.<a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/ParseUtils.html">ParseUtils</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Parses the specified <code>String</code> to a <code>Float</code> using the <code>parseFloat</code> global function.</td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/ParseUtils.html#parseInteger()">parseInteger</a>(str, radix) &mdash; Static method in class ch.capi.utils.<a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/ParseUtils.html">ParseUtils</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
-   Parses the specified <code>String</code> to a <code>Integer</code>.</td>
+   Parses the specified <code>String</code> to a <code>Integer</code> using the <code>parseInt</code> global function.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/ParseUtils.html#parseNumber()">parseNumber</a>(str) &mdash; Static method in class ch.capi.utils.<a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/ParseUtils.html">ParseUtils</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
-   Parses the specified <code>String</code> to a <code>Number</code>.</td>
+   Parses the specified <code>String</code> to a <code>Number</code> using the <code>Number</code> global function.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/data/xml/class-list.html');" href="ch/capi/data/xml/XMLDescriptor.html#parseSource()">parseSource</a>(source) &mdash; Method in class ch.capi.data.xml.<a onclick="javascript:loadClassListFrame('ch/capi/data/xml/class-list.html');" href="ch/capi/data/xml/XMLDescriptor.html">XMLDescriptor</a></td>
@@ -168,7 +175,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PÂ
    Defines the percent of bytes loaded.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/AbstractLoadableFile.html#prepareFixedRequest()">prepareFixedRequest</a>() &mdash; Method in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/AbstractLoadableFile.html">AbstractLoadableFile</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/ILoadableFile.html#prepareFixedRequest()">prepareFixedRequest</a>() &mdash; Method in interface ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/ILoadableFile.html">ILoadableFile</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
@@ -176,7 +183,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PÂ
    will be used to load the file.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/ILoadableFile.html#prepareFixedRequest()">prepareFixedRequest</a>() &mdash; Method in interface ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/ILoadableFile.html">ILoadableFile</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/AbstractLoadableFile.html#prepareFixedRequest()">prepareFixedRequest</a>() &mdash; Method in class ch.capi.net.files.<a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/AbstractLoadableFile.html">AbstractLoadableFile</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
@@ -261,11 +268,39 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PÂ
    Called by the <code>MassLoader</code> when a file download is complete.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/AbstractLoadableFile.html#processLoading()">processLoading</a>(request) &mdash; Method in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/AbstractLoadableFile.html">AbstractLoadableFile</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/AbstractLoadableFile.html#processLoading()">processLoading</a>(request) &mdash; Method in class ch.capi.net.files.<a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/AbstractLoadableFile.html">AbstractLoadableFile</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
    Tell the <code>ILoadableFile</code> to start the loading process.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/LoaderFile.html#processLoading()">processLoading</a>(request) &mdash; Method in class ch.capi.net.files.<a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/LoaderFile.html">LoaderFile</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Starts the loading of the <code>Loader</code>.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/SoundFile.html#processLoading()">processLoading</a>(request) &mdash; Method in class ch.capi.net.files.<a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/SoundFile.html">SoundFile</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Starts the loading of the <code>Sound</code>.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/URLLoaderFile.html#processLoading()">processLoading</a>(request) &mdash; Method in class ch.capi.net.files.<a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/URLLoaderFile.html">URLLoaderFile</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Starts the loading of the <code>URLLoader</code>.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/URLStreamFile.html#processLoading()">processLoading</a>(request) &mdash; Method in class ch.capi.net.files.<a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/URLStreamFile.html">URLStreamFile</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Starts the loading of the <code>URLStream</code>.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/MassLoader.html#processPolicy()">processPolicy</a>(file:<a href="ch/capi/net/ILoadManager.html" onclick="javascript:loadClassListFrame('ch/capi/net./class-list.html');">ch.capi.net:ILoadManager</a>, closeEvent) &mdash; Method in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/MassLoader.html">MassLoader</a></td>
@@ -275,13 +310,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PÂ
    Processes the loading policy on the currently closed file.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/AbstractLoadableFile.html#event:progress">progress</a> &mdash; Event in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/AbstractLoadableFile.html">AbstractLoadableFile</a></td>
-</tr>
-<tr>
-<td width="20"></td><td>
-  Dispatched when data is received as the download operation progresses.</td>
-</tr>
-<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/ILoadManager.html#event:progress">progress</a> &mdash; Event in interface ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/ILoadManager.html">ILoadManager</a></td>
 </tr>
 <tr>
@@ -289,14 +317,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PÂ
   Dispatched when data is received as the download operation progresses.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/MassLoader.html#event:progress">progress</a> &mdash; Event in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/MassLoader.html">MassLoader</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/AbstractLoadableFile.html#event:progress">progress</a> &mdash; Event in class ch.capi.net.files.<a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/AbstractLoadableFile.html">AbstractLoadableFile</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
   Dispatched when data is received as the download operation progresses.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/AbstractLoadableFile.html#properties">properties</a> &mdash; Property in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/AbstractLoadableFile.html">AbstractLoadableFile</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/ILoadableFile.html#properties">properties</a> &mdash; Property in interface ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/ILoadableFile.html">ILoadableFile</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
@@ -304,7 +332,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PÂ
    <code>ILoadableFile</code>.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/ILoadableFile.html#properties">properties</a> &mdash; Property in interface ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/ILoadableFile.html">ILoadableFile</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/AbstractLoadableFile.html#properties">properties</a> &mdash; Property in class ch.capi.net.files.<a onclick="javascript:loadClassListFrame('ch/capi/net/files/class-list.html');" href="ch/capi/net/files/AbstractLoadableFile.html">AbstractLoadableFile</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>

@@ -1,0 +1,1380 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
+<meta content="AbstractLoadableFile,ch.capi.net.files.AbstractLoadableFile,NO_CACHE_VARIABLE_NAME,bytesLoaded,bytesTotal,bytesTotalRetrieved,closeEvent,fixedRequest,loadManagerObject,netState,properties,stateIdle,stateLoading,urlRequest,urlVariables,useCache,virtualBytesTotal,checkDestroyed,destroy,getURLRequest,getUpdatedUrlRequest,invalidateFixedRequest,isDestroyed,isInstanceOf,isInstanceOfClass,isOnline,onComplete,onHttpStatus,onIOError,onInit,onOpen,onProgress,onSecurityError,prepareFixedRequest,processLoading,registerTo,start,stop,toString,unregisterFrom" name="keywords">
+<title>ch.capi.net.files.AbstractLoadableFile</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'AbstractLoadableFile - API Documentation';
+				var baseRef = '../../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../index-list.html')" href="../../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../../index.html?ch/capi/net/files/AbstractLoadableFile.html&amp;ch/capi/net/files/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;AbstractLoadableFile</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a>&nbsp;| <a href="#constantSummary">Constants</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class AbstractLoadableFile"); titleBar_setSubNav(true,true,false,false,true,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">ch.capi.net.files</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class AbstractLoadableFile</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">AbstractLoadableFile <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> flash.events.EventDispatcher</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Implements</td><td><a href="../INetStateManager.html">INetStateManager</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Subclasses</td><td><a href="../files/LoaderFile.html">LoaderFile</a>, <a href="../files/SoundFile.html">SoundFile</a>, <a href="../files/URLLoaderFile.html">URLLoaderFile</a>, <a href="../files/URLStreamFile.html">URLStreamFile</a></td>
+</tr>
+</table>
+<p></p>
+  Represents a <code>AbstractLoadableFile</code>. This is a basic
+  implementation to store the generic data of a <code>ILoadableFile</code>.
+  
+  <p></p>
+<p>
+<span class="classHeaderTableLabel">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../../net/ILoadableFile.html" target="">ILoadableFile</a>
+<br>
+<a href="../../net/LoadableFileFactory.html" target="">LoadableFileFactory</a>
+</div>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#bytesLoaded">bytesLoaded</a> : uint<div class="summaryTableDescription">[read-only]
+   Defines the bytes that have been loaded.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#bytesTotal">bytesTotal</a> : uint<div class="summaryTableDescription">[read-only]
+   Defines the total bytes to load.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#bytesTotalRetrieved">bytesTotalRetrieved</a> : Boolean<div class="summaryTableDescription">[read-only]
+   Defines if the <code>bytesTotal</code> have been retrieved.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#closeEvent">closeEvent</a> : Event<div class="summaryTableDescription">[read-only]
+   Defines the event that happend to close the file (Event.CLOSE, Event.COMPLETE, ...).</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#fixedRequest">fixedRequest</a> : URLRequest<div class="summaryTableDescription">[read-only]
+   Defines the <code>URLRequest</code> that has been loaded by the
+   <code>ILoadableFile</code>.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#loadManagerObject">loadManagerObject</a> : Object<div class="summaryTableDescription">[read-only]
+   Defines the load manager object.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#netState">netState</a> : String<div class="summaryTableDescription">
+   Defines the <code>NetState</code> value.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#properties">properties</a> : <a href="../../data/IMap.html">IMap</a>
+<div class="summaryTableDescription">[read-only]
+   Defines the properties stored into the
+   <code>ILoadableFile</code>.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#stateIdle">stateIdle</a> : Boolean<div class="summaryTableDescription">[read-only]
+   Defines if the <code>AbstractLoadableFile</code> is idle.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#stateLoading">stateLoading</a> : Boolean<div class="summaryTableDescription">[read-only]
+   Defines if the <code>AbstractLoadableFile</code> is loading.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#urlRequest">urlRequest</a> : URLRequest<div class="summaryTableDescription">
+   Defines the <code>URLRequest</code> object that specify the
+   URL to load.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#urlVariables">urlVariables</a> : <a href="../../data/IMap.html">IMap</a>
+<div class="summaryTableDescription">
+   Defines the variables key/values to be replaced
+   into the url before the loading is launched.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#useCache">useCache</a> : Boolean<div class="summaryTableDescription">
+   Defines if the <code>ILoadManager</code> can use the cache or not.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#virtualBytesTotal">virtualBytesTotal</a> : uint<div class="summaryTableDescription">
+   Defines the virtual total bytes.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#AbstractLoadableFile()">AbstractLoadableFile</a>(loadManagerObject:Object)</div>
+<div class="summaryTableDescription">
+   Creates a new <code>AbstractLoadableFile</code> object.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#destroy()">destroy</a>():void</div>
+<div class="summaryTableDescription">
+   Destroys this <code>ILoadableFile</code>.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getURLRequest()">getURLRequest</a>():URLRequest</div>
+<div class="summaryTableDescription">
+   Retrieves the <code>URLRequest</code> that is created depending of
+   the <code>useCache</code> property value.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#invalidateFixedRequest()">invalidateFixedRequest</a>():void</div>
+<div class="summaryTableDescription">
+   Invalidate the current <code>fixedRequest</code>.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#isDestroyed()">isDestroyed</a>():Boolean</div>
+<div class="summaryTableDescription">
+   Retrieves if this <code>ILoadableFile</code> has been destroyed.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#isOnline()">isOnline</a>():Boolean</div>
+<div class="summaryTableDescription">
+   Retrieves if the current <code>AbstractLoadableFile</code> is online or not.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#prepareFixedRequest()">prepareFixedRequest</a>():void</div>
+<div class="summaryTableDescription">
+   Tells the <code>ILoadableFile</code> to update the <code>fixedRequest</code> value that
+   will be used to load the file.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#start()">start</a>():void</div>
+<div class="summaryTableDescription">
+   Set the state as loading.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#stop()">stop</a>():void</div>
+<div class="summaryTableDescription">
+   Set the state as idle.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#toString()">toString</a>():String</div>
+<div class="summaryTableDescription">
+   Get the URL of the <code>AbstractLoadableFile</code>.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+</table>
+</div>
+<a name="protectedMethodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Protected Methods</div>
+<table id="summaryTableProtectedMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#checkDestroyed()">checkDestroyed</a>():void</div>
+<div class="summaryTableDescription">
+   Checks if the current <code>ILoadableFile</code> has been destroyed and if so, throws an <code>IllegalOperationError</code>.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getUpdatedUrlRequest()">getUpdatedUrlRequest</a>():URLRequest</div>
+<div class="summaryTableDescription">
+   Creates a clone of the current <code>URLRequest</code> and put the variables values into its data.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#isInstanceOf()">isInstanceOf</a>(source:String, superClasses:Array, appDomain:ApplicationDomain = null):Boolean</div>
+<div class="summaryTableDescription">
+   Checks if the specified source class is a child of one of the specified super classes.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#isInstanceOfClass()">isInstanceOfClass</a>(source:String, superClass:String, appDomain:ApplicationDomain = null):Boolean</div>
+<div class="summaryTableDescription">
+   Checks if the specified source class is a child of the specified super class.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onComplete()">onComplete</a>(evt:Event):void</div>
+<div class="summaryTableDescription">
+   <code>Event.COMPLETE</code> listener.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onHttpStatus()">onHttpStatus</a>(evt:HTTPStatusEvent):void</div>
+<div class="summaryTableDescription">
+   <code>HTTPStatusEvent.HTTP_STATUS</code> listener.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onInit()">onInit</a>(evt:Event):void</div>
+<div class="summaryTableDescription">
+   <code>Event.INIT</code> listener.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onIOError()">onIOError</a>(evt:IOErrorEvent):void</div>
+<div class="summaryTableDescription">
+   <code>IOErrorEvent</code> listener.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onOpen()">onOpen</a>(evt:Event):void</div>
+<div class="summaryTableDescription">
+   <code>Event.OPEN</code> listener.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onProgress()">onProgress</a>(evt:ProgressEvent):void</div>
+<div class="summaryTableDescription">
+   <code>ProgressEvent.PROGRESS</code> listener.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onSecurityError()">onSecurityError</a>(evt:SecurityErrorEvent):void</div>
+<div class="summaryTableDescription">
+   <code>SecurityErrorEvent</code> listener.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#processLoading()">processLoading</a>(request:URLRequest):void</div>
+<div class="summaryTableDescription">
+   Tell the <code>ILoadableFile</code> to start the loading process.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#registerTo()">registerTo</a>(dispatcher:IEventDispatcher):void</div>
+<div class="summaryTableDescription">
+   Register the events of the <code>AbstractLoadableFile</code>.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#unregisterFrom()">unregisterFrom</a>(dispatcher:IEventDispatcher):void</div>
+<div class="summaryTableDescription"> 
+   Unregister the events of the <code>AbstractLoadableFile</code>.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+</table>
+</div>
+<a name="eventSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Events</div>
+<table id="summaryTableEvent" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Event</th><th>Summary</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:close">close</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the download operation stops.</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:complete">complete</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched after all the received data is received.</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:httpStatus">httpStatus</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the http headers are received.</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:init">init</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the content of the <code>loadManagerObject</code> is displayed.</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:ioError">ioError</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched if a call to <code>start()</code> results in a fatal error that terminates the download.</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:open">open</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the download operation commences following a call to the <code>ILoadManager.load()</code>
+  method.</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:progress">progress</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when data is received as the download operation progresses.</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#event:securityError">securityError</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched if a call to <code>start()</code> attempts to load data from a server outside the security sandbox.</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+</table>
+</div>
+<a name="constantSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Constants</div>
+<table id="summaryTableConstant" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Constant</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#NO_CACHE_VARIABLE_NAME">NO_CACHE_VARIABLE_NAME</a> : String = "noCache"<div class="summaryTableDescription">[static]
+   Name of the 'no cache' variable.</div>
+</td><td class="summaryTableOwnerCol">AbstractLoadableFile</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="bytesLoaded"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">bytesLoaded</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>bytesLoaded:uint</code>&nbsp;&nbsp;[read-only]<p>
+   Defines the bytes that have been loaded.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get bytesLoaded():uint</code>
+<br>
+</div>
+<a name="bytesTotal"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">bytesTotal</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>bytesTotal:uint</code>&nbsp;&nbsp;[read-only]<p>
+   Defines the total bytes to load.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get bytesTotal():uint</code>
+<br>
+</div>
+<a name="bytesTotalRetrieved"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">bytesTotalRetrieved</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>bytesTotalRetrieved:Boolean</code>&nbsp;&nbsp;[read-only]<p>
+   Defines if the <code>bytesTotal</code> have been retrieved.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get bytesTotalRetrieved():Boolean</code>
+<br>
+</div>
+<a name="closeEvent"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">closeEvent</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>closeEvent:Event</code>&nbsp;&nbsp;[read-only]<p>
+   Defines the event that happend to close the file (Event.CLOSE, Event.COMPLETE, ...).
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get closeEvent():Event</code>
+<br>
+</div>
+<a name="fixedRequest"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">fixedRequest</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>fixedRequest:URLRequest</code>&nbsp;&nbsp;[read-only]<p>
+   Defines the <code>URLRequest</code> that has been loaded by the
+   <code>ILoadableFile</code>.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get fixedRequest():URLRequest</code>
+<br>
+</div>
+<a name="loadManagerObject"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">loadManagerObject</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>loadManagerObject:Object</code>&nbsp;&nbsp;[read-only]<p>
+   Defines the load manager object.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get loadManagerObject():Object</code>
+<br>
+</div>
+<a name="netState"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">netState</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>netState:String</code>&nbsp;&nbsp;[read-write]<p>
+   Defines the <code>NetState</code> value. The value available can
+   be retrieved from the <code>NetState</code> class.
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get netState():String</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set netState(value:String):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../../net/NetState.html" target="">NetState</a>
+<br>
+<a href="../files/AbstractLoadableFile.html#isOnline()" target="">isOnline()</a>
+</div>
+</div>
+<a name="properties"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">properties</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>properties:<a href="../../data/IMap.html">IMap</a></code>&nbsp;&nbsp;[read-only]<p>
+   Defines the properties stored into the
+   <code>ILoadableFile</code>.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get properties():<a href="../../data/IMap.html">IMap</a></code>
+<br>
+</div>
+<a name="stateIdle"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">stateIdle</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>stateIdle:Boolean</code>&nbsp;&nbsp;[read-only]<p>
+   Defines if the <code>AbstractLoadableFile</code> is idle.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get stateIdle():Boolean</code>
+<br>
+</div>
+<a name="stateLoading"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">stateLoading</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>stateLoading:Boolean</code>&nbsp;&nbsp;[read-only]<p>
+   Defines if the <code>AbstractLoadableFile</code> is loading.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get stateLoading():Boolean</code>
+<br>
+</div>
+<a name="urlRequest"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">urlRequest</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>urlRequest:URLRequest</code>&nbsp;&nbsp;[read-write]<p>
+   Defines the <code>URLRequest</code> object that specify the
+   URL to load.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get urlRequest():URLRequest</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set urlRequest(value:URLRequest):void</code>
+<br>
+</div>
+<a name="urlVariables"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">urlVariables</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>urlVariables:<a href="../../data/IMap.html">IMap</a></code>&nbsp;&nbsp;[read-write]<p>
+   Defines the variables key/values to be replaced
+   into the url before the loading is launched.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get urlVariables():<a href="../../data/IMap.html">IMap</a></code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set urlVariables(value:<a href="../../data/IMap.html">IMap</a>):void</code>
+<br>
+</div>
+<a name="useCache"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">useCache</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>useCache:Boolean</code>&nbsp;&nbsp;[read-write]<p>
+   Defines if the <code>ILoadManager</code> can use the cache or not.
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get useCache():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set useCache(value:Boolean):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../files/AbstractLoadableFile.html#getURLRequest()" target="">getURLRequest()</a>
+</div>
+</div>
+<a name="virtualBytesTotal"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">virtualBytesTotal</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>virtualBytesTotal:uint</code>&nbsp;&nbsp;[read-write]<p>
+   Defines the virtual total bytes. This value
+   represents an approximation of the total bytes.
+   This value should be greather than the real amount
+   of bytes of the loadable file.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get virtualBytesTotal():uint</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set virtualBytesTotal(value:uint):void</code>
+<br>
+</div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="AbstractLoadableFile()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">AbstractLoadableFile</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function AbstractLoadableFile(loadManagerObject:Object)</code><p>
+   Creates a new <code>AbstractLoadableFile</code> object. This method throws an error if
+   it is directly called or if a sub-class doesn't implement the <code>ILoadableFile</code> interface.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">loadManagerObject</span>:Object</code> &mdash;  The <code>loadManagerObject</code>.
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="checkDestroyed()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">checkDestroyed</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function checkDestroyed():void</code><p>
+   Checks if the current <code>ILoadableFile</code> has been destroyed and if so, throws an <code>IllegalOperationError</code>.
+   
+   </p><br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; flash.errors.IllegalOperationError If the <code>AbstractLoadableFile</code> has been destroyed.
+   </td>
+</tr>
+</table>
+</div>
+<a name="destroy()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">destroy</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function destroy():void</code><p>
+   Destroys this <code>ILoadableFile</code>. This method causes to set the <code>loadManagerObject</code> value to
+   <code>null</code> and releases all other references to the content loaded contained into the current <code>ILoadableFile</code>.
+   This method also resets all the variables of the <code>ILoadableFile</code>. It just keeps a <code>URLRequest</code> with the 
+   specified file URL.
+   After calling this method, no more operation is available on the <code>ILoadableFile</code> instance.
+   </p></div>
+<a name="getUpdatedUrlRequest()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getUpdatedUrlRequest</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function getUpdatedUrlRequest():URLRequest</code><p>
+   Creates a clone of the current <code>URLRequest</code> and put the variables values into its data.
+   If there is some 
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>URLRequest</code> &mdash; The new <code>URLRequest</code>.
+   </td>
+</tr>
+</table>
+</div>
+<a name="getURLRequest()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getURLRequest</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getURLRequest():URLRequest</code><p>
+   Retrieves the <code>URLRequest</code> that is created depending of
+   the <code>useCache</code> property value. The creation of the <code>URLRequest</code>
+   is based on the <code>netState</code>. If the <code>isOnline()</code> method returns
+   <code>false</code> or the <code>useCache</code> property value is </code>true</code>, then
+   the current <code>urlRequest</code> is returned. Else a new <code>URLRequest</code> is created,
+   cloning the data and adding a no cache variable.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>URLRequest</code> &mdash;  The <code>URLRequest</code>
+   </td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; flash.errors.IllegalOperationError If the <code>AbstractLoadableFile</code> has been destroyed.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../files/AbstractLoadableFile.html#useCache" target="">useCache</a>
+<br>
+<a href="../files/AbstractLoadableFile.html#isOnline()" target="">isOnline()</a>
+</div>
+</div>
+<a name="invalidateFixedRequest()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">invalidateFixedRequest</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function invalidateFixedRequest():void</code><p>
+   Invalidate the current <code>fixedRequest</code>. It means that the next time
+   the <code>start()</code> method will be launched, the <code>ILoadableFile</code>
+   will relaunch the loading of the data, without taking care of the cache.
+   
+   </p><p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../files/AbstractLoadableFile.html#fixedRequest" target="">fixedRequest</a>
+</div>
+</div>
+<a name="isDestroyed()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">isDestroyed</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function isDestroyed():Boolean</code><p>
+   Retrieves if this <code>ILoadableFile</code> has been destroyed. If this method returns <code>true</code>, then
+   no more operation is available on the <code>ILoadableFile</code>.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; <code>true</code> if the file has been destroyed.
+   </td>
+</tr>
+</table>
+</div>
+<a name="isInstanceOf()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">isInstanceOf</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function isInstanceOf(source:String, superClasses:Array, appDomain:ApplicationDomain = null):Boolean</code><p>
+   Checks if the specified source class is a child of one of the specified super classes.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">source</span>:String</code> &mdash;   The source class.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">superClasses</span>:Array</code> &mdash; An <code>Array</code> of <code>String</code> describing a list of classes.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">appDomain</span>:ApplicationDomain</code> (default = <code>null</code>)<code></code> &mdash;  The <code>ApplicationDomain</code> to retrieve the classes.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; <code>true</code> if the source class extends one of the super classes.
+   </td>
+</tr>
+</table>
+</div>
+<a name="isInstanceOfClass()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">isInstanceOfClass</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function isInstanceOfClass(source:String, superClass:String, appDomain:ApplicationDomain = null):Boolean</code><p>
+   Checks if the specified source class is a child of the specified super class.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">source</span>:String</code> &mdash;  The source class (child).
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">superClass</span>:String</code> &mdash; The super class.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">appDomain</span>:ApplicationDomain</code> (default = <code>null</code>)<code></code> &mdash; The <code>ApplicationDomain</code> to retrieve the classe.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; <code>true</code> if the source class extends the super class.
+   
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../files/AbstractLoadableFile.html#isInstanceOf()" target="">isInstanceOf()</a>
+</div>
+</div>
+<a name="isOnline()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">isOnline</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function isOnline():Boolean</code><p>
+   Retrieves if the current <code>AbstractLoadableFile</code> is online or not. If the current <code>netState</code>
+   value is <code>NetState.DYNAMIC</code>, then  the online state is retrieved from the specified url. If the url
+   is relative (no protocol specified), then the online state is retrieved from the current security sandbox.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; <code>true</code> if the <code>AbstractLoadableFile</code> is online.
+   </td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; flash.errors.IllegalOperationError If the <code>AbstractLoadableFile</code> has been destroyed.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../files/AbstractLoadableFile.html#netState" target="">netState</a>
+<br>Security.sandboxType</div>
+</div>
+<a name="onComplete()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onComplete</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function onComplete(evt:Event):void</code><p>
+   <code>Event.COMPLETE</code> listener.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">evt</span>:Event</code> &mdash;  The event object.
+   </td>
+</tr>
+</table>
+</div>
+<a name="onHttpStatus()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onHttpStatus</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function onHttpStatus(evt:HTTPStatusEvent):void</code><p>
+   <code>HTTPStatusEvent.HTTP_STATUS</code> listener.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">evt</span>:HTTPStatusEvent</code> &mdash;  The event object.
+   </td>
+</tr>
+</table>
+</div>
+<a name="onInit()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onInit</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function onInit(evt:Event):void</code><p>
+   <code>Event.INIT</code> listener.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">evt</span>:Event</code> &mdash;  The event object.
+   </td>
+</tr>
+</table>
+</div>
+<a name="onIOError()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onIOError</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function onIOError(evt:IOErrorEvent):void</code><p>
+   <code>IOErrorEvent</code> listener.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">evt</span>:IOErrorEvent</code> &mdash;  The event object.
+   </td>
+</tr>
+</table>
+</div>
+<a name="onOpen()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onOpen</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function onOpen(evt:Event):void</code><p>
+   <code>Event.OPEN</code> listener.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">evt</span>:Event</code> &mdash;  The event object.
+   </td>
+</tr>
+</table>
+</div>
+<a name="onProgress()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onProgress</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function onProgress(evt:ProgressEvent):void</code><p>
+   <code>ProgressEvent.PROGRESS</code> listener.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">evt</span>:ProgressEvent</code> &mdash;  The event object.
+   </td>
+</tr>
+</table>
+</div>
+<a name="onSecurityError()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onSecurityError</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function onSecurityError(evt:SecurityErrorEvent):void</code><p>
+   <code>SecurityErrorEvent</code> listener.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">evt</span>:SecurityErrorEvent</code> &mdash;  The event object.
+   </td>
+</tr>
+</table>
+</div>
+<a name="prepareFixedRequest()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">prepareFixedRequest</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function prepareFixedRequest():void</code><p>
+   Tells the <code>ILoadableFile</code> to update the <code>fixedRequest</code> value that
+   will be used to load the file. By default, this method is automatically called when the <code>start()<code>
+   method is executed and the <code>fixedRequest</code> hasn't been updated.
+   
+   </p><br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; flash.errors.IllegalOperationError If the <code>AbstractLoadableFile</code> has been destroyed.
+   </td>
+</tr>
+</table>
+</div>
+<a name="processLoading()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">processLoading</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function processLoading(request:URLRequest):void</code><p>
+   Tell the <code>ILoadableFile</code> to start the loading process. This method
+   is supposed to be overriden by the sub-classes.
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">request</span>:URLRequest</code></td>
+</tr>
+</table>
+</div>
+<a name="registerTo()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">registerTo</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function registerTo(dispatcher:IEventDispatcher):void</code><p>
+   Register the events of the <code>AbstractLoadableFile</code>.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">dispatcher</span>:IEventDispatcher</code> &mdash;   The <code>IEventDispatcher</code> of the events.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../files/AbstractLoadableFile.html#unregisterFrom()" target="">unregisterFrom()</a>
+</div>
+</div>
+<a name="start()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">start</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public final function start():void</code><p>
+   Set the state as loading. This method also update the <code>fixedRequest</code> if it hasn't been done before. In any cases,
+   the <code>fixedRequest</code> is invalidated right after the loading is started (just to ensure that the <code>fixedRequest</code>
+   will be update the next time the <code>start()</code> method is called).
+   
+   </p><br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; flash.errors.IllegalOperationError If the <code>AbstractLoadableFile</code> has been destroyed.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20"></td><td><code></code> &mdash; If the <code>AbstractLoadableFile</code> is already loading.
+   </td>
+</tr>
+</table>
+</div>
+<a name="stop()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">stop</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public final function stop():void</code><p>
+   Set the state as idle.
+   
+   </p><br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; flash.errors.IllegalOperationError If the <code>AbstractLoadableFile</code> has been destroyed.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20"></td><td><code></code> &mdash; If the <code>ILoadManager</code> is not loading.
+   </td>
+</tr>
+</table>
+</div>
+<a name="toString()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">toString</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function toString():String</code><p>
+   Get the URL of the <code>AbstractLoadableFile</code>.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>String</code> &mdash; The <code>url</code> or <code>null</code> if the urlRequest is not defined.
+   </td>
+</tr>
+</table>
+</div>
+<a name="unregisterFrom()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">unregisterFrom</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function unregisterFrom(dispatcher:IEventDispatcher):void</code><p> 
+   Unregister the events of the <code>AbstractLoadableFile</code>.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">dispatcher</span>:IEventDispatcher</code> &mdash;  The <code>IEventDispatcher</code> of the events.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../files/AbstractLoadableFile.html#registerTo()" target="">registerTo()</a>
+</div>
+</div>
+<div class="detailSectionHeader">Event detail</div>
+<a name="event:close"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">close</td><td class="detailHeaderType">event&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.Event</code></a>
+<br>
+<p></p><p>
+  Dispatched when the download operation stops. This is following a call to the <code>ILoadManager.stop()</code>
+  method.
+  
+  </p></div>
+<a name="event:complete"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">complete</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.Event</code></a>
+<br>
+<p></p><p>
+  Dispatched after all the received data is received.
+  
+  </p></div>
+<a name="event:httpStatus"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">httpStatus</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.HTTPStatusEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched when the http headers are received. This event isn't sent by the all the load manager objects.
+  
+  </p></div>
+<a name="event:init"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">init</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.Event</code></a>
+<br>
+<p></p><p>
+  Dispatched when the content of the <code>loadManagerObject</code> is displayed. This event is only dispatched if the
+  type of <code>ILoadableFile</code> is <code>LoadableFileType.SWF</code>.
+  
+  </p></div>
+<a name="event:ioError"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">ioError</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.IOErrorEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched if a call to <code>start()</code> results in a fatal error that terminates the download. 
+  
+  </p></div>
+<a name="event:open"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">open</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.Event</code></a>
+<br>
+<p></p><p>
+  Dispatched when the download operation commences following a call to the <code>ILoadManager.load()</code>
+  method.
+  
+  </p></div>
+<a name="event:progress"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">progress</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.ProgressEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched when data is received as the download operation progresses.
+  
+  </p></div>
+<a name="event:securityError"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">securityError</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href=""><code>flash.events.SecurityErrorEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched if a call to <code>start()</code> attempts to load data from a server outside the security sandbox. 
+  
+  </p></div>
+<a name="constantDetail"></a>
+<div class="detailSectionHeader">Constant detail</div>
+<a name="NO_CACHE_VARIABLE_NAME"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">NO_CACHE_VARIABLE_NAME</td><td class="detailHeaderType">constant</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static const NO_CACHE_VARIABLE_NAME:String = "noCache"</code><p>
+   Name of the 'no cache' variable.
+   </p></div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

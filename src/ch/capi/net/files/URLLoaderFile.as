@@ -1,5 +1,7 @@
-package ch.capi.net
-{	
+package ch.capi.net.files
+{	import flash.display.BitmapData;	
+	import flash.display.Bitmap;	
+	import flash.system.LoaderContext;	
 	import flash.net.URLRequest;	
 	import flash.display.LoaderInfo;	
 	import flash.display.DisplayObject;	
@@ -12,7 +14,10 @@ package ch.capi.net
 	import flash.events.IEventDispatcher;
 	import flash.net.URLLoader;
 
-	import ch.capi.display.IRootDocument;	
+	import ch.capi.display.IRootDocument;
+	import ch.capi.net.LoadableFileType;
+	import ch.capi.net.DataType;	
+	import ch.capi.net.ILoadableFile;		
 
 	/**
 	 * Represents a <code>ILoadableFile</code> based on a <code>URLLoader</code> object.
@@ -20,18 +25,28 @@ package ch.capi.net
 	 * @author	Cedric Tabin - thecaptain
 	 * @version	1.0
 	 */
-	internal class ULoadableFile extends AbstractLoadableFile implements ILoadableFile
+	public class URLLoaderFile extends AbstractLoadableFile implements ILoadableFile
 	{
+		//---------//
+		//Variables//
+		//---------//
+		
+		/**
+		 * Defines the <code>LoaderContext</code> for binary files when their are retrieved
+		 * as <code>Loader</code>.
+		 */
+		public var loaderContext:LoaderContext = null;
+		
 		//-----------//
 		//Constructor//
 		//-----------//
 		
 		/**
-		 * Creates a new <code>ULoadableFile</code> object.
+		 * Creates a new <code>URLLoaderFile</code> object.
 		 * 
 		 * @param	loadObject		The <code>URLLoader</code> object.
 		 */
-		public function ULoadableFile(loadObject:URLLoader):void
+		public function URLLoaderFile(loadObject:URLLoader):void
 		{
 			super(loadObject);
 			
@@ -43,9 +58,8 @@ package ch.capi.net
 		//--------------//
 		
 		/**
-		 * Retrieves the <code>IEventDispatcher</code> of all the sub-events
-		 * of a <code>ILoadableFile</code>. For example, the source event dispatcher
-		 * of a <code>Loader</code> object will be his <code>contentLoaderInfo</code>.
+		 * Retrieves the <code>IEventDispatcher</code>, which is directly the
+		 * <code>URLLoader</code> object.
 		 * 
 		 * @return	The <code>URLLoader</code> object.
 		 */
@@ -57,8 +71,14 @@ package ch.capi.net
 		
 		/**
 		 * Retrieves the data of the <code>loadManagerObject</code> if the loading
-		 * is complete. If the asType parameter is specified, then the <code>ILoadableFile</code>
-		 * will try to create an instance of it and parse the content into it.
+		 * is complete. Depending of the type of data, many classes are supported :
+		 * <ul>
+		 * 	<li>If the format is binary, then the classes <code>DataType.BYTE_ARRAY</code>, <code>DataType.BITMAP</code> 
+		 * 	and <code>DataType.LOADER</code> are supported.</li>
+		 * 	<li>If the format is variables, then the class <code>DatyType.URL_VARIABLES</code> is supported.</li>
+		 * 	<li>If the format is text, then the classes <code>DatyType.XML</code>, <code>DatyType.XML_DOCUMENT</code>,
+		 * 	<code>DatyType.STYLE_SHEET</code> and <code>DatyType.URL_VARIABLES</code> are supported.
+		 * </ul>
 		 * 
 		 * @param 	asClass		The class instance that should be returned by the method.
 		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
@@ -79,28 +99,34 @@ package ch.capi.net
 			if (asClass == DataType.BYTE_ARRAY) return loadedData;
 			if (asClass == DataType.XML) return new XML(loadedData);
 			
-			/*
-			//NOT SUPPORTED - The Loader.loadBytes method is asynchronous, so the content will be null
-			if (asClass == DataType.BITMAP || asClass == DataType.BITMAP_DATA)
+			//bitmap creation (asynchronous)
+			if (asClass == DataType.BITMAP)
 			{
+				var tmpBitmap:Bitmap = new Bitmap();
 				var tmpLoader:Loader = new Loader();
+				tmpLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onDataLoaded);
 				tmpLoader.loadBytes(loadedData);
 				
-				//clone the content into a bitmap data
-				var sourceBitmap:Bitmap = Bitmap(tmpLoader.content);
-				var clonedBitmapData:BitmapData = sourceBitmap.bitmapData.clone();
+				//initializes the bitmap
+				function onDataLoaded(evt:Event):void
+				{
+					if (! (tmpLoader.content is Bitmap)) throw new Error("The content of the ByteArray seems not to be a picture : "+this);
+					
+					//clone the data and put them into the returned Bitmap
+					var content:Bitmap = tmpLoader.content as Bitmap;
+					var clonedData:BitmapData = content.bitmapData.clone();
+					tmpBitmap.bitmapData = clonedData;
+				}
 				
-				if (asClass == DataType.BITMAP_DATA) return clonedBitmapData;
-				return new Bitmap(clonedBitmapData); 
+				return tmpBitmap;
 			}
-			*/
 			
 			//create the instance
 			var srcClass:Class = appDomain.getDefinition(asClass) as Class;
 			var insClass:* = new srcClass();
 			
 			//create the data
-			if (insClass is Loader){ insClass.contentLoaderInfo.addEventListener(Event.INIT, onInit, false, 10, true); insClass.loadBytes(loadedData); }
+			if (insClass is Loader){ insClass.contentLoaderInfo.addEventListener(Event.INIT, onInit, false, 10, true); insClass.loadBytes(loadedData, loaderContext); }
 			else if (insClass is URLVariables){ insClass.decode(loadedData); }
 			else if (insClass is XMLDocument){ insClass.ignoreWhite=true; insClass.parseXML(loadedData); }
 			else if (insClass is StyleSheet){ insClass.parseCSS(loadedData); }
@@ -118,7 +144,7 @@ package ch.capi.net
 		 */
 		public function isClassSupported(aClass:String, appDomain:ApplicationDomain=null):Boolean
 		{
-			if (getType() == LoadableFileType.BINARY && (aClass == DataType.BYTE_ARRAY
+			if (getType() == LoadableFileType.BINARY && (aClass == DataType.BYTE_ARRAY || aClass == DataType.BITMAP
 														 || isInstanceOfClass(aClass, DataType.LOADER, appDomain))) return true;
 			if (getType() == LoadableFileType.VARIABLES && isInstanceOfClass(aClass, DataType.URL_VARIABLES, appDomain)) return true;
 			

@@ -212,7 +212,10 @@ package ch.capi.net.app
 				var name:String = child.attributes[ATTRIBUTE_NAME_VALUE];
 				if (name == null) throw new ParseError("parseVariables", "The attribute '"+ATTRIBUTE_NAME_VALUE+"' is not defined", child);
 				
-				var value:String = child.firstChild.nodeValue;
+				//if the value is not defined, then put an empty string, otherwise, take the node value
+				var value:String = (child.firstChild != null) ? child.firstChild.nodeValue : "";
+				
+				//store the variable value
 				putVariable(name, value);
 			}
 		}
@@ -380,7 +383,7 @@ package ch.capi.net.app
 			var p:String = loadableFile.properties.getValue(ATTRIBUTE_VIRTUALBYTESTOTAL_VALUE);
 			if (p != null) loadableFile.virtualBytesTotal = ParseUtils.parseUnsigned(p);
 			
-			var c:String = loadableFile.properties.getValue(ATTRIBUTE_USECACHE_VALUE);
+			var c:String = loadableFile.properties.getValue(ATTRIBUTE_USECACHE_VALUE);	
 			if (c != null) loadableFile.useCache = ParseUtils.parseBoolean(c);
 			
 			var n:String = loadableFile.properties.getValue(ATTRIBUTE_NETSTATE_VALUE);

@@ -1,5 +1,6 @@
 ﻿package ch.capi.events
 {
+	import ch.capi.net.ILoadableFile;	
 	import ch.capi.net.ILoadManager;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -41,10 +42,12 @@
 		//-----------------//
 		
 		/**
-		 * Defines the file being loaded.
+		 * Defines the <code>ILoadManager</code> being loaded.
+		 * 
+		 * @see		#getFile()	getFile()
 		 */
-		public function get file():ILoadManager { return _file; }
-		
+		public function get loadManager():ILoadManager { return _file; }
+
 		/**
 		 * Defines the event that occured when the file was closed.
 		 */
@@ -108,7 +111,7 @@
 		 */
 		public override function clone():Event
 		{
-			return new MassLoadEvent(type, file, _closeEvent);
+			return new MassLoadEvent(type, _file, _closeEvent);
 		}
 		 
 		/**
@@ -123,6 +126,29 @@
 		{
 			if (type == FILE_OPEN) return false;
 			return (_closeEvent is IOErrorEvent || _closeEvent is SecurityErrorEvent);
+		}
+		
+		/**
+		 * Checks if the contained <code>ILoadManager</code> is a <code>ILoadableFile</code>.
+		 * 
+		 * @return	<code>true</code> if the <code>ILoadManager</code> is a <code>ILoadableFile</code>.
+		 */
+		public function isLoadableFile():Boolean
+		{
+			return _file is ILoadableFile;
+		}
+		
+		/**
+		 * Retrieves the <code>ILoadManager</code> as <code>ILoadableFile</code>.
+		 * 
+		 * @return	The <code>ILoadManager</code> as <code>ILoadableFile</code>.
+		 * @throws	Error	If the <code>ILoadManager</code> is not a <code>ILoadableFile</code>.
+		 * @see		#isLoadableFile()	isLoadableFile()
+		 */
+		public function getFile():ILoadableFile
+		{
+			if (!isLoadableFile()) throw new Error("Cast exception : the loadManger is not a ILoadbleFile");
+			return _file as ILoadableFile;
 		}
 	}
 }

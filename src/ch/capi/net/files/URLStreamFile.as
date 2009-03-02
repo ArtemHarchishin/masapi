@@ -1,4 +1,4 @@
-package ch.capi.net
+package ch.capi.net.files
 {
 	import flash.net.URLRequest;	
 	import flash.system.ApplicationDomain;	
@@ -6,6 +6,8 @@ package ch.capi.net
 	import flash.net.URLStream;
 	
 	import ch.capi.net.LoadableFileType;
+	import ch.capi.net.DataType;	
+	import ch.capi.net.ILoadableFile;	
 	
 	/**
 	 * Represents a <code>ILoadableFile</code> based on a <code>URLStream</code> object.
@@ -13,18 +15,18 @@ package ch.capi.net
 	 * @author	Cedric Tabin - thecaptain
 	 * @version	1.0
 	 */
-	internal class RLoadableFile extends AbstractLoadableFile implements ILoadableFile
+	public class URLStreamFile extends AbstractLoadableFile implements ILoadableFile
 	{
 		//-----------//
 		//Constructor//
 		//-----------//
 		
 		/**
-		 * Creates a new <code>RLoadableFile</code> object.
+		 * Creates a new <code>URLStreamFile</code> object.
 		 * 
-		 * @param	loadObject		The <code>URLLoader</code> object.
+		 * @param	loadObject		The <code>URLStream</code> object.
 		 */
-		public function RLoadableFile(loadObject:URLStream):void
+		public function URLStreamFile(loadObject:URLStream):void
 		{
 			super(loadObject);
 			
@@ -36,9 +38,8 @@ package ch.capi.net
 		//--------------//
 		
 		/**
-		 * Retrieves the <code>IEventDispatcher</code> of all the sub-events
-		 * of a <code>ILoadableFile</code>. For example, the source event dispatcher
-		 * of a <code>Loader</code> object will be his <code>contentLoaderInfo</code>.
+		 * Retrieves the <code>IEventDispatcher</code>, which is directly the
+		 * <code>URLStream</code> object.
 		 * 
 		 * @return	The <code>URLStream</code> object.
 		 */
@@ -50,8 +51,7 @@ package ch.capi.net
 		
 		/**
 		 * Retrieves the data of the <code>loadManagerObject</code> if the loading
-		 * is complete. If the asType parameter is specified, then the <code>ILoadableFile</code>
-		 * will try to create an instance of it and parse the content into it.
+		 * is complete. Actually, the only class supported is <code>DataType.STREAM</code>.
 		 * 
 		 * @param 	asClass		The class instance that should be returned by the method.
 		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
