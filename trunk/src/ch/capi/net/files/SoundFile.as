@@ -1,4 +1,4 @@
-package ch.capi.net
+package ch.capi.net.files
 {
 	import flash.net.URLRequest;	
 	import flash.system.ApplicationDomain;	
@@ -7,6 +7,8 @@ package ch.capi.net
 	import flash.media.SoundLoaderContext;
 	
 	import ch.capi.net.LoadableFileType;
+	import ch.capi.net.DataType;	
+	import ch.capi.net.ILoadableFile;	
 	
 	/**
 	 * Represents a <code>ILoadableFile</code> based on a <code>Sound</code> object.
@@ -14,7 +16,7 @@ package ch.capi.net
 	 * @author	Cedric Tabin - thecaptain
 	 * @version	1.0
 	 */
-	internal class SLoadableFile extends AbstractLoadableFile implements ILoadableFile
+	public class SoundFile extends AbstractLoadableFile implements ILoadableFile
 	{
 		//---------//
 		//Variables//
@@ -31,11 +33,11 @@ package ch.capi.net
 		//-----------//
 		
 		/**
-		 * Creates a new <code>SLoadableFile</code> object.
+		 * Creates a new <code>SoundFile</code> object.
 		 * 
 		 * @param	snd		The <code>Sound</code> object.
 		 */
-		public function SLoadableFile(snd:Sound):void
+		public function SoundFile(snd:Sound):void
 		{
 			super(snd);
 			
@@ -47,11 +49,9 @@ package ch.capi.net
 		//--------------//
 		
 		/**
-		 * Retrieves the <code>IEventDispatcher</code> of all the sub-events
-		 * of a <code>ILoadableFile</code>. For example, the source event dispatcher
-		 * of a <code>Loader</code> object will be his <code>contentLoaderInfo</code>.
+		 * Retrieves the <code>IEventDispatcher</code>, which is directly the <code>Sound</code> instance.
 		 * 
-		 * @return	The <code>URLLoader</code> object.
+		 * @return	The <code>Sound</code> object.
 		 */
 		public function getEventDispatcher():IEventDispatcher
 		{
@@ -61,13 +61,12 @@ package ch.capi.net
 		
 		/**
 		 * Retrieves the data of the <code>loadManagerObject</code> if the loading
-		 * is complete. If the asType parameter is specified, then the <code>ILoadableFile</code>
-		 * will try to create an instance of it and parse the content into it.
+		 * is complete. Currently, the only type supported is <code>DataType.SOUND</code>.
 		 * 
 		 * @param 	asClass		The class instance that should be returned by the method.
 		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
 		 * 						the current domain will be used.
-		 * @return	The data of the <code>loadManagerObject</code>.
+		 * @return	The <code>Sound</code> object.
 		 * @throws	ArgumentError	If the class type is not supported.
 		 * 
 		 * @see		#isClassSupported()		isClassSupported()
@@ -93,7 +92,7 @@ package ch.capi.net
 		}
 		
 		/**
-		 * Retrieves the type of the file based on the <code>LoadableFileType</code> constants.
+		 * Retrieves the type of the file. This method always returns <code>LoadableFileType.SOUND</code>.
 		 * 
 		 * @return	The <code>ILoadableFile</code> type.
 		 */
@@ -103,9 +102,7 @@ package ch.capi.net
 		}
 		
 		/**
-		 * Destroys this <code>ILoadableFile</code>. This method causes to set the <code>loadManagerObject</code> value to
-		 * <code>null</code> and releases all other references to the content loaded contained into the current <code>ILoadableFile</code>.
-		 * After calling this method, no more operation is available on the <code>ILoadableFile</code> instance.
+		 * Destroys this <code>SoundFile</code>.
 		 */
 		public override function destroy():void
 		{

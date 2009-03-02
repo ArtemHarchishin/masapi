@@ -3,6 +3,7 @@
 	import ch.capi.data.TreeMap;	
 	import ch.capi.data.DictionnaryMap;	
 	import ch.capi.data.IMap;	
+	import ch.capi.net.files.*;
 
 	import flash.system.ApplicationDomain;	
 	import flash.display.Loader;
@@ -224,11 +225,12 @@
 		 * @param	dataFormat	The format of the data issued from the <code>URLLoaderDataFormat</code> constants.
 		 * @return	The <code>ILoadableFile</code> object created.
 		 */
-		public function createURLLoaderFile(request:URLRequest=null, dataFormat:String=null):ILoadableFile
+		public function createURLLoaderFile(request:URLRequest=null, dataFormat:String=null):URLLoaderFile
 		{
 			var ldr:URLLoader = new URLLoader();
-			var ldb:ULoadableFile = new ULoadableFile(ldr);
+			var ldb:URLLoaderFile = new URLLoaderFile(ldr);
 			ldb.urlRequest = request;
+			ldb.loaderContext = defaultLoaderContext;
 			
 			if (dataFormat != null) ldr.dataFormat = dataFormat;
 			initializeFile(ldb);
@@ -243,10 +245,10 @@
 		 * @param	request		The url request.
 		 * @return	The <code>ILoadableFile</code> object created.
 		 */
-		public function createURLStreamFile(request:URLRequest=null):ILoadableFile
+		public function createURLStreamFile(request:URLRequest=null):URLStreamFile
 		{
 			var lds:URLStream = new URLStream();
-			var ids:RLoadableFile = new RLoadableFile(lds);
+			var ids:URLStreamFile = new URLStreamFile(lds);
 			ids.urlRequest = request;
 			
 			initializeFile(ids);
@@ -262,10 +264,10 @@
 		 * @param	context		The <code>SoundLoaderContext</code>.
 		 * @return	The <code>ILoadableFile</code> object created.
 		 */
-		public function createSoundFile(request:URLRequest=null, context:SoundLoaderContext=null):ILoadableFile
+		public function createSoundFile(request:URLRequest=null, context:SoundLoaderContext=null):SoundFile
 		{
 			var snd:Sound = new Sound();
-			var sld:SLoadableFile = new SLoadableFile(snd);
+			var sld:SoundFile = new SoundFile(snd);
 			sld.urlRequest = request;
 			
 			if (context == null) context = _defaultSoundLoaderContext;
@@ -283,10 +285,10 @@
 		 * @param	context				The <code>LoaderContext</code>.
 		 * @return	The <code>ILoadableFile</code> object created.
 		 */
-		public function createLoaderFile(request:URLRequest=null, context:LoaderContext=null):ILoadableFile
+		public function createLoaderFile(request:URLRequest=null, context:LoaderContext=null):LoaderFile
 		{
 			var ldr:Loader = new Loader();
-			var ldb:LLoadableFile = new LLoadableFile(ldr);
+			var ldb:LoaderFile = new LoaderFile(ldr);
 			ldb.urlRequest = request;
 
 			if (context == null) context = _defaultLoaderContext;

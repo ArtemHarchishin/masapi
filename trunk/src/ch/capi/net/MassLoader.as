@@ -63,7 +63,7 @@
 	 * @eventType	flash.events.ProgressEvent.PROGRESS
 	 */
 	[Event(name="progress", type="flash.events.ProgressEvent")]
-	
+import flash.utils.clearTimeout;	
 	/**
 	 * This is a basic implementation of a <code>IMassLoader</code> object. The files will be loaded
 	 * into the order of they have been added into the loading queue. In order to create some <code>ILoadableFile</code>,
@@ -102,8 +102,8 @@
 	 * Advanced usage :
 	 * <listing version="3.0">
 	 * var lf:LoadableFileFactory = new LoadableFileFactory();
-	 * var file1:ILoadableFile = lf.create("myFile.txt");
-	 * var file2:ILoadableFile = lf.create("myAnim.swf");
+	 * var file1:ILoadableFile = lf.createFile("myFile.txt");
+	 * var file2:ILoadableFile = lf.createFile("myAnim.swf");
 	 * 
 	 * var ml:MassLoader = new MassLoader();
 	 * ml.addFile(file1);
@@ -111,7 +111,7 @@
 	 * 
 	 * var eventFile:Function = function(evt:MassLoadEvent):void
 	 * {
-	 *    var src:ILoadableFile = (evt.file as ILoadableFile);
+	 *    var src:ILoadableFile = evt.getFile();
 	 *    trace(evt.type+" => "+src.urlRequest.url);
 	 * }
 	 * ml.addEventListener(MassLoadEvent.FILE_OPEN, eventFile);
@@ -166,6 +166,7 @@
 		private var _realLoadedBytes:uint				= 0;
 		private var _totalFilesToLoad:uint				= 0;
 		private var _totalFilesLoaded:uint				= 0;
+		private var _launchTimeout:uint;
 		
 		/**
 		 * Defines if the progress event should be dispatched each time or
@@ -198,6 +199,7 @@
 		 * function onLoadProgress(evt:ProgressEvent):void
 		 * {
 		 * 		trace(evt.target.loadInfo);
+		 * 		//trace(myMassLoader.loadInfo);
 		 * }
 		 * 
 		 * myMassLoader.addEventListener(ProgressEvent.PROGRESS, onLoadProgress);
@@ -344,7 +346,7 @@
 		 * @param	file	The <code>ILoadManager</code>.
 		 * @return	The static index of the file or -1 if the file is not into the loading queue.
 		 */
-		public function getFileStaticIndex(file:ILoadManager):int
+		public function getStaticIndexOf(file:ILoadManager):int
 		{
 			if (! _filesIndex.containsKey(file)) return -1;
 			var nb:int = _filesIndex.getValue(file);
@@ -436,6 +438,9 @@
 				stopLoadingFile(f);
 			}
 			
+			//if the MassLoader has just been started, clear the timeout
+			clearTimeout(_launchTimeout);
+			
 			//dispatch the close event
 			var evt:Event = new Event(Event.CLOSE);
 			_closeEvent = evt;
@@ -453,7 +458,7 @@
 			_isLoading = true;
 			_closeEvent = null;
 			
-			//init
+			//initialization of the data
 			_tempTotalBytes = 0;
 			_currentFilesLoading = 0;
 			_filesLoading.clear(); //empty the files being loaded
@@ -478,8 +483,8 @@
 			 * If there is no file to load, then wait some milliseconds before launch the complete
 			 * event so the listeners can register to the MassLoader !
 			 */
-			if (_filesQueue.isEmpty()) setTimeout(doComplete, 10);
-			else setTimeout(loadNext, 10); //also wait before starting the massive loading
+			if (_filesQueue.isEmpty()) _launchTimeout = setTimeout(doComplete, 10);
+			else _launchTimeout = setTimeout(loadNext, 10); //also wait before starting the massive loading
 		}
 		
 		/**
@@ -748,7 +753,7 @@
 		 */
 		protected function createMassLoadEvent(file:ILoadManager, type:String, evt:Event=null):MassLoadEvent
 		{
-			var staticIndex:int = getFileStaticIndex(file);
+			var staticIndex:int = getStaticIndexOf(file);
 			var queueIndex:int = getFileQueueIndex(file);
 			var op:MassLoadEvent = new MassLoadEvent(type, file, evt, staticIndex, queueIndex);
 			return op;
@@ -1073,6 +1078,7 @@ class MassLoadInfo implements ILoadInfo
 		var bytesLoadedTemp:uint = bytesLoaded - _lastTimeBytesLoaded;
 		var elapsedTimeTemp:uint = getTimer() - _lastTimeUpdate;
 		
+		//calculates the current speed
 		if (elapsedTimeTemp > 0)
 		{
 			_currentSpeed = (bytesLoadedTemp/1024) / (elapsedTimeTemp/1000);
@@ -1082,9 +1088,11 @@ class MassLoadInfo implements ILoadInfo
 		
 		_elapsedTime = getTimer() - _startTime;
 		
+		//calculate the average speed
 		if (_elapsedTime > 0) _averageSpeed = (bytesLoaded/1024) / (_elapsedTime/1000);
 		else _averageSpeed = 0;
 		
+		//calculate the remaining time
 		if (_averageSpeed > 0) _remainingTime = Math.round(bytesRemaining/_currentSpeed);
 		else _remainingTime = -1;
 		
@@ -1148,7 +1156,7 @@ class MassLoadInfo implements ILoadInfo
 	 */
 	protected function onFileClose(evt:MassLoadEvent):void
 	{ 
-		var file:ILoadManager = evt.file;
+		var file:ILoadManager = evt.loadManager;
 		var closeEvent:Event = evt.closeEvent;
 		
 		_listLoading.removeElement(file);
@@ -1164,7 +1172,7 @@ class MassLoadInfo implements ILoadInfo
 	 */
 	protected function onFileOpen(evt:MassLoadEvent):void
 	{
-		var file:ILoadManager = evt.file;
+		var file:ILoadManager = evt.loadManager;
 		
 		//removes the file from all lists (if contained)
 		_listIdle.removeElement(file);

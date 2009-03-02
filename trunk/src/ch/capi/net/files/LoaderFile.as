@@ -1,5 +1,6 @@
-﻿package ch.capi.net
+﻿package ch.capi.net.files
 {
+	
 	import flash.display.BitmapData;	
 	import flash.display.Bitmap;	
 	import flash.net.URLRequest;	
@@ -9,8 +10,11 @@
 	import flash.events.IEventDispatcher;
 	import flash.events.Event;
 	import flash.display.DisplayObject;
+	
+	import ch.capi.net.DataType;	
 	import ch.capi.net.LoadableFileType;
-	import ch.capi.display.IRootDocument;
+	import ch.capi.display.IRootDocument;	
+	import ch.capi.net.ILoadableFile;
 
 	/**
 	 * Represents a <code>ILoadableFile</code> based on a <code>Loader</code> object.
@@ -19,7 +23,7 @@
 	 * @author	Cedric Tabin - thecaptain
 	 * @version	1.0
 	 */
-	internal class LLoadableFile extends AbstractLoadableFile implements ILoadableFile
+	public class LoaderFile extends AbstractLoadableFile implements ILoadableFile
 	{
 		//---------//
 		//Variables//
@@ -36,11 +40,11 @@
 		//-----------//
 		
 		/**
-		 * Creates a new <code>ULoadableFile</code> object.
+		 * Creates a new <code>LoaderFile</code> object.
 		 * 
 		 * @param	loadObject		The <code>URLLoader</code> object.
 		 */
-		public function LLoadableFile(loadObject:Loader):void
+		public function LoaderFile(loadObject:Loader):void
 		{
 			super(loadObject);
 			
@@ -53,11 +57,9 @@
 		//--------------// 
 		
 		/**
-		 * Retrieves the <code>IEventDispatcher</code> of all the sub-events
-		 * of a <code>ILoadableFile</code>. For example, the source event dispatcher
-		 * of a <code>Loader</code> object will be his <code>contentLoaderInfo</code>.
+		 * Retrieves the <code>contentLoaderInfo</code> of the <code>Loader</code>.
 		 * 
-		 * @return	The <code>URLLoader</code> object.
+		 * @return	The <code>LoaderInfo</code> object.
 		 */
 		public function getEventDispatcher():IEventDispatcher
 		{
@@ -67,31 +69,40 @@
 		
 		/**
 		 * Retrieves the data of the <code>loadManagerObject</code> if the loading
-		 * is complete. If the asClass parameter is specified, then the <code>ILoadableFile</code>
-		 * will try to create an instance of it and parse the content into it.
+		 * is complete. The supported classes are <code>DataType.LOADER</code>, <code>DataType.BITMAP</code>
+		 * and <code>DataType.BITMAP_DATA</code>.
 		 * 
 		 * @param 	asClass		The class instance that should be returned by the method.
 		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
 		 * 						the current domain will be used.
-		 * @return	The data of the <code>loadManagerObject</code>.
+		 * @return	An instance of the specified class containing the data of the <code>loadManagerObject</code>.
 		 * @throws	ArgumentError	If the class type is not supported.
 		 * 
 		 * @see		#isClassSupported()		isClassSupported()
+		 * @see		ch.capi.net.DataType	DataType
 		 */
 		public function getData(asClass:String=null, appDomain:ApplicationDomain=null):*
 		{
 			checkDestroyed();
-			if (asClass != null && !isClassSupported(asClass)) throw new ArgumentError("The type '"+asClass+"' is not supported");	
+			if (asClass != null && !isClassSupported(asClass, appDomain)) throw new ArgumentError("The type '"+asClass+"' is not supported");	
 			
 			//simply returns the Loader
-			if (asClass == DataType.LOADER) return (loadManagerObject as Loader);
+			if (asClass == null || asClass == DataType.LOADER) return (loadManagerObject as Loader);
+			if (appDomain == null) appDomain = ApplicationDomain.currentDomain;
+			
+			//checks the content
+			if (! (loadManagerObject.content is Bitmap)) throw new ArgumentError("The type '"+asClass+"' cannot be supported, because the "+
+																					 "content is not a Bitmap : "+this);
 			
 			//creates a new detached bitmap
-			var sourceBitmap:Bitmap = Bitmap(loadManagerObject.content);
+			var sourceBitmap:Bitmap = loadManagerObject.content as Bitmap;
 			var clonedBitmapData:BitmapData = sourceBitmap.bitmapData.clone();
 			
+			//simply returns the cloned BitmapData if needed
 			if (asClass == DataType.BITMAP_DATA) return clonedBitmapData;
-			return new Bitmap(clonedBitmapData);
+			
+			var bmpClass:Class = appDomain.getDefinition(asClass) as Class;
+			return new bmpClass(clonedBitmapData);
 		}
 		
 		/**
@@ -104,15 +115,13 @@
 		 */
 		public function isClassSupported(aClass:String, appDomain:ApplicationDomain=null):Boolean
 		{
-			if (isInstanceOf(aClass, [DataType.LOADER,
-									  DataType.BITMAP,
-									  DataType.BITMAP_DATA], appDomain)) return true;
-									  
-			return false;
+			return isInstanceOfClass(aClass, DataType.BITMAP, appDomain) 
+				   || aClass == DataType.LOADER 
+				   || aClass == DataType.BITMAP_DATA;
 		}
 		
 		/**
-		 * Retrieves the type of the file based on the <code>LoadableFileType</code> constants.
+		 * Retrieves the type of the file. This method always return <code>LoadableFileType.SWF</code>.
 		 * 
 		 * @return	The <code>ILoadableFile</code> type.
 		 */
@@ -122,9 +131,7 @@
 		}
 		
 		/**
-		 * Destroys this <code>ILoadableFile</code>. This method causes to set the <code>loadManagerObject</code> value to
-		 * <code>null</code> and releases all other references to the content loaded contained into the current <code>ILoadableFile</code>.
-		 * After calling this method, no more operation is available on the <code>ILoadableFile</code> instance.
+		 * Destroys this <code>LoaderFile</code>. This will call the <code>unload()</code> method on the <code>Loader</code>.
 		 */
 		public override function destroy():void
 		{
@@ -147,9 +154,11 @@
 		}
 
 		/**
-		 * <code>Event.INIT</code> listener.
+		 * <code>Event.INIT</code> listener. This method will initialize
+		 * the <code>Loader</code> content (<code>IRootdocument.initializeContext()</code>).
 		 * 
 		 * @param	evt		The event object.
+		 * @see		ch.capi.display.IRootDocument#initializeContext()	IRootDocument.initializeContext()
 		 */
 		protected override function onInit(evt:Event):void
 		{

@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="MassLoader,ch.capi.net.MassLoader,alwaysDispatchProgressEvent,bytesLoaded,bytesTotal,closeEvent,files,filesLoading,filesQueue,loadInfo,loadPolicy,nextFileToLoad,numFiles,numFilesLoaded,numFilesLoading,numFilesOpen,numFilesToLoad,parallelFiles,stateIdle,stateLoading,addFile,clear,createMassLoadEvent,getFileCount,getFileQueueIndex,getFileStaticIndex,getFiles,hasFile,isComplete,loadFile,loadNextFile,onClose,onComplete,onIOError,onOpen,onProgress,onSecurityError,processPolicy,registerTo,removeFile,start,startLoading,stop,toString,unregisterFrom,updateBytes" name="keywords">
+<meta content="MassLoader,ch.capi.net.MassLoader,alwaysDispatchProgressEvent,bytesLoaded,bytesTotal,closeEvent,files,filesLoading,filesQueue,loadInfo,loadPolicy,nextFileToLoad,numFiles,numFilesLoaded,numFilesLoading,numFilesOpen,numFilesToLoad,parallelFiles,stateIdle,stateLoading,addFile,clear,createMassLoadEvent,getFileCount,getFileQueueIndex,getFiles,getStaticIndexOf,hasFile,isComplete,loadFile,loadNextFile,onClose,onComplete,onIOError,onOpen,onProgress,onSecurityError,processPolicy,registerTo,removeFile,start,startLoading,stop,toString,unregisterFrom,updateBytes" name="keywords">
 <title>ch.capi.net.MassLoader</title>
 </head>
 <body>
@@ -19,7 +19,7 @@
 <td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?ch/capi/net/MassLoader.html&amp;ch/capi/net/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
 </tr>
 <tr class="titleTableRow2">
-<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;MassLoader</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a></td>
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;MassLoader</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
 </tr>
 <tr class="titleTableRow3">
 <td colspan="2">&nbsp;</td>
@@ -27,7 +27,7 @@
 </table>
 <script type="text/javascript" language="javascript">
 <!--
-if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class MassLoader"); titleBar_setSubNav(false,true,false,false,true,false,true,false,false,false,false,false,false,false);}
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class MassLoader"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
 --></script>
 <div class="MainContent">
 <table cellspacing="0" cellpadding="0" class="classHeaderTable">
@@ -87,8 +87,8 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
   Advanced usage :
   <div class='listing'><pre>
   var lf:LoadableFileFactory = new LoadableFileFactory();
-  var file1:ILoadableFile = lf.create("myFile.txt");
-  var file2:ILoadableFile = lf.create("myAnim.swf");
+  var file1:ILoadableFile = lf.createFile("myFile.txt");
+  var file2:ILoadableFile = lf.createFile("myAnim.swf");
   
   var ml:MassLoader = new MassLoader();
   ml.addFile(file1);
@@ -96,7 +96,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
   
   var eventFile:Function = function(evt:MassLoadEvent):void
   {
-     var src:ILoadableFile = (evt.file as ILoadableFile);
+     var src:ILoadableFile = evt.getFile();
      trace(evt.type+" => "+src.urlRequest.url);
   }
   ml.addEventListener(MassLoadEvent.FILE_OPEN, eventFile);
@@ -293,7 +293,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#getFileStaticIndex()">getFileStaticIndex</a>(file:<a href="ILoadManager.html">ILoadManager</a>):int</div>
+<a class="signatureLink" href="#getStaticIndexOf()">getStaticIndexOf</a>(file:<a href="ILoadManager.html">ILoadManager</a>):int</div>
 <div class="summaryTableDescription">
    Retrieves the static index of the specified <code>ILoadManager</code>.</div>
 </td><td class="summaryTableOwnerCol">MassLoader</td>
@@ -482,65 +482,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </tr>
 </table>
 </div>
-<a name="eventSummary"></a>
-<div class="summarySection">
-<div class="summaryTableTitle">Events</div>
-<table id="summaryTableEvent" class="summaryTable " cellpadding="3" cellspacing="0">
-<tr>
-<th>&nbsp;</th><th colspan="2">Event</th><th>Summary</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#event:close">close</a>
-</div>
-</td><td class="summaryTableDescription summaryTableCol">
-  Dispatched when the download operation stops.</td><td class="summaryTableOwnerCol">MassLoader</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#event:complete">complete</a>
-</div>
-</td><td class="summaryTableDescription summaryTableCol">
-  Dispatched after all the data is received.</td><td class="summaryTableOwnerCol">MassLoader</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#event:fileClose">fileClose</a>
-</div>
-</td><td class="summaryTableDescription summaryTableCol">
-  Dispatched when the loading of a <code>ILoadManager</code> is closed (eg when the loading is complete or
-  an error has occured).</td><td class="summaryTableOwnerCol">MassLoader</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#event:fileOpen">fileOpen</a>
-</div>
-</td><td class="summaryTableDescription summaryTableCol">
-  Dispatched when the <code>MassLoader</code> starts the loading of a file.</td><td class="summaryTableOwnerCol">MassLoader</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#event:open">open</a>
-</div>
-</td><td class="summaryTableDescription summaryTableCol">
-  Dispatched when the download operation commences following a call to the <code>MassLoader.load()</code>
-  method.</td><td class="summaryTableOwnerCol">MassLoader</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#event:progress">progress</a>
-</div>
-</td><td class="summaryTableDescription summaryTableCol">
-  Dispatched when data is received as the download operation progresses.</td><td class="summaryTableOwnerCol">MassLoader</td>
-</tr>
-</table>
-</div>
 <script type="text/javascript" language="javascript">
 <!--
 showHideInherited();
@@ -698,6 +639,7 @@ showHideInherited();
    function onLoadProgress(evt:ProgressEvent):void
    {
      trace(evt.target.loadInfo);
+     //trace(myMassLoader.loadInfo);
    }
    
    myMassLoader.addEventListener(ProgressEvent.PROGRESS, onLoadProgress);
@@ -1056,14 +998,14 @@ showHideInherited();
 </tr>
 </table>
 </div>
-<a name="getFileStaticIndex()"></a>
+<a name="getStaticIndexOf()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">getFileStaticIndex</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+<td class="detailHeaderName">getStaticIndexOf</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>public function getFileStaticIndex(file:<a href="ILoadManager.html">ILoadManager</a>):int</code><p>
+<code>public function getStaticIndexOf(file:<a href="ILoadManager.html">ILoadManager</a>):int</code><p>
    Retrieves the static index of the specified <code>ILoadManager</code>. This index is attached to the <code>ILoadManager</code>
    when it is added to the loading queue and won't change even if files are removed. In order to reset the static index list, you
    must call the <code>clear()</code> method.
@@ -1504,91 +1446,6 @@ showHideInherited();
 <code>protected final function updateBytes():void</code><p>
    Updates the <code>bytesLoaded</code> and <code>bytesTotal</code> values.
    </p></div>
-<div class="detailSectionHeader">Event detail</div>
-<a name="event:close"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">close</td><td class="detailHeaderType">event&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<span class="label">Event object type: </span><a href=""><code>flash.events.Event</code></a>
-<br>
-<p></p><p>
-  Dispatched when the download operation stops. This is following a call to the <code>MassLoader.stop()</code>
-  method.
-  
-  </p></div>
-<a name="event:complete"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">complete</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<span class="label">Event object type: </span><a href=""><code>flash.events.Event</code></a>
-<br>
-<p></p><p>
-  Dispatched after all the data is received.
-  
-  </p></div>
-<a name="event:fileClose"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">fileClose</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<span class="label">Event object type: </span><a href="../events/MassLoadEvent.html"><code>ch.capi.events.MassLoadEvent</code></a>
-<br>
-<p></p><p>
-  Dispatched when the loading of a <code>ILoadManager</code> is closed (eg when the loading is complete or
-  an error has occured).
-  
-  </p></div>
-<a name="event:fileOpen"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">fileOpen</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<span class="label">Event object type: </span><a href="../events/MassLoadEvent.html"><code>ch.capi.events.MassLoadEvent</code></a>
-<br>
-<p></p><p>
-  Dispatched when the <code>MassLoader</code> starts the loading of a file. This event
-  is dispatched just before the <code>ILoadManager.start()</code> method is called.
-  
-  </p></div>
-<a name="event:open"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">open</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<span class="label">Event object type: </span><a href=""><code>flash.events.Event</code></a>
-<br>
-<p></p><p>
-  Dispatched when the download operation commences following a call to the <code>MassLoader.load()</code>
-  method.
-  
-  </p></div>
-<a name="event:progress"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">progress</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<span class="label">Event object type: </span><a href=""><code>flash.events.ProgressEvent</code></a>
-<br>
-<p></p><p>
-  Dispatched when data is received as the download operation progresses. The <code>bytesTotal</code> and <code>bytesLoaded</code>
-  value are based on the overall progressing of the files stored into the loading queue. If the <code>bytesTotal</code> of a
-  <code>ILoadableFile</code> has not been retrieved, then the <code>virtualBytesTotal</code> value will be used.
-  
-  </p></div>
 <br>
 <br>
 <hr>
