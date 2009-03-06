@@ -145,7 +145,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#get()">get</a>(name:String, context:<a href="ApplicationContext.html">ApplicationContext</a> = null):<a href="../app/ApplicationFile.html">ApplicationFile</a>
 </div>
 <div class="summaryTableDescription">[static]
-   Retrieves the specified <code>ApplicationFile</code>.</div>
+   THIS METHOD IS DEPRECATED.</div>
 </td><td class="summaryTableOwnerCol">ApplicationFile</td>
 </tr>
 <tr class="">
@@ -439,6 +439,7 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public static function get(name:String, context:<a href="ApplicationContext.html">ApplicationContext</a> = null):<a href="../app/ApplicationFile.html">ApplicationFile</a></code><p>
+   THIS METHOD IS DEPRECATED. USE <code>ApplicationContext.getFile()</code> METHOD INSTEAD !
    Retrieves the specified <code>ApplicationFile</code>. This method is just an encapsulation to retrieve
    the file throught the <code>ApplicationContext</code>.
    
@@ -467,6 +468,12 @@ showHideInherited();
                      </td>
 </tr>
 </table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../app/ApplicationContext.html#getFile()" target="">ApplicationContext.getFile()</a>
+</div>
 </div>
 <a name="getByLoadableFile()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">

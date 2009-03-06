@@ -56,11 +56,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PÂ
    Defines the parent <code>IMap</code> to look for the variables.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/data/text/class-list.html');" href="ch/capi/data/text/Properties.html#parse()">parse</a>(src) &mdash; Method in class ch.capi.data.text.<a onclick="javascript:loadClassListFrame('ch/capi/data/text/class-list.html');" href="ch/capi/data/text/Properties.html">Properties</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/data/text/class-list.html');" href="ch/capi/data/text/Properties.html#parse()">parse</a>(properties, source:<a href="ch/capi/data/IMap.html" onclick="javascript:loadClassListFrame('ch/capi/data./class-list.html');">ch.capi.data:IMap</a>) &mdash; Static method in class ch.capi.data.text.<a onclick="javascript:loadClassListFrame('ch/capi/data/text/class-list.html');" href="ch/capi/data/text/Properties.html">Properties</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
-   Parses the specified source.</td>
+   Parses the specified <code>String</code>.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/display/text/class-list.html');" href="ch/capi/display/text/FontsParser.html#parse()">parse</a>(node) &mdash; Method in class ch.capi.display.text.<a onclick="javascript:loadClassListFrame('ch/capi/display/text/class-list.html');" href="ch/capi/display/text/FontsParser.html">FontsParser</a></td>
@@ -70,11 +70,12 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PÂ
    Parse the <code>Font</code> contained into the <code>XMLNode</code>.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/app/class-list.html');" href="ch/capi/net/app/ApplicationFileParser.html#parse()">parse</a>(node) &mdash; Method in class ch.capi.net.app.<a onclick="javascript:loadClassListFrame('ch/capi/net/app/class-list.html');" href="ch/capi/net/app/ApplicationFileParser.html">ApplicationFileParser</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/app/class-list.html');" href="ch/capi/net/app/ApplicationFileParser.html#parse()">parse</a>(source, loadableFileFactory:<a href="ch/capi/net/LoadableFileFactory.html" onclick="javascript:loadClassListFrame('ch/capi/net./class-list.html');">ch.capi.net:LoadableFileFactory</a>) &mdash; Static method in class ch.capi.net.app.<a onclick="javascript:loadClassListFrame('ch/capi/net/app/class-list.html');" href="ch/capi/net/app/ApplicationFileParser.html">ApplicationFileParser</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
-   Parse the specified <code>XMLNode</code>.</td>
+   Parses the specified source <code>String</code>, using the specified <code>LoadableFileFactory</code> into
+   a new <code>ApplicationContext</code>.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/ParseUtils.html#parseBoolean()">parseBoolean</a>(str) &mdash; Static method in class ch.capi.utils.<a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/ParseUtils.html">ParseUtils</a></td>
@@ -82,6 +83,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PÂ
 <tr>
 <td width="20"></td><td>
    Parses the specified <code>String</code> to a <code>Boolean</code>.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/data/text/class-list.html');" href="ch/capi/data/text/Properties.html#parseData()">parseData</a>(src) &mdash; Method in class ch.capi.data.text.<a onclick="javascript:loadClassListFrame('ch/capi/data/text/class-list.html');" href="ch/capi/data/text/Properties.html">Properties</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Parses the specified source.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/app/class-list.html');" href="ch/capi/net/app/ApplicationFileParser.html#parseDependencies()">parseDependencies</a>(node) &mdash; Method in class ch.capi.net.app.<a onclick="javascript:loadClassListFrame('ch/capi/net/app/class-list.html');" href="ch/capi/net/app/ApplicationFileParser.html">ApplicationFileParser</a></td>
@@ -124,6 +132,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PÂ
 <tr>
 <td width="20"></td><td>
    Parses the specified <code>String</code> to a <code>Integer</code> using the <code>parseInt</code> global function.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/app/class-list.html');" href="ch/capi/net/app/ApplicationFileParser.html#parseNode()">parseNode</a>(node) &mdash; Method in class ch.capi.net.app.<a onclick="javascript:loadClassListFrame('ch/capi/net/app/class-list.html');" href="ch/capi/net/app/ApplicationFileParser.html">ApplicationFileParser</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Parse the specified <code>XMLNode</code>.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/ParseUtils.html#parseNumber()">parseNumber</a>(str) &mdash; Static method in class ch.capi.utils.<a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/ParseUtils.html">ParseUtils</a></td>
@@ -210,6 +225,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PÂ
 <tr>
 <td width="20"></td><td>
    Defines the priority of the <code>ApplicationFile</code>.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/CompositeMassLoader.html#event:priorityChanged">priorityChanged</a> &mdash; Event in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/CompositeMassLoader.html">CompositeMassLoader</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  Dispatched when the loading of files with a lower priority starts.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/PriorityMassLoader.html#event:priorityChanged">priorityChanged</a> &mdash; Event in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/PriorityMassLoader.html">PriorityMassLoader</a></td>
@@ -310,7 +332,21 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PÂ
    Processes the loading policy on the currently closed file.</td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/CompositeMassLoader.html#event:progress">progress</a> &mdash; Event in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/CompositeMassLoader.html">CompositeMassLoader</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  Dispatched when data is received as the download operation progresses.</td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/ILoadManager.html#event:progress">progress</a> &mdash; Event in interface ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/ILoadManager.html">ILoadManager</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  Dispatched when data is received as the download operation progresses.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/MassLoader.html#event:progress">progress</a> &mdash; Event in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/MassLoader.html">MassLoader</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
@@ -347,7 +383,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PÂ
   The Properties class can store and parse some key/value pairs.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/data/text/class-list.html');" href="ch/capi/data/text/Properties.html#Properties()">Properties</a>(src) &mdash; Constructor in class ch.capi.data.text.<a onclick="javascript:loadClassListFrame('ch/capi/data/text/class-list.html');" href="ch/capi/data/text/Properties.html">Properties</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/data/text/class-list.html');" href="ch/capi/data/text/Properties.html#Properties()">Properties</a>(source:<a href="ch/capi/data/IMap.html" onclick="javascript:loadClassListFrame('ch/capi/data./class-list.html');">ch.capi.data:IMap</a>) &mdash; Constructor in class ch.capi.data.text.<a onclick="javascript:loadClassListFrame('ch/capi/data/text/class-list.html');" href="ch/capi/data/text/Properties.html">Properties</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
@@ -389,6 +425,20 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("PÂ
 <td width="20"></td><td>
    Retrieves all the key/value from the source <code>IMap</code> and put them
    in the current <code>IMap</code>.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/data/class-list.html');" href="ch/capi/data/DictionnaryMap.html#putObject()">putObject</a>(obj) &mdash; Method in class ch.capi.data.<a onclick="javascript:loadClassListFrame('ch/capi/data/class-list.html');" href="ch/capi/data/DictionnaryMap.html">DictionnaryMap</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Puts all the key/value from the specified object into the <code>IMap</code>.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/data/class-list.html');" href="ch/capi/data/IMap.html#putObject()">putObject</a>(obj) &mdash; Method in interface ch.capi.data.<a onclick="javascript:loadClassListFrame('ch/capi/data/class-list.html');" href="ch/capi/data/IMap.html">IMap</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Puts all the key/value from the specified object into the <code>IMap</code>.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/app/class-list.html');" href="ch/capi/net/app/ApplicationFileParser.html#putVariable()">putVariable</a>(name, value) &mdash; Method in class ch.capi.net.app.<a onclick="javascript:loadClassListFrame('ch/capi/net/app/class-list.html');" href="ch/capi/net/app/ApplicationFileParser.html">ApplicationFileParser</a></td>

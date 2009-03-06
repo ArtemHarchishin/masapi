@@ -1,17 +1,84 @@
 package ch.capi.net 
 {
-	import flash.errors.IllegalOperationError;	
+	import flash.events.ProgressEvent;	
+	import flash.events.EventDispatcher;	
+	import flash.events.Event;	
 	import flash.net.URLRequest;		
 	
+	import ch.capi.events.PriorityEvent;	
+	import ch.capi.events.MassLoadEvent;
 	import ch.capi.data.ArrayList;	
 	import ch.capi.net.LoadableFileFactory;
 	import ch.capi.net.IMassLoader;
 	import ch.capi.net.ILoadableFile;
 	
 	/**
-	 * This is a utility class to avoid too much verbose code within the masapi API. Note that this
-	 * class simply uses the <code>IMassLoader</code> and <code>LoadableFileFactory</code> to creates
+	 * Dispatched after all the files have been downloaded
+	 * 
+	 * @see			ch.capi.net.MassLoader		MassLoader
+	 * @eventType	flash.events.Event.COMPLETE
+	 */
+	[Event(name="complete", type="flash.events.Event")]
+	
+	/**
+	 * Dispatched when the download operation commences following a call to the <code>MassLoader.start()</code>
+	 * method.
+	 * 
+	 * @see			ch.capi.net.MassLoader		MassLoader
+	 * @eventType	flash.events.Event.OPEN
+	 */
+	[Event(name="open", type="flash.events.Event")]
+	
+	/**
+	 * Dispatched when the <code>MassLoader</code> starts the loading of a file. This event
+	 * is dispatched just before the <code>ILoadManager.start()</code> method is called.
+	 * 
+	 * @see			ch.capi.net.MassLoader		MassLoader
+	 * @eventType	ch.capi.events.MassLoadEvent.FILE_OPEN
+	 */
+	[Event(name="fileOpen", type="ch.capi.events.MassLoadEvent")]
+	
+	/**
+	 * Dispatched when the loading of a <code>ILoadManager</code> is closed (eg when the loading is complete or
+	 * an error has occured).
+	 * 
+	 * @see			ch.capi.net.MassLoader		MassLoader
+	 * @eventType	ch.capi.events.MassLoadEvent.FILE_CLOSE
+	 */
+	[Event(name="fileClose", type="ch.capi.events.MassLoadEvent")]
+	
+	/**
+	 * Dispatched when the download operation stops. This is following a call to the <code>MassLoader.stop()</code>
+	 * method.
+	 * 
+	 * @see			ch.capi.net.MassLoader		MassLoader
+	 * @eventType	flash.events.Event.CLOSE
+	 */
+	[Event(name="close", type="flash.events.Event")]
+	
+	/**
+	 * Dispatched when data is received as the download operation progresses. The <code>bytesTotal</code> and <code>bytesLoaded</code>
+	 * value are based on the overall progressing of the files stored into the loading queue. If the <code>bytesTotal</code> of a
+	 * <code>ILoadableFile</code> has not been retrieved, then the <code>virtualBytesTotal</code> value will be used.
+	 * 
+	 * @see			ch.capi.net.MassLoader		MassLoader
+	 * @eventType	flash.events.ProgressEvent.PROGRESS
+	 */
+	[Event(name="progress", type="flash.events.ProgressEvent")]
+	
+	/**
+	 * Dispatched when the loading of files with a lower priority starts.
+	 * 
+	 * @see			ch.capi.net.PriorityMassLoader	PriorityMassLoader
+	 * @eventType	ch.capi.events.PriorityEvent.PRIORITY_CHANGED
+	 */
+	[Event(name="priorityChanged", type="ch.capi.events.PriorityEvent")]
+	
+	/**
+	 * This is a utility class to avoid too much verbose code within the Masapi API. Note that this
+	 * class simply uses the <code>PriorityMassLoader</code> and <code>LoadableFileFactory</code> to creates
 	 * the <code>ILoadableFile</code> and for the loading management.
+	 * It is an encapsulation class to the core Masapi API core functions.
 	 *
 	 * <p>The <code>CompositeMassLoader</code> keeps by default a reference to the created <code>ILoadableFile</code>
 	 * (see the <code>keepFiles</code> property).</p>
@@ -22,7 +89,8 @@ package ch.capi.net
 	 * var cm:CompositeMassLoader = new CompositeMassLoader();
 	 * cm.addFile("myAnimation.swf");
 	 * cm.addFile("otherSWF.swf", LoadableFileType.BINARY);
-	 * cm.addFile("myVariables.txt");
+	 * cm.addFile({url:"otherSWF.swf", type:LoadableFileType.BINARY, priority:30});
+	 * cm.addFile("myVariables.txt", LoadableFileType.TEXT, 10);
 	 * 
 	 * cm.start();
 	 * </listing>
@@ -44,14 +112,14 @@ package ch.capi.net
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		1.0
 	 */
-	public class CompositeMassLoader 
+	public class CompositeMassLoader extends EventDispatcher
 	{
 		//---------//
 		//Variables//
 		//---------//
-		private var _storage:ArrayList = new ArrayList();
+		private var _storage:ArrayList 					= new ArrayList();
+		private var _massLoader:PriorityMassLoader		= new PriorityMassLoader();
 		private var _factory:LoadableFileFactory;
-		private var _massLoader:IMassLoader;
 		private var _keepFiles:Boolean;
 
 		//-----------------//
@@ -78,14 +146,9 @@ package ch.capi.net
 		}
 		
 		/**
-		 * Defines the <code>IMassLoader</code> to use.
+		 * Defines the <code>PriorityMassLoader</code> to use.
 		 */
-		public function get massLoader():IMassLoader { return _massLoader; }
-		public function set massLoader(value:IMassLoader):void
-		{
-			if (value == null) throw new ArgumentError("value is not defined");
-			_massLoader = value;
-		}
+		public function get massLoader():PriorityMassLoader { return _massLoader; }
 		
 		//-----------//
 		//Constructor//
@@ -95,17 +158,16 @@ package ch.capi.net
 		 * Creates a new <code>CompositeMassLoader</code> object.
 		 * 
 		 * @param	keepFiles				If the <code>CompositeMassLoader</code> must keep a reference on the created <code>ILoadableFile</code> instances.
-		 * @param	massLoader				The <code>IMassLoader</code> to use.
 		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code> to use.
 		 */
-		public function CompositeMassLoader(keepFiles:Boolean = true, massLoader:IMassLoader=null, loadableFileFactory:LoadableFileFactory=null)
+		public function CompositeMassLoader(keepFiles:Boolean = true, loadableFileFactory:LoadableFileFactory=null)
 		{
-			if (massLoader == null) massLoader = new PriorityMassLoader();
 			if (loadableFileFactory == null) loadableFileFactory = new LoadableFileFactory();
 			
 			_keepFiles = keepFiles;
-			_massLoader = massLoader;
 			_factory = loadableFileFactory;
+			
+			registerTo(massLoader);
 		}
 		
 		//--------------//
@@ -114,10 +176,12 @@ package ch.capi.net
 		
 		/**
 		 * Creates a <code>ILoadableFile</code> from a url. This method doesn't register the file to the <code>IMassLoader</code> but
-		 * it stores it into the <code>CompositeMassLoader</code>.
+		 * it stores it into the <code>CompositeMassLoader</code>. If the fileOrURL parameter is an object, all the properties will
+		 * be put into the <code>ILoadableFile.properties</code> attribute of the created <code>ILoadableFile</code>.
 		 * 
-		 * @param 	url			The url of the file.
-		 * @param	fileType	The type of the file.
+		 * @param 	fileOrURL	The url of the file or an <code>Object</code> containing at least the 'url' attribute.
+		 * @param	fileType	The type of the file. If not defined and the fileOrURL parameter is an <code>Object</code>, then
+		 * 						the type will be extracted from the attribute 'type'.
 		 * @param	onOpen		The <code>Event.OPEN</code> listener.
 		 * @param	onProgress	The <code>ProgressEvent.PROGRESS</code> listener.
 		 * @param	onComplete	The <code>Event.COMPLETE</code> listener.
@@ -126,29 +190,48 @@ package ch.capi.net
 		 * @param	onSecurityError The <code>SecurityErrorEvent.SECURITY_ERROR</code> listener.
 		 * @return	The created <code>ILoadableFile</code>.
 		 * @see ch.capi.net.LoadableFileFactory#getRequest()	LoadableFileFactory.getRequest()
+		 * @see	ch.capi.net.ILoadableFile#properties			ILoadableFile.properties
 		 */
-		public function createFile(url:Object, fileType:String = null,
-											onOpen:Function=null, 
-								   			onProgress:Function=null, 
-								   			onComplete:Function=null, 
-								   			onClose:Function=null,
-								   			onIOError:Function=null,
-								   			onSecurityError:Function=null):ILoadableFile
+		public function createFile( fileOrURL:Object, 
+									fileType:String = null,
+									onOpen:Function=null, 
+						   			onProgress:Function=null, 
+						   			onComplete:Function=null, 
+						   			onClose:Function=null,
+						   			onIOError:Function=null,
+						   			onSecurityError:Function=null):ILoadableFile
 		{
+			//retrieves the url
+			var isObject:Boolean = (fileOrURL is String || fileOrURL is URLRequest);
+			var url:* = (isObject) ? fileOrURL : fileOrURL.url;
 			var request:URLRequest = LoadableFileFactory.getRequest(url);
+			
+			//retrieves the type
+			if (fileType == null && !isObject) fileType = fileOrURL.type;
+			
+			//initialize the loadable file
 			var file:ILoadableFile = createLoadableFile(request, fileType);
 			_factory.attachListeners(file,onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
 			
+			//store the file if needed
 			if (keepFiles) storeFile(file);
+			
+			//put the properties
+			if (!isObject) file.properties.putObject(fileOrURL);
 			
 			return file;
 		}
 		
 		/**
-		 * Creates a <code>ILoadableFile</code> from a url and add it to the current loading queue.
+		 * Creates a <code>ILoadableFile</code> from a url and add it to the current loading queue. If the fileOrURL parameter is an object, 
+		 * all the properties will be put into the <code>ILoadableFile.properties</code> attribute of the created <code>ILoadableFile</code>.
 		 * 
-		 * @param 	url			The url of the file.
-		 * @param	fileType	The type of the file.
+		 * @param 	fileOrURL	The url of the file or an <code>Object</code> containing at least the 'url' attribute.
+		 * @param	priority	The priority of the file (must be an int). If not defined and the fileOrURL parameter is an <code>Object</code>, then
+		 * 						the priority of the file will be extracted from the attribute 'priority'. If no priority is specified, then the
+		 * 						priority will be 0.
+		 * @param	fileType	The type of the file. If not defined and the fileOrURL parameter is an <code>Object</code>, then
+		 * 						the type will be extracted from the attribute 'type'.
 		 * @param	onOpen		The <code>Event.OPEN</code> listener.
 		 * @param	onProgress	The <code>ProgressEvent.PROGRESS</code> listener.
 		 * @param	onComplete	The <code>Event.COMPLETE</code> listener.
@@ -156,59 +239,29 @@ package ch.capi.net
 		 * @param	onIOError	The <code>IOErrorEvent.IO_ERROR</code> listener.
 		 * @param	onSecurityError The <code>SecurityErrorEvent.SECURITY_ERROR</code> listener.
 		 * @return	The created <code>ILoadableFile</code>.
+		 * @throws	ArgumentError			If the priority is invalid.
 		 * @see ch.capi.net.LoadableFileFactory#getRequest()	LoadableFileFactory.getRequest()
-		 */
-		public function addFile(url:Object, fileType:String = null,
-											onOpen:Function=null, 
-								   			onProgress:Function=null, 
-								   			onComplete:Function=null, 
-								   			onClose:Function=null,
-								   			onIOError:Function=null,
-								   			onSecurityError:Function=null):ILoadableFile
-		{
-			var request:URLRequest = LoadableFileFactory.getRequest(url);
-			var file:ILoadableFile = createLoadableFile(request, fileType);
-			_factory.attachListeners(file, onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
-			_massLoader.addFile(file);
-			
-			if (keepFiles) storeFile(file);
-			
-			return file;
-		}
-		
-		/**
-		 * Creates a <code>ILoadableFile</code> from a url and add it to the current loading queue.
-		 * 
-		 * @param 	url			The url of the file.
-		 * @param	priority	The priority of the file.
-		 * @param	fileType	The type of the file.
-		 * @param	onOpen		The <code>Event.OPEN</code> listener.
-		 * @param	onProgress	The <code>ProgressEvent.PROGRESS</code> listener.
-		 * @param	onComplete	The <code>Event.COMPLETE</code> listener.
-		 * @param	onClose		The <code>Event.CLOSE</code> listener.
-		 * @param	onIOError	The <code>IOErrorEvent.IO_ERROR</code> listener.
-		 * @param	onSecurityError The <code>SecurityErrorEvent.SECURITY_ERROR</code> listener.
-		 * @return	The created <code>ILoadableFile</code>.
-		 * @throws	IllegalOperationError	If the <code>IMassLoader</code> is not a <code>PriorityMassLoader</code>.
-		 * @see ch.capi.net.LoadableFileFactory#getRequest()	LoadableFileFactory.getRequest()
+		 * @see	ch.capi.net.ILoadableFile#properties			ILoadableFile.properties
 		 * @see	ch.capi.net.PriorityMassLoader	PriorityMassLoader
 		 */
-		public function addPrioritizedFile(url:Object, priority:int = 0, fileType:String = null, 
-											onOpen:Function=null, 
-								   			onProgress:Function=null, 
-								   			onComplete:Function=null, 
-								   			onClose:Function=null,
-								   			onIOError:Function=null,
-								   			onSecurityError:Function=null):ILoadableFile
+		public function addFile(fileOrURL:Object, 
+								fileType:String = null,
+								priority:*=null,
+								onOpen:Function=null, 
+					   			onProgress:Function=null, 
+					   			onComplete:Function=null, 
+					   			onClose:Function=null,
+					   			onIOError:Function=null,
+					   			onSecurityError:Function=null):ILoadableFile
 		{
-			if (!(_massLoader is PriorityMassLoader)) throw new IllegalOperationError("The IMassLoader is not a PrioritzedMassLoader");
+			//parse the priority
+			if (priority != null && !(priority is int)) throw new ArgumentError("Illegal value for priority : "+priority);
+			if (priority == null && !(fileOrURL is String  || file is URLRequest)) priority = fileOrURL.priority; 
+			if (priority == null) priority = 0;
 			
-			var request:URLRequest = LoadableFileFactory.getRequest(url);
-			var file:ILoadableFile = createLoadableFile(request, fileType);
-			_factory.attachListeners(file, onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
-			(_massLoader as PriorityMassLoader).addPrioritizedFile(file, priority);
-			
-			if (keepFiles) storeFile(file);
+			//creates the file an put it into the loading queue
+			var file:ILoadableFile = createFile(fileOrURL, fileType, onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
+			_massLoader.addPrioritizedFile(file, priority as int);
 			
 			return file;
 		}
@@ -304,6 +357,51 @@ package ch.capi.net
 		protected function storeFile(file:ILoadableFile):void
 		{
 			_storage.addElement(file);
+		}
+		
+		/**
+		 * Register as listener to the specified <code>IMassLoader</code>.
+		 * 
+		 * @param	massLoader		The <code>IMassLoader</code> to listen.
+		 */
+		protected function registerTo(massLoader:IMassLoader):void
+		{
+			massLoader.addEventListener(Event.OPEN, eventRedirector, false, 0, true);
+			massLoader.addEventListener(Event.CLOSE, eventRedirector, false, 0, true);
+			massLoader.addEventListener(ProgressEvent.PROGRESS, eventRedirector, false, 0, true);
+			massLoader.addEventListener(Event.COMPLETE, eventRedirector, false, 0, true);
+			massLoader.addEventListener(MassLoadEvent.FILE_OPEN, eventRedirector, false, 0, true);
+			massLoader.addEventListener(MassLoadEvent.FILE_CLOSE, eventRedirector, false, 0, true);
+			massLoader.addEventListener(PriorityEvent.PRIORITY_CHANGED, eventRedirector, false, 0, true);
+		}
+		
+		/**
+		 * Unregister from the specified <code>IMassLoader</code>.
+		 * 
+		 * @param	massLoader	The <code>IMassLoader</code> to stop to listen to.
+		 */
+		protected function unregisterFrom(massLoader:IMassLoader):void
+		{
+			massLoader.removeEventListener(Event.OPEN, eventRedirector);
+			massLoader.removeEventListener(Event.CLOSE, eventRedirector);
+			massLoader.removeEventListener(ProgressEvent.PROGRESS, eventRedirector);
+			massLoader.removeEventListener(Event.COMPLETE, eventRedirector);
+			massLoader.removeEventListener(MassLoadEvent.FILE_OPEN, eventRedirector);
+			massLoader.removeEventListener(MassLoadEvent.FILE_CLOSE, eventRedirector);
+			massLoader.removeEventListener(PriorityEvent.PRIORITY_CHANGED, eventRedirector);
+		}
+		
+		/**
+		 * Redirects all the events that it received. This method acts like a proxy : it is attached
+		 * to a <code>IMassLoader</code> as event listener and all the events are redispatched through
+		 * the <code>CompositeMassLoader</code>. Note that all the events are cloned before redirection.
+		 * 
+		 * @param	evt		The <code>Event</code> object.
+		 */
+		protected function eventRedirector(evt:Event):void
+		{
+			var c:Event = evt.clone();
+			dispatchEvent(c);
 		}
 	}
 }

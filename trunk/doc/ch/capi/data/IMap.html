@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="IMap,ch.capi.data.IMap,clear,containsKey,containsValue,getValue,isEmpty,keys,put,putAll,remove,size,values" name="keywords">
+<meta content="IMap,ch.capi.data.IMap,clear,containsKey,containsValue,getValue,isEmpty,keys,put,putAll,putObject,remove,size,values" name="keywords">
 <title>ch.capi.data.IMap</title>
 </head>
 <body>
@@ -45,6 +45,12 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
   Represents an object that maps keys to values.
   
   <p></p>
+<p>
+<span class="classHeaderTableLabel">See also</span>
+</p>
+<div class="seeAlso">
+<a href="text/Properties.html" target="">Properties</a>
+</div>
 <br>
 <hr>
 </div>
@@ -119,6 +125,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <div class="summaryTableDescription">
    Retrieves all the key/value from the source <code>IMap</code> and put them
    in the current <code>IMap</code>.</div>
+</td><td class="summaryTableOwnerCol">IMap</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#putObject()">putObject</a>(obj:Object):void</div>
+<div class="summaryTableDescription">
+   Puts all the key/value from the specified object into the <code>IMap</code>.</div>
 </td><td class="summaryTableOwnerCol">IMap</td>
 </tr>
 <tr class="">
@@ -329,6 +343,24 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">source</span>:<a href="IMap.html">IMap</a></code> &mdash;  The source <code>IMap</code>. 
+   </td>
+</tr>
+</table>
+</div>
+<a name="putObject()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">putObject</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function putObject(obj:Object):void</code><p>
+   Puts all the key/value from the specified object into the <code>IMap</code>.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">obj</span>:Object</code> &mdash;  The source <code>Object</code>.
    </td>
 </tr>
 </table>

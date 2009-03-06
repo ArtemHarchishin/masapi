@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="LoadableFileFactory,ch.capi.net.LoadableFileFactory,basePath,defaultLoadableFileFactory,defaultLoaderContext,defaultSoundLoaderContext,defaultUseCache,defaultVariables,defaultVirtualBytesTotal,fileTypeSelector,listenersPriority,attachListeners,create,createFile,createLoaderFile,createSoundFile,createURLLoaderFile,createURLStreamFile,getMethod,getRequest,initializeFile" name="keywords">
+<meta content="LoadableFileFactory,ch.capi.net.LoadableFileFactory,basePath,defaultLoadableFileFactory,defaultLoaderContext,defaultSoundLoaderContext,defaultUseCache,defaultVariables,defaultVirtualBytesTotal,fileTypeSelector,listenersPriority,attachListeners,clone,create,createFile,createLoaderFile,createSoundFile,createURLLoaderFile,createURLStreamFile,getMethod,getRequest,initializeFile" name="keywords">
 <title>ch.capi.net.LoadableFileFactory</title>
 </head>
 <body>
@@ -152,6 +152,15 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#attachListeners()">attachListeners</a>(file:<a href="ILoadableFile.html">ILoadableFile</a>, onOpen:Function = null, onProgress:Function = null, onComplete:Function = null, onClose:Function = null, onIOError:Function = null, onSecurityError:Function = null):void</div>
 <div class="summaryTableDescription">
    Creates  the listeners on a <code>ILoadManager</code> object.</div>
+</td><td class="summaryTableOwnerCol">LoadableFileFactory</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#clone()">clone</a>():<a href="../net/LoadableFileFactory.html">LoadableFileFactory</a>
+</div>
+<div class="summaryTableDescription">
+   Creates a clone of the current <code>LoadableFileFactory</code>.</div>
 </td><td class="summaryTableOwnerCol">LoadableFileFactory</td>
 </tr>
 <tr class="">
@@ -566,6 +575,29 @@ showHideInherited();
 <a href="../net/LoadableFileFactory.html#listenersPriority" target="">listenersPriority()</a>
 </div>
 </div>
+<a name="clone()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">clone</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function clone():<a href="../net/LoadableFileFactory.html">LoadableFileFactory</a></code><p>
+   Creates a clone of the current <code>LoadableFileFactory</code>. This method will only clone the
+   current <code>LoadableFileFactory</code> and report its references into the new one.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../net/LoadableFileFactory.html">LoadableFileFactory</a></code> &mdash; 
+                        The cloned <code>LoadableFileFactory</code>.
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
 <a name="create()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -923,8 +955,8 @@ showHideInherited();
 <div class="detailBody">
 <code>public static function getRequest(url:Object):URLRequest</code><p>
    Creates a <code>URLRequest</code> from a url object. If the url is a <code>URLRequest</code>, then it is simply
-   returned. If the url is an object of any sort, a new <code>URLRequest</code> object is created with the value returned by
-   the <code>toString()</code> method as url.
+   returned. If the url is a <code>String</code>, it is encapsulated in a new <code>URLRequest</code>. Otherwise, an
+   error is thrown.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
@@ -938,6 +970,14 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20"></td><td><code>URLRequest</code> &mdash; The created <code>URLRequest</code> object.
+   </td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; If the url is not a <code>URLRequest</code> nor a <code>String</code>.
    </td>
 </tr>
 </table>

@@ -210,15 +210,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="AbstractLoadableFile.html#getURLRequest()">getURLRequest</a>():URLRequest</div>
-<div class="summaryTableDescription">
-   Retrieves the <code>URLRequest</code> that is created depending of
-   the <code>useCache</code> property value.</div>
-</td><td class="summaryTableOwnerCol"><a href="AbstractLoadableFile.html">AbstractLoadableFile</a></td>
-</tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
 <a class="signatureLink" href="AbstractLoadableFile.html#invalidateFixedRequest()">invalidateFixedRequest</a>():void</div>
 <div class="summaryTableDescription">
    Invalidate the current <code>fixedRequest</code>.</div>
@@ -312,6 +303,15 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="AbstractLoadableFile.html#getUpdatedUrlRequest()">getUpdatedUrlRequest</a>():URLRequest</div>
 <div class="summaryTableDescription">
    Creates a clone of the current <code>URLRequest</code> and put the variables values into its data.</div>
+</td><td class="summaryTableOwnerCol"><a href="AbstractLoadableFile.html">AbstractLoadableFile</a></td>
+</tr>
+<tr class="hideInheritedProtectedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="AbstractLoadableFile.html#getURLRequest()">getURLRequest</a>():URLRequest</div>
+<div class="summaryTableDescription">
+   Retrieves the <code>URLRequest</code> that is created depending of
+   the <code>useCache</code> property value.</div>
 </td><td class="summaryTableOwnerCol"><a href="AbstractLoadableFile.html">AbstractLoadableFile</a></td>
 </tr>
 <tr class="hideInheritedProtectedMethod">
@@ -568,7 +568,9 @@ showHideInherited();
    is complete. Depending of the type of data, many classes are supported :
    <ul>
     <li>If the format is binary, then the classes <code>DataType.BYTE_ARRAY</code>, <code>DataType.BITMAP</code> 
-    and <code>DataType.LOADER</code> are supported.</li>
+    and <code>DataType.LOADER</code> are supported. If you use the class <code>DataType.BITMAP</code>, the data won't
+    be directly available into the <code>Bitmap</code> instance returned. An event <code>Event.INIT</code> will be dispatched
+    by the <code>Bitmap</code> after the new <code>BitmapData</code> has been updated.</li>
     <li>If the format is variables, then the class <code>DatyType.URL_VARIABLES</code> is supported.</li>
     <li>If the format is text, then the classes <code>DatyType.XML</code>, <code>DatyType.XML_DOCUMENT</code>,
     <code>DatyType.STYLE_SHEET</code> and <code>DatyType.URL_VARIABLES</code> are supported.

@@ -1,5 +1,7 @@
 package ch.capi.net.app 
 {
+	import flash.xml.XMLDocument;	
+	
 	import ch.capi.utils.ParseUtils;		import ch.capi.errors.ParseError;
 	import ch.capi.net.LoadableFileFactory;
 	import ch.capi.net.ILoadableFile;
@@ -175,13 +177,47 @@ package ch.capi.net.app
 		//--------------//
 		
 		/**
+		 * Creates a new <code>ApplicationFileParser</code> using a new empty <code>ApplicationContext</code>.
+		 * 
+		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code>. If not defined, then the 
+		 * 									<code>LoadableFileFactory.defaultLoadableFileFactory</code> will be used.
+		 * @return	The created <code>ApplicationFileParser</code>.
+		 */
+		public static function createWithNewContext(loadableFileFactory:LoadableFileFactory=null):ApplicationFileParser
+		{
+			var newContext:ApplicationContext = new ApplicationContext();
+			return new ApplicationFileParser(loadableFileFactory, newContext); 
+		}
+
+		/**
+		 * Parses the specified source <code>String</code>, using the specified <code>LoadableFileFactory</code> into
+		 * a new <code>ApplicationContext</code>.
+		 * 
+		 * @param	source					The source <code>String</code> into <code>XML</code> format that matches the XMLSchema.
+		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code>. If not defined, then the 
+		 * 									<code>LoadableFileFactory.defaultLoadableFileFactory</code> will be used.
+		 * @return	The new <code>ApplicationContext</code> that contains all the parsed <code>ApplicationFile</code> instances.
+		 */
+		public static function parse(source:String, loadableFileFactory:LoadableFileFactory=null):ApplicationContext
+		{
+			var doc:XMLDocument = new XMLDocument();
+			doc.ignoreWhite = true;
+			doc.parseXML(source);
+			
+			var parser:ApplicationFileParser = createWithNewContext(loadableFileFactory);
+			parser.parseNode(doc.firstChild);
+			
+			return parser.applicationContext;
+		}
+
+		/**
 		 * Parse the specified <code>XMLNode</code>. The specified node must contains at least one subnode with all
 		 * the files declaration. The second subnode will contains the dependencies.
 		 * 
 		 * @param	node	The <code>XMLNode</code> to parse.
 		 * @param	ch.capi.errors.ParseError	If the node is invalid.
 		 */
-		public function parse(node:XMLNode):void
+		public function parseNode(node:XMLNode):void
 		{
 			if(node.childNodes.length < 1 || node.childNodes.length > 3) throw new ParseError("parse", "Invalid node count : "+node.childNodes.length, node);
 			

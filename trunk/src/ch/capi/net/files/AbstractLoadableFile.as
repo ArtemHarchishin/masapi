@@ -133,6 +133,8 @@
 		/**
 		 * Defines the properties stored into the
 		 * <code>ILoadableFile</code>.
+		 * 
+		 * @see			ch.capi.data.text.Properties	Properties
 		 */
 		public function get properties():IMap { return _properties; }
 		
@@ -268,42 +270,6 @@
 		public function invalidateFixedRequest():void
 		{
 			_fixedRequestUpdated = false;
-		}
-		
-		/**
-		 * Retrieves the <code>URLRequest</code> that is created depending of
-		 * the <code>useCache</code> property value. The creation of the <code>URLRequest</code>
-		 * is based on the <code>netState</code>. If the <code>isOnline()</code> method returns
-		 * <code>false</code> or the <code>useCache</code> property value is </code>true</code>, then
-		 * the current <code>urlRequest</code> is returned. Else a new <code>URLRequest</code> is created,
-		 * cloning the data and adding a no cache variable.
-		 * 
-		 * @return		The <code>URLRequest</code>
-		 * @see			#useCache 	useCache
-		 * @see			#isOnline()	isOnline()
-		 * @throws  flash.errors.IllegalOperationError	If the <code>AbstractLoadableFile</code> has been destroyed.
-		 */
-		public function getURLRequest():URLRequest
-		{
-			checkDestroyed();
-			
-			//creates a clone of the URLRequest and replaces the variables
-			var newRequest:URLRequest = getUpdatedUrlRequest();
-			if (useCache || !isOnline()) return newRequest;
-			
-			//retrieves the url data and create a unique value
-			var ncValue:Number = (new Date()).getTime();
-			var currentUrl:String = newRequest.url;
-			var noCacheValue:String = NO_CACHE_VARIABLE_NAME+"="+ncValue;
-			
-			//add the no-cache variable at the end of the url
-			if (currentUrl.indexOf("?") == -1) currentUrl += "?" + noCacheValue;
-			else currentUrl += "&" + noCacheValue;
-			
-			//put the new request
-			newRequest.url = currentUrl;
-			
-			return newRequest;
 		}
 		
 		/**
@@ -451,6 +417,42 @@
 		//-----------------//
 		//Protected methods//
 		//-----------------//
+		
+		/**
+		 * Retrieves the <code>URLRequest</code> that is created depending of
+		 * the <code>useCache</code> property value. The creation of the <code>URLRequest</code>
+		 * is based on the <code>netState</code>. If the <code>isOnline()</code> method returns
+		 * <code>false</code> or the <code>useCache</code> property value is </code>true</code>, then
+		 * the current <code>urlRequest</code> is returned. Else a new <code>URLRequest</code> is created,
+		 * cloning the data and adding a no cache variable.
+		 * 
+		 * @return		The <code>URLRequest</code>
+		 * @see			#useCache 	useCache
+		 * @see			#isOnline()	isOnline()
+		 * @throws  flash.errors.IllegalOperationError	If the <code>AbstractLoadableFile</code> has been destroyed.
+		 */
+		protected function getURLRequest():URLRequest
+		{
+			checkDestroyed();
+			
+			//creates a clone of the URLRequest and replaces the variables
+			var newRequest:URLRequest = getUpdatedUrlRequest();
+			if (useCache || !isOnline()) return newRequest;
+			
+			//retrieves the url data and create a unique value
+			var ncValue:Number = (new Date()).getTime();
+			var currentUrl:String = newRequest.url;
+			var noCacheValue:String = NO_CACHE_VARIABLE_NAME+"="+ncValue;
+			
+			//add the no-cache variable at the end of the url
+			if (currentUrl.indexOf("?") == -1) currentUrl += "?" + noCacheValue;
+			else currentUrl += "&" + noCacheValue;
+			
+			//put the new request
+			newRequest.url = currentUrl;
+			
+			return newRequest;
+		}
 		
 		/**
 		 * Tell the <code>ILoadableFile</code> to start the loading process. This method

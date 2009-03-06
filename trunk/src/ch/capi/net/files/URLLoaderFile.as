@@ -74,7 +74,9 @@ package ch.capi.net.files
 		 * is complete. Depending of the type of data, many classes are supported :
 		 * <ul>
 		 * 	<li>If the format is binary, then the classes <code>DataType.BYTE_ARRAY</code>, <code>DataType.BITMAP</code> 
-		 * 	and <code>DataType.LOADER</code> are supported.</li>
+		 * 	and <code>DataType.LOADER</code> are supported. If you use the class <code>DataType.BITMAP</code>, the data won't
+		 * 	be directly available into the <code>Bitmap</code> instance returned. An event <code>Event.INIT</code> will be dispatched
+		 * 	by the <code>Bitmap</code> after the new <code>BitmapData</code> has been updated.</li>
 		 * 	<li>If the format is variables, then the class <code>DatyType.URL_VARIABLES</code> is supported.</li>
 		 * 	<li>If the format is text, then the classes <code>DatyType.XML</code>, <code>DatyType.XML_DOCUMENT</code>,
 		 * 	<code>DatyType.STYLE_SHEET</code> and <code>DatyType.URL_VARIABLES</code> are supported.
@@ -99,28 +101,6 @@ package ch.capi.net.files
 			if (asClass == DataType.BYTE_ARRAY) return loadedData;
 			if (asClass == DataType.XML) return new XML(loadedData);
 			
-			//bitmap creation (asynchronous)
-			if (asClass == DataType.BITMAP)
-			{
-				var tmpBitmap:Bitmap = new Bitmap();
-				var tmpLoader:Loader = new Loader();
-				tmpLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onDataLoaded);
-				tmpLoader.loadBytes(loadedData);
-				
-				//initializes the bitmap
-				function onDataLoaded(evt:Event):void
-				{
-					if (! (tmpLoader.content is Bitmap)) throw new Error("The content of the ByteArray seems not to be a picture : "+this);
-					
-					//clone the data and put them into the returned Bitmap
-					var content:Bitmap = tmpLoader.content as Bitmap;
-					var clonedData:BitmapData = content.bitmapData.clone();
-					tmpBitmap.bitmapData = clonedData;
-				}
-				
-				return tmpBitmap;
-			}
-			
 			//create the instance
 			var srcClass:Class = appDomain.getDefinition(asClass) as Class;
 			var insClass:* = new srcClass();
@@ -130,6 +110,32 @@ package ch.capi.net.files
 			else if (insClass is URLVariables){ insClass.decode(loadedData); }
 			else if (insClass is XMLDocument){ insClass.ignoreWhite=true; insClass.parseXML(loadedData); }
 			else if (insClass is StyleSheet){ insClass.parseCSS(loadedData); }
+			
+			//bitmap creation (asynchronous)
+			if (asClass is Bitmap)
+			{
+				var tmpBitmap:Bitmap = insClass as Bitmap;
+				var tmpLoader:Loader = new Loader();
+				tmpLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onDataLoaded);
+				tmpLoader.loadBytes(loadedData, loaderContext);
+				
+				//initializes the bitmap
+				function onDataLoaded(evt:Event):void
+				{
+					if (! (tmpLoader.content is Bitmap)) throw new Error("The content of the ByteArray is not a Bitmap : "+this);
+					
+					//clone the data and put them into the returned Bitmap
+					var content:Bitmap = tmpLoader.content as Bitmap;
+					var clonedData:BitmapData = content.bitmapData.clone();
+					tmpBitmap.bitmapData = clonedData;
+					
+					//dispatches an INIT event when the new bitmapData is set
+					var initEvt:Event = new Event(Event.INIT);
+					tmpBitmap.dispatchEvent(initEvt);
+				}
+				
+				return tmpBitmap;
+			}
 			
 			return insClass;
 		}
