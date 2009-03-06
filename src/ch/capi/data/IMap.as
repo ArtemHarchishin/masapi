@@ -5,6 +5,7 @@ package ch.capi.data
 	 * 
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		1.0
+	 * @see			ch.capi.data.text.Properties	Properties
 	 */
 	public interface IMap
 	{
@@ -61,6 +62,13 @@ package ch.capi.data
 		 * @param	source		The source <code>IMap</code>. 
 		 */
 		function putAll(source:IMap):void;
+		
+		/**
+		 * Puts all the key/value from the specified object into the <code>IMap</code>.
+		 * 
+		 * @param	obj		The source <code>Object</code>.
+		 */
+		function putObject(obj:Object):void;
 		
 		/**
 		 * Removes the mapping for a key from the <code>IMap</code> if it is present.

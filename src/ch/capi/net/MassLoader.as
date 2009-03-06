@@ -15,6 +15,7 @@
 	import flash.events.IOErrorEvent;
 	import flash.errors.IllegalOperationError;
 	import flash.utils.setTimeout;
+	import flash.utils.clearTimeout;	
 	
 	/**
 	 * Dispatched after all the data is received.
@@ -24,7 +25,7 @@
 	[Event(name="complete", type="flash.events.Event")]
 	
 	/**
-	 * Dispatched when the download operation commences following a call to the <code>MassLoader.load()</code>
+	 * Dispatched when the download operation commences following a call to the <code>MassLoader.start()</code>
 	 * method.
 	 * 
 	 * @eventType	flash.events.Event.OPEN
@@ -63,7 +64,7 @@
 	 * @eventType	flash.events.ProgressEvent.PROGRESS
 	 */
 	[Event(name="progress", type="flash.events.ProgressEvent")]
-import flash.utils.clearTimeout;	
+
 	/**
 	 * This is a basic implementation of a <code>IMassLoader</code> object. The files will be loaded
 	 * into the order of they have been added into the loading queue. In order to create some <code>ILoadableFile</code>,

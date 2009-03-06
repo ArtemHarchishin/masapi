@@ -49,6 +49,8 @@ package ch.capi.net
 		/**
 		 * Defines the properties stored into the
 		 * <code>ILoadableFile</code>.
+		 * 
+		 * @see			ch.capi.data.text.Properties	Properties
 		 */
 		function get properties():IMap;
 		

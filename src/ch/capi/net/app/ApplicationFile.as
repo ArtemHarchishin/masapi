@@ -104,12 +104,15 @@ package ch.capi.net.app
 		//--------------//
 		
 		/**
+		 * THIS METHOD IS DEPRECATED. USE <code>ApplicationContext.getFile()</code> METHOD INSTEAD !
 		 * Retrieves the specified <code>ApplicationFile</code>. This method is just an encapsulation to retrieve
 		 * the file throught the <code>ApplicationContext</code>.
 		 * 
 		 * @param	name		The name of the file to retrieve.
 		 * @param	context		The <code>ApplicationContext</code>. If not specified, the global context will be used.
 		 * @return	The <code>ApplicationFile</code> or <code>null</code>.
+		 * @see		ch.capi.net.app.ApplicationContext#getFile()	ApplicationContext.getFile()
+		 * @deprecated
 		 */
 		public static function get(name:String, context:ApplicationContext=null):ApplicationFile
 		{

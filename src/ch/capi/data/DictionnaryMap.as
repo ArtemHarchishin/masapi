@@ -130,6 +130,19 @@ package ch.capi.data
 		}
 		
 		/**
+		 * Puts all the key/value from the specified object into the <code>IMap</code>.
+		 * 
+		 * @param	obj		The source <code>Object</code>.
+		 */
+		public function putObject(obj:Object):void
+		{
+			for (var key:String in obj)
+			{
+				put(key, obj[key]);
+			}
+		}
+		
+		/**
 		 * Removes the mapping for a key from the <code>IMap</code> if it is present.
 		 * 
 		 * @param	key		The key to remove.
@@ -184,6 +197,22 @@ package ch.capi.data
 				list.push(i);
 			}
 			return list;
+		}
+		
+		/**
+		 * Retrieves a <code>String</code> displaying all the key/value pairs of the <code>DictionnaryMap</code>.
+		 * 
+		 * @return	A <code>String</code> representing the <code>DictionnaryMap</code>.
+		 */
+		public function toString():String
+		{
+			var str:String = "";
+			for (var key:* in _dictionnary)
+			{
+				str += key.toString()+ " => " + _dictionnary[key] + "\n";
+			}
+			
+			return str;
 		}
 	}
 }

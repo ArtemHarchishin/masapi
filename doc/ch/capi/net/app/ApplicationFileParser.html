@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
-<meta content="ApplicationFileParser,ch.capi.net.app.ApplicationFileParser,initializeFile,applicationContext,loadableFileFactory,createApplicationFile,createLoadableFile,initializeApplicationFile,parse,parseDependencies,parseFiles,parseVariables,putVariable" name="keywords">
+<meta content="ApplicationFileParser,ch.capi.net.app.ApplicationFileParser,initializeFile,applicationContext,loadableFileFactory,createApplicationFile,createLoadableFile,createWithNewContext,initializeApplicationFile,parse,parseDependencies,parseFiles,parseNode,parseVariables,putVariable" name="keywords">
 <title>ch.capi.net.app.ApplicationFileParser</title>
 </head>
 <body>
@@ -100,9 +100,20 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#parse()">parse</a>(node:XMLNode):void</div>
-<div class="summaryTableDescription">
-   Parse the specified <code>XMLNode</code>.</div>
+<a class="signatureLink" href="#createWithNewContext()">createWithNewContext</a>(loadableFileFactory:<a href="../LoadableFileFactory.html">LoadableFileFactory</a> = null):<a href="../app/ApplicationFileParser.html">ApplicationFileParser</a>
+</div>
+<div class="summaryTableDescription">[static]
+   Creates a new <code>ApplicationFileParser</code> using a new empty <code>ApplicationContext</code>.</div>
+</td><td class="summaryTableOwnerCol">ApplicationFileParser</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#parse()">parse</a>(source:String, loadableFileFactory:<a href="../LoadableFileFactory.html">LoadableFileFactory</a> = null):<a href="../app/ApplicationContext.html">ApplicationContext</a>
+</div>
+<div class="summaryTableDescription">[static]
+   Parses the specified source <code>String</code>, using the specified <code>LoadableFileFactory</code> into
+   a new <code>ApplicationContext</code>.</div>
 </td><td class="summaryTableOwnerCol">ApplicationFileParser</td>
 </tr>
 <tr class="">
@@ -119,6 +130,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#parseFiles()">parseFiles</a>(node:XMLNode):void</div>
 <div class="summaryTableDescription">
    Parses the <code>ApplicationFile</code> of the specified <code>XMLNode</code>.</div>
+</td><td class="summaryTableOwnerCol">ApplicationFileParser</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#parseNode()">parseNode</a>(node:XMLNode):void</div>
+<div class="summaryTableDescription">
+   Parse the specified <code>XMLNode</code>.</div>
 </td><td class="summaryTableOwnerCol">ApplicationFileParser</td>
 </tr>
 <tr class="">
@@ -336,6 +355,36 @@ showHideInherited();
 </tr>
 </table>
 </div>
+<a name="createWithNewContext()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">createWithNewContext</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function createWithNewContext(loadableFileFactory:<a href="../LoadableFileFactory.html">LoadableFileFactory</a> = null):<a href="../app/ApplicationFileParser.html">ApplicationFileParser</a></code><p>
+   Creates a new <code>ApplicationFileParser</code> using a new empty <code>ApplicationContext</code>.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">loadableFileFactory</span>:<a href="../LoadableFileFactory.html">LoadableFileFactory</a></code> (default = <code>null</code>)<code></code> &mdash;  The <code>LoadableFileFactory</code>. If not defined, then the 
+            <code>LoadableFileFactory.defaultLoadableFileFactory</code> will be used.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../app/ApplicationFileParser.html">ApplicationFileParser</a></code> &mdash; 
+                        The created <code>ApplicationFileParser</code>.
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
 <a name="initializeApplicationFile()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -370,15 +419,34 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function parse(node:XMLNode):void</code><p>
-   Parse the specified <code>XMLNode</code>. The specified node must contains at least one subnode with all
-   the files declaration. The second subnode will contains the dependencies.
+<code>public static function parse(source:String, loadableFileFactory:<a href="../LoadableFileFactory.html">LoadableFileFactory</a> = null):<a href="../app/ApplicationContext.html">ApplicationContext</a></code><p>
+   Parses the specified source <code>String</code>, using the specified <code>LoadableFileFactory</code> into
+   a new <code>ApplicationContext</code>.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">node</span>:XMLNode</code> &mdash; The <code>XMLNode</code> to parse.
+<td width="20px"></td><td><code><span class="label">source</span>:String</code> &mdash;     The source <code>String</code> into <code>XML</code> format that matches the XMLSchema.
    </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">loadableFileFactory</span>:<a href="../LoadableFileFactory.html">LoadableFileFactory</a></code> (default = <code>null</code>)<code></code> &mdash;  The <code>LoadableFileFactory</code>. If not defined, then the 
+            <code>LoadableFileFactory.defaultLoadableFileFactory</code> will be used.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../app/ApplicationContext.html">ApplicationContext</a></code> &mdash; 
+                        The new <code>ApplicationContext</code> that contains all the parsed <code>ApplicationFile</code> instances.
+   
+                        
+                     </td>
 </tr>
 </table>
 </div>
@@ -414,6 +482,25 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">node</span>:XMLNode</code> &mdash; The <code>XMLNode</code>.
+   </td>
+</tr>
+</table>
+</div>
+<a name="parseNode()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">parseNode</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function parseNode(node:XMLNode):void</code><p>
+   Parse the specified <code>XMLNode</code>. The specified node must contains at least one subnode with all
+   the files declaration. The second subnode will contains the dependencies.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">node</span>:XMLNode</code> &mdash; The <code>XMLNode</code> to parse.
    </td>
 </tr>
 </table>

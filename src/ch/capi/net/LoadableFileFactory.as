@@ -17,7 +17,8 @@
 	import flash.system.LoaderContext;
 	import flash.events.IOErrorEvent;
 	import flash.events.SecurityErrorEvent;
-	
+	import flash.utils.getQualifiedClassName;
+		
 	/**
 	 * Factory of <code>ILoadableFile</code> objects.
 	 * 
@@ -206,15 +207,19 @@
 
 		/**
 		 * Creates a <code>URLRequest</code> from a url object. If the url is a <code>URLRequest</code>, then it is simply
-		 * returned. If the url is an object of any sort, a new <code>URLRequest</code> object is created with the value returned by
-		 * the <code>toString()</code> method as url.
+		 * returned. If the url is a <code>String</code>, it is encapsulated in a new <code>URLRequest</code>. Otherwise, an
+		 * error is thrown.
 		 * 
 		 * @param	url		The url object.
 		 * @return	The created <code>URLRequest</code> object.
+		 * @throws	ArgumentError	If the url is not a <code>URLRequest</code> nor a <code>String</code>.
 		 */
 		public static function getRequest(url:Object):URLRequest
 		{
-			return (url is URLRequest) ? url as URLRequest : new URLRequest(url.toString());
+			if (url is URLRequest) return url as URLRequest;
+			if (url is String) return new URLRequest(url as String);
+			
+			throw new ArgumentError("Unrecognized object : "+getQualifiedClassName(url)+" => "+url);
 		}
 		
 		/**
@@ -334,7 +339,9 @@
 			//retrieves the type if not specified and create the ILoadableFile
 			if (type == null) type = fileTypeSelector.getType(request);
 			var method:Function = getMethod(type);
-			if (method == null || method == createFile) throw new ArgumentError("File type not supported : '"+request.url+"'");
+			
+			if (method == null) throw new ArgumentError("File type not supported : '"+request.url+"' ("+type+")");
+			else if (method == createFile) throw new ArgumentError("Recusive method call (createFile). Probably the file type not supported : '"+request.url+"' ("+type+")");
 			
 			var file:ILoadableFile = method(request);
 			if (file == null) return null;
@@ -371,7 +378,26 @@
 			createListener(SecurityErrorEvent.SECURITY_ERROR, file, onSecurityError);
 		}
 		
-		//-----------------//
+		/**
+		 * Creates a clone of the current <code>LoadableFileFactory</code>. This method will only clone the
+		 * current <code>LoadableFileFactory</code> and report its references into the new one.
+		 * 
+		 * @return	The cloned <code>LoadableFileFactory</code>.
+		 */
+		public function clone():LoadableFileFactory
+		{
+			var ncl:LoadableFileFactory = new LoadableFileFactory();
+			ncl._defaultLoaderContext = _defaultLoaderContext;
+			ncl._defaultSoundLoaderContext = _defaultSoundLoaderContext;
+			ncl._defaultVariables = _defaultVariables;
+			ncl._defaultVirtualBytes = _defaultVirtualBytes;
+			ncl._fileSelector = _fileSelector;
+			ncl._listenersPriority = _listenersPriority;
+			ncl._useCache = _useCache;
+			ncl.basePath = basePath;
+			return ncl;
+		}
+		//-----------------//
 		//Protected methods//
 		//-----------------//
 		
