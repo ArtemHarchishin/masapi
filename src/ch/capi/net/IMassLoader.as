@@ -17,6 +17,13 @@ package ch.capi.net
 	[Event(name="fileClose", type="ch.capi.events.MassLoadEvent")]
 	
 	/**
+	 * Dispatched when the loading of a <code>ILoadManager</code> progresses.
+	 * 
+	 * @eventType	ch.capi.events.MassLoadEvent.FILE_PROGRESS
+	 */
+	[Event(name="fileProgress", type="ch.capi.events.MassLoadEvent")]
+	
+	/**
 	 * Represents a massive loader. This interface represents objects that manages the
 	 * loading of many files.
 	 * 

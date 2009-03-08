@@ -1,5 +1,9 @@
 package ch.capi.net 
 {
+	import ch.capi.errors.NameAlreadyExistsError;	
+	import ch.capi.data.DictionnaryMap;	
+	import ch.capi.data.IMap;	
+	
 	import flash.events.ProgressEvent;	
 	import flash.events.EventDispatcher;	
 	import flash.events.Event;	
@@ -46,6 +50,13 @@ package ch.capi.net
 	 * @eventType	ch.capi.events.MassLoadEvent.FILE_CLOSE
 	 */
 	[Event(name="fileClose", type="ch.capi.events.MassLoadEvent")]
+	
+	/**
+	 * Dispatched when the loading of a <code>ILoadManager</code> progresses.
+	 * 
+	 * @eventType	ch.capi.events.MassLoadEvent.FILE_PROGRESS
+	 */
+	[Event(name="fileProgress", type="ch.capi.events.MassLoadEvent")]
 	
 	/**
 	 * Dispatched when the download operation stops. This is following a call to the <code>MassLoader.stop()</code>
@@ -117,14 +128,26 @@ package ch.capi.net
 		//---------//
 		//Variables//
 		//---------//
+		private static var __storedLoaders:IMap 		= new DictionnaryMap(false);
+
 		private var _storage:ArrayList 					= new ArrayList();
 		private var _massLoader:PriorityMassLoader		= new PriorityMassLoader();
 		private var _factory:LoadableFileFactory;
 		private var _keepFiles:Boolean;
+		private var _name:String;
 
 		//-----------------//
 		//Getters & Setters//
 		//-----------------//
+		
+		/**
+		 * Defines the name of the <code>CompositeMassLoader</code>. If the name is
+		 * <code>null</code>, then the <code>CompositeMassLoader</code> is not registered
+		 * into the global map.
+		 * 
+		 * @see	#get()		CompositeMassLoader.get()
+		 */
+		public function get name():String { return _name; }
 		
 		/**
 		 * Defines if the <code>CompositeMassLoader</code> must keep references on the created
@@ -157,23 +180,41 @@ package ch.capi.net
 		/**
 		 * Creates a new <code>CompositeMassLoader</code> object.
 		 * 
+		 * @param	name					The name of the <code>CompositeMassLoader</code>. That name must be unique. If no name is defined, then
+		 * 									the instance won't be registered.
 		 * @param	keepFiles				If the <code>CompositeMassLoader</code> must keep a reference on the created <code>ILoadableFile</code> instances.
 		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code> to use.
 		 */
-		public function CompositeMassLoader(keepFiles:Boolean = true, loadableFileFactory:LoadableFileFactory=null)
+		public function CompositeMassLoader(name:String=null, keepFiles:Boolean=true, loadableFileFactory:LoadableFileFactory=null)
 		{
 			if (loadableFileFactory == null) loadableFileFactory = new LoadableFileFactory();
 			
+			_name = name;
 			_keepFiles = keepFiles;
 			_factory = loadableFileFactory;
 			
 			registerTo(massLoader);
+			registerLoader(name);
 		}
 		
 		//--------------//
 		//Public methods//
 		//--------------//
 		
+		/**
+		 * Retrieves the <code>CompositeMassLoader</code> matching the specified name.
+		 * 
+		 * @param	name	The name of the <code>CompositeMassLoader</code>.
+		 * @return	The <code>CompositeMassLoader</code>.
+		 * @throws	Error	If there is no <code>CompositeMassLoader</code> matching the specified name.
+		 */
+		public static function get(name:String):CompositeMassLoader
+		{
+			var cml:CompositeMassLoader = __storedLoaders.getValue(name);
+			if (cml == null) throw new Error("There is no CompositeMassLoader matching the name '"+name+"'");
+			return cml;
+		}
+
 		/**
 		 * Creates a <code>ILoadableFile</code> from a url. This method doesn't register the file to the <code>IMassLoader</code> but
 		 * it stores it into the <code>CompositeMassLoader</code>. If the fileOrURL parameter is an object, all the properties will
@@ -191,6 +232,17 @@ package ch.capi.net
 		 * @return	The created <code>ILoadableFile</code>.
 		 * @see ch.capi.net.LoadableFileFactory#getRequest()	LoadableFileFactory.getRequest()
 		 * @see	ch.capi.net.ILoadableFile#properties			ILoadableFile.properties
+		 * @throws	ArgumentError	if the fileOrURL parameter is not defined.
+		 * 
+		 * @example
+		 * <listing version="3.0">
+		 * var cm:CompositeMassLoader = new CompositeMassLoader(false);
+		 * 
+		 * //those three lines have the same behavior
+		 * cm.createFile("myAnimation.swf", LoadableFileType.BINARY);
+		 * cm.createFile({url:"myAnimation.swf", type:LoadableFileType.BINARY});
+		 * cm.createFile(new URLRequest("myAnimation.swf"), LoadableFileType.BINARY);
+		 * </listing>
 		 */
 		public function createFile( fileOrURL:Object, 
 									fileType:String = null,
@@ -201,6 +253,9 @@ package ch.capi.net
 						   			onIOError:Function=null,
 						   			onSecurityError:Function=null):ILoadableFile
 		{
+			//null url is not allowed
+			if (fileOrURL == null) throw new ArgumentError("The fileOrURL is not defined");
+			
 			//retrieves the url
 			var isObject:Boolean = (fileOrURL is String || fileOrURL is URLRequest);
 			var url:* = (isObject) ? fileOrURL : fileOrURL.url;
@@ -243,6 +298,16 @@ package ch.capi.net
 		 * @see ch.capi.net.LoadableFileFactory#getRequest()	LoadableFileFactory.getRequest()
 		 * @see	ch.capi.net.ILoadableFile#properties			ILoadableFile.properties
 		 * @see	ch.capi.net.PriorityMassLoader	PriorityMassLoader
+		 * 
+		 * @example
+		 * <listing version="3.0">
+		 * var cm:CompositeMassLoader = new CompositeMassLoader(false);
+		 * 
+		 * //those three lines have the same behavior
+		 * cm.addFile("myAnimation.swf", LoadableFileType.BINARY, 10);
+		 * cm.addFile({url:"myAnimation.swf", type:LoadableFileType.BINARY, priority:10});
+		 * cm.addFile(new URLRequest("myAnimation.swf"), LoadableFileType.BINARY, 10);
+		 * </listing>
 		 */
 		public function addFile(fileOrURL:Object, 
 								fileType:String = null,
@@ -372,6 +437,7 @@ package ch.capi.net
 			massLoader.addEventListener(Event.COMPLETE, eventRedirector, false, 0, true);
 			massLoader.addEventListener(MassLoadEvent.FILE_OPEN, eventRedirector, false, 0, true);
 			massLoader.addEventListener(MassLoadEvent.FILE_CLOSE, eventRedirector, false, 0, true);
+			massLoader.addEventListener(MassLoadEvent.FILE_PROGRESS, eventRedirector, false, 0, true);
 			massLoader.addEventListener(PriorityEvent.PRIORITY_CHANGED, eventRedirector, false, 0, true);
 		}
 		
@@ -388,6 +454,7 @@ package ch.capi.net
 			massLoader.removeEventListener(Event.COMPLETE, eventRedirector);
 			massLoader.removeEventListener(MassLoadEvent.FILE_OPEN, eventRedirector);
 			massLoader.removeEventListener(MassLoadEvent.FILE_CLOSE, eventRedirector);
+			massLoader.removeEventListener(MassLoadEvent.FILE_PROGRESS, eventRedirector);
 			massLoader.removeEventListener(PriorityEvent.PRIORITY_CHANGED, eventRedirector);
 		}
 		
@@ -402,6 +469,25 @@ package ch.capi.net
 		{
 			var c:Event = evt.clone();
 			dispatchEvent(c);
+		}
+		
+		//---------------//
+		//Private methods//
+		//---------------//
+		
+		/**
+		 * @private
+		 * Registers the <code>CompositeMassLoader</code> into the static map.
+		 * 
+		 * @param	name		The name. If the name is not specified, then this method does nothing.
+		 * @throws	ch.capi.errors.NameAlreadyExistsError	If the name is not unique.
+		 */
+		private function registerLoader(name:String=null):void
+		{
+			if (name == null) return; //do nothing
+			if (__storedLoaders.containsKey(name)) throw new NameAlreadyExistsError("The name '"+name+"' is already exists");
+			
+			__storedLoaders.put(name, this);	
 		}
 	}
 }

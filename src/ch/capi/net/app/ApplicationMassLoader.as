@@ -97,11 +97,11 @@ package ch.capi.net.app
 		 */
 		public function load(file:Object, context:ApplicationContext=null, withGlobalFiles:Boolean=false):ApplicationFile
 		{
-			if (stateLoading) throw new IllegalOperationError("The ApplicationMassLoader is already loading (adding file "+file+")");
+			if (stateLoading) throw new IllegalOperationError("The ApplicationMassLoader is already loading when trying to add file "+file);
 			if (context == null) context = ApplicationContext.globalContext;
 			
 			//retrieves the specified file
-			var appFile:ApplicationFile = (file is ApplicationFile) ? (file as ApplicationFile) : ApplicationFile.get(file.toString(), context);
+			var appFile:ApplicationFile = (file is ApplicationFile) ? (file as ApplicationFile) : context.getFile(file.toString());
 			
 			//add the global files
 			if (withGlobalFiles) addGlobalFiles(context);

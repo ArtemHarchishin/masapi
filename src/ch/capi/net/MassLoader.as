@@ -49,6 +49,14 @@
 	[Event(name="fileClose", type="ch.capi.events.MassLoadEvent")]
 	
 	/**
+	 * Dispatched when the loading of a <code>ILoadManager</code> progresses. This is just an encapsulation of
+	 * the global <code>ProgressEvent.PROGRESS</code> event of the <code>MassLoader</code>.
+	 * 
+	 * @eventType	ch.capi.events.MassLoadEvent.FILE_PROGRESS
+	 */
+	[Event(name="fileProgress", type="ch.capi.events.MassLoadEvent")]
+	
+	/**
 	 * Dispatched when the download operation stops. This is following a call to the <code>MassLoader.stop()</code>
 	 * method.
 	 * 
@@ -678,12 +686,17 @@
 		{
 			updateBytes();
 			
+			//dispatches the global MassLoad progress
 			if (alwaysDispatchProgressEvent ||
 			   _filesLoading.length >= _currentFilesLoading) //should never be greater than the _currentFilesLoading
 			{
 				var pg:ProgressEvent = new ProgressEvent(ProgressEvent.PROGRESS, evt.bubbles, evt.cancelable, bytesLoaded, bytesTotal);
 				dispatchEvent(pg);
 			}
+			
+			//dispatches the file progress
+			var fileProgress:MassLoadEvent = createMassLoadEvent(evt.target as ILoadManager, MassLoadEvent.FILE_PROGRESS);
+			dispatchEvent(fileProgress);
 		}
 
 		/**

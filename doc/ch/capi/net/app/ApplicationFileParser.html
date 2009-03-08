@@ -100,7 +100,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#createWithNewContext()">createWithNewContext</a>(loadableFileFactory:<a href="../LoadableFileFactory.html">LoadableFileFactory</a> = null):<a href="../app/ApplicationFileParser.html">ApplicationFileParser</a>
+<a class="signatureLink" href="#createWithNewContext()">createWithNewContext</a>(contextName:String, loadableFileFactory:<a href="../LoadableFileFactory.html">LoadableFileFactory</a> = null):<a href="../app/ApplicationFileParser.html">ApplicationFileParser</a>
 </div>
 <div class="summaryTableDescription">[static]
    Creates a new <code>ApplicationFileParser</code> using a new empty <code>ApplicationContext</code>.</div>
@@ -109,7 +109,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#parse()">parse</a>(source:String, loadableFileFactory:<a href="../LoadableFileFactory.html">LoadableFileFactory</a> = null):<a href="../app/ApplicationContext.html">ApplicationContext</a>
+<a class="signatureLink" href="#parse()">parse</a>(source:String, contextName:String = null, loadableFileFactory:<a href="../LoadableFileFactory.html">LoadableFileFactory</a> = null):<a href="../app/ApplicationContext.html">ApplicationContext</a>
 </div>
 <div class="summaryTableDescription">[static]
    Parses the specified source <code>String</code>, using the specified <code>LoadableFileFactory</code> into
@@ -362,11 +362,18 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function createWithNewContext(loadableFileFactory:<a href="../LoadableFileFactory.html">LoadableFileFactory</a> = null):<a href="../app/ApplicationFileParser.html">ApplicationFileParser</a></code><p>
+<code>public static function createWithNewContext(contextName:String, loadableFileFactory:<a href="../LoadableFileFactory.html">LoadableFileFactory</a> = null):<a href="../app/ApplicationFileParser.html">ApplicationFileParser</a></code><p>
    Creates a new <code>ApplicationFileParser</code> using a new empty <code>ApplicationContext</code>.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">contextName</span>:String</code> &mdash;    The name of the new <code>ApplicationContext</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
 <tr>
 <td width="20px"></td><td><code><span class="label">loadableFileFactory</span>:<a href="../LoadableFileFactory.html">LoadableFileFactory</a></code> (default = <code>null</code>)<code></code> &mdash;  The <code>LoadableFileFactory</code>. If not defined, then the 
             <code>LoadableFileFactory.defaultLoadableFileFactory</code> will be used.
@@ -419,7 +426,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function parse(source:String, loadableFileFactory:<a href="../LoadableFileFactory.html">LoadableFileFactory</a> = null):<a href="../app/ApplicationContext.html">ApplicationContext</a></code><p>
+<code>public static function parse(source:String, contextName:String = null, loadableFileFactory:<a href="../LoadableFileFactory.html">LoadableFileFactory</a> = null):<a href="../app/ApplicationContext.html">ApplicationContext</a></code><p>
    Parses the specified source <code>String</code>, using the specified <code>LoadableFileFactory</code> into
    a new <code>ApplicationContext</code>.
    
@@ -427,6 +434,14 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">source</span>:String</code> &mdash;     The source <code>String</code> into <code>XML</code> format that matches the XMLSchema.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">contextName</span>:String</code> (default = <code>null</code>)<code></code> &mdash;    Defines the name of the <code>ApplicationContext</code>. If no context name is specified, then
+            the created <code>ApplicationContext</code> won't be registered into the global contexts.
    </td>
 </tr>
 <tr>

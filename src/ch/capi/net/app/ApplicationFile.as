@@ -1,21 +1,16 @@
 package ch.capi.net.app 
-{	import flash.system.ApplicationDomain;	
+{	import ch.capi.data.text.Properties;	
+	
+	import flash.system.ApplicationDomain;	
 	
 	import ch.capi.net.ILoadableFile;
 	import ch.capi.errors.DependencyNotSafeError;
 	
 	/**
-	 * Represents an application file.
-	 * 
-	 * @example
-	 * <listing version="3.0">
-	 * var xmlDependencies:XMLDocument = ... //the xml of the dependencies
-	 * var parser:ApplicationFileParser = new ApplicationFileParser();
-	 * parser.parse(xmlDependencies.firstChild);
-	 * 
-	 * //now the files are available into the default ApplicationContext
-	 * var file:ApplicationFile = ApplicationFile.getFile("myFile");
-	 * </listing>
+	 * Represents an application file. An <code>ApplicationFile</code> is always registered into
+	 * an <code>ApplicationContext</code> that will manage the unicity of each <code>ApplicationFile</code>.
+	 * Basically, an <code>ApplicationFile</code> just holds an <code>ILoadableFile</code> and stores
+	 * the dependencies on it.
 	 * 
 	 * @see		ch.capi.net.app.ApplicationFileParser	ApplicationFileParser
 	 * @see		ch.capi.net.app.ApplicationMassLoader	ApplicationMassLoader
@@ -104,20 +99,18 @@ package ch.capi.net.app
 		//--------------//
 		
 		/**
-		 * THIS METHOD IS DEPRECATED. USE <code>ApplicationContext.getFile()</code> METHOD INSTEAD !
-		 * Retrieves the specified <code>ApplicationFile</code>. This method is just an encapsulation to retrieve
-		 * the file throught the <code>ApplicationContext</code>.
+		 * Retrieves the specified <code>ApplicationFile</code> from the specified <code>ApplicationContext</code>.
 		 * 
-		 * @param	name		The name of the file to retrieve.
-		 * @param	context		The <code>ApplicationContext</code>. If not specified, the global context will be used.
-		 * @return	The <code>ApplicationFile</code> or <code>null</code>.
+		 * @param	fileName		The name of the file to retrieve.
+		 * @param	contextName		The name of the <code>ApplicationContext</code>. If not specified, then the global 
+		 * 							<code>ApplicationContext</code> will be used.
 		 * @see		ch.capi.net.app.ApplicationContext#getFile()	ApplicationContext.getFile()
-		 * @deprecated
+		 * @see		ch.capi.net.app.ApplicationContext#get()		ApplicationContext.get()
 		 */
-		public static function get(name:String, context:ApplicationContext=null):ApplicationFile
+		public static function get(fileName:String, contextName:String=null):ApplicationFile
 		{
-			if (context == null) context = ApplicationContext.globalContext;
-			return context.getFile(name);
+			var context:ApplicationContext = (contextName != null) ? ApplicationContext.get(contextName) : ApplicationContext.globalContext;
+			return context.getFile(fileName);
 		}
 		
 		/**
@@ -125,8 +118,9 @@ package ch.capi.net.app
 		 * 
 		 * @param	file		The <code>ILoadableFile</code>.
 		 * @param	context		The <code>ApplicationContext</code>. If not specified, the global context will be used.
-		 * @return	The <code>ApplicationFile</code> or <code>null</code> if there is no <code>ApplicationFile</code> that holds
-		 * 			the specified <code>ILoadableFile</code>.
+		 * @return	The <code>ApplicationFile</code> that holds the specified <code>ILoadableFile</code>.
+		 * @throws	Error		If there is no <code>ApplicationFile</code> with the specified <code>ILoadableFile</code> into the
+		 * 						specified <code>ApplicationContext</code>.
 		 */
 		public static function getByLoadableFile(file:ILoadableFile, context:ApplicationContext=null):ApplicationFile
 		{
@@ -139,7 +133,7 @@ package ch.capi.net.app
 				if (apf.loadableFile == file) return apf;
 			}
 			
-			return null;
+			throw new Error("There is no ApplicationFile with the specified ILoadableFile in the specified context ("+file+")");
 		}
 
 		/**
@@ -260,6 +254,7 @@ package ch.capi.net.app
 		 * 
 		 * @param	key		The key.
 		 * @return	The value or <code>null</code>.
+		 * @see		#getProperties()	getProperties()
 		 */
 		public function getProperty(key:*):*
 		{
@@ -267,6 +262,17 @@ package ch.capi.net.app
 			return loadableFile.properties.getValue(key);
 		}
 		
+		/**
+		 * Retrieves the properties of the <code>ILoadableFile</code> into a <code>Properties</code> object.
+		 * 
+		 * @return	The <code>Properties</code> of the <code>ILoadableFile</code>.
+		 * @see		#getProperty()		getProperty()
+		 */
+		public function getProperties():Properties
+		{
+			return new Properties(loadableFile.properties);
+		}
+
 		/**
 		 * Represents this <code>ApplicationFile</code> into a <code>String</code>. This gives just useful information
 		 * for debugging purpose.

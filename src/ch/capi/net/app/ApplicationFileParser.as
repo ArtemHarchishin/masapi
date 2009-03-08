@@ -118,6 +118,11 @@ package ch.capi.net.app
 		 */
 		private static const ATTRIBUTE_FOLDER_ABSOLUTE:String = "absolutePath";
 		
+		/**
+		 * Defines the 'context' attribute value.
+		 */
+		private static const ATTRIBUTE_CONTEXT:String = "contextName";
+		
 		//---------//
 		//Variables//
 		//---------//
@@ -179,13 +184,14 @@ package ch.capi.net.app
 		/**
 		 * Creates a new <code>ApplicationFileParser</code> using a new empty <code>ApplicationContext</code>.
 		 * 
+		 * @param	contextName				The name of the new <code>ApplicationContext</code>.
 		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code>. If not defined, then the 
 		 * 									<code>LoadableFileFactory.defaultLoadableFileFactory</code> will be used.
 		 * @return	The created <code>ApplicationFileParser</code>.
 		 */
-		public static function createWithNewContext(loadableFileFactory:LoadableFileFactory=null):ApplicationFileParser
+		public static function createWithNewContext(contextName:String, loadableFileFactory:LoadableFileFactory=null):ApplicationFileParser
 		{
-			var newContext:ApplicationContext = new ApplicationContext();
+			var newContext:ApplicationContext = new ApplicationContext(contextName);
 			return new ApplicationFileParser(loadableFileFactory, newContext); 
 		}
 
@@ -194,17 +200,22 @@ package ch.capi.net.app
 		 * a new <code>ApplicationContext</code>.
 		 * 
 		 * @param	source					The source <code>String</code> into <code>XML</code> format that matches the XMLSchema.
+		 * @param	contextName				Defines the name of the <code>ApplicationContext</code>. If no context name is specified, then
+		 * 									the created <code>ApplicationContext</code> won't be registered into the global contexts.
 		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code>. If not defined, then the 
 		 * 									<code>LoadableFileFactory.defaultLoadableFileFactory</code> will be used.
 		 * @return	The new <code>ApplicationContext</code> that contains all the parsed <code>ApplicationFile</code> instances.
 		 */
-		public static function parse(source:String, loadableFileFactory:LoadableFileFactory=null):ApplicationContext
+		public static function parse(source:String, contextName:String=null, loadableFileFactory:LoadableFileFactory=null):ApplicationContext
 		{
 			var doc:XMLDocument = new XMLDocument();
 			doc.ignoreWhite = true;
 			doc.parseXML(source);
 			
-			var parser:ApplicationFileParser = createWithNewContext(loadableFileFactory);
+			var ctxName:String = (contextName != null) ? contextName : doc.firstChild.attributes[ATTRIBUTE_CONTEXT];
+			var context:ApplicationContext = new ApplicationContext(ctxName); 
+			
+			var parser:ApplicationFileParser = new ApplicationFileParser(loadableFileFactory, context);
 			parser.parseNode(doc.firstChild);
 			
 			return parser.applicationContext;
@@ -219,7 +230,7 @@ package ch.capi.net.app
 		 */
 		public function parseNode(node:XMLNode):void
 		{
-			if(node.childNodes.length < 1 || node.childNodes.length > 3) throw new ParseError("parse", "Invalid node count : "+node.childNodes.length, node);
+			if(node.childNodes.length < 1 || node.childNodes.length > 3) throw new ParseError("parseNode", "Invalid node count : "+node.childNodes.length, node);
 			
 			var firstNode:XMLNode = node.firstChild;
 			if (firstNode.nodeName == NODE_VARIABLES)
