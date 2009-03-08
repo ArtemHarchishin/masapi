@@ -3,8 +3,6 @@ package ch.capi.net.files
 	import flash.display.Bitmap;	
 	import flash.system.LoaderContext;	
 	import flash.net.URLRequest;	
-	import flash.display.LoaderInfo;	
-	import flash.display.DisplayObject;	
 	import flash.events.Event;	
 	import flash.system.ApplicationDomain;	
 	import flash.text.StyleSheet;	
@@ -14,9 +12,8 @@ package ch.capi.net.files
 	import flash.events.IEventDispatcher;
 	import flash.net.URLLoader;
 
-	import ch.capi.display.IRootDocument;
 	import ch.capi.net.LoadableFileType;
-	import ch.capi.net.DataType;	
+	import ch.capi.net.DataType;
 	import ch.capi.net.ILoadableFile;		
 
 	/**
@@ -184,30 +181,6 @@ package ch.capi.net.files
 		{
 			var ul:URLLoader = loadManagerObject as URLLoader;
 			ul.load(request);
-		}
-
-		/**
-		 * <code>Event.INIT</code> listener.
-		 * 
-		 * @param	evt		The event object.
-		 */
-		protected override function onInit(evt:Event):void
-		{
-			var src:LoaderInfo = evt.target as LoaderInfo;
-			var cnt:DisplayObject = src.content;
-			
-			//set the linked loadable file
-			if (cnt is IRootDocument)
-			{
-				var adc:IRootDocument = cnt as IRootDocument;
-				adc.initializeContext(this);
-			}
-			
-			/*
-			 * DO NOT CALL THE SUPER onInit METHOD !!!
-			 * This method is only called to retrieve the data with the getData() method, so
-			 * there would be conceptually wrong that a ULoadableFile dispatches a Event.INIT event !
-			 */
 		}
 	}
 }

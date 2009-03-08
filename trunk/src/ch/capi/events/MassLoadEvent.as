@@ -28,6 +28,11 @@
 		 */
 		public static const FILE_CLOSE:String = "fileClose";
 		
+		/**
+		 * Event when the loading of a file progresses.
+		 */
+		public static const FILE_PROGRESS:String = "fileProgress";
+		
 		//---------//
 		//Variables//
 		//---------//

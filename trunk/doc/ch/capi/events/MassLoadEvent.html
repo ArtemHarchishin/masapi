@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="MassLoadEvent,ch.capi.events.MassLoadEvent,FILE_CLOSE,FILE_OPEN,closeEvent,loadManager,priority,queueIndex,staticIndex,clone,getFile,isError,isLoadableFile" name="keywords">
+<meta content="MassLoadEvent,ch.capi.events.MassLoadEvent,FILE_CLOSE,FILE_OPEN,FILE_PROGRESS,closeEvent,loadManager,priority,queueIndex,staticIndex,clone,getFile,isError,isLoadableFile" name="keywords">
 <title>ch.capi.events.MassLoadEvent</title>
 </head>
 <body>
@@ -148,6 +148,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#FILE_OPEN">FILE_OPEN</a> : String = "fileOpen"<div class="summaryTableDescription">[static]
    Event when the loading of a file starts.</div>
+</td><td class="summaryTableOwnerCol">MassLoadEvent</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#FILE_PROGRESS">FILE_PROGRESS</a> : String = "fileProgress"<div class="summaryTableDescription">[static]
+   Event when the loading of a file progresses.</div>
 </td><td class="summaryTableOwnerCol">MassLoadEvent</td>
 </tr>
 </table>
@@ -429,6 +434,16 @@ showHideInherited();
 <div class="detailBody">
 <code>public static const FILE_OPEN:String = "fileOpen"</code><p>
    Event when the loading of a file starts.
+   </p></div>
+<a name="FILE_PROGRESS"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">FILE_PROGRESS</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static const FILE_PROGRESS:String = "fileProgress"</code><p>
+   Event when the loading of a file progresses.
    </p></div>
 <br>
 <br>

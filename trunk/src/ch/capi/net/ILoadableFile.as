@@ -28,7 +28,8 @@ package ch.capi.net
 	
 	/**
 	 * Dispatched when the content of the <code>loadManagerObject</code> is displayed. This event is only dispatched if the
-	 * type of <code>ILoadableFile</code> is <code>LoadableFileType.SWF</code>.
+	 * type of <code>ILoadableFile</code> is <code>LoadableFileType.SWF</code> or when the data of a binary <code>URLLoaderFile</code> is
+	 * retrieved as <code>DataType.LOADER</code>.
 	 * 
 	 * @eventType	flash.events.Event.INIT
 	 */

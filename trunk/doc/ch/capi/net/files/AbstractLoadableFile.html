@@ -1013,12 +1013,21 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>protected function onInit(evt:Event):void</code><p>
-   <code>Event.INIT</code> listener.
+   <code>Event.INIT</code> listener. This method retrieves the root <code>DisplayObject</code> associated
+   to the <code>LoaderInfo</code> and then initializes the content.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">evt</span>:Event</code> &mdash;  The event object.
+   </td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; If the <code>Event</code> target is not a <code>LoaderInfo</code> instance.
    </td>
 </tr>
 </table>
@@ -1306,7 +1315,8 @@ showHideInherited();
 <br>
 <p></p><p>
   Dispatched when the content of the <code>loadManagerObject</code> is displayed. This event is only dispatched if the
-  type of <code>ILoadableFile</code> is <code>LoadableFileType.SWF</code>.
+  type of <code>ILoadableFile</code> is <code>LoadableFileType.SWF</code> or when the data of a binary <code>URLLoaderFile</code> is
+  retrieved as <code>DataType.LOADER</code>.
   
   </p></div>
 <a name="event:ioError"></a>

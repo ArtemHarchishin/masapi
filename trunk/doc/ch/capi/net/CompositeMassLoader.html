@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="CompositeMassLoader,ch.capi.net.CompositeMassLoader,keepFiles,loadableFileFactory,massLoader,addFile,clear,createFile,createLoadableFile,eventRedirector,getFileAt,getFileCount,getFiles,registerTo,start,stop,storeFile,unregisterFrom" name="keywords">
+<meta content="CompositeMassLoader,ch.capi.net.CompositeMassLoader,keepFiles,loadableFileFactory,massLoader,name,addFile,clear,createFile,createLoadableFile,eventRedirector,getFileAt,getFileCount,getFiles,registerTo,start,stop,storeFile,unregisterFrom,get" name="keywords">
 <title>ch.capi.net.CompositeMassLoader</title>
 </head>
 <body>
@@ -108,6 +108,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
    Defines the <code>PriorityMassLoader</code> to use.</div>
 </td><td class="summaryTableOwnerCol">CompositeMassLoader</td>
 </tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#name">name</a> : String<div class="summaryTableDescription">[read-only]
+   Defines the name of the <code>CompositeMassLoader</code>.</div>
+</td><td class="summaryTableOwnerCol">CompositeMassLoader</td>
+</tr>
 </table>
 </div>
 <a name="methodSummary"></a>
@@ -120,7 +125,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#CompositeMassLoader()">CompositeMassLoader</a>(keepFiles:Boolean = true, loadableFileFactory:<a href="LoadableFileFactory.html">LoadableFileFactory</a> = null)</div>
+<a class="signatureLink" href="#CompositeMassLoader()">CompositeMassLoader</a>(name:String = null, keepFiles:Boolean = true, loadableFileFactory:<a href="LoadableFileFactory.html">LoadableFileFactory</a> = null)</div>
 <div class="summaryTableDescription">
    Creates a new <code>CompositeMassLoader</code> object.</div>
 </td><td class="summaryTableOwnerCol">CompositeMassLoader</td>
@@ -150,6 +155,15 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </div>
 <div class="summaryTableDescription">
    Creates a <code>ILoadableFile</code> from a url.</div>
+</td><td class="summaryTableOwnerCol">CompositeMassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#get()">get</a>(name:String):<a href="../net/CompositeMassLoader.html">CompositeMassLoader</a>
+</div>
+<div class="summaryTableDescription">[static]
+   Retrieves the <code>CompositeMassLoader</code> matching the specified name.</div>
 </td><td class="summaryTableOwnerCol">CompositeMassLoader</td>
 </tr>
 <tr class="">
@@ -291,6 +305,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
+<a class="signatureLink" href="#event:fileProgress">fileProgress</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched when the loading of a <code>ILoadManager</code> progresses.</td><td class="summaryTableOwnerCol">CompositeMassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
 <a class="signatureLink" href="#event:open">open</a>
 </div>
 </td><td class="summaryTableDescription summaryTableCol">
@@ -375,6 +397,29 @@ showHideInherited();
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get massLoader():<a href="../net/PriorityMassLoader.html">PriorityMassLoader</a></code>
 <br>
 </div>
+<a name="name"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">name</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>name:String</code>&nbsp;&nbsp;[read-only]<p>
+   Defines the name of the <code>CompositeMassLoader</code>. If the name is
+   <code>null</code>, then the <code>CompositeMassLoader</code> is not registered
+   into the global map.
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get name():String</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../net/CompositeMassLoader.html#get()" target="">CompositeMassLoader.get()</a>
+</div>
+</div>
 <a name="constructorDetail"></a>
 <div class="detailSectionHeader">Constructor detail</div>
 <a name="CompositeMassLoader()"></a>
@@ -384,11 +429,19 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function CompositeMassLoader(keepFiles:Boolean = true, loadableFileFactory:<a href="LoadableFileFactory.html">LoadableFileFactory</a> = null)</code><p>
+<code>public function CompositeMassLoader(name:String = null, keepFiles:Boolean = true, loadableFileFactory:<a href="LoadableFileFactory.html">LoadableFileFactory</a> = null)</code><p>
    Creates a new <code>CompositeMassLoader</code> object.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">name</span>:String</code> (default = <code>null</code>)<code></code> &mdash;     The name of the <code>CompositeMassLoader</code>. That name must be unique. If no name is defined, then
+            the instance won't be registered.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
 <tr>
 <td width="20px"></td><td><code><span class="label">keepFiles</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash;    If the <code>CompositeMassLoader</code> must keep a reference on the created <code>ILoadableFile</code> instances.
    </td>
@@ -510,6 +563,17 @@ showHideInherited();
 <br>
 <a href="../net/PriorityMassLoader.html" target="">PriorityMassLoader</a>
 </div>
+<br>
+<span class="label">Example</span>
+<br>   <div class='listing'><pre>
+   var cm:CompositeMassLoader = new CompositeMassLoader(false);
+   
+   //those three lines have the same behavior
+   cm.addFile("myAnimation.swf", LoadableFileType.BINARY, 10);
+   cm.addFile({url:"myAnimation.swf", type:LoadableFileType.BINARY, priority:10});
+   cm.addFile(new URLRequest("myAnimation.swf"), LoadableFileType.BINARY, 10);
+   </pre></div>
+   <p></p>
 </div>
 <a name="clear()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -609,6 +673,15 @@ showHideInherited();
                      </td>
 </tr>
 </table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; if the fileOrURL parameter is not defined.
+   
+   </td>
+</tr>
+</table>
 <p>
 <span class="label">See also</span>
 </p>
@@ -617,6 +690,17 @@ showHideInherited();
 <br>
 <a href="../net/ILoadableFile.html#properties" target="">ILoadableFile.properties</a>
 </div>
+<br>
+<span class="label">Example</span>
+<br>   <div class='listing'><pre>
+   var cm:CompositeMassLoader = new CompositeMassLoader(false);
+   
+   //those three lines have the same behavior
+   cm.createFile("myAnimation.swf", LoadableFileType.BINARY);
+   cm.createFile({url:"myAnimation.swf", type:LoadableFileType.BINARY});
+   cm.createFile(new URLRequest("myAnimation.swf"), LoadableFileType.BINARY);
+   </pre></div>
+   <p></p>
 </div>
 <a name="createLoadableFile()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -685,6 +769,43 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">evt</span>:Event</code> &mdash;  The <code>Event</code> object.
+   </td>
+</tr>
+</table>
+</div>
+<a name="get()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">get</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function get(name:String):<a href="../net/CompositeMassLoader.html">CompositeMassLoader</a></code><p>
+   Retrieves the <code>CompositeMassLoader</code> matching the specified name.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">name</span>:String</code> &mdash; The name of the <code>CompositeMassLoader</code>.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../net/CompositeMassLoader.html">CompositeMassLoader</a></code> &mdash; 
+                        The <code>CompositeMassLoader</code>.
+   
+                        
+                     </td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; If there is no <code>CompositeMassLoader</code> matching the specified name.
    </td>
 </tr>
 </table>
@@ -925,6 +1046,19 @@ showHideInherited();
 <a href="../net/MassLoader.html" target="">MassLoader</a>
 </div>
 </div>
+<a name="event:fileProgress"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">fileProgress</td><td class="detailHeaderType">event&nbsp;</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<span class="label">Event object type: </span><a href="../events/MassLoadEvent.html"><code>ch.capi.events.MassLoadEvent</code></a>
+<br>
+<p></p><p>
+  Dispatched when the loading of a <code>ILoadManager</code> progresses.
+  
+  </p></div>
 <a name="event:open"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>

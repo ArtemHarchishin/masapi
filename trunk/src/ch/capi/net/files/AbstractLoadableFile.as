@@ -1,5 +1,9 @@
 ﻿package ch.capi.net.files
 {
+	import ch.capi.display.IRootDocument;	
+	
+	import flash.display.DisplayObject;	
+	import flash.display.LoaderInfo;	
 	import flash.utils.ByteArray;	
 	import flash.events.HTTPStatusEvent;	
 	import flash.system.ApplicationDomain;	
@@ -74,7 +78,8 @@
 	
 	/**
 	 * Dispatched when the content of the <code>loadManagerObject</code> is displayed. This event is only dispatched if the
-	 * type of <code>ILoadableFile</code> is <code>LoadableFileType.SWF</code>.
+	 * type of <code>ILoadableFile</code> is <code>LoadableFileType.SWF</code> or when the data of a binary <code>URLLoaderFile</code> is
+	 * retrieved as <code>DataType.LOADER</code>.
 	 * 
 	 * @eventType	flash.events.Event.INIT
 	 */
@@ -498,12 +503,27 @@
 		}
 		
 		/**
-		 * <code>Event.INIT</code> listener.
+		 * <code>Event.INIT</code> listener. This method retrieves the root <code>DisplayObject</code> associated
+		 * to the <code>LoaderInfo</code> and then initializes the content.
 		 * 
 		 * @param	evt		The event object.
+		 * @throws	ArgumentError	If the <code>Event</code> target is not a <code>LoaderInfo</code> instance.
 		 */
 		protected function onInit(evt:Event):void
 		{
+			if ( !(evt.target is LoaderInfo)) throw new ArgumentError("Invalid Event object : the target is not a LoaderInfo", evt);
+			
+			var src:LoaderInfo = evt.target as LoaderInfo;
+			var cnt:DisplayObject = src.content;
+			
+			//set the linked loadable file
+			if (cnt != null && cnt is IRootDocument)
+			{
+				var adc:IRootDocument = cnt as IRootDocument;
+				adc.initializeContext(this as ILoadableFile);
+			}
+			
+			//foward the event to the listeners
 			var ne:Event = evt.clone();
 			dispatchEvent(ne);
 		}
