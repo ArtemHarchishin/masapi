@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="LoadableFileFactory,ch.capi.net.LoadableFileFactory,basePath,defaultLoadableFileFactory,defaultLoaderContext,defaultSoundLoaderContext,defaultUseCache,defaultVariables,defaultVirtualBytesTotal,fileTypeSelector,listenersPriority,attachListeners,clone,create,createFile,createLoaderFile,createSoundFile,createURLLoaderFile,createURLStreamFile,getMethod,getRequest,initializeFile" name="keywords">
+<meta content="LoadableFileFactory,ch.capi.net.LoadableFileFactory,applicationDomainPolicy,basePath,securityDomainPolicy,contextPolicy,defaultLoadableFileFactory,defaultUseCache,defaultVariables,defaultVirtualBytesTotal,fileTypeSelector,listenersPriority,attachListeners,clone,create,createFile,createLoaderFile,createSoundFile,createURLLoaderFile,createURLStreamFile,getMethod,getRequest,initializeFile" name="keywords">
 <title>ch.capi.net.LoadableFileFactory</title>
 </head>
 <body>
@@ -76,26 +76,26 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#applicationDomainPolicy">applicationDomainPolicy</a> : String = "null"<div class="summaryTableDescription">
+   Defines the <code>ApplicationDomain</code> policy.</div>
+</td><td class="summaryTableOwnerCol">LoadableFileFactory</td>
+</tr>
+<tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#basePath">basePath</a> : String = "null"<div class="summaryTableDescription">
    Defines the base path that will be used as prefix when a <code>URLRequest</code> is created.</div>
+</td><td class="summaryTableOwnerCol">LoadableFileFactory</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#contextPolicy">contextPolicy</a> : <a href="../net/IContextPolicy.html">IContextPolicy</a>
+<div class="summaryTableDescription">
+   Defines the <code>IContextPolicy</code> that will be used to create the
+   <code>LoaderContext</code> and <code>SoundLoaderContext</code> objects.</div>
 </td><td class="summaryTableOwnerCol">LoadableFileFactory</td>
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#defaultLoadableFileFactory">defaultLoadableFileFactory</a> : <a href="../net/LoadableFileFactory.html">LoadableFileFactory</a>
 <div class="summaryTableDescription">[static][read-only]
    Defines the default <code>LoadableFileFactory</code>.</div>
-</td><td class="summaryTableOwnerCol">LoadableFileFactory</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#defaultLoaderContext">defaultLoaderContext</a> : LoaderContext<div class="summaryTableDescription">
-   Defines the default <code>LoaderContext</code> that will be used to create a <code>ILoadableFile</code>
-   based on a <code>Loader</code> object.</div>
-</td><td class="summaryTableOwnerCol">LoadableFileFactory</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#defaultSoundLoaderContext">defaultSoundLoaderContext</a> : SoundLoaderContext<div class="summaryTableDescription">
-   Defines the defaut <code>SoundLoaderContext</code> that will be used to create a <code>ILoadableFile</code>
-   based on a <code>Sound</code> object.</div>
 </td><td class="summaryTableOwnerCol">LoadableFileFactory</td>
 </tr>
 <tr class="">
@@ -129,6 +129,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
    Defines the listeners priority when the <code>attachListeners</code> method is used.</div>
 </td><td class="summaryTableOwnerCol">LoadableFileFactory</td>
 </tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#securityDomainPolicy">securityDomainPolicy</a> : String = "null"<div class="summaryTableDescription">
+   Defines the <code>SecurityDomain</code> policy.</div>
+</td><td class="summaryTableOwnerCol">LoadableFileFactory</td>
+</tr>
 </table>
 </div>
 <a name="methodSummary"></a>
@@ -141,7 +146,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#LoadableFileFactory()">LoadableFileFactory</a>(fileSelector:<a href="FileTypeSelector.html">FileTypeSelector</a> = null, defaultUseCache:Boolean = true, defaultVirtualBytesTotal:uint = 204800, listenersPriority:int = 0)</div>
+<a class="signatureLink" href="#LoadableFileFactory()">LoadableFileFactory</a>(defaultUseCache:Boolean = true, defaultVirtualBytesTotal:uint = 204800, listenersPriority:int = 0)</div>
 <div class="summaryTableDescription">
    Creates a new <code>LoadableFileFactory</code> object.</div>
 </td><td class="summaryTableOwnerCol">LoadableFileFactory</td>
@@ -262,10 +267,28 @@ showHideInherited();
 <div class="MainContent">
 <a name="propertyDetail"></a>
 <div class="detailSectionHeader">Property detail</div>
+<a name="applicationDomainPolicy"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">applicationDomainPolicy</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var applicationDomainPolicy:String = "null"</code><p>
+   Defines the <code>ApplicationDomain</code> policy. The value must be
+   issued from the <code>DomainUtils</code> constants or <code>null</code>.
+   
+   </p><p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../utils/DomainUtils.html" target="">DomainUtils.</a>
+</div>
+</div>
 <a name="basePath"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">basePath</td><td class="detailHeaderType">property</td>
+<td class="detailHeaderName">basePath</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">
@@ -278,6 +301,24 @@ showHideInherited();
 <div class="seeAlso">
 <a href="../net/LoadableFileFactory.html#create()" target="">create()</a>
 </div>
+</div>
+<a name="contextPolicy"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">contextPolicy</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>contextPolicy:<a href="../net/IContextPolicy.html">IContextPolicy</a></code>&nbsp;&nbsp;[read-write]<p>
+   Defines the <code>IContextPolicy</code> that will be used to create the
+   <code>LoaderContext</code> and <code>SoundLoaderContext</code> objects. This
+   value is never <code>null</code>.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get contextPolicy():<a href="../net/IContextPolicy.html">IContextPolicy</a></code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set contextPolicy(value:<a href="../net/IContextPolicy.html">IContextPolicy</a>):void</code>
+<br>
 </div>
 <a name="defaultLoadableFileFactory"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -298,54 +339,6 @@ showHideInherited();
 </p>
 <div class="seeAlso">
 <a href="../net/LoadableFileFactory.html#create()" target="">create()</a>
-</div>
-</div>
-<a name="defaultLoaderContext"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">defaultLoaderContext</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>defaultLoaderContext:LoaderContext</code>&nbsp;&nbsp;[read-write]<p>
-   Defines the default <code>LoaderContext</code> that will be used to create a <code>ILoadableFile</code>
-   based on a <code>Loader</code> object.
-   
-   </p><span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get defaultLoaderContext():LoaderContext</code>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set defaultLoaderContext(value:LoaderContext):void</code>
-<br>
-<p>
-<span class="label">See also</span>
-</p>
-<div class="seeAlso">
-<a href="../net/LoadableFileFactory.html#createLoaderFile()" target="">createLoaderFile()</a>
-</div>
-</div>
-<a name="defaultSoundLoaderContext"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">defaultSoundLoaderContext</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>defaultSoundLoaderContext:SoundLoaderContext</code>&nbsp;&nbsp;[read-write]<p>
-   Defines the defaut <code>SoundLoaderContext</code> that will be used to create a <code>ILoadableFile</code>
-   based on a <code>Sound</code> object.
-   
-   </p><span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get defaultSoundLoaderContext():SoundLoaderContext</code>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set defaultSoundLoaderContext(value:SoundLoaderContext):void</code>
-<br>
-<p>
-<span class="label">See also</span>
-</p>
-<div class="seeAlso">
-<a href="../net/LoadableFileFactory.html#createSoundFile()" target="">createSoundFile()</a>
 </div>
 </div>
 <a name="defaultUseCache"></a>
@@ -382,7 +375,7 @@ showHideInherited();
 <code>defaultVariables:<a href="../data/IMap.html">IMap</a></code>&nbsp;&nbsp;[read-write]<p>
    Defines the default variables that will be used by the created <code>ILoadableFile</code> instances as
    parent <code>IMap</code>. The <code>LoadableFileFactory</code> will create a <code>TreeMap</code> for each
-   <code>ILoadableFile</code> with this <code>IMap</code> as parent. 
+   <code>ILoadableFile</code> with this <code>IMap</code> as parent. This value is never <code>null</code>.
    
    </p><span class="label">Implementation</span>
 <br>
@@ -430,7 +423,7 @@ showHideInherited();
 <div class="detailBody">
 <code>fileTypeSelector:<a href="../net/FileTypeSelector.html">FileTypeSelector</a></code>&nbsp;&nbsp;[read-write]<p>
    Defines the <code>FileTypeSelector</code> that will be used when the
-   <code>createFile</code> method is called.
+   <code>createFile</code> method is called. This value is never <code>null</code>.
    
    </p><span class="label">Implementation</span>
 <br>
@@ -462,6 +455,24 @@ showHideInherited();
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function set listenersPriority(value:int):void</code>
 <br>
 </div>
+<a name="securityDomainPolicy"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">securityDomainPolicy</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var securityDomainPolicy:String = "null"</code><p>
+   Defines the <code>SecurityDomain</code> policy. The value must be
+   issued from the <code>DomainUtils</code> constants or <code>null</code>.
+   
+   </p><p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../utils/DomainUtils.html" target="">DomainUtils.</a>
+</div>
+</div>
 <a name="constructorDetail"></a>
 <div class="detailSectionHeader">Constructor detail</div>
 <a name="LoadableFileFactory()"></a>
@@ -471,19 +482,11 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function LoadableFileFactory(fileSelector:<a href="FileTypeSelector.html">FileTypeSelector</a> = null, defaultUseCache:Boolean = true, defaultVirtualBytesTotal:uint = 204800, listenersPriority:int = 0)</code><p>
+<code>public function LoadableFileFactory(defaultUseCache:Boolean = true, defaultVirtualBytesTotal:uint = 204800, listenersPriority:int = 0)</code><p>
    Creates a new <code>LoadableFileFactory</code> object.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20px"></td><td><code><span class="label">fileSelector</span>:<a href="FileTypeSelector.html">FileTypeSelector</a></code> (default = <code>null</code>)<code></code> &mdash;    The <code>FileTypeSelector</code>. If not defined, the 
-             <code>FileTypeSelector.defaultFileTypeSelector</code> will be used.
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
 <tr>
 <td width="20px"></td><td><code><span class="label">defaultUseCache</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash;    Indicates if the <code>ILoadableFile</code>
              will use the cache or not.

@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="ParseUtils,ch.capi.utils.ParseUtils,isBoolean,isInteger,isNumber,isUnsigned,parseBoolean,parseFloat,parseInteger,parseNumber,parseUnsigned" name="keywords">
+<meta content="ParseUtils,ch.capi.utils.ParseUtils,isBoolean,isColor,isFloat,isInteger,isUnsigned,parseBoolean,parseColor,parseFloat,parseInteger,parseNumber,parseUnsigned" name="keywords">
 <title>ch.capi.utils.ParseUtils</title>
 </head>
 <body>
@@ -55,14 +55,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#ParseUtils()">ParseUtils</a>()</div>
-<div class="summaryTableDescription">
-   Creates a new <code>ParseUtils</code> object.</div>
-</td><td class="summaryTableOwnerCol">ParseUtils</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
 <a class="signatureLink" href="#isBoolean()">isBoolean</a>(str:String):Boolean</div>
 <div class="summaryTableDescription">[static]
    Retrieves if the specified <code>String</code> is a valid <code>Boolean</code>.</div>
@@ -71,17 +63,25 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#isInteger()">isInteger</a>(str:String):Boolean</div>
+<a class="signatureLink" href="#isColor()">isColor</a>(str:String):Boolean</div>
 <div class="summaryTableDescription">[static]
-   Retrieves if the specified <code>String</code> is a valid <code>Integer</code>.</div>
+   Retrieves if the specified <code>String</code> is a color.</div>
 </td><td class="summaryTableOwnerCol">ParseUtils</td>
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#isNumber()">isNumber</a>(str:String):Boolean</div>
+<a class="signatureLink" href="#isFloat()">isFloat</a>(str:String):Boolean</div>
 <div class="summaryTableDescription">[static]
    Retrieves if the specified <code>String</code> is a valid <code>Number</code>.</div>
+</td><td class="summaryTableOwnerCol">ParseUtils</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#isInteger()">isInteger</a>(str:String):Boolean</div>
+<div class="summaryTableDescription">[static]
+   Retrieves if the specified <code>String</code> is a valid <code>Integer</code>.</div>
 </td><td class="summaryTableOwnerCol">ParseUtils</td>
 </tr>
 <tr class="">
@@ -98,6 +98,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#parseBoolean()">parseBoolean</a>(str:String):Boolean</div>
 <div class="summaryTableDescription">[static]
    Parses the specified <code>String</code> to a <code>Boolean</code>.</div>
+</td><td class="summaryTableOwnerCol">ParseUtils</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#parseColor()">parseColor</a>(str:String):uint</div>
+<div class="summaryTableDescription">[static]
+   Parses the specified <code>String</code> into a color.</div>
 </td><td class="summaryTableOwnerCol">ParseUtils</td>
 </tr>
 <tr class="">
@@ -129,7 +137,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summarySignature">
 <a class="signatureLink" href="#parseUnsigned()">parseUnsigned</a>(str:String):uint</div>
 <div class="summaryTableDescription">[static]
-   Parses the specified <code>String</code> to a unsigned <code>Integer</code>.</div>
+   Parses the specified <code>String</code> to an unsigned <code>Integer</code>.</div>
 </td><td class="summaryTableOwnerCol">ParseUtils</td>
 </tr>
 </table>
@@ -139,18 +147,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 showHideInherited();
 --></script>
 <div class="MainContent">
-<a name="constructorDetail"></a>
-<div class="detailSectionHeader">Constructor detail</div>
-<a name="ParseUtils()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">ParseUtils</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function ParseUtils()</code><p>
-   Creates a new <code>ParseUtils</code> object.
-   </p></div>
 <a name="methodDetail"></a>
 <div class="detailSectionHeader">Method detail</div>
 <a name="isBoolean()"></a>
@@ -189,6 +185,66 @@ showHideInherited();
 </tr>
 </table>
 </div>
+<a name="isColor()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">isColor</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function isColor(str:String):Boolean</code><p>
+   Retrieves if the specified <code>String</code> is a color. A color is defined
+   by its RGB value, beginning with a '0x' or a '#' (0xFFFAAA or #FFFAAA).
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">str</span>:String</code> &mdash;  The <code>String</code> to test.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; <code>true</code> if the <code>String</code> can be parsed as color.
+   </td>
+</tr>
+</table>
+</div>
+<a name="isFloat()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">isFloat</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function isFloat(str:String):Boolean</code><p>
+   Retrieves if the specified <code>String</code> is a valid <code>Number</code>.
+   </p><p>A valid <code>Number</code> can be one of the following :<br />
+   <ul>
+    <li>Any signed or unsigned <code>Float</code> value</li>
+    <li>Any value that begins with a dot (.35)</li>
+    <li>Any value that ends with a dot (10.)</li>
+   </ul>
+   </p>
+   
+   <span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">str</span>:String</code> &mdash;  The <code>String</code> to check.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; <code>true</code> if the <code>String</code> is a valid <code>Number</code>.
+   </td>
+</tr>
+</table>
+</div>
 <a name="isInteger()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -212,39 +268,6 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20"></td><td><code>Boolean</code> &mdash; <code>true</code> if the <code>String</code> is a valid <code>Integer</code>.
-   </td>
-</tr>
-</table>
-</div>
-<a name="isNumber()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">isNumber</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static function isNumber(str:String):Boolean</code><p>
-   Retrieves if the specified <code>String</code> is a valid <code>Number</code>.
-   </p><p>A valid <code>Number</code> can be one of the following :<br />
-   <ul>
-    <li>Any signed or unsigned <code>Float</code> value</li>
-    <li>Any value that begins with a dot (.35)</li>
-    <li>Any value that ends with a dot (10.)</li>
-   </ul>
-   </p>
-   
-   <span class="label">Parameters</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20px"></td><td><code><span class="label">str</span>:String</code> &mdash;  The <code>String</code> to check.
-   </td>
-</tr>
-</table>
-<p></p>
-<span class="label">Returns</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20"></td><td><code>Boolean</code> &mdash; <code>true</code> if the <code>String</code> is a valid <code>Number</code>.
    </td>
 </tr>
 </table>
@@ -314,6 +337,46 @@ showHideInherited();
 </p>
 <div class="seeAlso">
 <a href="../utils/ParseUtils.html#isBoolean()" target="">isBoolean()</a>
+</div>
+</div>
+<a name="parseColor()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">parseColor</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function parseColor(str:String):uint</code><p>
+   Parses the specified <code>String</code> into a color.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">str</span>:String</code> &mdash;  The <code>String</code> to parse.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>uint</code> &mdash; A <code>uint</code> representing the color.
+   </td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../errors/ParseError.html">ParseError</a> </code> &mdash; If the specified <code>String</code> is not a valid color.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../utils/ParseUtils.html#isColor()" target="">isColor()</a>
 </div>
 </div>
 <a name="parseFloat()"></a>
@@ -412,7 +475,7 @@ showHideInherited();
 <div class="detailBody">
 <code>public static function parseNumber(str:String):Number</code><p>
    Parses the specified <code>String</code> to a <code>Number</code> using the <code>Number</code> global function. This
-   method can be useful for parsing special number string such as colors.
+   method doesn't perform any verification and just use the global <code>Number</code> parse function.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
@@ -438,7 +501,7 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public static function parseUnsigned(str:String):uint</code><p>
-   Parses the specified <code>String</code> to a unsigned <code>Integer</code>.
+   Parses the specified <code>String</code> to an unsigned <code>Integer</code>.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">

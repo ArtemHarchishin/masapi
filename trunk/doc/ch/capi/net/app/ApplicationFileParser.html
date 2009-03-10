@@ -169,7 +169,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#createLoadableFile()">createLoadableFile</a>(url:String, type:String = null):<a href="../../net/ILoadableFile.html">ILoadableFile</a>
+<a class="signatureLink" href="#createLoadableFile()">createLoadableFile</a>(url:String, type:String = null, appDomainPolicy:String = null, secDomainPolicy:String = null):<a href="../../net/ILoadableFile.html">ILoadableFile</a>
 </div>
 <div class="summaryTableDescription">
    Creates a <code>ILoadableFile</code> object.</div>
@@ -326,7 +326,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>protected function createLoadableFile(url:String, type:String = null):<a href="../../net/ILoadableFile.html">ILoadableFile</a></code><p>
+<code>protected function createLoadableFile(url:String, type:String = null, appDomainPolicy:String = null, secDomainPolicy:String = null):<a href="../../net/ILoadableFile.html">ILoadableFile</a></code><p>
    Creates a <code>ILoadableFile</code> object.
    
    </p><span class="label">Parameters</span>
@@ -342,6 +342,20 @@ showHideInherited();
 <td width="20px"></td><td><code><span class="label">type</span>:String</code> (default = <code>null</code>)<code></code> &mdash; The type issued from the <code>LoadableFileFactory</code> constants.
    </td>
 </tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">appDomainPolicy</span>:String</code> (default = <code>null</code>)<code></code> &mdash; The <code>ApplicationDomain</code> policy.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">secDomainPolicy</span>:String</code> (default = <code>null</code>)<code></code> &mdash; The <code>SecurityDomain</code> policy.
+   </td>
+</tr>
 </table>
 <p></p>
 <span class="label">Returns</span>
@@ -350,10 +364,17 @@ showHideInherited();
 <td width="20"></td><td><code><a href="../../net/ILoadableFile.html">ILoadableFile</a></code> &mdash; 
                         The <code>ILoadableFile</code> created.
    
+   
                         
                      </td>
 </tr>
 </table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../../utils/DomainUtils.html" target="">DomainUtils</a>
+</div>
 </div>
 <a name="createWithNewContext()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">

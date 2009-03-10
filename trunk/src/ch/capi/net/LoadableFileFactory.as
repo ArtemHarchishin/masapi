@@ -1,11 +1,11 @@
 ﻿package ch.capi.net
 {
+	import ch.capi.net.policies.DefaultContextPolicy;	
 	import ch.capi.data.TreeMap;	
 	import ch.capi.data.DictionnaryMap;	
 	import ch.capi.data.IMap;	
 	import ch.capi.net.files.*;
 
-	import flash.system.ApplicationDomain;	
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.ProgressEvent;
@@ -45,12 +45,12 @@
 		//---------//
 		private static var __defaultFactory:LoadableFileFactory		= new LoadableFileFactory();
 		private var _defaultVariables:IMap 							= new DictionnaryMap(true);
-		private var _defaultLoaderContext:LoaderContext				= new LoaderContext(false, ApplicationDomain.currentDomain);
-		private var _defaultSoundLoaderContext:SoundLoaderContext	= new SoundLoaderContext();
-		private var _defaultVirtualBytes:uint;
-		private var _useCache:Boolean;
-		private var _fileSelector:FileTypeSelector;
+		private var _contextPolicy:IContextPolicy 					= new DefaultContextPolicy();
+		private var _fileSelector:FileTypeSelector					= FileTypeSelector.defaultFileTypeSelector;
 		private var _listenersPriority:int;
+		private var _defaultVirtualBytes:uint;
+		private var _defaultUseCache:Boolean;
+		
 
 		/**
 		 * Defines the base path that will be used as prefix when a <code>URLRequest</code> is created.
@@ -58,6 +58,22 @@
 		 * @see	#create()	create()
 		 */
 		public var basePath:String = null;
+
+		/**
+		 * Defines the <code>ApplicationDomain</code> policy. The value must be
+		 * issued from the <code>DomainUtils</code> constants or <code>null</code>.
+		 * 
+		 * @see		ch.capi.utils.DomainUtils	DomainUtils.
+		 */
+		public var applicationDomainPolicy:String = null;
+		
+		/**
+		 * Defines the <code>SecurityDomain</code> policy. The value must be
+		 * issued from the <code>DomainUtils</code> constants or <code>null</code>.
+		 * 
+		 * @see		ch.capi.utils.DomainUtils	DomainUtils.
+		 */
+		public var securityDomainPolicy:String = null;
 
 		//-----------------//
 		//Getters & Setters//
@@ -71,6 +87,18 @@
 		public static function get defaultLoadableFileFactory():LoadableFileFactory { return __defaultFactory; }
 		
 		/**
+		 * Defines the <code>IContextPolicy</code> that will be used to create the
+		 * <code>LoaderContext</code> and <code>SoundLoaderContext</code> objects. This
+		 * value is never <code>null</code>.
+		 */
+		public function get contextPolicy():IContextPolicy { return _contextPolicy; }
+		public function set contextPolicy(value:IContextPolicy):void
+		{ 
+			if (value == null) throw new ArgumentError("The value is not defined");
+			_contextPolicy = value; 
+		}
+
+		/**
 		 * Defines the listeners priority when the <code>attachListeners</code> method is used.
 		 * 
 		 * @param	#attachListeners()		attachListeners()
@@ -80,17 +108,21 @@
 		
 		/**
 		 * Defines the <code>FileTypeSelector</code> that will be used when the
-		 * <code>createFile</code> method is called.
+		 * <code>createFile</code> method is called. This value is never <code>null</code>.
 		 * 
 		 * @see		#createFile()		createFile()
 		 */
 		public function get fileTypeSelector():FileTypeSelector { return _fileSelector; }
-		public function set fileTypeSelector(value:FileTypeSelector):void { _fileSelector = value; }
+		public function set fileTypeSelector(value:FileTypeSelector):void
+		{
+			if (value == null) throw new ArgumentError("The value is not defined");
+			_fileSelector = value; 
+		}
 		
 		/**
 		 * Defines the default variables that will be used by the created <code>ILoadableFile</code> instances as
 		 * parent <code>IMap</code>. The <code>LoadableFileFactory</code> will create a <code>TreeMap</code> for each
-		 * <code>ILoadableFile</code> with this <code>IMap</code> as parent. 
+		 * <code>ILoadableFile</code> with this <code>IMap</code> as parent. This value is never <code>null</code>.
 		 * 
 		 * @see		ch.capi.net.ILoadableFile#urlVariables ILoadableFile.urlVariables
 		 * @see		ch.capi.dataTreeMap	TreeMap	
@@ -108,8 +140,8 @@
 		 * 
 		 * @see		ch.capi.net.ILoadManager#useCache	ILoadManager.useCache
 		 */
-		public function get defaultUseCache():Boolean { return _useCache; }
-		public function set defaultUseCache(value:Boolean):void { _useCache = value; }
+		public function get defaultUseCache():Boolean { return _defaultUseCache; }
+		public function set defaultUseCache(value:Boolean):void { _defaultUseCache = value; }
 		
 		/**
 		 * Defines the default virtual bytes to set to the created <code>ILoadableFile</code>
@@ -119,32 +151,6 @@
 		 */
 		public function get defaultVirtualBytesTotal():uint { return _defaultVirtualBytes; }
 		public function set defaultVirtualBytesTotal(value:uint):void { _defaultVirtualBytes = value; }
-		
-		/**
-		 * Defines the default <code>LoaderContext</code> that will be used to create a <code>ILoadableFile</code>
-		 * based on a <code>Loader</code> object.
-		 * 
-		 * @see		#createLoaderFile()		createLoaderFile()
-		 */
-		public function get defaultLoaderContext():LoaderContext { return _defaultLoaderContext; }
-		public function set defaultLoaderContext(value:LoaderContext):void
-		{
-			if (value == null) throw new ArgumentError("value is not defined");
-			_defaultLoaderContext = value;
-		}
-		
-		/**
-		 * Defines the defaut <code>SoundLoaderContext</code> that will be used to create a <code>ILoadableFile</code>
-		 * based on a <code>Sound</code> object.
-		 * 
-		 * @see		#createSoundFile()		createSoundFile()
-		 */
-		public function get defaultSoundLoaderContext():SoundLoaderContext { return _defaultSoundLoaderContext; }
-		public function set defaultSoundLoaderContext(value:SoundLoaderContext):void
-		{
-			if (value == null) throw new ArgumentError("value is not defined");
-			_defaultSoundLoaderContext = value;
-		}
 
 		//-----------//
 		//Constructor//
@@ -153,8 +159,6 @@
 		/**
 		 * Creates a new <code>LoadableFileFactory</code> object.
 		 * 
-		 * @param	fileSelector				The <code>FileTypeSelector</code>. If not defined, the 
-		 * 										<code>FileTypeSelector.defaultFileTypeSelector</code> will be used.
 		 * @param	defaultUseCache				Indicates if the <code>ILoadableFile</code>
 		 * 										will use the cache or not.
 		 * @param	defaultVirtualBytesTotal	The virtual bytes to set by default to the
@@ -162,14 +166,12 @@
 		 * @param	listenersPriority			Defines the listeners priority when the <code>attachListeners</code>
 		 * 										method is used.
 		 */
-		public function LoadableFileFactory(fileSelector:FileTypeSelector=null,
-											defaultUseCache:Boolean=true,  
+		public function LoadableFileFactory(defaultUseCache:Boolean=true,  
 											defaultVirtualBytesTotal:uint = 204800,
 											listenersPriority:int = 0):void
 		{
-			_fileSelector = (fileSelector==null) ? FileTypeSelector.defaultFileTypeSelector : fileSelector;
 			_defaultVirtualBytes = defaultVirtualBytesTotal;
-			_useCache = defaultUseCache;
+			_defaultUseCache = defaultUseCache;
 			_listenersPriority = listenersPriority;
 		}
 		
@@ -235,7 +237,7 @@
 			var ldr:URLLoader = new URLLoader();
 			var ldb:URLLoaderFile = new URLLoaderFile(ldr);
 			ldb.urlRequest = request;
-			ldb.loaderContext = defaultLoaderContext;
+			ldb.loaderContext = _contextPolicy.getLoaderContext(ldb, applicationDomainPolicy, securityDomainPolicy);
 			
 			if (dataFormat != null) ldr.dataFormat = dataFormat;
 			initializeFile(ldb);
@@ -275,7 +277,7 @@
 			var sld:SoundFile = new SoundFile(snd);
 			sld.urlRequest = request;
 			
-			if (context == null) context = _defaultSoundLoaderContext;
+			if (context == null) context = _contextPolicy.getSoundContext(sld);
 			sld.soundLoaderContext = context;
 			
 			initializeFile(sld);
@@ -296,7 +298,7 @@
 			var ldb:LoaderFile = new LoaderFile(ldr);
 			ldb.urlRequest = request;
 
-			if (context == null) context = _defaultLoaderContext;
+			if (context == null) context = _contextPolicy.getLoaderContext(ldb, applicationDomainPolicy, securityDomainPolicy);
 			ldb.loaderContext = context;
 			
 			initializeFile(ldb);
@@ -387,13 +389,12 @@
 		public function clone():LoadableFileFactory
 		{
 			var ncl:LoadableFileFactory = new LoadableFileFactory();
-			ncl._defaultLoaderContext = _defaultLoaderContext;
-			ncl._defaultSoundLoaderContext = _defaultSoundLoaderContext;
+			ncl._contextPolicy = _contextPolicy;
 			ncl._defaultVariables = _defaultVariables;
 			ncl._defaultVirtualBytes = _defaultVirtualBytes;
 			ncl._fileSelector = _fileSelector;
 			ncl._listenersPriority = _listenersPriority;
-			ncl._useCache = _useCache;
+			ncl._defaultUseCache = _defaultUseCache;
 			ncl.basePath = basePath;
 			return ncl;
 		}
@@ -410,7 +411,7 @@
 		{
 			file.urlVariables = new TreeMap(_defaultVariables);
 			file.virtualBytesTotal = _defaultVirtualBytes;
-			file.useCache = _useCache;
+			file.useCache = _defaultUseCache;
 		}
 		
 		/**

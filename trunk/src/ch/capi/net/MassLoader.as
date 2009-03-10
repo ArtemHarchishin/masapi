@@ -1,6 +1,6 @@
 ﻿package ch.capi.net
 {
-	import ch.capi.data.DictionnaryMap;	
+	import ch.capi.net.policies.DefaultLoadPolicy;		import ch.capi.data.DictionnaryMap;	
 	import ch.capi.data.IMap;	
 	import ch.capi.data.IList;
 	import ch.capi.data.IDataStructure;
@@ -163,12 +163,10 @@
 		private var _filesLoading:IList					= new ArrayList();
 		private var _filesIndex:IMap 					= new DictionnaryMap(true);
 		private var _filesOrder:IMap					= new DictionnaryMap(true);
+		private var _loadPolicy:ILoadPolicy				= new DefaultLoadPolicy();
 		private var _currentFileIndex:int				= 0;
 		private var _isLoading:Boolean					= false;
 		private var _closeEvent:Event					= null;
-		private var _loadInfo:ILoadInfo;
-		private var _parallelFiles:uint;
-		private var _loadPolicy:ILoadPolicy;
 		private var _currentFilesLoading:uint			= 0;
 		private var _tempTotalBytes:uint				= 0; //used to manage the total bytes
 		private var _realTotalBytes:uint 				= 0;
@@ -176,6 +174,8 @@
 		private var _totalFilesToLoad:uint				= 0;
 		private var _totalFilesLoaded:uint				= 0;
 		private var _launchTimeout:uint;
+		private var _loadInfo:ILoadInfo;
+		private var _parallelFiles:uint;
 		
 		/**
 		 * Defines if the progress event should be dispatched each time or
@@ -334,13 +334,11 @@
 		 * Creates a new <code>MassLoader</code> object.
 		 * 
 		 * @param	parallelFiles	The number of files to be loaded simultaneously.
-		 * @param	loadPolicy		The <code>ILoadPolicy</code> to use.
 		 */
-		public function MassLoader(parallelFiles:uint=0, loadPolicy:ILoadPolicy=null):void
+		public function MassLoader(parallelFiles:uint=0):void
 		{
 			_loadInfo = new MassLoadInfo(this);
 			_parallelFiles = parallelFiles;
-			_loadPolicy = (loadPolicy==null) ? new DefaultLoadPolicy() : loadPolicy;
 		}
 
 		//--------------//
