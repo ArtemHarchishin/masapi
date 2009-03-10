@@ -27,6 +27,8 @@
                 <xsd:attribute name="useCache" type="Boolean" />
                 <xsd:attribute name="virtualBytesTotal" type="xsd:int" />
                 <xsd:attribute name="basePath" type="xsd:string" />
+				<xsd:attribute name="appDomain" type="AppDomain" />
+				<xsd:attribute name="secDomain" type="SecDomain" />
             </xsd:complexType>
             
             <xsd:complexType name="FolderDefinition">
@@ -53,11 +55,13 @@
                 <xsd:attribute name="type" type="FileType" />
                 <xsd:attribute name="global" type="Boolean" />
                 <xsd:attribute name="useCache" type="Boolean" />
-                <xsd:attribute name="netStage" type="NetState" />
+                <xsd:attribute name="netState" type="NetState" />
                 <xsd:attribute name="virtualBytesTotal" type="xsd:int" />
                 <xsd:attribute name="priority" type="xsd:int" />
                 <xsd:attribute name="requestMethod" type="RequestMethod" />
                 <xsd:attribute name="requestData" type="xsd:string" />
+				<xsd:attribute name="appDomain" type="AppDomain" />
+				<xsd:attribute name="secDomain" type="SecDomain" />
                 
                 <xsd:anyAttribute processContents="skip" />
             </xsd:complexType>
@@ -84,25 +88,37 @@
             
             <xsd:simpleType name="Boolean">
                 <xsd:restriction base="xsd:string">
-                    <xsd:pattern value="true|false|yes|no|-?[0-9]+"/>
+                    <xsd:pattern value="(true)|(false)|(yes)|(no)|(-?[0-9]+)"/>
                 </xsd:restriction>
             </xsd:simpleType>
             
             <xsd:simpleType name="FileType">
                 <xsd:restriction base="xsd:string">
-                    <xsd:pattern value="swf|text|variables|binary|sound|stream"/>
+                    <xsd:pattern value="(swf)|(text)|(variables)|(binary)|(sound)|(stream)"/>
                 </xsd:restriction>
             </xsd:simpleType>
             
             <xsd:simpleType name="NetState">
                 <xsd:restriction base="xsd:string">
-                    <xsd:pattern value="online|offline|dynamic"/>
+                    <xsd:pattern value="(online)|(offline)|(dynamic)"/>
                 </xsd:restriction>
             </xsd:simpleType>
             
             <xsd:simpleType name="RequestMethod">
                 <xsd:restriction base="xsd:string">
-                    <xsd:pattern value="GET|POST"/>
+                    <xsd:pattern value="(GET)|(POST)"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+			
+			<xsd:simpleType name="AppDomain">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="(create)|(child)|(current)|(none)"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+			
+			<xsd:simpleType name="SecDomain">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="(current)|(none)"/>
                 </xsd:restriction>
             </xsd:simpleType>
 </xsd:schema>

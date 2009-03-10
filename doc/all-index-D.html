@@ -51,6 +51,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("DÂ
    Defines the default alignement if the attribute is not specified.</td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultContextPolicy.html#defaultAppDomainPolicy">defaultAppDomainPolicy</a> &mdash; Property in class ch.capi.net.policies.<a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultContextPolicy.html">DefaultContextPolicy</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Defines the behavior to create the <code>ApplicationDomain</code>.</td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/display/text/class-list.html');" href="ch/capi/display/text/FontsParser.html#defaultColor">defaultColor</a> &mdash; Property in class ch.capi.display.text.<a onclick="javascript:loadClassListFrame('ch/capi/display/text/class-list.html');" href="ch/capi/display/text/FontsParser.html">FontsParser</a></td>
 </tr>
 <tr>
@@ -58,7 +65,21 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("DÂ
    Defines the default color if attribute not specified.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/DefaultLoadPolicy.html#defaultFiles">defaultFiles</a> &mdash; Property in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/DefaultLoadPolicy.html">DefaultLoadPolicy</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultContextPolicy.html">DefaultContextPolicy</a> &mdash; Class in package <a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/package-detail.html">ch.capi.net.policies</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  Default implementation of a <code>IContextPolicy</code>.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultContextPolicy.html#DefaultContextPolicy()">DefaultContextPolicy</a>(defaultAppDomainPolicy, defaultSecDomainPolicy) &mdash; Constructor in class ch.capi.net.policies.<a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultContextPolicy.html">DefaultContextPolicy</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Creates a new <code>DefaultContextPolicy</code> object.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultLoadPolicy.html#defaultFiles">defaultFiles</a> &mdash; Property in class ch.capi.net.policies.<a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultLoadPolicy.html">DefaultLoadPolicy</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
@@ -80,22 +101,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("DÂ
    Defines the default <code>LoadableFileFactory</code>.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/LoadableFileFactory.html#defaultLoaderContext">defaultLoaderContext</a> &mdash; Property in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/LoadableFileFactory.html">LoadableFileFactory</a></td>
-</tr>
-<tr>
-<td width="20"></td><td>
-   Defines the default <code>LoaderContext</code> that will be used to create a <code>ILoadableFile</code>
-   based on a <code>Loader</code> object.</td>
-</tr>
-<tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/DefaultLoadPolicy.html">DefaultLoadPolicy</a> &mdash; Class in package <a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/package-detail.html">ch.capi.net</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultLoadPolicy.html">DefaultLoadPolicy</a> &mdash; Class in package <a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/package-detail.html">ch.capi.net.policies</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
   Basic implementation of a <code>ILoadPolicy</code>.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/DefaultLoadPolicy.html#DefaultLoadPolicy()">DefaultLoadPolicy</a>(reloadTimes, continueOnFailure) &mdash; Constructor in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/DefaultLoadPolicy.html">DefaultLoadPolicy</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultLoadPolicy.html#DefaultLoadPolicy()">DefaultLoadPolicy</a>(reloadTimes, continueOnFailure) &mdash; Constructor in class ch.capi.net.policies.<a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultLoadPolicy.html">DefaultLoadPolicy</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
@@ -109,19 +122,18 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("DÂ
    Defines the default priority to use for the <code>addFile</code> method.</td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultContextPolicy.html#defaultSecDomainPolicy">defaultSecDomainPolicy</a> &mdash; Property in class ch.capi.net.policies.<a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultContextPolicy.html">DefaultContextPolicy</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Defines the behavior to use the <code>SecuritDomain</code>.</td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/display/text/class-list.html');" href="ch/capi/display/text/FontsParser.html#defaultSize">defaultSize</a> &mdash; Property in class ch.capi.display.text.<a onclick="javascript:loadClassListFrame('ch/capi/display/text/class-list.html');" href="ch/capi/display/text/FontsParser.html">FontsParser</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
    Defines the default size if attribute not specified.</td>
-</tr>
-<tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/LoadableFileFactory.html#defaultSoundLoaderContext">defaultSoundLoaderContext</a> &mdash; Property in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/LoadableFileFactory.html">LoadableFileFactory</a></td>
-</tr>
-<tr>
-<td width="20"></td><td>
-   Defines the defaut <code>SoundLoaderContext</code> that will be used to create a <code>ILoadableFile</code>
-   based on a <code>Sound</code> object.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/LoadableFileFactory.html#defaultUseCache">defaultUseCache</a> &mdash; Property in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/LoadableFileFactory.html">LoadableFileFactory</a></td>
@@ -223,6 +235,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("DÂ
 <tr>
 <td width="20"></td><td>
    Creates a new <code>DictionnaryMap</code> object.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/DomainUtils.html">DomainUtils</a> &mdash; Class in package <a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/package-detail.html">ch.capi.utils</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+  Represents DomainUtils.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/NetState.html#DYNAMIC">DYNAMIC</a> &mdash; Constant static property in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/NetState.html">NetState</a></td>

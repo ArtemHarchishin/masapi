@@ -1,11 +1,13 @@
 package ch.capi.net.app 
-{
-	import flash.xml.XMLDocument;	
-	
+{	import ch.capi.net.files.URLLoaderFile;	
+	import ch.capi.net.files.LoaderFile;	
+	import ch.capi.net.IContextPolicy;	
+	import ch.capi.net.policies.DefaultContextPolicy;		
 	import ch.capi.utils.ParseUtils;		import ch.capi.errors.ParseError;
 	import ch.capi.net.LoadableFileFactory;
 	import ch.capi.net.ILoadableFile;
-	
+
+	import flash.xml.XMLDocument;		
 	import flash.xml.XMLNode;
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
@@ -122,6 +124,16 @@ package ch.capi.net.app
 		 * Defines the 'context' attribute value.
 		 */
 		private static const ATTRIBUTE_CONTEXT:String = "contextName";
+		
+		/**
+		 * Defines the 'appDomain' attribute value.
+		 */
+		private static const ATTRIBUTE_DOMAIN:String = "appDomain";
+		
+		/**
+		 * Defines the 'secDomain' attribute value.
+		 */
+		private static const ATTRIBUTE_SECURITY:String = "secDomain";
 		
 		//---------//
 		//Variables//
@@ -305,6 +317,19 @@ package ch.capi.net.app
 				if (rootPath.length > 0 && rootPath.charAt(rootPath.length-1) != "/") rootPath += "/";
 			}
 			
+			//domain & security policy
+			if (node.attributes[ATTRIBUTE_DOMAIN] != null || node.attributes[ATTRIBUTE_SECURITY] != null)
+			{
+				var appDomain:String = node.attributes[ATTRIBUTE_DOMAIN];
+				var secDomain:String = node.attributes[ATTRIBUTE_SECURITY];
+				var policy:DefaultContextPolicy = new DefaultContextPolicy();
+				
+				if (appDomain != null) policy.defaultAppDomainPolicy = appDomain;
+				if (secDomain != null) policy.defaultSecDomainPolicy = secDomain;
+				
+				loadableFileFactory.contextPolicy = policy;
+			}
+			
 			//parse the sub nodes
 			_currentIndex = 0;
 			parseApplicationFiles(node, rootPath);
@@ -367,7 +392,10 @@ package ch.capi.net.app
 				//update the url with the folder (if the path is not absolute)
 				if (!isAbsolutePath) url = folderPath+url;
 
-				var loadableFile:ILoadableFile = createLoadableFile(url, type);
+				//creation of the loadable file
+				var appDomain:String = node.attributes[ATTRIBUTE_DOMAIN];
+				var secDomain:String = node.attributes[ATTRIBUTE_SECURITY];
+				var loadableFile:ILoadableFile = createLoadableFile(url, type, appDomain, secDomain);
 				appFile.loadableFile = loadableFile;
 				
 				//attach the properties to the ILoadableFile
@@ -396,12 +424,33 @@ package ch.capi.net.app
 		 * 
 		 * @param	url		The url.
 		 * @param	type	The type issued from the <code>LoadableFileFactory</code> constants.
+		 * @param	appDomainPolicy	The <code>ApplicationDomain</code> policy.
+		 * @param	secDomainPolicy	The <code>SecurityDomain</code> policy.
 		 * @return	The <code>ILoadableFile</code> created.
+		 * 
+		 * @see		ch.capi.utils.DomainUtils DomainUtils
 		 */
-		protected function createLoadableFile(url:String, type:String=null):ILoadableFile
+		protected function createLoadableFile(url:String, type:String=null, appDomainPolicy:String=null, secDomainPolicy:String=null):ILoadableFile
 		{
-			var lf:LoadableFileFactory = _loadableFileFactory;
-			return lf.createFile(url, type);
+			var factory:LoadableFileFactory = _loadableFileFactory;
+			var file:ILoadableFile = factory.createFile(url, type);
+			
+			//the policies are not defined, so simply create the file
+			if (appDomainPolicy != null || secDomainPolicy != null)
+			{
+				var ctxPolicy:IContextPolicy = factory.contextPolicy;
+				
+				//updates the loaderContext of the loadable file
+				if (file is LoaderFile) (file as LoaderFile).loaderContext = ctxPolicy.getLoaderContext(file, appDomainPolicy, secDomainPolicy);
+				else if (file is URLLoaderFile) (file as URLLoaderFile).loaderContext = ctxPolicy.getLoaderContext(file, appDomainPolicy, secDomainPolicy);
+				else
+				{
+					//the policies doesn't apply to the file...
+					//throw an exception ??? -> mmmh no, it can be used as a property for another use
+				}
+			}
+			
+			return file;
 		}
 		
 		/**

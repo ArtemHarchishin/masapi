@@ -16,7 +16,7 @@
 		public override function initializeContext(loadableFile:ILoadableFile):void
 		{
 			super.initializeContext(loadableFile);
-			
+		
 			//Retrieves the data
 			var dataXml:ILoadableFile = loadableFile.properties.getValue("data");
 			var picture:ILoadableFile = loadableFile.properties.getValue("picture");

@@ -64,6 +64,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("GÂ
    Retrieves the specified <code>ApplicationFile</code> from the specified <code>ApplicationContext</code>.</td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/DomainUtils.html#getApplicationDomain()">getApplicationDomain</a>(appDomainCreationPolicy) &mdash; Static method in class ch.capi.utils.<a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/DomainUtils.html">DomainUtils</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Retrieves a new <code>ApplicationDomain</code> depending of the specified <code>appDomainCreationPolicy</code>.</td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/data/xml/class-list.html');" href="ch/capi/data/xml/XMLDescriptor.html#getAttribute()">getAttribute</a>(name, defaultValue) &mdash; Method in class ch.capi.data.xml.<a onclick="javascript:loadClassListFrame('ch/capi/data/xml/class-list.html');" href="ch/capi/data/xml/XMLDescriptor.html">XMLDescriptor</a></td>
 </tr>
 <tr>
@@ -296,7 +303,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("GÂ
    Get the number of files to be loaded.</td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/DefaultLoadPolicy.html#getFileLoadedTimes()">getFileLoadedTimes</a>(file:<a href="ch/capi/net/ILoadManager.html" onclick="javascript:loadClassListFrame('ch/capi/net./class-list.html');">ch.capi.net:ILoadManager</a>) &mdash; Method in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/DefaultLoadPolicy.html">DefaultLoadPolicy</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultLoadPolicy.html#getFileLoadedTimes()">getFileLoadedTimes</a>(file:<a href="ch/capi/net/ILoadManager.html" onclick="javascript:loadClassListFrame('ch/capi/net./class-list.html');">ch.capi.net:ILoadManager</a>) &mdash; Method in class ch.capi.net.policies.<a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultLoadPolicy.html">DefaultLoadPolicy</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
@@ -381,6 +388,22 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("GÂ
    Get the last element of the <code>QueueList</code>.</td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/IContextPolicy.html#getLoaderContext()">getLoaderContext</a>(file:<a href="ch/capi/net/ILoadableFile.html" onclick="javascript:loadClassListFrame('ch/capi/net./class-list.html');">ch.capi.net:ILoadableFile</a>, appDomainPolicy, secDomainPolicy) &mdash; Method in interface ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/IContextPolicy.html">IContextPolicy</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Retrieves a <code>LoaderContext</code> that will be attached
+   to the specified <code>ILoadableFile</code>.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultContextPolicy.html#getLoaderContext()">getLoaderContext</a>(file:<a href="ch/capi/net/ILoadableFile.html" onclick="javascript:loadClassListFrame('ch/capi/net./class-list.html');">ch.capi.net:ILoadableFile</a>, appDomainPolicy, secDomainPolicy) &mdash; Method in class ch.capi.net.policies.<a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultContextPolicy.html">DefaultContextPolicy</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Retrieves a <code>LoaderContext</code> that will be attached
+   to the specified <code>ILoadableFile</code>.</td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/LoadableFileFactory.html#getMethod()">getMethod</a>(type) &mdash; Method in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/LoadableFileFactory.html">LoadableFileFactory</a></td>
 </tr>
 <tr>
@@ -421,6 +444,29 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("GÂ
 <tr>
 <td width="20"></td><td>
    Creates a <code>URLRequest</code> from a url object.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/DomainUtils.html#getSecurityDomain()">getSecurityDomain</a>(secDomainPolicy) &mdash; Static method in class ch.capi.utils.<a onclick="javascript:loadClassListFrame('ch/capi/utils/class-list.html');" href="ch/capi/utils/DomainUtils.html">DomainUtils</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Retrieves the <code>SecurityDomain</code> depending of the specified <code>secDomainPolicy</code>.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/IContextPolicy.html#getSoundContext()">getSoundContext</a>(file:<a href="ch/capi/net/ILoadableFile.html" onclick="javascript:loadClassListFrame('ch/capi/net./class-list.html');">ch.capi.net:ILoadableFile</a>) &mdash; Method in interface ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/IContextPolicy.html">IContextPolicy</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Retrieves a <code>SoundLoaderContext</code> that will be attached
+   to the specified <code>ILoadableFile</code>.</td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultContextPolicy.html#getSoundContext()">getSoundContext</a>(file:<a href="ch/capi/net/ILoadableFile.html" onclick="javascript:loadClassListFrame('ch/capi/net./class-list.html');">ch.capi.net:ILoadableFile</a>) &mdash; Method in class ch.capi.net.policies.<a onclick="javascript:loadClassListFrame('ch/capi/net/policies/class-list.html');" href="ch/capi/net/policies/DefaultContextPolicy.html">DefaultContextPolicy</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   Retrieves a <code>SoundLoaderContext</code> that will be attached
+   to the specified <code>ILoadableFile</code>.</td>
 </tr>
 <tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/MassLoader.html#getStaticIndexOf()">getStaticIndexOf</a>(file:<a href="ch/capi/net/ILoadManager.html" onclick="javascript:loadClassListFrame('ch/capi/net./class-list.html');">ch.capi.net:ILoadManager</a>) &mdash; Method in class ch.capi.net.<a onclick="javascript:loadClassListFrame('ch/capi/net/class-list.html');" href="ch/capi/net/MassLoader.html">MassLoader</a></td>
