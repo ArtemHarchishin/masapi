@@ -272,7 +272,7 @@ package ch.capi.net
 			if (keepFiles) storeFile(file);
 			
 			//put the properties
-			if (!isObject) file.properties.putObject(fileOrURL);
+			if (!isObject) file.properties.variables.putObject(fileOrURL);
 			
 			return file;
 		}

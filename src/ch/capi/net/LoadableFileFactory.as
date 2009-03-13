@@ -63,7 +63,7 @@
 		 * Defines the <code>ApplicationDomain</code> policy. The value must be
 		 * issued from the <code>DomainUtils</code> constants or <code>null</code>.
 		 * 
-		 * @see		ch.capi.utils.DomainUtils	DomainUtils.
+		 * @see		ch.capi.utils.DomainUtils	DomainUtils
 		 */
 		public var applicationDomainPolicy:String = null;
 		
@@ -71,7 +71,7 @@
 		 * Defines the <code>SecurityDomain</code> policy. The value must be
 		 * issued from the <code>DomainUtils</code> constants or <code>null</code>.
 		 * 
-		 * @see		ch.capi.utils.DomainUtils	DomainUtils.
+		 * @see		ch.capi.utils.DomainUtils	DomainUtils
 		 */
 		public var securityDomainPolicy:String = null;
 

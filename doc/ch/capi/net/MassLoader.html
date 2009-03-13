@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="MassLoader,ch.capi.net.MassLoader,alwaysDispatchProgressEvent,bytesLoaded,bytesTotal,closeEvent,files,filesLoading,filesQueue,loadInfo,loadPolicy,nextFileToLoad,numFiles,numFilesLoaded,numFilesLoading,numFilesOpen,numFilesToLoad,parallelFiles,stateIdle,stateLoading,addFile,clear,createMassLoadEvent,getFileCount,getFileQueueIndex,getFiles,getStaticIndexOf,hasFile,isComplete,loadFile,loadNextFile,onClose,onComplete,onIOError,onOpen,onProgress,onSecurityError,processPolicy,registerTo,removeFile,start,startLoading,stop,toString,unregisterFrom,updateBytes" name="keywords">
+<meta content="MassLoader,ch.capi.net.MassLoader,alwaysDispatchProgressEvent,bytesLoaded,bytesTotal,closeEvent,files,filesLoading,filesQueue,loadInfo,loadPolicy,loaded,nextFileToLoad,numFiles,numFilesLoaded,numFilesLoading,numFilesOpen,numFilesToLoad,parallelFiles,stateIdle,stateLoading,addFile,clear,createMassLoadEvent,getFileCount,getFileQueueIndex,getFiles,getStaticIndexOf,hasFile,isComplete,loadFile,loadNextFile,onClose,onComplete,onIOError,onOpen,onProgress,onSecurityError,processPolicy,registerTo,removeFile,start,startLoading,stop,toString,unregisterFrom,updateBytes" name="keywords">
 <title>ch.capi.net.MassLoader</title>
 </head>
 <body>
@@ -57,61 +57,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
   destroy them.</p>
   
   <p></p>
-<br>
-<span class="label">Example</span>
-<br>  Basic usage (limited verbose code) :
-  <div class='listing'><pre>
-  var cl:CompositeMassLoader = new CompositeMassLoader();
-  cl.addFile("myFile.txt");
-  cl.addFile("myAnim.swf");
-  
-  var ml:IMassLoader = cl.massLoader;
-  var eventFile:Function = function(evt:MassLoadEvent):void
-  {
-     var src:ILoadableFile = (evt.file as ILoadableFile);
-     trace(evt.type+" => "+src.urlRequest.url);
-  }
-  ml.addEventListener(MassLoadEvent.FILE_OPEN, eventFile);
-  ml.addEventListener(MassLoadEvent.FILE_CLOSE, eventFile);
-  
-  var onMassLoadComplete:Function = function(evt:Event):void
-  {
-     trace("massload complete");
-  }
-  ml.addEventListener(Event.COMPLETE, onMassLoadComplete);
-  
-  cl.start();
-  //ml.start() also works
-  </pre></div>
-  
-  Advanced usage :
-  <div class='listing'><pre>
-  var lf:LoadableFileFactory = new LoadableFileFactory();
-  var file1:ILoadableFile = lf.createFile("myFile.txt");
-  var file2:ILoadableFile = lf.createFile("myAnim.swf");
-  
-  var ml:MassLoader = new MassLoader();
-  ml.addFile(file1);
-  ml.addFile(file2);
-  
-  var eventFile:Function = function(evt:MassLoadEvent):void
-  {
-     var src:ILoadableFile = evt.getFile();
-     trace(evt.type+" => "+src.urlRequest.url);
-  }
-  ml.addEventListener(MassLoadEvent.FILE_OPEN, eventFile);
-  ml.addEventListener(MassLoadEvent.FILE_CLOSE, eventFile);
-  
-  var onMassLoadComplete:Function = function(evt:Event):void
-  {
-     trace("massload complete");
-  }
-  ml.addEventListener(Event.COMPLETE, onMassLoadComplete);
-  
-  ml.start();
-  </pre></div>
-  
-  <p></p>
 <p>
 <span class="classHeaderTableLabel">See also</span>
 </p>
@@ -154,6 +99,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#closeEvent">closeEvent</a> : Event<div class="summaryTableDescription">[read-only]
    Defines the event that happend to close the <code>MassLoader</code> (Event.CLOSE or Event.COMPLETE).</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#loaded">loaded</a> : Boolean<div class="summaryTableDescription">[read-only]
+   Defines if the <code>ILoadManager</code> operation is complete.</div>
 </td><td class="summaryTableOwnerCol">MassLoader</td>
 </tr>
 <tr class="">
@@ -684,6 +634,21 @@ showHideInherited();
 <br>
 <a href="../net/ILoadManager.html" target="">ILoadManager</a>
 </div>
+</div>
+<a name="loaded"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">loaded</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>loaded:Boolean</code>&nbsp;&nbsp;[read-only]<p>
+   Defines if the <code>ILoadManager</code> operation is complete. This
+   value is <code>true</code> when all the files have been loaded (successfully or not).
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get loaded():Boolean</code>
+<br>
 </div>
 <a name="loadInfo"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">

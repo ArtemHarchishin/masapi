@@ -73,6 +73,13 @@ package ch.capi.net.app
 		public function get priority():int { return _priority; }
 		public function set priority(value:int):void { _priority = value; }
 		
+		/**
+		 * Defines the <code>Properties</code> of the linked <code>ILoadableFile</code>.
+		 * 
+		 * @see		ch.capi.net.ILoadableFile#properties	ILoadableFile.properties
+		 */
+		public function get properties():Properties { return _loadableFile.properties; }
+		
 		//-----------//
 		//Constructor//
 		//-----------//
@@ -260,17 +267,6 @@ package ch.capi.net.app
 		{
 			if (loadableFile == null) return null;
 			return loadableFile.properties.getValue(key);
-		}
-		
-		/**
-		 * Retrieves the properties of the <code>ILoadableFile</code> into a <code>Properties</code> object.
-		 * 
-		 * @return	The <code>Properties</code> of the <code>ILoadableFile</code>.
-		 * @see		#getProperty()		getProperty()
-		 */
-		public function getProperties():Properties
-		{
-			return new Properties(loadableFile.properties);
 		}
 
 		/**

@@ -82,59 +82,6 @@
 	 * have anoter reference to the created <code>ILoadManager</code> objects to access them and prevent that the Garbage Collector
 	 * destroy them.</p>
 	 * 
-	 * @example
-	 * Basic usage (limited verbose code) :
-	 * <listing version="3.0">
-	 * var cl:CompositeMassLoader = new CompositeMassLoader();
-	 * cl.addFile("myFile.txt");
-	 * cl.addFile("myAnim.swf");
-	 * 
-	 * var ml:IMassLoader = cl.massLoader;
-	 * var eventFile:Function = function(evt:MassLoadEvent):void
-	 * {
-	 *    var src:ILoadableFile = (evt.file as ILoadableFile);
-	 *    trace(evt.type+" => "+src.urlRequest.url);
-	 * }
-	 * ml.addEventListener(MassLoadEvent.FILE_OPEN, eventFile);
-	 * ml.addEventListener(MassLoadEvent.FILE_CLOSE, eventFile);
-	 * 
-	 * var onMassLoadComplete:Function = function(evt:Event):void
-	 * {
-	 *    trace("massload complete");
-	 * }
-	 * ml.addEventListener(Event.COMPLETE, onMassLoadComplete);
-	 * 
-	 * cl.start();
-	 * //ml.start() also works
-	 * </listing>
-	 * 
-	 * Advanced usage :
-	 * <listing version="3.0">
-	 * var lf:LoadableFileFactory = new LoadableFileFactory();
-	 * var file1:ILoadableFile = lf.createFile("myFile.txt");
-	 * var file2:ILoadableFile = lf.createFile("myAnim.swf");
-	 * 
-	 * var ml:MassLoader = new MassLoader();
-	 * ml.addFile(file1);
-	 * ml.addFile(file2);
-	 * 
-	 * var eventFile:Function = function(evt:MassLoadEvent):void
-	 * {
-	 *    var src:ILoadableFile = evt.getFile();
-	 *    trace(evt.type+" => "+src.urlRequest.url);
-	 * }
-	 * ml.addEventListener(MassLoadEvent.FILE_OPEN, eventFile);
-	 * ml.addEventListener(MassLoadEvent.FILE_CLOSE, eventFile);
-	 * 
-	 * var onMassLoadComplete:Function = function(evt:Event):void
-	 * {
-	 *    trace("massload complete");
-	 * }
-	 * ml.addEventListener(Event.COMPLETE, onMassLoadComplete);
-	 * 
-	 * ml.start();
-	 * </listing>
-	 * 
 	 * @see			ch.capi.net.ILoadPolicy			ILoadPolicy
 	 * @see			ch.capi.net.LoadableFileFactory	LoadableFileFactory
 	 * @see			ch.capi.net.CompositeMassLoader	CompositeMassLoader
@@ -173,6 +120,7 @@
 		private var _realLoadedBytes:uint				= 0;
 		private var _totalFilesToLoad:uint				= 0;
 		private var _totalFilesLoaded:uint				= 0;
+		private var _loaded:Boolean						= false;
 		private var _launchTimeout:uint;
 		private var _loadInfo:ILoadInfo;
 		private var _parallelFiles:uint;
@@ -188,6 +136,12 @@
 		//-----------------//
 		//Getters & Setters//
 		//-----------------//
+		
+		/**
+		 * Defines if the <code>ILoadManager</code> operation is complete. This
+		 * value is <code>true</code> when all the files have been loaded (successfully or not).
+		 */
+		public function get loaded():Boolean { return _loaded; }
 		
 		/**
 		 * Defines the bytes that have been loaded.
@@ -434,6 +388,7 @@
 		 */
 		public final function stop():void
 		{
+			//checks the status
 			if (!_isLoading) throw new IllegalOperationError("State not loading");
 			_isLoading = false;
 			
@@ -461,11 +416,13 @@
 		 */
 		public final function start():void
 		{
+			//checks the status
 			if (_isLoading) throw new IllegalOperationError("State already loading");
 			_isLoading = true;
-			_closeEvent = null;
 			
 			//initialization of the data
+			_loaded = false;
+			_closeEvent = null;
 			_tempTotalBytes = 0;
 			_currentFilesLoading = 0;
 			_filesLoading.clear(); //empty the files being loaded
@@ -913,6 +870,7 @@
 		private function doComplete():void
 		{		
 			_isLoading = false;
+			_loaded = true;
 			
 			//complete event
 			var evt:Event = new Event(Event.COMPLETE);

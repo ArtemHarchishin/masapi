@@ -102,9 +102,12 @@ package ch.capi.data
 		 * @param	key		The key.
 		 * @param	value	The value.
 		 * @return	The previous value mapped to the key or <code>null</code>.
+		 * @throws	Error	If the key is <code>null</code>.
 		 */
 		public function put(key:*, value:*):*
 		{
+			if (key == null) throw new Error("The key is not defined (value="+value+")");
+			
 			var old:* = _dictionnary[key];
 			_dictionnary[key] = value;
 			

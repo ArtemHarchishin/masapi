@@ -6,6 +6,7 @@ package ch.capi.net
 	/**
 	 * Represents a manager of context for <code>Loader</code> and <code>Sound</code> objects.
 	 * 
+	 * @see		ch.capi.net.LoadableFileFactory		LoadableFileFactory
 	 * @author Cedric Tabin - thecaptain
 	 */
 	public interface IContextPolicy 
