@@ -1,7 +1,5 @@
 ﻿package ch.capi.net.files
 {
-	import ch.capi.display.IRootDocument;	
-	
 	import flash.display.DisplayObject;	
 	import flash.display.LoaderInfo;	
 	import flash.utils.ByteArray;	
@@ -18,6 +16,8 @@
 	import flash.errors.IllegalOperationError;
 	import flash.utils.describeType;
 	
+	import ch.capi.data.text.Properties;	
+	import ch.capi.display.IRootDocument;
 	import ch.capi.net.ILoadableFile;	
 	import ch.capi.net.NetState;	
 	import ch.capi.net.INetStateManager;
@@ -123,12 +123,13 @@
 		private var _useCache:Boolean				= true;
 		private var _online:String 					= NetState.DYNAMIC;
 		private var _stateLoading:Boolean			= false;
-		private var _properties:IMap				= new DictionnaryMap();
+		private var _properties:Properties 			= new Properties();
 		private var _urlVariables:IMap				= new DictionnaryMap();
 		private var _closeEvent:Event				= null;
 		private var _destroyed:Boolean				= false;
 		private var _fixedRequest:URLRequest		= null;
 		private var _fixedRequestUpdated:Boolean	= false;
+		private var _loaded:Boolean					= false;
 		private var _loadManagerObject:*;
 		
 		//-----------------//
@@ -136,12 +137,17 @@
 		//-----------------//
 		
 		/**
+		 * Defines if the <code>ILoadManager</code> operation is complete. This
+		 * value is <code>true</code> only if the data has been successfully loaded.
+		 */
+		public function get loaded():Boolean { return _loaded; }
+		
+		/**
 		 * Defines the properties stored into the
 		 * <code>ILoadableFile</code>.
 		 * 
-		 * @see			ch.capi.data.text.Properties	Properties
 		 */
-		public function get properties():IMap { return _properties; }
+		public function get properties():Properties { return _properties; }
 		
 		/**
 		 * Defines if the <code>AbstractLoadableFile</code> is loading.
@@ -325,6 +331,9 @@
 			checkDestroyed();
 			if (_stateLoading) throw new IllegalOperationError("State already loading");
 			
+			//initialize the data before loading
+			_loaded = false;
+			
 			//generate the new fixed request
 			var oldFixedRequest:URLRequest = fixedRequest;
 			if (!_fixedRequestUpdated) prepareFixedRequest();
@@ -406,6 +415,7 @@
 			_destroyed = true;
 			_fixedRequest = null;
 			_fixedRequestUpdated = false;
+			_loaded = false;
 		}
 
 		/**
@@ -540,6 +550,7 @@
 			
 			_bytesTotalRetrieved = true;
 			_bytesTotal = _bytesLoaded;
+			_loaded = true;
 			
 			var ne:Event = evt.clone();
 			dispatchEvent(ne);
@@ -693,6 +704,42 @@
 			newRequest.data = data;
 			
 			return newRequest;
+		}
+		
+		/**
+		 * Checks if data has been loaded and is available to be retrieved. If not, then an <code>Error</code>
+		 * will be thrown. This method is useful to get direct information about why the data couldn't be retrieved.
+		 * 
+		 * @throws	Error	If the data are not loaded.
+		 */
+		protected function checkData():void
+		{
+			if (!loaded)
+			{
+				//basic message
+				var message:String = "Data not loaded\n  file : "+this+"\n";
+				
+				//fixedRequest information
+				message += "  fixedRequest : ";
+				if (fixedRequest == null) message += "null\n";
+				else message += fixedRequest.url+"\n";
+				
+				//closeEvent information
+				message += "  closeEvent : ";
+				if (closeEvent == null) message += "null";
+				else
+				{
+					message += closeEvent.type;
+					
+					//more details if the closeEvent is an error event
+					if (closeEvent is IOErrorEvent) message += " ("+(closeEvent as IOErrorEvent).text+")";
+					else if (closeEvent is SecurityErrorEvent) message += " ("+(closeEvent as SecurityErrorEvent).text+")";
+					message += "\n";
+				}
+				
+				//and throw it !!!
+				throw new Error(message);
+			}
 		}
 		
 		//---------------//

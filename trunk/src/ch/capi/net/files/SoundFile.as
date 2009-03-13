@@ -67,6 +67,7 @@ package ch.capi.net.files
 		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
 		 * 						the current domain will be used.
 		 * @return	The <code>Sound</code> object.
+		 * @throws	Error			If the data are not loaded.
 		 * @throws	ArgumentError	If the class type is not supported.
 		 * 
 		 * @see		#isClassSupported()		isClassSupported()
@@ -74,6 +75,7 @@ package ch.capi.net.files
 		public function getData(asClass:String=null, appDomain:ApplicationDomain= null):*
 		{
 			checkDestroyed();
+			checkData();
 			if (asClass != null && !isClassSupported(asClass)) throw new ArgumentError("The type '"+asClass+"' is not supported");
 			return loadManagerObject as Sound;
 		}

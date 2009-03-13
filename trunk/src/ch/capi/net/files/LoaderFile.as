@@ -72,6 +72,7 @@
 		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
 		 * 						the current domain will be used.
 		 * @return	An instance of the specified class containing the data of the <code>loadManagerObject</code>.
+		 * @throws	Error			If the data are not loaded.
 		 * @throws	ArgumentError	If the class type is not supported.
 		 * 
 		 * @see		#isClassSupported()		isClassSupported()
@@ -80,6 +81,7 @@
 		public function getData(asClass:String=null, appDomain:ApplicationDomain=null):*
 		{
 			checkDestroyed();
+			checkData();
 			if (asClass != null && !isClassSupported(asClass, appDomain)) throw new ArgumentError("The type '"+asClass+"' is not supported");	
 			
 			//simply returns the Loader

@@ -312,8 +312,8 @@ showHideInherited();
 <div class="detailBody">
 <code>public function replaceVars(source:String):String</code><p>
    Replaces all the variables contained into the source <code>String</code> using the specified
-   <code>IMap</code> as source for the variables. If a variable isn't found, a null value is put
-   in place of the variable.
+   <code>IMap</code> as source for the variables. If a variable is not defined, then an <code>Error</code>
+   will be thrown.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
@@ -327,6 +327,14 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20"></td><td><code>String</code> &mdash; The updated <code>String</code> with values.
+   </td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash;  If a variable is not defined.
    </td>
 </tr>
 </table>

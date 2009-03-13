@@ -213,7 +213,7 @@ package ch.capi.net.app
 		 * 
 		 * @param	source					The source <code>String</code> into <code>XML</code> format that matches the XMLSchema.
 		 * @param	contextName				Defines the name of the <code>ApplicationContext</code>. If no context name is specified, then
-		 * 									the created <code>ApplicationContext</code> won't be registered into the global contexts.
+		 * 									the global <code>ApplicationContext</code> will be used.
 		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code>. If not defined, then the 
 		 * 									<code>LoadableFileFactory.defaultLoadableFileFactory</code> will be used.
 		 * @return	The new <code>ApplicationContext</code> that contains all the parsed <code>ApplicationFile</code> instances.
@@ -225,7 +225,7 @@ package ch.capi.net.app
 			doc.parseXML(source);
 			
 			var ctxName:String = (contextName != null) ? contextName : doc.firstChild.attributes[ATTRIBUTE_CONTEXT];
-			var context:ApplicationContext = new ApplicationContext(ctxName); 
+			var context:ApplicationContext = (ctxName==null) ? ApplicationContext.globalContext : new ApplicationContext(ctxName); 
 			
 			var parser:ApplicationFileParser = new ApplicationFileParser(loadableFileFactory, context);
 			parser.parseNode(doc.firstChild);
@@ -402,7 +402,7 @@ package ch.capi.net.app
 				for(var prop:String in node.attributes)
 				{
 					var dt:String = node.attributes[prop];
-					loadableFile.properties.put(prop, dt);
+					loadableFile.properties.setValue(prop, dt);
 				}
 			}
 			else

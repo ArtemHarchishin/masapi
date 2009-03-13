@@ -4,6 +4,8 @@ package ch.capi.net
 	import flash.net.URLRequest;
 	import flash.events.IEventDispatcher;
 	import ch.capi.data.IMap;
+	import ch.capi.data.text.Properties;	
+	
 	
 	/**
 	 * Dispatched if a call to <code>start()</code> results in a fatal error that terminates the download. 
@@ -50,11 +52,9 @@ package ch.capi.net
 		/**
 		 * Defines the properties stored into the
 		 * <code>ILoadableFile</code>.
-		 * 
-		 * @see			ch.capi.data.text.Properties	Properties
 		 */
-		function get properties():IMap;
-		
+		function get properties():Properties;
+
 		/**
 		 * Defines the variables key/values to be replaced
 		 * into the url before the loading is launched.
@@ -142,6 +142,7 @@ package ch.capi.net
 		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
 		 * 						the current domain will be used.
 		 * @return	The data of the <code>loadManagerObject</code>.
+		 * @throws	Error			If the data are not loaded.
 		 * @throws	ArgumentError	If the class type is not supported.
 		 * 
 		 * @see		ch.capi.net.DataType	DataType class

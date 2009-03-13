@@ -93,6 +93,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </td><td class="summaryTableOwnerCol"><a href="AbstractLoadableFile.html">AbstractLoadableFile</a></td>
 </tr>
 <tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="AbstractLoadableFile.html#loaded">loaded</a> : Boolean<div class="summaryTableDescription">
+   Defines if the <code>ILoadManager</code> operation is complete.</div>
+</td><td class="summaryTableOwnerCol"><a href="AbstractLoadableFile.html">AbstractLoadableFile</a></td>
+</tr>
+<tr class="hideInheritedProperty">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="AbstractLoadableFile.html#loadManagerObject">loadManagerObject</a> : Object<div class="summaryTableDescription">
    Defines the load manager object.</div>
 </td><td class="summaryTableOwnerCol"><a href="AbstractLoadableFile.html">AbstractLoadableFile</a></td>
@@ -103,7 +108,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </td><td class="summaryTableOwnerCol"><a href="AbstractLoadableFile.html">AbstractLoadableFile</a></td>
 </tr>
 <tr class="hideInheritedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="AbstractLoadableFile.html#properties">properties</a> : <a href="../../data/IMap.html">IMap</a>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="AbstractLoadableFile.html#properties">properties</a> : <a href="../../data/text/Properties.html">Properties</a>
 <div class="summaryTableDescription">
    Defines the properties stored into the
    <code>ILoadableFile</code>.</div>
@@ -287,6 +292,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <table id="summaryTableProtectedMethod" class="summaryTable " cellpadding="3" cellspacing="0">
 <tr>
 <th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="hideInheritedProtectedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="AbstractLoadableFile.html#checkData()">checkData</a>():void</div>
+<div class="summaryTableDescription">
+   Checks if data has been loaded and is available to be retrieved.</div>
+</td><td class="summaryTableOwnerCol"><a href="AbstractLoadableFile.html">AbstractLoadableFile</a></td>
 </tr>
 <tr class="hideInheritedProtectedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
@@ -602,6 +615,13 @@ showHideInherited();
 <br>
 <span class="label">Throws</span>
 <table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash;   If the data are not loaded.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
 <tr>
 <td width="20"></td><td><code></code> &mdash; If the class type is not supported.
    

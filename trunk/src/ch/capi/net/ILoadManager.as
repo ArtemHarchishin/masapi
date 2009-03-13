@@ -44,6 +44,12 @@ package ch.capi.net
 	public interface ILoadManager extends IEventDispatcher
 	{
 		/**
+		 * Defines if the <code>ILoadManager</code> operation is complete. This
+		 * value is <code>true</code> only if the data has been successfully loaded.
+		 */
+		function get loaded():Boolean;
+		
+		/**
 		 * Defines if the <code>ILoadManager</code> is loading.
 		 */
 		function get stateLoading():Boolean;
