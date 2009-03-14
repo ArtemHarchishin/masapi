@@ -331,9 +331,6 @@
 			checkDestroyed();
 			if (_stateLoading) throw new IllegalOperationError("State already loading");
 			
-			//initialize the data before loading
-			_loaded = false;
-			
 			//generate the new fixed request
 			var oldFixedRequest:URLRequest = fixedRequest;
 			if (!_fixedRequestUpdated) prepareFixedRequest();
@@ -342,6 +339,7 @@
 			//the data won't be reloaded (static cache)
 			if (!useCache || !isEqual(oldFixedRequest, fixedRequest) || bytesTotal <= 0 || bytesLoaded < bytesTotal)
 			{
+				_loaded = false;
 				_stateLoading = true;
 				_closeEvent = null;
 		
