@@ -752,7 +752,7 @@ showHideInherited();
 <span class="label">Throws</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20"></td><td><code></code> &mdash; If the data are not loaded.
+<td width="20"></td><td><code><a href="../../errors/DataError.html">DataError</a> </code> &mdash; If the data are not loaded.
    </td>
 </tr>
 </table>
@@ -1176,11 +1176,21 @@ showHideInherited();
 <div class="detailBody">
 <code>protected function processLoading(request:URLRequest):void</code><p>
    Tell the <code>ILoadableFile</code> to start the loading process. This method
-   is supposed to be overriden by the sub-classes.
+   is supposed to be overriden by the sub-classes. It always throws an
+   <code>IllegalOperationError</code>.
+   
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">request</span>:URLRequest</code></td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; Always if not overriden.
+   </td>
 </tr>
 </table>
 </div>

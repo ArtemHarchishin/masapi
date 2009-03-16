@@ -1,5 +1,5 @@
 ﻿package ch.capi.net.files
-{
+{	import flash.events.ErrorEvent;	
 	import flash.display.DisplayObject;	
 	import flash.display.LoaderInfo;	
 	import flash.utils.ByteArray;	
@@ -15,6 +15,7 @@
 	import flash.system.Security;
 	import flash.errors.IllegalOperationError;
 	import flash.utils.describeType;
+	import flash.utils.getQualifiedClassName;
 	
 	import ch.capi.data.text.Properties;	
 	import ch.capi.display.IRootDocument;
@@ -24,6 +25,7 @@
 	import ch.capi.data.IMap;
 	import ch.capi.data.DictionnaryMap;
 	import ch.capi.utils.VariableReplacer;
+	import ch.capi.errors.DataError;
 	
 	/**
 	 * Dispatched after all the received data is received.
@@ -249,7 +251,7 @@
 		{		
 			_loadManagerObject = loadManagerObject;
 			
-			if (! (this is ILoadableFile)) throw new IllegalOperationError("ILoableFile interface not implemented : "+this);
+			if (! (this is ILoadableFile)) throw new IllegalOperationError("ILoableFile interface not implemented : "+getQualifiedClassName(this));
 		}
 
 		//--------------//
@@ -331,22 +333,33 @@
 			checkDestroyed();
 			if (_stateLoading) throw new IllegalOperationError("State already loading");
 			
-			//generate the new fixed request
-			var oldFixedRequest:URLRequest = fixedRequest;
-			if (!_fixedRequestUpdated) prepareFixedRequest();
-			
-			//check if the new generated URL is different. If not and the bytes are already loaded, then
-			//the data won't be reloaded (static cache)
-			if (!useCache || !isEqual(oldFixedRequest, fixedRequest) || bytesTotal <= 0 || bytesLoaded < bytesTotal)
+			try
 			{
+				//generate the new fixed request
+				var oldFixedRequest:URLRequest = fixedRequest;
+				if (!_fixedRequestUpdated) prepareFixedRequest();
+				
+				//check if the new generated URL is different. If not and the bytes are already loaded, then
+				//the data won't be reloaded (static cache)
+				if (!useCache || !isEqual(oldFixedRequest, fixedRequest) || bytesTotal <= 0 || bytesLoaded < bytesTotal)
+				{
+					_loaded = false;
+					_stateLoading = true;
+					_closeEvent = null;
+			
+					//launch the loading (implemented by sub-classes)
+					processLoading(fixedRequest);
+				}
+			}
+			catch (e:Error)
+			{
+				//an error has been thrown, cancel the loading
 				_loaded = false;
-				_stateLoading = true;
-				_closeEvent = null;
-		
-				processLoading(fixedRequest);
+				_stateLoading = false;
+				_closeEvent = new ErrorEvent(ErrorEvent.ERROR, false, false, "Loading not started : "+e.message);
 			}
 			
-			//automatically invalidate the request after the loading is started
+			//always invalidate the request after the loading is started
 			invalidateFixedRequest();
 		}
 		
@@ -409,7 +422,7 @@
 			_stateLoading = false;
 			_useCache = false;
 			_virtualBytesTotal = 0;
-			_request = new URLRequest(_request.url);
+			_request = new URLRequest(_request.url); //keep the request url
 			_destroyed = true;
 			_fixedRequest = null;
 			_fixedRequestUpdated = false;
@@ -469,13 +482,17 @@
 		
 		/**
 		 * Tell the <code>ILoadableFile</code> to start the loading process. This method
-		 * is supposed to be overriden by the sub-classes.
+		 * is supposed to be overriden by the sub-classes. It always throws an
+		 * <code>IllegalOperationError</code>.
+		 * 
+		 * @throws	IllegalOperationError	Always if not overriden.
 		 */
 		protected function processLoading(request:URLRequest):void 
 		{
-			//nothing	
+			//nothing	(handled by sub-classes)
+			throw new IllegalOperationError("Method not overriden in subclass : "+getQualifiedClassName(this));
 		}
-		
+
 		/**
 		 * Register the events of the <code>AbstractLoadableFile</code>.
 		 * 
@@ -672,7 +689,7 @@
 		 */
 		protected function checkDestroyed():void
 		{
-			if (isDestroyed()) throw new IllegalOperationError("The file [ "+this+" ] has been destroyed");
+			if (isDestroyed()) throw new IllegalOperationError("File destroyed : "+this);
 		}
 		
 		/**
@@ -708,7 +725,7 @@
 		 * Checks if data has been loaded and is available to be retrieved. If not, then an <code>Error</code>
 		 * will be thrown. This method is useful to get direct information about why the data couldn't be retrieved.
 		 * 
-		 * @throws	Error	If the data are not loaded.
+		 * @throws	ch.capi.errors.DataError	If the data are not loaded.
 		 */
 		protected function checkData():void
 		{
@@ -736,7 +753,7 @@
 				}
 				
 				//and throw it !!!
-				throw new Error(message);
+				throw new DataError(message);
 			}
 		}
 		
