@@ -514,21 +514,15 @@
 			//open event
 			dispatchOpenEvent(file);
 			
-			try
-			{
-				//try to start the loading
-				file.start();
-				
-				//if the file is loading, return true, else continue
-				if (file.stateLoading) return true;
-			}
-			catch(e:Error)
-			{
-				//do nothing, the file will automatically get discarded
-			}
+			//try to start the loading
+			file.start();
+			
+			//if the file is loading, return true, else continue
+			if (file.stateLoading) return true;
 			
 			//problem during the launching (or already in cache) => stop it !
 			closeFile(file, null);
+			
 			return false;
 		}
 		

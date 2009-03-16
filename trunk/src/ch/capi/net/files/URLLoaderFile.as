@@ -83,8 +83,8 @@ package ch.capi.net.files
 		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
 		 * 						the current domain will be used.
 		 * @return	The data of the <code>loadManagerObject</code>.
-		 * @throws	Error			If the data are not loaded.
 		 * @throws	ArgumentError	If the class type is not supported.
+		 * @throws	ch.capi.errors.DataError		If the data are not loaded.
 		 * 
 		 * @see		#isClassSupported()		isClassSupported()
 		 */
