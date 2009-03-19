@@ -231,7 +231,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#ApplicationMassLoader()">ApplicationMassLoader</a>(loadByPriority:Boolean = true, parallelFiles:uint = 0)</div>
+<a class="signatureLink" href="#ApplicationMassLoader()">ApplicationMassLoader</a>(parallelFiles:uint = 0, loadByPriority:Boolean = false)</div>
 <div class="summaryTableDescription">
    Creates a new <code>ApplicationMassLoader</code> object.</div>
 </td><td class="summaryTableOwnerCol">ApplicationMassLoader</td>
@@ -647,21 +647,21 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function ApplicationMassLoader(loadByPriority:Boolean = true, parallelFiles:uint = 0)</code><p>
+<code>public function ApplicationMassLoader(parallelFiles:uint = 0, loadByPriority:Boolean = false)</code><p>
    Creates a new <code>ApplicationMassLoader</code> object.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">loadByPriority</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash;  Defines if the <code>ApplicationMassLoader</code> must load the files by priority.
+<td width="20px"></td><td><code><span class="label">parallelFiles</span>:uint</code> (default = <code>0</code>)<code></code> &mdash;  Defines how many file to load at the same time. This value will affect the loading only if the
+           <code>loadByPriority</code> property is <code>false</code>.
    </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">parallelFiles</span>:uint</code> (default = <code>0</code>)<code></code> &mdash;  Defines how many file to load at the same time. This value will affect the loading only if the
-           <code>loadByPriority</code> property is <code>false</code>.
+<td width="20px"></td><td><code><span class="label">loadByPriority</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash;  Defines if the <code>ApplicationMassLoader</code> must load the files by priority.
    </td>
 </tr>
 </table>

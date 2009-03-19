@@ -22,13 +22,13 @@ package ch.capi.net.app
 		/**
 		 * Creates a new <code>ApplicationMassLoader</code> object.
 		 * 
-		 * @param	loadByPriority		Defines if the <code>ApplicationMassLoader</code> must load the files by priority.
 		 * @param	prallelFiles		Defines how many file to load at the same time. This value will affect the loading only if the
 		 * 								<code>loadByPriority</code> property is <code>false</code>.
+		 * @param	loadByPriority		Defines if the <code>ApplicationMassLoader</code> must load the files by priority.
 		 */
-		public function ApplicationMassLoader(loadByPriority:Boolean=true, parallelFiles:uint=0):void 
+		public function ApplicationMassLoader(parallelFiles:uint=0, loadByPriority:Boolean=false):void 
 		{
-			super(loadByPriority, parallelFiles);
+			super(parallelFiles, loadByPriority);
 		}
 		
 		//--------------//
@@ -43,7 +43,7 @@ package ch.capi.net.app
 		public function addGlobalFiles(context:ApplicationContext=null):void
 		{
 			if (context == null) context = ApplicationContext.globalContext;
-			var f:Array = context.enumerateAll(true);
+			var f:Array = context.enumerateGlobals();
 			for each(var a:ApplicationFile in f)
 			{
 				addApplicationFile(a);

@@ -40,10 +40,10 @@ package ch.capi.net
 	/**
 	 * Represents a loadable file.
 	 * 
-	 * @see			ch.capi.net.AbstractLoadableFile	AbstractLoadableFile
-	 * @see			ch.capi.net.LoadableFileFactory		LoadableFileFactory
-	 * @see			ch.capi.net.LoadableFileType		LoadableFileType
-	 * @see			ch.capi.net.FileTypeSelector		FileTypeSelector
+	 * @see			ch.capi.net.files.AbstractLoadableFile	AbstractLoadableFile
+	 * @see			ch.capi.net.LoadableFileFactory			LoadableFileFactory
+	 * @see			ch.capi.net.LoadableFileType			LoadableFileType
+	 * @see			ch.capi.net.FileTypeSelector			FileTypeSelector
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		1.0
 	 */

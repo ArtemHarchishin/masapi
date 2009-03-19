@@ -234,8 +234,8 @@
 		public function get numFilesLoaded():uint { return _totalFilesLoaded; }
 		
 		/**
-		 * Defines the total of the files into the <code>MassLoader</code>. This value will remain correct even
-		 * if files are added during the loading.
+		 * Defines the total of the files into the <code>MassLoader</code>. This value will remain constant
+		 * after the loading has been started event if files are added.
 		 */
 		public function get numFiles():uint { return numFilesToLoad+numFilesLoaded+numFilesLoading; }
 		
@@ -519,7 +519,7 @@
 			
 			//if the file is loading, return true, else continue
 			if (file.stateLoading) return true;
-			
+		
 			//problem during the launching (or already in cache) => stop it !
 			closeFile(file, null);
 			
@@ -535,11 +535,18 @@
 		 */
 		protected function startLoading():void
 		{
-			var nb:uint = (_parallelFiles == 0 || _parallelFiles > _filesToLoad.length) ? _filesToLoad.length : _parallelFiles;
+			var nb:int = (_parallelFiles == 0 || _parallelFiles > _filesToLoad.length) ? _filesToLoad.length : _parallelFiles;
 			while (numFilesLoading < nb)
 			{
 				var nf:ILoadManager = loadNextFile();
-				if (nf == null && isComplete()) break;
+				
+				/*
+				 * If nf is null, that means that the loading of the
+				 * file hasn't been started due to some direct error...
+				 * In that case, if there is no more file into the loading
+				 * queue, jump out of the loop.
+				 */
+				if (nf == null && _filesQueue.isEmpty()) break;
 			}
 		}
 		
@@ -802,7 +809,7 @@
 			unregisterFrom(file);
 			_filesLoading.removeElement(file);
 			
-			//decrement the numbe of files being loaded
+			//decrement the number of files being loaded
 			_currentFilesLoading--;
 			
 			/*

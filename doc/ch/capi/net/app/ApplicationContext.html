@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
-<meta content="ApplicationContext,ch.capi.net.app.ApplicationContext,globalContext,name,addFile,clear,enumerateAll,enumerateContexts,enumerateLeaves,enumerateRoots,getFile,printFiles,removeFile,get" name="keywords">
+<meta content="ApplicationContext,ch.capi.net.app.ApplicationContext,globalContext,name,addFile,clear,enumerateAll,enumerateContexts,enumerateGlobals,enumerateLeaves,enumerateRoots,getFile,printFiles,removeFile,toString,get" name="keywords">
 <title>ch.capi.net.app.ApplicationContext</title>
 </head>
 <body>
@@ -105,7 +105,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#enumerateAll()">enumerateAll</a>(globalOnly:Boolean = false):Array</div>
+<a class="signatureLink" href="#enumerateAll()">enumerateAll</a>(excludeGlobalFiles:Boolean = false):Array</div>
 <div class="summaryTableDescription">
    Enumerates all the <code>ApplicationFile</code> contained into the <code>ApplicationContext</code>.</div>
 </td><td class="summaryTableOwnerCol">ApplicationContext</td>
@@ -116,6 +116,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#enumerateContexts()">enumerateContexts</a>():Array</div>
 <div class="summaryTableDescription">[static]
    Enumerates all <code>ApplicationContext</code> instances.</div>
+</td><td class="summaryTableOwnerCol">ApplicationContext</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#enumerateGlobals()">enumerateGlobals</a>():Array</div>
+<div class="summaryTableDescription">
+   Enumerates all the global <code>ApplicationFile</code> contained into the <code>ApplicationContext</code>.</div>
 </td><td class="summaryTableOwnerCol">ApplicationContext</td>
 </tr>
 <tr class="">
@@ -166,6 +174,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#removeFile()">removeFile</a>(file:<a href="ApplicationFile.html">ApplicationFile</a>, recursiveRemoval:Boolean = false):void</div>
 <div class="summaryTableDescription">
    Remove the specified <code>ApplicationFile</code> from the <code>ApplicationContext</code>.</div>
+</td><td class="summaryTableOwnerCol">ApplicationContext</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#toString()">toString</a>():String</div>
+<div class="summaryTableDescription">
+   Returns a <code>String</code> presentation of the <code>ApplicationContext</code>.</div>
 </td><td class="summaryTableOwnerCol">ApplicationContext</td>
 </tr>
 </table>
@@ -299,13 +315,13 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function enumerateAll(globalOnly:Boolean = false):Array</code><p>
+<code>public function enumerateAll(excludeGlobalFiles:Boolean = false):Array</code><p>
    Enumerates all the <code>ApplicationFile</code> contained into the <code>ApplicationContext</code>.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">globalOnly</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash;  Defines if only the global files or all the files must be listed.
+<td width="20px"></td><td><code><span class="label">excludeGlobalFiles</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash;  Defines if the global files must be excluded.
    </td>
 </tr>
 </table>
@@ -333,6 +349,25 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20"></td><td><code>Array</code> &mdash; An <code>Array</code> containing all <code>ApplicationContext</code>.
+   </td>
+</tr>
+</table>
+</div>
+<a name="enumerateGlobals()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">enumerateGlobals</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function enumerateGlobals():Array</code><p>
+   Enumerates all the global <code>ApplicationFile</code> contained into the <code>ApplicationContext</code>.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Array</code> &mdash; An <code>Array</code> containing the enumerated <code>ApplicationFile</code>.
    </td>
 </tr>
 </table>
@@ -525,6 +560,31 @@ showHideInherited();
    </td>
 </tr>
 </table>
+</div>
+<a name="toString()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">toString</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function toString():String</code><p>
+   Returns a <code>String</code> presentation of the <code>ApplicationContext</code>.
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>String</code> &mdash; A <code>String</code> representation of the <code>ApplicationContext</code>. 
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../app/ApplicationContext.html#printFiles()" target="">printFiles()</a>
+</div>
 </div>
 <br>
 <br>

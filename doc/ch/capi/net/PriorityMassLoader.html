@@ -257,7 +257,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#PriorityMassLoader()">PriorityMassLoader</a>(loadByPriority:Boolean = true, parallelFiles:uint = 0)</div>
+<a class="signatureLink" href="#PriorityMassLoader()">PriorityMassLoader</a>(parallelFiles:uint = 0, loadByPriority:Boolean = false)</div>
 <div class="summaryTableDescription">
    Creates a new <code>PriorityMassLoader</code> object.</div>
 </td><td class="summaryTableOwnerCol">PriorityMassLoader</td>
@@ -663,7 +663,7 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>loadByPriority:Boolean</code>&nbsp;&nbsp;[read-write]<p>
-   Defines if the loading is done by priority. By default, this value is <code>true</code>.
+   Defines if the loading is done by priority. By default, this value is <code>false</code>.
    </p><p>If this value is <code>false</code> then the files
    will be loaded directly into the priority order but will not take care of the change of the priority.
    If this value is <code>true</code>, then the <code>parallelFiles</code> value will not be used.</p>
@@ -694,21 +694,22 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function PriorityMassLoader(loadByPriority:Boolean = true, parallelFiles:uint = 0)</code><p>
+<code>public function PriorityMassLoader(parallelFiles:uint = 0, loadByPriority:Boolean = false)</code><p>
    Creates a new <code>PriorityMassLoader</code> object.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">loadByPriority</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash;  Defines if the <code>PriorityMassLoader</code> must load the files by priority.
+<td width="20px"></td><td><code><span class="label">parallelFiles</span>:uint</code> (default = <code>0</code>)<code></code> &mdash;  Defines how many file to load at the same time. This value will affect the loading only if the
+           <code>loadByPriority</code> property is <code>false</code>.
    </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">parallelFiles</span>:uint</code> (default = <code>0</code>)<code></code> &mdash;  Defines how many file to load at the same time. This value will affect the loading only if the
-           <code>loadByPriority</code> property is <code>false</code>.
+<td width="20px"></td><td><code><span class="label">loadByPriority</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash;  Defines if the <code>PriorityMassLoader</code> must load the files by priority. If this value is
+           <code>true</code>, then the <code>parallelFiles</code> property will be ignored.
    </td>
 </tr>
 </table>
@@ -1030,7 +1031,7 @@ showHideInherited();
 <br>
 <p></p><p>
   Dispatched when the loading of files with a lower priority starts. This event
-  won't be dispatched if the value of <code>loadByPriority</code> is <code>false</code>.
+  will be dispatched only if the value of <code>loadByPriority</code> is <code>true</code>.
   
   </p><p>
 <span class="label">See also</span>

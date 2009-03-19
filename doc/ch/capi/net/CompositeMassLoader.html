@@ -125,7 +125,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#CompositeMassLoader()">CompositeMassLoader</a>(name:String = null, keepFiles:Boolean = true, loadableFileFactory:<a href="LoadableFileFactory.html">LoadableFileFactory</a> = null)</div>
+<a class="signatureLink" href="#CompositeMassLoader()">CompositeMassLoader</a>(name:String = null, parallelFiles:int = 0)</div>
 <div class="summaryTableDescription">
    Creates a new <code>CompositeMassLoader</code> object.</div>
 </td><td class="summaryTableOwnerCol">CompositeMassLoader</td>
@@ -429,7 +429,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function CompositeMassLoader(name:String = null, keepFiles:Boolean = true, loadableFileFactory:<a href="LoadableFileFactory.html">LoadableFileFactory</a> = null)</code><p>
+<code>public function CompositeMassLoader(name:String = null, parallelFiles:int = 0)</code><p>
    Creates a new <code>CompositeMassLoader</code> object.
    
    </p><span class="label">Parameters</span>
@@ -443,14 +443,7 @@ showHideInherited();
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">keepFiles</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash;    If the <code>CompositeMassLoader</code> must keep a reference on the created <code>ILoadableFile</code> instances.
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
-<td width="20px"></td><td><code><span class="label">loadableFileFactory</span>:<a href="LoadableFileFactory.html">LoadableFileFactory</a></code> (default = <code>null</code>)<code></code> &mdash;  The <code>LoadableFileFactory</code> to use.
+<td width="20px"></td><td><code><span class="label">parallelFiles</span>:int</code> (default = <code>0</code>)<code></code> &mdash;   The number of files to load at the same time.
    </td>
 </tr>
 </table>
