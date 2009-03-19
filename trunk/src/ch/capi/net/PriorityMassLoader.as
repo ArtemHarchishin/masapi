@@ -2,8 +2,7 @@ package ch.capi.net
 {	import flash.errors.IllegalOperationError;	
 	import flash.events.Event;	
 	
-	import ch.capi.events.MassLoadEvent;	
-	import ch.capi.data.IDataStructure;		import ch.capi.net.MassLoader;
+	import ch.capi.events.MassLoadEvent;			import ch.capi.net.MassLoader;
 	import ch.capi.data.tree.ArrayHeap;
 	import ch.capi.events.PriorityEvent;
 	import ch.capi.net.IMassLoader;
@@ -13,7 +12,7 @@ package ch.capi.net
 	
 	/**
 	 * Dispatched when the loading of files with a lower priority starts. This event
-	 * won't be dispatched if the value of <code>loadByPriority</code> is <code>false</code>.
+	 * will be dispatched only if the value of <code>loadByPriority</code> is <code>true</code>.
 	 * 
 	 * @see			ch.capi.net.PriorityMassLoader#loadByPriority	loadByPriority
 	 * @eventType	ch.capi.events.PriorityEvent.PRIORITY_CHANGED
@@ -62,7 +61,7 @@ package ch.capi.net
 		//---------//
 		private var _filePriority:IMap				= new DictionnaryMap(true);
 		private var _currentPriority:int			= 0;
-		private var _loadByPriority:Boolean			= true;
+		private var _loadByPriority:Boolean			= false;
 		/**
 		 * Defines the default priority to use for the <code>addFile</code> method.
 		 * 
@@ -80,7 +79,7 @@ package ch.capi.net
 		public function get currentPriority():int { return _currentPriority; }
 		
 		/**
-		 * Defines if the loading is done by priority. By default, this value is <code>true</code>.
+		 * Defines if the loading is done by priority. By default, this value is <code>false</code>.
 		 * <p>If this value is <code>false</code> then the files
 		 * will be loaded directly into the priority order but will not take care of the change of the priority.
 		 * If this value is <code>true</code>, then the <code>parallelFiles</code> value will not be used.</p>
@@ -100,11 +99,12 @@ package ch.capi.net
 		/**
 		 * Creates a new <code>PriorityMassLoader</code> object.
 		 * 
-		 * @param	loadByPriority		Defines if the <code>PriorityMassLoader</code> must load the files by priority.
 		 * @param	prallelFiles		Defines how many file to load at the same time. This value will affect the loading only if the
 		 * 								<code>loadByPriority</code> property is <code>false</code>.
+		 * @param	loadByPriority		Defines if the <code>PriorityMassLoader</code> must load the files by priority. If this value is
+		 * 								<code>true</code>, then the <code>parallelFiles</code> property will be ignored.
 		 */
-		public function PriorityMassLoader(loadByPriority:Boolean=true, parallelFiles:uint=0):void 
+		public function PriorityMassLoader(parallelFiles:uint=0, loadByPriority:Boolean=false):void 
 		{
 			super(parallelFiles);
 			super.filesQueue = new ArrayHeap(sortFiles);

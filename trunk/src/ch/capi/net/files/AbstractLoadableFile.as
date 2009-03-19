@@ -1,5 +1,5 @@
 ﻿package ch.capi.net.files
-{	import flash.events.ErrorEvent;	
+{
 	import flash.display.DisplayObject;	
 	import flash.display.LoaderInfo;	
 	import flash.utils.ByteArray;	
@@ -87,7 +87,7 @@
 	 */
 	[Event(name="init", type="flash.events.Event")]
 
-	/**
+import ch.capi.events.LoadStartErrorEvent;	/**
 	 * Represents a <code>AbstractLoadableFile</code>. This is a basic
 	 * implementation to store the generic data of a <code>ILoadableFile</code>.
 	 * 
@@ -356,7 +356,7 @@
 				//an error has been thrown, cancel the loading
 				_loaded = false;
 				_stateLoading = false;
-				_closeEvent = new ErrorEvent(ErrorEvent.ERROR, false, false, "Loading not started : "+e.message);
+				_closeEvent = new LoadStartErrorEvent(LoadStartErrorEvent.START_FAILED, "Failed to start : " + e.message, e);
 			}
 			
 			//always invalidate the request after the loading is started
@@ -749,6 +749,7 @@
 					//more details if the closeEvent is an error event
 					if (closeEvent is IOErrorEvent) message += " ("+(closeEvent as IOErrorEvent).text+")";
 					else if (closeEvent is SecurityErrorEvent) message += " ("+(closeEvent as SecurityErrorEvent).text+")";
+					else if (closeEvent is LoadStartErrorEvent) message += " => "+closeEvent.toString();
 					message += "\n";
 				}
 				

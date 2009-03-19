@@ -718,8 +718,8 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>numFiles:uint</code>&nbsp;&nbsp;[read-only]<p>
-   Defines the total of the files into the <code>MassLoader</code>. This value will remain correct even
-   if files are added during the loading.
+   Defines the total of the files into the <code>MassLoader</code>. This value will remain constant
+   after the loading has been started event if files are added.
    </p><span class="label">Implementation</span>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get numFiles():uint</code>

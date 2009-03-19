@@ -9,7 +9,6 @@ package ch.capi.net.app
 
 	import flash.xml.XMLDocument;		
 	import flash.xml.XMLNode;
-	import flash.net.URLRequest;
 	import flash.net.URLVariables;
 	
 	/**

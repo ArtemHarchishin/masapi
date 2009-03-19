@@ -60,7 +60,8 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
 <a class="signatureLink" href="#GlobalEventDispatcher()">GlobalEventDispatcher</a>()</div>
-<div class="summaryTableDescription"></div>
+<div class="summaryTableDescription">
+   Creates a new <code>GlobalEventDispatcher</code> object.</div>
 </td><td class="summaryTableOwnerCol">GlobalEventDispatcher</td>
 </tr>
 <tr class="">
@@ -112,8 +113,9 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function GlobalEventDispatcher()</code>
-</div>
+<code>public function GlobalEventDispatcher()</code><p>
+   Creates a new <code>GlobalEventDispatcher</code> object.
+   </p></div>
 <a name="methodDetail"></a>
 <div class="detailSectionHeader">Method detail</div>
 <a name="dispatchEvent()"></a>
@@ -127,12 +129,12 @@ showHideInherited();
    Dispatches the specified <code>Event</code> through the listeners. This method
    will also dispatch a <code>GlobalEvent.GLOBAL_BEFORE</code> and <code>GlobalEvent.GLOBAL_AFTER</code>
    event before and after the event dispatching.
-   If the <code>GlobalEvent.GLOBAL_BEFORE</code> dispatching returns <code>false</code>, then the
+   </p><p>If the <code>GlobalEvent.GLOBAL_BEFORE</code> dispatching returns <code>false</code>, then the
    event won't ben dispatched trought the listeners and <code>false</code> is returned. Otherwise,
    the event source and the event <code>GlobalEvent.GLOBAL_AFTER</code> are dispatched and the result
-   is the returned value of the source event dispatching.
+   is the returned value of the source event dispatching.</p>
    
-   </p><span class="label">Parameters</span>
+   <span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">evt</span>:Event</code> &mdash;  The source <code>Event</code>.

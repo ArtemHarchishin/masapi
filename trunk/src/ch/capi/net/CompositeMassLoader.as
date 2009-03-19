@@ -1,9 +1,5 @@
 package ch.capi.net 
 {
-	import ch.capi.errors.NameAlreadyExistsError;	
-	import ch.capi.data.DictionnaryMap;	
-	import ch.capi.data.IMap;	
-	
 	import flash.events.ProgressEvent;	
 	import flash.events.EventDispatcher;	
 	import flash.events.Event;	
@@ -15,6 +11,9 @@ package ch.capi.net
 	import ch.capi.net.LoadableFileFactory;
 	import ch.capi.net.IMassLoader;
 	import ch.capi.net.ILoadableFile;
+	import ch.capi.errors.NameAlreadyExistsError;	
+	import ch.capi.data.DictionnaryMap;	
+	import ch.capi.data.IMap;
 	
 	/**
 	 * Dispatched after all the files have been downloaded
@@ -132,8 +131,8 @@ package ch.capi.net
 
 		private var _storage:ArrayList 					= new ArrayList();
 		private var _massLoader:PriorityMassLoader		= new PriorityMassLoader();
-		private var _factory:LoadableFileFactory;
-		private var _keepFiles:Boolean;
+		private var _factory:LoadableFileFactory		= new LoadableFileFactory();
+		private var _keepFiles:Boolean					= true;
 		private var _name:String;
 
 		//-----------------//
@@ -182,16 +181,12 @@ package ch.capi.net
 		 * 
 		 * @param	name					The name of the <code>CompositeMassLoader</code>. That name must be unique. If no name is defined, then
 		 * 									the instance won't be registered.
-		 * @param	keepFiles				If the <code>CompositeMassLoader</code> must keep a reference on the created <code>ILoadableFile</code> instances.
-		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code> to use.
+		 * @param	parallelFiles			The number of files to load at the same time.
 		 */
-		public function CompositeMassLoader(name:String=null, keepFiles:Boolean=true, loadableFileFactory:LoadableFileFactory=null)
+		public function CompositeMassLoader(name:String=null, parallelFiles:int=0)
 		{
-			if (loadableFileFactory == null) loadableFileFactory = new LoadableFileFactory();
-			
 			_name = name;
-			_keepFiles = keepFiles;
-			_factory = loadableFileFactory;
+			_massLoader.parallelFiles = parallelFiles;
 			
 			registerTo(massLoader);
 			registerLoader(name);
@@ -323,6 +318,7 @@ package ch.capi.net
 			if (priority != null && !(priority is int)) throw new ArgumentError("Illegal value for priority : "+priority);
 			if (priority == null && !(fileOrURL is String  || file is URLRequest)) priority = fileOrURL.priority; 
 			if (priority == null) priority = 0;
+			if (!(priority is int)) throw new ArgumentError("Illegal value for priority : "+priority);
 			
 			//creates the file an put it into the loading queue
 			var file:ILoadableFile = createFile(fileOrURL, fileType, onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
