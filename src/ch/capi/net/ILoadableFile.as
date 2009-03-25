@@ -38,6 +38,14 @@ package ch.capi.net
 	[Event(name="init", type="flash.events.Event")]
 	
 	/**
+	 * Dispatched when the load couldn't start. That means that an error has occured during the <code>start()</code> method
+	 * and an <code>Error</code> has been thrown.
+	 * 
+	 * @eventType	ch.capi.events.LoadStartErrorEvent.START_FAILED
+	 */
+	[Event(name="startFailed", type="ch.capi.events.LoadStartErrorEvent")]
+	
+	/**
 	 * Represents a loadable file.
 	 * 
 	 * @see			ch.capi.net.files.AbstractLoadableFile	AbstractLoadableFile

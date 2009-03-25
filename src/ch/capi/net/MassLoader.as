@@ -1,5 +1,22 @@
-﻿package ch.capi.net
+﻿
+//////////////////////////////////////////////////////////////////////
+//																	//
+//	ooo        ooooo                                          o8o   //
+//	`88.       .888'                                                //
+//	 888b     d'888   .oooo.    .oooo.o  .oooo.   oo.ooooo.  oooo   //
+//	 8 Y88. .P  888  `P  )88b  d88(  "8 `P  )88b   888' `88b `888   //
+//	 8  `888'   888   .oP"888  `"Y88b.   .oP"888   888   888  888   //
+//	 8    Y     888  d8(  888  o.  )88b d8(  888   888   888  888   // 
+//	o8o        o888o `Y888""8o 8""888P' `Y888""8o  888bod8P' o888o 	// 
+//	                                               888              //
+//	                                              o888o            	//
+//																2.0	//
+//////////////////////////////////////////////////////////////////////	                                                               
+
+
+package ch.capi.net
 {
+	import ch.capi.events.GlobalEventDispatcher;	
 	import ch.capi.net.policies.DefaultLoadPolicy;		import ch.capi.data.DictionnaryMap;	
 	import ch.capi.data.IMap;	
 	import ch.capi.data.IList;
@@ -10,7 +27,6 @@
 	
 	import flash.events.Event;
 	import flash.events.ProgressEvent;
-	import flash.events.EventDispatcher;
 	import flash.events.SecurityErrorEvent;
 	import flash.events.IOErrorEvent;
 	import flash.errors.IllegalOperationError;
@@ -89,7 +105,7 @@
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		2.2
 	 */
-	public class MassLoader extends EventDispatcher implements IMassLoader
+	public class MassLoader extends GlobalEventDispatcher implements IMassLoader
 	{
 		//---------//
 		//Constants//
@@ -412,9 +428,10 @@
 		/**
 		 * Starts downloading data from the specified <code>ILoadableFile</code> objects.
 		 * 
+		 * @return	<code>true</code> if the loading has been started, <code>false</code> otherwise.
 		 * @throws	flash.errors.IllegalOperationError	If the <code>MassLoader</code> is already loading.
 		 */
-		public final function start():void
+		public final function start():Boolean
 		{
 			//checks the status
 			if (_isLoading) throw new IllegalOperationError("State already loading");
@@ -447,10 +464,20 @@
 			 * If there is no file to load, then wait some milliseconds before launch the complete
 			 * event so the listeners can register to the MassLoader !
 			 */
-			if (_filesQueue.isEmpty()) _launchTimeout = setTimeout(doComplete, 10);
-			else _launchTimeout = setTimeout(loadNext, 10); //also wait before starting the massive loading
+			if (_filesQueue.isEmpty())
+			{
+				_launchTimeout = setTimeout(doComplete, 10);
+				_isLoading = false;
+			}
+			else
+			{
+				//also wait before starting the massive loading
+				_launchTimeout = setTimeout(loadNext, 10); 
+			}
+			
+			return _isLoading;
 		}
-		
+
 		/**
 		 * Empty the loading queue. This will not affect the current loading.
 		 */
@@ -501,12 +528,18 @@
 		
 		/**
 		 * Start the loading of a file. The file specified will not be removed from the loading queue !
+		 * This method won't start the loading if the <code>ILoadPolicy</code> returns <code>null</code>.
 		 * 
 		 * @param	file		The <code>ILoadManager</code> to load.
 		 * @return	<code>true</code> if the loading has been started.
+		 * @see		#processOpenPolicy()	processOpenPolicy()
 		 */
 		protected final function loadFile(file:ILoadManager):Boolean
 		{
+			//process the policy and exit if the policy returns null
+			file = processOpenPolicy(file);
+			if (file == null) return false;
+			
 			//register to the file
 			_currentFilesLoading++;
 			registerTo(file);
@@ -515,10 +548,8 @@
 			dispatchOpenEvent(file);
 			
 			//try to start the loading
-			file.start();
-			
-			//if the file is loading, return true, else continue
-			if (file.stateLoading) return true;
+			var fileStarted:Boolean = file.start();
+			if (fileStarted) return true; //okay !!!
 		
 			//problem during the launching (or already in cache) => stop it !
 			closeFile(file, null);
@@ -707,11 +738,24 @@
 		 * @param	closeEvent	The event that occured.
 		 * @return	The <code>ILoadManager</code> that must be reloaded or <code>null</code>.
 		 */
-		protected function processPolicy(file:ILoadManager, closeEvent:Event):ILoadManager
+		protected function processClosePolicy(file:ILoadManager, closeEvent:Event):ILoadManager
 		{
-			return _loadPolicy.processFile(file, closeEvent);
+			return _loadPolicy.processFileClose(file, closeEvent, this);
 		}
 		
+		/**
+		 * Process the loading policy on the currently file that is being open. At this point,
+		 * the file hasn't been open and isn't registered into the <code>MassLoader</code>.
+		 * 
+		 * @param	file		The <code>ILoadManager</code> that must be loaded.
+		 * @return	The <code>ILoadManager</code> that must be loaded or <code>null</code> if the specified
+		 * 			<code>ILoadManager</code> shouldn't be loaded.
+		 */
+		protected function processOpenPolicy(file:ILoadManager):ILoadManager
+		{
+			return _loadPolicy.processFileOpen(file, this);
+		}
+
 		/**
 		 * Creates a <code>MassLoadEvent</code> based on the specified <code>ILoadManager</code>.
 		 * 
@@ -831,20 +875,25 @@
 		 */
 		private function loadNext(file:ILoadManager = null, evt:Event = null):void
 		{
-			//remove the specified file
 			if (file != null)
 			{
+				//remove the specified file
 				closeFile(file, evt);
 				
 				//apply the loading policy over the current closed file
-				var f:ILoadManager = processPolicy(file, evt);
+				var f:ILoadManager = processClosePolicy(file, evt);
 				if (f!=null)
 				{
 					_tempTotalBytes -= file.bytesLoaded; //readjust the bytes loaded
 					_filesToLoad.addElement(f);
-					loadFile(f); //launch the loading of the file specified by the load policy
 					
-					return;
+					var loading:Boolean = loadFile(f); //launch the loading of the file specified by the load policy
+					if (loading) return; //if the file is being loaded, nothing more to do
+					
+					/*
+					 * Being here means that the file to reload fails to start... In that case, 
+					 * just let the MassLoader continues his loading process as usual.
+					 */
 				}
 				else if (!loadPolicy.canContinue)
 				{

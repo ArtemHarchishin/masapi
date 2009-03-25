@@ -66,7 +66,8 @@
 		/**
 		 * Retrieves the data of the <code>loadManagerObject</code> if the loading
 		 * is complete. The supported classes are <code>DataType.LOADER</code>, <code>DataType.BITMAP</code>
-		 * and <code>DataType.BITMAP_DATA</code>.
+		 * and <code>DataType.BITMAP_DATA</code>. If the <code>asClass</code> parameter is <code>null</code>,
+		 * then the source <code>Loader</code> object is returned.
 		 * 
 		 * @param 	asClass		The class instance that should be returned by the method.
 		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
