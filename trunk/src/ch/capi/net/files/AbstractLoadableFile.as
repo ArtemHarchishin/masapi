@@ -1,12 +1,14 @@
 ﻿package ch.capi.net.files
 {
+	import ch.capi.events.GlobalEventDispatcher;	
+	
+	import flash.events.TextEvent;	
 	import flash.display.DisplayObject;	
 	import flash.display.LoaderInfo;	
 	import flash.utils.ByteArray;	
 	import flash.events.HTTPStatusEvent;	
 	import flash.system.ApplicationDomain;	
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
@@ -16,6 +18,7 @@
 	import flash.errors.IllegalOperationError;
 	import flash.utils.describeType;
 	import flash.utils.getQualifiedClassName;
+	import flash.utils.setTimeout;
 	
 	import ch.capi.data.text.Properties;	
 	import ch.capi.display.IRootDocument;
@@ -26,6 +29,7 @@
 	import ch.capi.data.DictionnaryMap;
 	import ch.capi.utils.VariableReplacer;
 	import ch.capi.errors.DataError;
+	import ch.capi.events.LoadStartErrorEvent;
 	
 	/**
 	 * Dispatched after all the received data is received.
@@ -86,8 +90,16 @@
 	 * @eventType	flash.events.Event.INIT
 	 */
 	[Event(name="init", type="flash.events.Event")]
+	
+	/**
+	 * Dispatched when the load couldn't start. That means that an error has occured during the <code>start()</code> method
+	 * and an <code>Error</code> has been thrown.
+	 * 
+	 * @eventType	ch.capi.events.LoadStartErrorEvent.START_FAILED
+	 */
+	[Event(name="startFailed", type="ch.capi.events.LoadStartErrorEvent")]
 
-import ch.capi.events.LoadStartErrorEvent;	/**
+	/**
 	 * Represents a <code>AbstractLoadableFile</code>. This is a basic
 	 * implementation to store the generic data of a <code>ILoadableFile</code>.
 	 * 
@@ -96,7 +108,7 @@ import ch.capi.events.LoadStartErrorEvent;	/**
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		2.1
 	 */
-	public class AbstractLoadableFile extends EventDispatcher implements INetStateManager
+	public class AbstractLoadableFile extends GlobalEventDispatcher implements INetStateManager
 	{
 		//---------//
 		//Constants//
@@ -325,10 +337,11 @@ import ch.capi.events.LoadStartErrorEvent;	/**
 		 * the <code>fixedRequest</code> is invalidated right after the loading is started (just to ensure that the <code>fixedRequest</code>
 		 * will be update the next time the <code>start()</code> method is called).
 		 * 
+		 * @return	<code>true</code> if the loading has been started, <code>false</code> otherwise.
 		 * @throws  flash.errors.IllegalOperationError	If the <code>AbstractLoadableFile</code> has been destroyed.
 		 * @throws	flash.errors.IllegalOperationError	If the <code>AbstractLoadableFile</code> is already loading.
 		 */
-		public final function start():void
+		public final function start():Boolean
 		{
 			checkDestroyed();
 			if (_stateLoading) throw new IllegalOperationError("State already loading");
@@ -357,12 +370,17 @@ import ch.capi.events.LoadStartErrorEvent;	/**
 				_loaded = false;
 				_stateLoading = false;
 				_closeEvent = new LoadStartErrorEvent(LoadStartErrorEvent.START_FAILED, "Failed to start : " + e.message, e);
+				
+				//dispatches the event in a delayed time of 10ms
+				setTimeout(dispatchEvent, 10, _closeEvent);
 			}
 			
 			//always invalidate the request after the loading is started
 			invalidateFixedRequest();
+			
+			return _stateLoading;
 		}
-		
+
 		/**
 		 * Set the state as idle.
 		 * 
@@ -747,9 +765,8 @@ import ch.capi.events.LoadStartErrorEvent;	/**
 					message += closeEvent.type;
 					
 					//more details if the closeEvent is an error event
-					if (closeEvent is IOErrorEvent) message += " ("+(closeEvent as IOErrorEvent).text+")";
-					else if (closeEvent is SecurityErrorEvent) message += " ("+(closeEvent as SecurityErrorEvent).text+")";
-					else if (closeEvent is LoadStartErrorEvent) message += " => "+closeEvent.toString();
+					if (closeEvent is TextEvent) message += " ("+(closeEvent as TextEvent).text+")";
+					else message += " ("+closeEvent.toString()+")";
 					message += "\n";
 				}
 				

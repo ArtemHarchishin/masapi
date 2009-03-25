@@ -1,7 +1,8 @@
 package ch.capi.net
 {
 	import flash.events.Event;	
-	import flash.events.IEventDispatcher;
+	
+	import ch.capi.events.IGlobalEventDispatcher;	
 	
 	/**
 	 * Dispatched after all the received data is received.
@@ -41,7 +42,7 @@ package ch.capi.net
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		2.1
 	 */
-	public interface ILoadManager extends IEventDispatcher
+	public interface ILoadManager extends IGlobalEventDispatcher
 	{
 		/**
 		 * Defines if the <code>ILoadManager</code> operation is complete. This
@@ -85,8 +86,9 @@ package ch.capi.net
 		/**
 		 * Starts downloading data from the specified URL.
 		 * 
+		 * @return	<code>true</code> if the loading has been started, <code>false</code> otherwise.
 		 * @throws	flash.errors.IllegalOperationError	If the <code>ILoadManager</code> is already loading.
 		 */
-		function start():void;
+		function start():Boolean;
 	}
 }

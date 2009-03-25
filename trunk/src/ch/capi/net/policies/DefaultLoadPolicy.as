@@ -1,5 +1,6 @@
 package ch.capi.net.policies
 {
+	import ch.capi.net.IMassLoader;	
 	import ch.capi.net.ILoadManager;	
 	import ch.capi.net.ILoadPolicy;	
 	import ch.capi.data.DictionnaryMap;	
@@ -73,7 +74,9 @@ package ch.capi.net.policies
 		public function get defaultFiles():IMap { return _defaultFiles; }
 		
 		/**
-		 * Defines if the massive loading can continue or not when a download has failed.
+		 * Defines if the massive loading can continue or not when a download has failed.  This property will only
+		 * be checked after the <code>processFileClose()</code> method has been called and
+		 * only if it returns <code>null</code>.
 		 */
 		public function get canContinue():Boolean { return _continue; }
 		
@@ -104,9 +107,10 @@ package ch.capi.net.policies
 		 * 
 		 * @param	file			The <code>ILoadManager</code> to process.
 		 * @param	closeEvent 		The event within the <code>ILoadManager</code> is finished.
+		 * @param	source			The <code>IMassLoader</code> processing the <code>ILoadManager</code>.
 		 * @return	The <code>ILoadManager</code> to reload or <code>null</code> if there is nothing do.
 		 */
-		public function processFile(file:ILoadManager, closeEvent:Event):ILoadManager
+		public function processFileClose(file:ILoadManager, closeEvent:Event, source:IMassLoader):ILoadManager
 		{
 			//nothing to process
 			if (closeEvent.type == Event.COMPLETE) return null;
@@ -124,6 +128,21 @@ package ch.capi.net.policies
 			}
 			
 			_linkedFiles.put(file, nbLoaded+1);
+			return file;
+		}
+		
+		/**
+		 * Called by a <code>IMassLoader</code> before it starts to load the specified <code>ILoadManager</code>. If
+		 * this method returns <code>null</code>, then the <code>IMassLoader</code> will simply skip the file. This method
+		 * simply return the specified <code>ILoadManager</code>.
+		 * 
+		 * @param	file		The <code>ILoadManager</code> before being started.
+		 * @param	source			The <code>IMassLoader</code> processing the <code>ILoadManager</code>.
+		 * @return	The <code>ILoadManager</code> to load or <code>null</code> if the <code>IMassLoader</code> must skip
+		 * 			The file.
+		 */
+		public function processFileOpen(file:ILoadManager, source:IMassLoader):ILoadManager
+		{
 			return file;
 		}
 

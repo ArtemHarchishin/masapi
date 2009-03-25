@@ -10,13 +10,13 @@
 <body>
 <script type="text/javascript" language="javascript" src="../../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../../cookies.js"></script><script type="text/javascript" language="javascript">
 <!--
-				asdocTitle = 'ApplicationMassLoader - API Documentation';
+				asdocTitle = 'ApplicationMassLoader - Masapi 2.0 API Reference';
 				var baseRef = '../../../../';
 				window.onload = configPage;
 			--></script>
 <table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
 <tr>
-<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../index-list.html')" href="../../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../../index.html?ch/capi/net/app/ApplicationMassLoader.html&amp;ch/capi/net/app/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../../images/logo.jpg"></td>
+<td align="left" class="titleTableTitle">Masapi 2.0 - http://masapi.googlecode.com</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../index-list.html')" href="../../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../../index.html?ch/capi/net/app/ApplicationMassLoader.html&amp;ch/capi/net/app/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../../images/logo.jpg"></td>
 </tr>
 <tr class="titleTableRow2">
 <td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;ApplicationMassLoader</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a></td>
@@ -38,7 +38,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <td class="classHeaderTableLabel">Class</td><td class="classSignature">public class ApplicationMassLoader</td>
 </tr>
 <tr>
-<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">ApplicationMassLoader <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> <a href="../PriorityMassLoader.html">PriorityMassLoader</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> <a href="../MassLoader.html">MassLoader</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> flash.events.EventDispatcher</td>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">ApplicationMassLoader <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> <a href="../PriorityMassLoader.html">PriorityMassLoader</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> <a href="../MassLoader.html">MassLoader</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> <a href="../../events/GlobalEventDispatcher.html">GlobalEventDispatcher</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> flash.events.EventDispatcher</td>
 </tr>
 <tr>
 <td class="classHeaderTableLabel">Implements</td><td><a href="../IMassLoader.html">IMassLoader</a></td>
@@ -288,6 +288,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
+<a class="signatureLink" href="../../events/GlobalEventDispatcher.html#dispatchEvent()">dispatchEvent</a>(evt:Event):Boolean</div>
+<div class="summaryTableDescription">
+   Dispatches the specified <code>Event</code> through the listeners.</div>
+</td><td class="summaryTableOwnerCol"><a href="../../events/GlobalEventDispatcher.html">GlobalEventDispatcher</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
 <a class="signatureLink" href="../MassLoader.html#getFileCount()">getFileCount</a>():uint</div>
 <div class="summaryTableDescription">
    Get the number of files to be loaded.</div>
@@ -361,7 +369,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="../MassLoader.html#start()">start</a>():void</div>
+<a class="signatureLink" href="../MassLoader.html#start()">start</a>():Boolean</div>
 <div class="summaryTableDescription">
    Starts downloading data from the specified <code>ILoadableFile</code> objects.</div>
 </td><td class="summaryTableOwnerCol"><a href="../MassLoader.html">MassLoader</a></td>
@@ -500,10 +508,19 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedProtectedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="../MassLoader.html#processPolicy()">processPolicy</a>(file:<a href="../../net/ILoadManager.html">ILoadManager</a>, closeEvent:Event):<a href="../../net/ILoadManager.html">ILoadManager</a>
+<a class="signatureLink" href="../MassLoader.html#processClosePolicy()">processClosePolicy</a>(file:<a href="../../net/ILoadManager.html">ILoadManager</a>, closeEvent:Event):<a href="../../net/ILoadManager.html">ILoadManager</a>
 </div>
 <div class="summaryTableDescription">
    Processes the loading policy on the currently closed file.</div>
+</td><td class="summaryTableOwnerCol"><a href="../MassLoader.html">MassLoader</a></td>
+</tr>
+<tr class="hideInheritedProtectedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="../MassLoader.html#processOpenPolicy()">processOpenPolicy</a>(file:<a href="../../net/ILoadManager.html">ILoadManager</a>):<a href="../../net/ILoadManager.html">ILoadManager</a>
+</div>
+<div class="summaryTableDescription">
+   Process the loading policy on the currently file that is being open.</div>
 </td><td class="summaryTableOwnerCol"><a href="../MassLoader.html">MassLoader</a></td>
 </tr>
 <tr class="hideInheritedProtectedMethod">
@@ -605,6 +622,22 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </div>
 </td><td class="summaryTableDescription summaryTableCol">
   Dispatched when the loading of a <code>ILoadManager</code> progresses.</td><td class="summaryTableOwnerCol"><a href="../MassLoader.html">MassLoader</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="../../events/GlobalEventDispatcher.html#event:globalAfter">globalAfter</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched after an event is dispatched.</td><td class="summaryTableOwnerCol"><a href="../../events/GlobalEventDispatcher.html">GlobalEventDispatcher</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="../../events/GlobalEventDispatcher.html#event:globalBefore">globalBefore</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched before an event is dispatched.</td><td class="summaryTableOwnerCol"><a href="../../events/GlobalEventDispatcher.html">GlobalEventDispatcher</a></td>
 </tr>
 <tr class="hideInheritedEvent">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
@@ -821,9 +854,8 @@ showHideInherited();
 <hr>
 <br>
 <p></p>
-<center class="copyright"> 
-</center>
+<center class="copyright">Cedric Tabin - http://www.astorm.ch</center>
 </div>
 </body>
 </html>
-<!-- -->
+<!--Cedric Tabin - http://www.astorm.ch-->

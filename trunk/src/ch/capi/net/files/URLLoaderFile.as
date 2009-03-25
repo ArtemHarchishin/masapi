@@ -73,7 +73,8 @@ package ch.capi.net.files
 		 * 	<li>If the format is binary, then the classes <code>DataType.BYTE_ARRAY</code>, <code>DataType.BITMAP</code> 
 		 * 	and <code>DataType.LOADER</code> are supported. If you use the class <code>DataType.BITMAP</code>, the data won't
 		 * 	be directly available into the <code>Bitmap</code> instance returned. An event <code>Event.INIT</code> will be dispatched
-		 * 	by the <code>Bitmap</code> after the new <code>BitmapData</code> has been updated.</li>
+		 * 	by the <code>Bitmap</code> after the new <code>BitmapData</code> has been updated. If a <code>DataType.LOADER</code> is asked,
+		 * 	each time this method will create a new <code>Loader</code> and the put the data into it using the <code>loadBytes()</code> method.</li>
 		 * 	<li>If the format is variables, then the class <code>DatyType.URL_VARIABLES</code> is supported.</li>
 		 * 	<li>If the format is text, then the classes <code>DatyType.XML</code>, <code>DatyType.XML_DOCUMENT</code>,
 		 * 	<code>DatyType.STYLE_SHEET</code> and <code>DatyType.URL_VARIABLES</code> are supported.

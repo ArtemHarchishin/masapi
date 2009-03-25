@@ -4,19 +4,19 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="MassLoader,ch.capi.net.MassLoader,alwaysDispatchProgressEvent,bytesLoaded,bytesTotal,closeEvent,files,filesLoading,filesQueue,loadInfo,loadPolicy,loaded,nextFileToLoad,numFiles,numFilesLoaded,numFilesLoading,numFilesOpen,numFilesToLoad,parallelFiles,stateIdle,stateLoading,addFile,clear,createMassLoadEvent,getFileCount,getFileQueueIndex,getFiles,getStaticIndexOf,hasFile,isComplete,loadFile,loadNextFile,onClose,onComplete,onIOError,onOpen,onProgress,onSecurityError,processPolicy,registerTo,removeFile,start,startLoading,stop,toString,unregisterFrom,updateBytes" name="keywords">
+<meta content="MassLoader,ch.capi.net.MassLoader,alwaysDispatchProgressEvent,bytesLoaded,bytesTotal,closeEvent,files,filesLoading,filesQueue,loadInfo,loadPolicy,loaded,nextFileToLoad,numFiles,numFilesLoaded,numFilesLoading,numFilesOpen,numFilesToLoad,parallelFiles,stateIdle,stateLoading,addFile,clear,createMassLoadEvent,getFileCount,getFileQueueIndex,getFiles,getStaticIndexOf,hasFile,isComplete,loadFile,loadNextFile,onClose,onComplete,onIOError,onOpen,onProgress,onSecurityError,processClosePolicy,processOpenPolicy,registerTo,removeFile,start,startLoading,stop,toString,unregisterFrom,updateBytes" name="keywords">
 <title>ch.capi.net.MassLoader</title>
 </head>
 <body>
 <script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
 <!--
-				asdocTitle = 'MassLoader - API Documentation';
+				asdocTitle = 'MassLoader - Masapi 2.0 API Reference';
 				var baseRef = '../../../';
 				window.onload = configPage;
 			--></script>
 <table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
 <tr>
-<td align="left" class="titleTableTitle">API Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?ch/capi/net/MassLoader.html&amp;ch/capi/net/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+<td align="left" class="titleTableTitle">Masapi 2.0 - http://masapi.googlecode.com</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?ch/capi/net/MassLoader.html&amp;ch/capi/net/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
 </tr>
 <tr class="titleTableRow2">
 <td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;MassLoader</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#eventSummary">Events</a></td>
@@ -38,7 +38,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <td class="classHeaderTableLabel">Class</td><td class="classSignature">public class MassLoader</td>
 </tr>
 <tr>
-<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">MassLoader <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> flash.events.EventDispatcher</td>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">MassLoader <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> <a href="../events/GlobalEventDispatcher.html">GlobalEventDispatcher</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> flash.events.EventDispatcher</td>
 </tr>
 <tr>
 <td class="classHeaderTableLabel">Implements</td><td><a href="IMassLoader.html">IMassLoader</a></td>
@@ -196,6 +196,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a name="methodSummary"></a>
 <div class="summarySection">
 <div class="summaryTableTitle">Public Methods</div>
+<div class="showHideLinks">
+<div class="hideInheritedMethod" id="hideInheritedMethod">
+<a onclick="javascript:setInheritedVisible(false,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Methods</a>
+</div>
+<div class="showInheritedMethod" id="showInheritedMethod">
+<a onclick="javascript:setInheritedVisible(true,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Methods</a>
+</div>
+</div>
 <table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
 <tr>
 <th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
@@ -223,6 +231,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summaryTableDescription">
    Empty the loading queue.</div>
 </td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="../events/GlobalEventDispatcher.html#dispatchEvent()">dispatchEvent</a>(evt:Event):Boolean</div>
+<div class="summaryTableDescription">
+   Dispatches the specified <code>Event</code> through the listeners.</div>
+</td><td class="summaryTableOwnerCol"><a href="../events/GlobalEventDispatcher.html">GlobalEventDispatcher</a></td>
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
@@ -267,7 +283,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#start()">start</a>():void</div>
+<a class="signatureLink" href="#start()">start</a>():Boolean</div>
 <div class="summaryTableDescription">
    Starts downloading data from the specified <code>ILoadableFile</code> objects.</div>
 </td><td class="summaryTableOwnerCol">MassLoader</td>
@@ -390,10 +406,19 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#processPolicy()">processPolicy</a>(file:<a href="ILoadManager.html">ILoadManager</a>, closeEvent:Event):<a href="../net/ILoadManager.html">ILoadManager</a>
+<a class="signatureLink" href="#processClosePolicy()">processClosePolicy</a>(file:<a href="ILoadManager.html">ILoadManager</a>, closeEvent:Event):<a href="../net/ILoadManager.html">ILoadManager</a>
 </div>
 <div class="summaryTableDescription">
    Processes the loading policy on the currently closed file.</div>
+</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#processOpenPolicy()">processOpenPolicy</a>(file:<a href="ILoadManager.html">ILoadManager</a>):<a href="../net/ILoadManager.html">ILoadManager</a>
+</div>
+<div class="summaryTableDescription">
+   Process the loading policy on the currently file that is being open.</div>
 </td><td class="summaryTableOwnerCol">MassLoader</td>
 </tr>
 <tr class="">
@@ -435,6 +460,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a name="eventSummary"></a>
 <div class="summarySection">
 <div class="summaryTableTitle">Events</div>
+<div class="showHideLinks">
+<div class="hideInheritedEvent" id="hideInheritedEvent">
+<a onclick="javascript:setInheritedVisible(false,'Event');" href="#eventSummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Events</a>
+</div>
+<div class="showInheritedEvent" id="showInheritedEvent">
+<a onclick="javascript:setInheritedVisible(true,'Event');" href="#eventSummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Events</a>
+</div>
+</div>
 <table id="summaryTableEvent" class="summaryTable " cellpadding="3" cellspacing="0">
 <tr>
 <th>&nbsp;</th><th colspan="2">Event</th><th>Summary</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
@@ -479,6 +512,22 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </div>
 </td><td class="summaryTableDescription summaryTableCol">
   Dispatched when the loading of a <code>ILoadManager</code> progresses.</td><td class="summaryTableOwnerCol">MassLoader</td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="../events/GlobalEventDispatcher.html#event:globalAfter">globalAfter</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched after an event is dispatched.</td><td class="summaryTableOwnerCol"><a href="../events/GlobalEventDispatcher.html">GlobalEventDispatcher</a></td>
+</tr>
+<tr class="hideInheritedEvent">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="../events/GlobalEventDispatcher.html#event:globalBefore">globalBefore</a>
+</div>
+</td><td class="summaryTableDescription summaryTableCol">
+  Dispatched before an event is dispatched.</td><td class="summaryTableOwnerCol"><a href="../events/GlobalEventDispatcher.html">GlobalEventDispatcher</a></td>
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
@@ -1112,6 +1161,7 @@ showHideInherited();
 <div class="detailBody">
 <code>protected final function loadFile(file:<a href="ILoadManager.html">ILoadManager</a>):Boolean</code><p>
    Start the loading of a file. The file specified will not be removed from the loading queue !
+   This method won't start the loading if the <code>ILoadPolicy</code> returns <code>null</code>.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
@@ -1128,6 +1178,12 @@ showHideInherited();
    </td>
 </tr>
 </table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../net/MassLoader.html#processOpenPolicy()" target="">processOpenPolicy()</a>
+</div>
 </div>
 <a name="loadNextFile()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -1262,14 +1318,14 @@ showHideInherited();
 </tr>
 </table>
 </div>
-<a name="processPolicy()"></a>
+<a name="processClosePolicy()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">processPolicy</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+<td class="detailHeaderName">processClosePolicy</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>protected function processPolicy(file:<a href="ILoadManager.html">ILoadManager</a>, closeEvent:Event):<a href="../net/ILoadManager.html">ILoadManager</a></code><p>
+<code>protected function processClosePolicy(file:<a href="ILoadManager.html">ILoadManager</a>, closeEvent:Event):<a href="../net/ILoadManager.html">ILoadManager</a></code><p>
    Processes the loading policy on the currently closed file.
    
    </p><span class="label">Parameters</span>
@@ -1292,6 +1348,37 @@ showHideInherited();
 <tr>
 <td width="20"></td><td><code><a href="../net/ILoadManager.html">ILoadManager</a></code> &mdash; 
                         The <code>ILoadManager</code> that must be reloaded or <code>null</code>.
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="processOpenPolicy()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">processOpenPolicy</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function processOpenPolicy(file:<a href="ILoadManager.html">ILoadManager</a>):<a href="../net/ILoadManager.html">ILoadManager</a></code><p>
+   Process the loading policy on the currently file that is being open. At this point,
+   the file hasn't been open and isn't registered into the <code>MassLoader</code>.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">file</span>:<a href="ILoadManager.html">ILoadManager</a></code> &mdash;  The <code>ILoadManager</code> that must be loaded.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../net/ILoadManager.html">ILoadManager</a></code> &mdash; 
+                        The <code>ILoadManager</code> that must be loaded or <code>null</code> if the specified
+      <code>ILoadManager</code> shouldn't be loaded.
    
                         
                      </td>
@@ -1366,10 +1453,18 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public final function start():void</code><p>
+<code>public final function start():Boolean</code><p>
    Starts downloading data from the specified <code>ILoadableFile</code> objects.
    
-   </p><br>
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; <code>true</code> if the loading has been started, <code>false</code> otherwise.
+   </td>
+</tr>
+</table>
+<br>
 <span class="label">Throws</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
@@ -1575,9 +1670,8 @@ showHideInherited();
 <hr>
 <br>
 <p></p>
-<center class="copyright"> 
-</center>
+<center class="copyright">Cedric Tabin - http://www.astorm.ch</center>
 </div>
 </body>
 </html>
-<!-- -->
+<!--Cedric Tabin - http://www.astorm.ch-->

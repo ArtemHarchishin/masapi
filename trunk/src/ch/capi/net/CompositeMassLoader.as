@@ -1,10 +1,10 @@
 package ch.capi.net 
 {
 	import flash.events.ProgressEvent;	
-	import flash.events.EventDispatcher;	
 	import flash.events.Event;	
 	import flash.net.URLRequest;		
 	
+	import ch.capi.events.GlobalEventDispatcher;	
 	import ch.capi.events.PriorityEvent;	
 	import ch.capi.events.MassLoadEvent;
 	import ch.capi.data.ArrayList;	
@@ -122,7 +122,7 @@ package ch.capi.net
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		1.0
 	 */
-	public class CompositeMassLoader extends EventDispatcher
+	public class CompositeMassLoader extends GlobalEventDispatcher
 	{
 		//---------//
 		//Variables//
