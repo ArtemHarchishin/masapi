@@ -1,0 +1,17 @@
+#!/bin/sh
+
+source config
+
+folder_output="$default_output_documentation"
+
+if [ $# -eq 1 ]; then
+	if [ $1 = "-help" ]; then
+		echo "Usage : $0 [output_folder]"
+		exit
+	else
+		folder_output=$1
+	fi
+fi
+
+echo "Generating documentation into folder $folder_output"
+$flex_sdk_path/asdoc -source-path ./src -output $folder_output -doc-sources ./src/ch -main-title "Masapi 2.0 - http://masapi.googlecode.com" -window-title "Masapi 2.0 API Reference" -footer "Cedric Tabin - http://www.astorm.ch"
