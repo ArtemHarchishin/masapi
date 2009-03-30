@@ -1,0 +1,31 @@
+#!/bin/sh
+
+source config
+cd ..
+
+current_revision=`svn info | grep Revision | grep -o -E [0-9]+`
+echo -n "Enter revision (current=$current_revision) : "
+read revision
+
+file_name="masapi-2.0-r$revision.zip"
+
+mkdir tmp
+echo "Copying sources..."
+cp -R $source_path tmp
+echo "Copying documentation..."
+cp -R $doc_path tmp
+
+echo "Removing .svn folders..."
+find tmp -name \.svn -exec rm -rf {} \;
+
+cd tmp
+zip -r $file_name $source_path $doc_path
+mv $file_name ../bundles/svn
+
+cd ..
+svn add ./bundles/svn/$file_name
+
+rm -rf tmp
+
+
+

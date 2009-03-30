@@ -4,6 +4,8 @@
 # This scripts sets the global variables #
 ##########################################
 
+source_path="src"
+doc_path="doc"
 flex_sdk_path=../tools/flex-sdk/bin
 
 default_output_documentation="./doc"

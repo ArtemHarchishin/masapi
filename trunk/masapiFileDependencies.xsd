@@ -7,9 +7,6 @@
                 <xsd:complexType>
 					<xsd:sequence maxOccurs="1" minOccurs="0">
                         <xsd:element name="variables" type="Variables" />
-                    </xsd:sequence>
-				
-                    <xsd:sequence>
                         <xsd:element name="files" type="Files" />
                         <xsd:element name="dependencies" type="Dependencies" />
                     </xsd:sequence>
@@ -22,7 +19,7 @@
                 <xsd:choice maxOccurs="unbounded">
                 	<xsd:element name="folder" type="FolderDefinition" />
                     <xsd:element name="file" type="FileDefinition" />
-                </xsd:sequence>
+                </xsd:choice>
                 
                 <xsd:attribute name="useCache" type="Boolean" />
                 <xsd:attribute name="virtualBytesTotal" type="xsd:int" />
@@ -35,7 +32,7 @@
             	<xsd:choice maxOccurs="unbounded">
                 	<xsd:element name="folder" type="FolderDefinition" />
                     <xsd:element name="file" type="FileDefinition" />
-                </xsd:sequence>
+                </xsd:choice>
                 
                 <xsd:attribute name="path" type="xsd:string" />
                 <xsd:attribute name="absolutePath" type="Boolean" />

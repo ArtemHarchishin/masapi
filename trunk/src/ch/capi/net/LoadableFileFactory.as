@@ -109,8 +109,10 @@
 		/**
 		 * Defines the <code>FileTypeSelector</code> that will be used when the
 		 * <code>createFile</code> method is called. This value is never <code>null</code>.
+		 * By default, this value is intialized by the default <code>FileTypeSelector</code>.
 		 * 
 		 * @see		#createFile()		createFile()
+		 * @see		ch.capi.net.FileTypeSelector#defaultFileTypeSelector	FileTypeSelector.defaultFileTypeSelector
 		 */
 		public function get fileTypeSelector():FileTypeSelector { return _fileSelector; }
 		public function set fileTypeSelector(value:FileTypeSelector):void

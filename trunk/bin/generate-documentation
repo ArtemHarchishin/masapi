@@ -1,6 +1,7 @@
 #!/bin/sh
 
 source config
+cd ..
 
 folder_output="$default_output_documentation"
 
