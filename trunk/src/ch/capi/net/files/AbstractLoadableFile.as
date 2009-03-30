@@ -1,7 +1,5 @@
 ﻿package ch.capi.net.files
 {
-	import ch.capi.events.GlobalEventDispatcher;	
-	
 	import flash.events.TextEvent;	
 	import flash.display.DisplayObject;	
 	import flash.display.LoaderInfo;	
@@ -20,6 +18,7 @@
 	import flash.utils.getQualifiedClassName;
 	import flash.utils.setTimeout;
 	
+	import ch.capi.events.GlobalEventDispatcher;
 	import ch.capi.data.text.Properties;	
 	import ch.capi.display.IRootDocument;
 	import ch.capi.net.ILoadableFile;	
@@ -229,7 +228,7 @@
 		/**
 		 * Defines the virtual total bytes. This value
 		 * represents an approximation of the total bytes.
-		 * This value should be greather than the real amount
+		 * This value should be greater than the real amount
 		 * of bytes of the loadable file.
 		 */
 		public function get virtualBytesTotal():uint { return _virtualBytesTotal; }
@@ -258,6 +257,7 @@
 		 * it is directly called or if a sub-class doesn't implement the <code>ILoadableFile</code> interface.
 		 * 
 		 * @param	loadManagerObject		The <code>loadManagerObject</code>.
+		 * @throws	flash.errors.IllegalOperationError	If the sub-class doesn't implement <code>ILoadableFile</code>.
 		 */
 		public function AbstractLoadableFile(loadManagerObject:Object):void
 		{		
@@ -271,21 +271,6 @@
 		//--------------//
 		
 		/**
-		 * Tells the <code>ILoadableFile</code> to update the <code>fixedRequest</code> value that
-		 * will be used to load the file. By default, this method is automatically called when the <code>start()<code>
-		 * method is executed and the <code>fixedRequest</code> hasn't been updated.
-		 * 
-		 * @throws  flash.errors.IllegalOperationError	If the <code>AbstractLoadableFile</code> has been destroyed.
-		 */
-		public function prepareFixedRequest():void
-		{
-			checkDestroyed();
-
-			_fixedRequest = getURLRequest();
-			_fixedRequestUpdated = true;
-		}
-		
-		/**
 		 * Invalidate the current <code>fixedRequest</code>. It means that the next time
 		 * the <code>start()</code> method will be launched, the <code>ILoadableFile</code>
 		 * will relaunch the loading of the data, without taking care of the cache.
@@ -295,6 +280,21 @@
 		public function invalidateFixedRequest():void
 		{
 			_fixedRequestUpdated = false;
+		}
+		
+		/**
+		 * Tells the <code>ILoadableFile</code> to update the <code>fixedRequest</code> value that
+		 * will be used to load the file. By default, this method is automatically called when the 
+		 * <code>start()</code> method is executed and the <code>fixedRequest</code> hasn't been updated.
+		 * 
+		 * @throws  flash.errors.IllegalOperationError	If the <code>AbstractLoadableFile</code> has been destroyed.
+		 */
+		public function prepareFixedRequest():void
+		{
+			checkDestroyed();
+
+			_fixedRequest = getURLRequest();
+			_fixedRequestUpdated = true;
 		}
 		
 		/**
@@ -466,11 +466,11 @@
 		 * Retrieves the <code>URLRequest</code> that is created depending of
 		 * the <code>useCache</code> property value. The creation of the <code>URLRequest</code>
 		 * is based on the <code>netState</code>. If the <code>isOnline()</code> method returns
-		 * <code>false</code> or the <code>useCache</code> property value is </code>true</code>, then
+		 * <code>false</code> or the <code>useCache</code> property value is <code>true</code>, then
 		 * the current <code>urlRequest</code> is returned. Else a new <code>URLRequest</code> is created,
 		 * cloning the data and adding a no cache variable.
 		 * 
-		 * @return		The <code>URLRequest</code>
+		 * @return		The <code>URLRequest</code>.
 		 * @see			#useCache 	useCache
 		 * @see			#isOnline()	isOnline()
 		 * @throws  flash.errors.IllegalOperationError	If the <code>AbstractLoadableFile</code> has been destroyed.
@@ -503,7 +503,7 @@
 		 * is supposed to be overriden by the sub-classes. It always throws an
 		 * <code>IllegalOperationError</code>.
 		 * 
-		 * @throws	IllegalOperationError	Always if not overriden.
+		 * @throws	flash.errors.IllegalOperationError	Always if not overriden.
 		 */
 		protected function processLoading(request:URLRequest):void 
 		{

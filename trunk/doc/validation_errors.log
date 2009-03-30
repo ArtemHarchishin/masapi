@@ -1,0 +1,6 @@
+Text for description in ch.capi.net:AbstractLoadableFile/getURLRequest is not valid.
+org.xml.sax.SAXParseException: The element type "test" must be terminated by the matching end-tag "</test>".
+
+Text for description in ch.capi.net:AbstractLoadableFile/prepareFixedRequest is not valid.
+org.xml.sax.SAXParseException: The element type "code" must be terminated by the matching end-tag "</code>".
+
