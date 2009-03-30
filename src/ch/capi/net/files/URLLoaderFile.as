@@ -77,7 +77,7 @@ package ch.capi.net.files
 		 * 	each time this method will create a new <code>Loader</code> and the put the data into it using the <code>loadBytes()</code> method.</li>
 		 * 	<li>If the format is variables, then the class <code>DatyType.URL_VARIABLES</code> is supported.</li>
 		 * 	<li>If the format is text, then the classes <code>DatyType.XML</code>, <code>DatyType.XML_DOCUMENT</code>,
-		 * 	<code>DatyType.STYLE_SHEET</code> and <code>DatyType.URL_VARIABLES</code> are supported.
+		 * 	<code>DatyType.STYLE_SHEET</code> and <code>DatyType.URL_VARIABLES</code> are supported.</li>
 		 * </ul>
 		 * 
 		 * @param 	asClass		The class instance that should be returned by the method.

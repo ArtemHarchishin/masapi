@@ -331,7 +331,7 @@ package ch.capi.net
 		}
 
 		/**
-		 * Add a file to the loading queue. A file added while the <code>MassLoader<code>
+		 * Add a file to the loading queue. A file added while the <code>MassLoader</code>
 		 * is already running will not be added to the current loading queue. You should stop
 		 * and restart the <code>MassLoader</code> in order to include the file into the loading.
 		 * 
@@ -704,8 +704,8 @@ package ch.capi.net
 			var loaded:uint = _tempTotalBytes;
 			var total:uint = _tempTotalBytes;
 			
-			var length:uint = _filesToLoad.length;
-			for (var i:uint=0 ; i<length ; i++)
+			var filesCount:uint = _filesToLoad.length;
+			for (var i:uint=0 ; i<filesCount ; i++)
 			{
 				var il:ILoadManager = _filesToLoad.getElementAt(i) as ILoadManager;
 				loaded += il.bytesLoaded;
