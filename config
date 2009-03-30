@@ -1,0 +1,10 @@
+#!/bin/sh
+
+##########################################
+# This scripts sets the global variables #
+##########################################
+
+flex_sdk_path=../tools/flex-sdk/bin
+
+default_output_documentation="./doc"
+default_output_swc="./masapi.swc"
