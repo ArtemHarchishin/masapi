@@ -1,0 +1,19 @@
+#!/bin/sh
+
+cd `dirname $0`
+
+source config
+cd ..
+
+current_revision=`svn info | grep Revision | grep -o -E [0-9]+`
+echo -n "Enter revision (current=$current_revision) : "
+read revision
+
+file_name="masapi-2.0-r$revision.swc"
+
+command_line="$flex_sdk_path/compc -include-sources $source_path -output bundles/svn/$file_name -strict -optimize"
+echo $command_line
+
+$command_line
+svn add bundles/svn/$file_name
+
