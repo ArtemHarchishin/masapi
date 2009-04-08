@@ -4,9 +4,19 @@
 # This scripts sets the global variables #
 ##########################################
 
+flex_sdk_path=../tools/flex-sdk/bin
+masapi_version="2.0"
+target_player="9.0.0"
+
 source_path="src"
 doc_path="doc"
-flex_sdk_path=../tools/flex-sdk/bin
+resources_path="resources"
+samples_path="samples"
+current_folder=`pwd`
 
 default_output_documentation="./doc"
-default_output_swc="./masapi.swc"
+default_output_swc="./masapi-$masapi_version.swc"
+default_output_bundle="./masapi-$masapi_version.zip"
+
+samples_root_package="masapi"
+samples_root_file="RootDocument.as"

@@ -9,7 +9,7 @@ package ch.capi.data.tree
 		//---------//
 		//Variables//
 		//---------//
-		private var _nextElement:*				= null;
+		private var _nextElement:HeapElement	= null;
 		private var _elements:Array				= new Array();
 		private var _sortFunction:Function;
 		
@@ -43,8 +43,8 @@ package ch.capi.data.tree
 		 * Defines the next element that will be removed
 		 * from the data structure.
 		 */
-		public function get nextElement():* { return _nextElement; }
-		
+		public function get nextElement():* { return (_nextElement==null)?null:_nextElement.element; }
+
 		//-----------//
 		//Constructor//
 		//-----------//
@@ -70,19 +70,20 @@ package ch.capi.data.tree
 		 */
 		public function add(element:*):void
 		{
-			_elements.push(element);
+			var heapElement:HeapElement = new HeapElement(element);
+			_elements.push(heapElement);
 			
 			var currentIndex:uint = _elements.length-1;
 			
 			while (currentIndex > 0)
 			{
 				var p:uint = Math.floor(currentIndex/2);
-				var a:int = _sortFunction(_elements[p], _elements[currentIndex]);
+				var a:int = _sortFunction(_elements[p].element, _elements[currentIndex].element);
 				
 				if (a <= 0) break;
 				
 				_elements[currentIndex] = _elements[p];
-				_elements[p] = element;
+				_elements[p] = heapElement;
 				currentIndex = p;
 			}
 			
@@ -98,28 +99,51 @@ package ch.capi.data.tree
 		{
 			if (isEmpty()) return null;
 			
-			var tr:* = _elements[0];
+			var tr:HeapElement = _elements[0];
 			
-			//remove the last elements
+			//remove the last element and put it on the top of the heap
 			_elements[0] = _elements[_elements.length-1];
 			_elements.splice(_elements.length-1, 1);
 			
 			var currentIndex:uint = 0;
 			while(true)
 			{
+				//calculates the indexes
 				var p1:uint = currentIndex*2;
 				var p2:uint = p1+1;
 				
+				//if the p1 index is out of bounds => exit
 				if (p1 > _elements.length-1) break;
+				
+				//if the p2 index is into the bounds, compare the children and take the
+				//bigger one
 				if (p2 <= _elements.length-1)
 				{
-					var c:int = _sortFunction(_elements[p1], _elements[p2]);
-					if (c > 0) p1 = p2;
+					var leftElement:HeapElement = _elements[p1];
+					var rightElement:HeapElement = _elements[p2];
+					
+					var c:int = _sortFunction(leftElement.element, rightElement.element);
+				
+					//the right element is bigger or both elements are 
+					//equal each other => take the one that has the lower index
+					//so the adding order will be kept
+					if (c > 0 || (c == 0 && rightElement.index < leftElement.index))
+					{
+						p1 = p2; 
+					}
 				}
 				
-				var d:int = _sortFunction(_elements[currentIndex], _elements[p1]);
-				if (d <= 0) break;
+				var parentElement:HeapElement = _elements[currentIndex];
+				var childElement:HeapElement = _elements[p1];
 				
+				//compare the parent and the biggest of the children
+				var d:int = _sortFunction(parentElement.element, childElement.element);
+				
+				//if the child is lower than the parent, and the index of the parent
+				//is lower than the child, exit
+				if (d < 0 || (d == 0 && parentElement.index <= childElement.index)) break;
+				
+				//the child and the parents must be inverted
 				var temp:* = _elements[currentIndex];
 				_elements[currentIndex] = _elements[p1];
 				_elements[p1] = temp;
@@ -128,7 +152,11 @@ package ch.capi.data.tree
 			
 			_nextElement = _elements[0];
 			
-			return tr;
+			//if there is no more element into the heap, the index can
+			//be reset to zero
+			if (_elements.length == 0) HeapElement.resetSharedIndex();
+			
+			return tr.element;
 		}
 		
 		/**
@@ -222,4 +250,55 @@ package ch.capi.data.tree
 			}
 			
 			return -1;
-		}	}}
+		}	}}
+
+class HeapElement
+{
+	//---------//
+	//Variables//
+	//---------//
+	private static var __sharedIndex:int = 0;
+	private var _index:int;
+	private var _element:*;
+	
+	//-----------------//
+	//Getters & Setters//
+	//-----------------//
+	
+	/**
+	 * Defines the element.
+	 */
+	public function get element():* { return _element; }
+	
+	/**
+	 * Defines the index of the element.
+	 */
+	public function get index():int { return _index; }
+	
+	//-----------//
+	//Constructor//
+	//-----------//
+	
+	/**
+	 * Creates a new <code>ArrayHeap</code> object.
+	 * 
+	 * @param	element		The heap element.
+	 */
+	public function HeapElement(element:*):void
+	{
+		_element = element;
+		_index = __sharedIndex++;	}
+	
+	//--------------//
+	//Public methods//
+	//--------------//
+	
+	/**
+	 * Resets the shared index. The index of the next inserted
+	 * element will be zero.
+	 */
+	public static function resetSharedIndex():void
+	{
+		__sharedIndex = 0;
+	}
+}

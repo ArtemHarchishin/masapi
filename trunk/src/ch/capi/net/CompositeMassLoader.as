@@ -1,5 +1,5 @@
-package ch.capi.net 
-{
+package ch.capi.net {
+	import flash.errors.IllegalOperationError;	
 	import flash.events.ProgressEvent;	
 	import flash.events.Event;	
 	import flash.net.URLRequest;		
@@ -125,6 +125,17 @@ package ch.capi.net
 	public class CompositeMassLoader extends GlobalEventDispatcher
 	{
 		//---------//
+		//Constants//
+		//---------//
+		
+		/**
+		 * Priority of the listener on the <code>MassLoader</code>.
+		 * 
+		 * @see		#registerTo()		registerTo()
+		 */
+		private static const LISTENER_PRIORITY:int = -999;
+		
+		//---------//
 		//Variables//
 		//---------//
 		private static var __storedLoaders:IMap 		= new DictionnaryMap(false);
@@ -188,8 +199,11 @@ package ch.capi.net
 			_name = name;
 			_massLoader.parallelFiles = parallelFiles;
 			
+			//register itself as listener
 			registerTo(massLoader);
-			registerLoader(name);
+			
+			//if the name is specified, register the loader
+			if (name != null) register(name);
 		}
 		
 		//--------------//
@@ -289,6 +303,7 @@ package ch.capi.net
 		 * @param	onIOError	The <code>IOErrorEvent.IO_ERROR</code> listener.
 		 * @param	onSecurityError The <code>SecurityErrorEvent.SECURITY_ERROR</code> listener.
 		 * @return	The created <code>ILoadableFile</code>.
+		 * @throws	ArgumentError			If <code>fileOrURl</code> is <code>null</code>.
 		 * @throws	ArgumentError			If the priority is invalid.
 		 * @see ch.capi.net.LoadableFileFactory#getRequest()	LoadableFileFactory.getRequest()
 		 * @see	ch.capi.net.ILoadableFile#properties			ILoadableFile.properties
@@ -314,6 +329,9 @@ package ch.capi.net
 					   			onIOError:Function=null,
 					   			onSecurityError:Function=null):ILoadableFile
 		{
+			//check the first argument
+			if (fileOrURL == null) throw new ArgumentError("The fileOrURL parameter is not defined");
+			
 			//parse the priority
 			if (priority != null && !(priority is int)) throw new ArgumentError("Illegal value for priority : "+priority);
 			if (priority == null && !(fileOrURL is String  || file is URLRequest)) priority = fileOrURL.priority; 
@@ -391,6 +409,27 @@ package ch.capi.net
 			_storage.clear();
 		}
 		
+		/**
+		 * Registers the <code>CompositeMassLoader</code> into the static map. After calling
+		 * this method, the <code>CompositeMassLoader</code> will be available with the <code>get()</code>
+		 * method.
+		 * 
+		 * @param	name		The name within the <code>CompositeMassLoader</code> will be registered.
+		 * @throws	flash.errors.ArgumentError				If the name is not defined.
+		 * @throws	flash.errors.IllegalOperationError		If the <code>CompositeMassLoader</code> is already
+		 * 													registered (that means, if its name is not <code>null</code>).
+		 * @throws	ch.capi.errors.NameAlreadyExistsError	If the name is not unique.
+		 * @see		#get()									CompositeMassLoader.get()
+		 */
+		public function register(name:String):void
+		{
+			if (name == null) throw new ArgumentError("The name is not defined");
+			if (_name != null) throw new IllegalOperationError("The CompositeMassLoader is already registered as '"+_name+"' (trying with "+name+")");
+			if (__storedLoaders.containsKey(name)) throw new NameAlreadyExistsError("The name '"+name+"' is already exists");
+			
+			__storedLoaders.put(name, this);	
+		}
+		
 		//-------------------//
 		//Protected functions//
 		//-------------------//
@@ -427,14 +466,14 @@ package ch.capi.net
 		 */
 		protected function registerTo(massLoader:IMassLoader):void
 		{
-			massLoader.addEventListener(Event.OPEN, eventRedirector, false, 0, true);
-			massLoader.addEventListener(Event.CLOSE, eventRedirector, false, 0, true);
-			massLoader.addEventListener(ProgressEvent.PROGRESS, eventRedirector, false, 0, true);
-			massLoader.addEventListener(Event.COMPLETE, eventRedirector, false, 0, true);
-			massLoader.addEventListener(MassLoadEvent.FILE_OPEN, eventRedirector, false, 0, true);
-			massLoader.addEventListener(MassLoadEvent.FILE_CLOSE, eventRedirector, false, 0, true);
-			massLoader.addEventListener(MassLoadEvent.FILE_PROGRESS, eventRedirector, false, 0, true);
-			massLoader.addEventListener(PriorityEvent.PRIORITY_CHANGED, eventRedirector, false, 0, true);
+			massLoader.addEventListener(Event.OPEN, eventRedirector, false, LISTENER_PRIORITY, true);
+			massLoader.addEventListener(Event.CLOSE, eventRedirector, false, LISTENER_PRIORITY, true);
+			massLoader.addEventListener(ProgressEvent.PROGRESS, eventRedirector, false, LISTENER_PRIORITY, true);
+			massLoader.addEventListener(Event.COMPLETE, eventRedirector, false, LISTENER_PRIORITY, true);
+			massLoader.addEventListener(MassLoadEvent.FILE_OPEN, eventRedirector, false, LISTENER_PRIORITY, true);
+			massLoader.addEventListener(MassLoadEvent.FILE_CLOSE, eventRedirector, false, LISTENER_PRIORITY, true);
+			massLoader.addEventListener(MassLoadEvent.FILE_PROGRESS, eventRedirector, false, LISTENER_PRIORITY, true);
+			massLoader.addEventListener(PriorityEvent.PRIORITY_CHANGED, eventRedirector, false, LISTENER_PRIORITY, true);
 		}
 		
 		/**
@@ -470,20 +509,5 @@ package ch.capi.net
 		//---------------//
 		//Private methods//
 		//---------------//
-		
-		/**
-		 * @private
-		 * Registers the <code>CompositeMassLoader</code> into the static map.
-		 * 
-		 * @param	name		The name. If the name is not specified, then this method does nothing.
-		 * @throws	ch.capi.errors.NameAlreadyExistsError	If the name is not unique.
-		 */
-		private function registerLoader(name:String=null):void
-		{
-			if (name == null) return; //do nothing
-			if (__storedLoaders.containsKey(name)) throw new NameAlreadyExistsError("The name '"+name+"' is already exists");
-			
-			__storedLoaders.put(name, this);	
-		}
 	}
 }

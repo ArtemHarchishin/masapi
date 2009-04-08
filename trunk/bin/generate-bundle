@@ -1,0 +1,48 @@
+#!/bin/sh
+
+dir_name=`dirname $0`
+cmd_name=`basename $0`
+
+source "$dir_name/config"
+cd "$dir_name/.."
+
+file_name=$default_output_bundle
+
+if [ $# -eq 1 ]; then
+	if [ "$1" = "-help" ]; then
+		echo "Usage : $cmd_name [bundle_path_name]"
+		exit
+	else
+		file_name=$1
+	fi
+elif [ $# -gt 1 ]; then
+	echo "Invalid number of arguments..." >&2
+	echo "Usage : $cmd_name [bundle_path_name]"
+	exit
+fi
+
+temp_dir="tmp"
+temp_file="masapi-tmp.zip"
+
+mkdir "$temp_dir"
+echo "Copying sources..."
+cp -R "$source_path" "$temp_dir"
+
+echo "Copying documentation..."
+cp -R "$doc_path" "$temp_dir"
+
+echo "Copying resources..."
+cp -R "$resources_path" "$temp_dir"
+
+echo "Removing svn private folders..."
+find "$temp_dir" -name \.svn -exec rm -rf {} \;
+
+echo "Generating $file_name..."
+cd "$temp_dir"
+zip -r "$temp_file" "$source_path" "$doc_path" "$resources_path"
+cd ..
+
+mv "$temp_dir/$temp_file" "$current_folder/$file_name"
+rm -rf "$temp_dir"
+
+echo "The file $file_name has been successfully generated !"

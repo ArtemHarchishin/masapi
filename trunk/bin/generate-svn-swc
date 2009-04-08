@@ -1,0 +1,19 @@
+#!/bin/sh
+
+dir_name=`dirname $0`
+cmd_name=`basename $0`
+
+source "$dir_name/config"
+source "$dir_name/svn-utils"
+cd "$dir_name/.."
+
+swc_name="masapi-$masapi_version-r$next_revision.swc"
+./bin/generate-swc "$bundles_path/$swc_name"
+
+echo
+echo -n "Do you want to add the file $swc_name to subversion ? (y or n) "
+read addFile
+
+if [ "$addFile" = "y" ]; then
+	svn add "$bundles_path/$swc_name"
+fi

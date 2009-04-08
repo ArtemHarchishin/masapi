@@ -1,0 +1,1 @@
+title=Masapi sample&text=This is a text issued from a sample of Masapi !
