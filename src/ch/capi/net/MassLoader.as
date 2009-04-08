@@ -116,7 +116,7 @@ package ch.capi.net
 		 * 
 		 * @see		#registerTo()		registerTo()
 		 */
-		private static const LISTENER_PRIORITY:int = -100;
+		private static const LISTENER_PRIORITY:int = -999;
 		
 		//---------//
 		//Variables//
@@ -677,13 +677,13 @@ package ch.capi.net
 			if (alwaysDispatchProgressEvent ||
 			   _filesLoading.length >= _currentFilesLoading) //should never be greater than the _currentFilesLoading
 			{
-				var pg:ProgressEvent = new ProgressEvent(ProgressEvent.PROGRESS, evt.bubbles, evt.cancelable, bytesLoaded, bytesTotal);
-				dispatchEvent(pg);
+				var fileProgressEvt:ProgressEvent = new ProgressEvent(ProgressEvent.PROGRESS, evt.bubbles, evt.cancelable, bytesLoaded, bytesTotal);
+				dispatchEvent(fileProgressEvt);
 			}
 			
 			//dispatches the file progress
-			var fileProgress:MassLoadEvent = createMassLoadEvent(evt.target as ILoadManager, MassLoadEvent.FILE_PROGRESS);
-			dispatchEvent(fileProgress);
+			var mlProgressEvt:MassLoadEvent = createMassLoadEvent(evt.target as ILoadManager, MassLoadEvent.FILE_PROGRESS);
+			dispatchEvent(mlProgressEvt);
 		}
 
 		/**
@@ -829,7 +829,7 @@ package ch.capi.net
 			if (!_isLoading)
 			{
 				dispatchCloseEvent(trg, evt);
-				 return; //loading closed, stop propagation
+				return; //loading closed, stop propagation
 			}
 			
 			//load the next file
@@ -892,7 +892,7 @@ package ch.capi.net
 					
 					/*
 					 * Being here means that the file to reload fails to start... In that case, 
-					 * just let the MassLoader continues his loading process as usual.
+					 * just let the MassLoader continue his loading process as usual.
 					 */
 				}
 				else if (!loadPolicy.canContinue)

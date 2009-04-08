@@ -1,33 +1,19 @@
 #!/bin/sh
 
-cd `dirname $0`
+dir_name=`dirname $0`
+cmd_name=`basename $0`
 
-source config
-cd ..
+source "$dir_name/config"
+source "$dir_name/svn-utils"
+cd "$dir_name/.."
 
-current_revision=`svn info | grep Revision | grep -o -E [0-9]+`
-echo -n "Enter revision (current=$current_revision) : "
-read revision
+zip_name="masapi-$masapi_version-r$next_revision.zip"
+./bin/generate-bundle "$bundles_path/$zip_name"
 
-file_name="masapi-2.0-r$revision.zip"
+echo
+echo -n "Do you want to add the file $zip_name to subversion ? (y or n) "
+read addFile
 
-mkdir tmp
-echo "Copying sources..."
-cp -R $source_path tmp
-echo "Copying documentation..."
-cp -R $doc_path tmp
-
-echo "Removing .svn folders..."
-find tmp -name \.svn -exec rm -rf {} \;
-
-cd tmp
-zip -r $file_name $source_path $doc_path
-mv $file_name ../bundles/svn
-
-cd ..
-svn add ./bundles/svn/$file_name
-
-rm -rf tmp
-
-
-
+if [ "$addFile" = "y" ]; then
+	svn add "$bundles_path/$zip_name"
+fi
