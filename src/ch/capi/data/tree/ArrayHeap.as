@@ -246,7 +246,7 @@ package ch.capi.data.tree
 			var b:uint = _elements.length;
 			for (var i:uint=0 ; i<b ; i++)
 			{
-				if (_elements[i] == element) return i;
+				if (_elements[i].element == element) return i;
 			}
 			
 			return -1;
