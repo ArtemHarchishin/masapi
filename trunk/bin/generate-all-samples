@@ -1,0 +1,16 @@
+#!/bin/sh
+
+dir_name=`dirname $0`
+cmd_name=`basename $0`
+
+source "$dir_name/config"
+cd "$dir_name/.."
+
+cd "$samples_path/$samples_root_package"
+for sample in *; do
+	if [ -d $sample ]; then
+		echo "Generating sample $sample..."
+		../../bin/generate-sample "$sample"
+	fi
+done
+

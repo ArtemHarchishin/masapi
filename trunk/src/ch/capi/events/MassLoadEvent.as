@@ -116,7 +116,7 @@
 		 */
 		public override function clone():Event
 		{
-			return new MassLoadEvent(type, _file, _closeEvent);
+			return new MassLoadEvent(type, _file, _closeEvent, _staticIndex, _queueIndex, _priority);
 		}
 		 
 		/**

@@ -4,7 +4,14 @@
 # This scripts sets the global variables #
 ##########################################
 
+#
+# That's the only variable you should change. Just make it point
+# to your flex 4 SDK bin directory !
+#
 flex_sdk_path=../tools/flex-sdk/bin
+
+##########################################
+
 masapi_version="2.0"
 target_player="9.0.0"
 

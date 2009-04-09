@@ -17,17 +17,14 @@ if [ $1 = "list" ]; then
 	cd "$samples_path/$samples_root_package"
 	echo "Allowed sample names :"
 	for sample in *; do
-		echo "  $sample"
+		if [ -d $sample ]; then
+			echo "  $sample"
+		fi
 	done
 	exit
 fi
 
 output_name="./$samples_path/$1.swf"
-masapi_samples_swc="masapi.swc"
 sample_root_file="./$samples_path/$samples_root_package/$1/$samples_root_file"
 
-if [ ! -f "./$samples_path/$masapi_samples_swc" ]; then
-	./bin/generate-swc "./$samples_path/$masapi_samples_swc"
-fi
-
-$flex_sdk_path/mxmlc -use-network=false -as3 -compiler.source-path "$samples_path" -compiler.library-path "$samples_path/$masapi_samples_swc" -output "$output_name" -strict -optimize -target-player "$target_player" "$sample_root_file"
+$flex_sdk_path/mxmlc -use-network=false -as3 -compiler.source-path "$samples_path" "$source_path" -output "$output_name" -strict -optimize -target-player "$target_player" "$sample_root_file"
