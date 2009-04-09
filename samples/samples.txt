@@ -1,0 +1,28 @@
+
+###########################
+
+	Masapi 2.0 Samples
+	
+###########################
+
+This file gives a short description of all the samples
+that you can find. All the sources of the samples in this
+directory can be found into the folder ./masapi/SAMPLE_NAME/
+
+sample01		=>		This is a very simple sample that simply shows
+						how to create a CompositeMassLoader, add some
+						files into the loading queue, start the loading
+						and then retrieves the data and put it on the
+						stage.
+
+sample02		=>		This sample is based at 95% on the sample01. The
+						main difference is that it uses dynamic URLs to
+						load the files.
+
+sample03		=>		This sample is a trace-only sample that show how
+						to handl basic events sended by Masapi. Its code
+						is based on sample01 and sample02.
+
+sample04		=>		This sample shows how to manage the priority of
+						the files with Masapi. It is based on the code
+						of the sample03.

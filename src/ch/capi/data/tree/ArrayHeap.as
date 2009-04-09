@@ -252,6 +252,9 @@ package ch.capi.data.tree
 			return -1;
 		}	}}
 
+/**
+ * This class represents an element into the ArrayHeap.
+ */
 class HeapElement
 {
 	//---------//

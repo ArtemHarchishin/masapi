@@ -65,5 +65,5 @@ package ch.capi.events
 		 */
 		public override function clone():Event
 		{
-			return new PriorityEvent(type, _currentPriority);
+			return new PriorityEvent(type, _currentPriority, _files);
 		}	}}

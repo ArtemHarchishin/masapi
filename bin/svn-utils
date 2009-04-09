@@ -1,5 +1,7 @@
 #!/bin/sh
 
+svn up
+
 current_revision=`svn info | grep Revision | grep -o -E [0-9]+`
 next_revision=$(($current_revision + 1))
 
