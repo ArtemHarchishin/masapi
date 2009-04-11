@@ -455,6 +455,7 @@ package ch.capi.net
 			//update the current loaded values
 			updateBytes();
 			
+			//TODO also delay the event dispatching ???
 			//open event
 			var evt:Event = new Event(Event.OPEN);
 			dispatchEvent(evt);
@@ -543,6 +544,11 @@ package ch.capi.net
 			//register to the file
 			_currentFilesLoading++;
 			registerTo(file);
+			
+			//TODO is that really the right way ??? Architecture may be reviewed...
+			//if the file is a ILoadableFile, then prepare the fixed
+			//request. So it can be available within the open event.
+			if (file is ILoadableFile) (file as ILoadableFile).prepareFixedRequest();
 			
 			//open event
 			dispatchOpenEvent(file);
