@@ -711,8 +711,8 @@
 		}
 		
 		/**
-		 * Creates a clone of the current <code>URLRequest</code> and put the variables values into its data.
-		 * If there is some 
+		 * Creates a clone of the current <code>URLRequest</code> and put the variables values into its data. 
+		 * If there is some variables into the data object, they will be also replaced.
 		 * 
 		 * @return	The new <code>URLRequest</code>.
 		 */
