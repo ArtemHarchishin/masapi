@@ -428,7 +428,7 @@ package ch.capi.net
 		/**
 		 * Starts downloading data from the specified <code>ILoadableFile</code> objects.
 		 * 
-		 * @return	<code>true</code> if the loading has been started, <code>false</code> otherwise.
+		 * @return	<code>true</code> if there is any file into the loading queue, <code>false</code> otherwise.
 		 * @throws	flash.errors.IllegalOperationError	If the <code>MassLoader</code> is already loading.
 		 */
 		public final function start():Boolean
