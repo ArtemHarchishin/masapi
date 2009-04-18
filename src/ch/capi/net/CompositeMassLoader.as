@@ -144,7 +144,7 @@ package ch.capi.net {
 		private var _massLoader:PriorityMassLoader		= new PriorityMassLoader();
 		private var _factory:LoadableFileFactory		= new LoadableFileFactory();
 		private var _keepFiles:Boolean					= true;
-		private var _name:String;
+		private var _name:String						= null;
 
 		//-----------------//
 		//Getters & Setters//
@@ -196,7 +196,6 @@ package ch.capi.net {
 		 */
 		public function CompositeMassLoader(name:String=null, parallelFiles:int=0)
 		{
-			_name = name;
 			_massLoader.parallelFiles = parallelFiles;
 			
 			//register itself as listener
@@ -427,6 +426,7 @@ package ch.capi.net {
 			if (_name != null) throw new IllegalOperationError("The CompositeMassLoader is already registered as '"+_name+"' (trying with "+name+")");
 			if (__storedLoaders.containsKey(name)) throw new NameAlreadyExistsError("The name '"+name+"' is already exists");
 			
+			_name = name;
 			__storedLoaders.put(name, this);	
 		}
 		
