@@ -20,9 +20,13 @@ sample02		=>		This sample is based at 95% on the sample01. The
 						load the files.
 
 sample03		=>		This sample is a trace-only sample that show how
-						to handl basic events sended by Masapi. Its code
+						to handle basic events sended by Masapi. Its code
 						is based on sample01 and sample02.
 
 sample04		=>		This sample shows how to manage the priority of
 						the files with Masapi. It is based on the code
 						of the sample03.
+						
+sample05		=>		This one show how you can share a CompositeMassLoader
+						through two SWF and use the loaded data into a
+						loaded SWF.
