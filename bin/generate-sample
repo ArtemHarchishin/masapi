@@ -24,7 +24,29 @@ if [ $1 = "list" ]; then
 	exit
 fi
 
-output_name="./$samples_path/$1.swf"
-sample_root_file="./$samples_path/$samples_root_package/$1/$samples_root_file"
 
-$flex_sdk_path/mxmlc -use-network=false -as3 -compiler.source-path "$samples_path" "$source_path" -output "$output_name" -strict -optimize -target-player "$target_player" "$sample_root_file"
+generate_sample_swf()
+{
+	# $1 = root AS file
+	# $2 = output swf
+	output_path="./$samples_path/$2"
+	$flex_sdk_path/mxmlc -use-network=false -as3 -compiler.source-path "$samples_path" "$source_path" -output "$output_path" -strict -optimize -target-player "$target_player" "$1"
+}
+
+sample_root_path="./$samples_path/$samples_root_package/$1"
+sample_config="$sample_root_path/$samples_config_file"
+
+# there is no config file
+if [ ! -f $sample_config ]; then
+	default_root_class_path="$sample_root_path/$samples_root_file"
+	generate_sample_swf $default_root_class_path "$1.swf"
+	exit
+fi
+
+# there is a config file
+config_data=`cat $sample_config`
+for config_line in $config_data; do
+	root_class=`echo $config_line | cut -d: -f1`
+	output_file=`echo $config_line | cut -d: -f2`
+	generate_sample_swf "$sample_root_path/$root_class" "$output_file"
+done

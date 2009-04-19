@@ -1,0 +1,1 @@
+package masapi.sample05{	/**	 * 	 * 	 * @author		Cedric Tabin - thecaptain	 * @version		1.0	 */	public class SampleConstants	{		//---------//		//Constants//		//---------//				/**		 * Defines the MassLoader name.		 */		public static const MASSLOADER_NAME:String = "sample05MassLoader";	}}
