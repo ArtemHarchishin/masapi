@@ -84,6 +84,7 @@ package ch.capi.net {
 	 */
 	[Event(name="priorityChanged", type="ch.capi.events.PriorityEvent")]
 	
+	//TODO use the same method as ApplicationContext to store statically the massloaders
 	/**
 	 * This is a utility class to avoid too much verbose code within the Masapi API. Note that this
 	 * class simply uses the <code>PriorityMassLoader</code> and <code>LoadableFileFactory</code> to creates

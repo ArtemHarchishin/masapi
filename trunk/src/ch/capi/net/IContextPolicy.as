@@ -10,7 +10,7 @@ package ch.capi.net
 	 * @author Cedric Tabin - thecaptain
 	 */
 	public interface IContextPolicy 
-	{
+	{ 
 		/**
 		 * Retrieves a <code>LoaderContext</code> that will be attached
 		 * to the specified <code>ILoadableFile</code>.
