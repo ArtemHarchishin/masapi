@@ -1,5 +1,5 @@
 package ch.capi.net.app 
-{	import ch.capi.net.files.URLLoaderFile;	
+{	import ch.capi.errors.DataError;		import ch.capi.net.files.URLLoaderFile;	
 	import ch.capi.net.files.LoaderFile;	
 	import ch.capi.net.IContextPolicy;	
 	import ch.capi.net.policies.DefaultContextPolicy;		
@@ -138,7 +138,7 @@ package ch.capi.net.app
 		//Variables//
 		//---------//
 		private var _loadableFileFactory:LoadableFileFactory;
-		private var _applicationContext:ApplicationContext;
+		private var _applicationContext:IApplicationContext;
 		private var _currentIndex:int;
 		
 		/**
@@ -163,10 +163,10 @@ package ch.capi.net.app
 		}
 		
 		/**
-		 * Defines the <code>ApplicationContext</code>.
+		 * Defines the <code>IApplicationContext</code>.
 		 */
-		public function get applicationContext():ApplicationContext { return _applicationContext; }
-		public function set applicationContext(value:ApplicationContext):void { _applicationContext = value; }
+		public function get applicationContext():IApplicationContext { return _applicationContext; }
+		public function set applicationContext(value:IApplicationContext):void { _applicationContext = value; }
 		
 		//-----------//
 		//Constructor//
@@ -175,16 +175,15 @@ package ch.capi.net.app
 		/**
 		 * Creates a new <code>ApplicationFileParser</code> object.
 		 * 
+		 * @param	context					The <code>ApplicationContext</code>.
 		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code>. If not defined, then the 
 		 * 									<code>LoadableFileFactory.defaultLoadableFileFactory</code> will be used.
-		 * @param	context					The <code>ApplicationContext</code>. If not defined, then the global <code>ApplicationContext</code>
-		 * 									will be used.
+		 * 
 		 */
-		public function ApplicationFileParser(loadableFileFactory:LoadableFileFactory=null, context:ApplicationContext=null):void
+		public function ApplicationFileParser(context:IApplicationContext, loadableFileFactory:LoadableFileFactory=null):void
 		{
 			_loadableFileFactory = (loadableFileFactory==null) ? LoadableFileFactory.defaultLoadableFileFactory : loadableFileFactory;
 			
-			if (context == null) context = ApplicationContext.globalContext;
 			_applicationContext = context;
 		}
 
@@ -203,7 +202,7 @@ package ch.capi.net.app
 		public static function createWithNewContext(contextName:String, loadableFileFactory:LoadableFileFactory=null):ApplicationFileParser
 		{
 			var newContext:ApplicationContext = new ApplicationContext(contextName);
-			return new ApplicationFileParser(loadableFileFactory, newContext); 
+			return new ApplicationFileParser(newContext, loadableFileFactory); 
 		}
 
 		/**
@@ -216,17 +215,20 @@ package ch.capi.net.app
 		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code>. If not defined, then the 
 		 * 									<code>LoadableFileFactory.defaultLoadableFileFactory</code> will be used.
 		 * @return	The new <code>ApplicationContext</code> that contains all the parsed <code>ApplicationFile</code> instances.
+		 * @throws	ch.capi.errors.DataError	If the <code>contextName</code> and the context attribute is <code>null</code>.
 		 */
-		public static function parse(source:String, contextName:String=null, loadableFileFactory:LoadableFileFactory=null):ApplicationContext
+		public static function parse(source:String, contextName:String=null, loadableFileFactory:LoadableFileFactory=null):IApplicationContext
 		{
 			var doc:XMLDocument = new XMLDocument();
 			doc.ignoreWhite = true;
 			doc.parseXML(source);
 			
 			var ctxName:String = (contextName != null) ? contextName : doc.firstChild.attributes[ATTRIBUTE_CONTEXT];
-			var context:ApplicationContext = (ctxName==null) ? ApplicationContext.globalContext : new ApplicationContext(ctxName); 
+			if (ctxName == null) throw new DataError("The context name is not specified");
 			
-			var parser:ApplicationFileParser = new ApplicationFileParser(loadableFileFactory, context);
+			var context:ApplicationContext = new ApplicationContext(ctxName); 
+			
+			var parser:ApplicationFileParser = new ApplicationFileParser(context, loadableFileFactory);
 			parser.parseNode(doc.firstChild);
 			
 			return parser.applicationContext;
@@ -378,7 +380,7 @@ package ch.capi.net.app
 			var name:String = node.attributes[ATTRIBUTE_NAME_VALUE];
 			if (name == null || name.length == 0) name="$appFile_"+_currentIndex+"$";
 		
-			var appFile:ApplicationFile = new ApplicationFile(name, null, applicationContext);
+			var appFile:ApplicationFile = new ApplicationFile(name, applicationContext);
 			
 			var url:String = node.attributes[ATTRIBUTE_URL_VALUE];
 			var type:String = node.attributes[ATTRIBUTE_TYPE_VALUE];
@@ -576,7 +578,7 @@ package ch.capi.net.app
 			var app:ApplicationFile = applicationContext.getFile(name);
 			if (node.nodeName == NODE_GROUP && app != null) throw new ParseError("getApplicationFile", "There is already a group/file with the name '"+name+"'");
 			else if (node.nodeName != NODE_GROUP && app == null) throw new ParseError("getApplicationFile", "The file named '"+name+"' does not exist");
-			else if (app == null) app = new ApplicationFile(name, null, applicationContext); //this is a group => create an empty ApplicationFile
+			else if (app == null) app = new ApplicationFile(name, applicationContext); //this is a group => create an empty ApplicationFile
 			
 			return app;
 		}	}}

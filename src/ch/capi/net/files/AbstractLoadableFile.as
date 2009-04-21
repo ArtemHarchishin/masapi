@@ -1,6 +1,5 @@
 ﻿package ch.capi.net.files
-{
-	import flash.events.TextEvent;	
+{			import flash.events.TextEvent;	
 	import flash.display.DisplayObject;	
 	import flash.display.LoaderInfo;	
 	import flash.utils.ByteArray;	
@@ -20,6 +19,7 @@
 	
 	import ch.capi.events.GlobalEventDispatcher;
 	import ch.capi.data.text.Properties;	
+	import ch.capi.data.text.IProperties;
 	import ch.capi.display.IRootDocument;
 	import ch.capi.net.ILoadableFile;	
 	import ch.capi.net.NetState;	
@@ -160,7 +160,7 @@
 		 * <code>ILoadableFile</code>.
 		 * 
 		 */
-		public function get properties():Properties { return _properties; }
+		public function get properties():IProperties  { return _properties; }
 		
 		/**
 		 * Defines if the <code>AbstractLoadableFile</code> is loading.

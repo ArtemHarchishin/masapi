@@ -4,8 +4,7 @@ package ch.capi.net
 	import flash.net.URLRequest;
 	import flash.events.IEventDispatcher;
 	import ch.capi.data.IMap;
-	import ch.capi.data.text.Properties;	
-	
+	import ch.capi.data.text.IProperties;	
 	
 	/**
 	 * Dispatched if a call to <code>start()</code> results in a fatal error that terminates the download. 
@@ -61,7 +60,7 @@ package ch.capi.net
 		 * Defines the properties stored into the
 		 * <code>ILoadableFile</code>.
 		 */
-		function get properties():Properties;
+		function get properties():IProperties;
 
 		/**
 		 * Defines the variables key/values to be replaced

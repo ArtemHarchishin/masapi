@@ -1,14 +1,14 @@
 package ch.capi.net.app 
-{	import ch.capi.data.text.Properties;	
-	
+{
 	import flash.system.ApplicationDomain;	
 	
+	import ch.capi.data.text.IProperties;
 	import ch.capi.net.ILoadableFile;
 	import ch.capi.errors.DependencyNotSafeError;
 	
 	/**
 	 * Represents an application file. An <code>ApplicationFile</code> is always registered into
-	 * an <code>ApplicationContext</code> that will manage the unicity of each <code>ApplicationFile</code>.
+	 * an <code>IApplicationContext</code> that will manage the unicity of each <code>ApplicationFile</code>.
 	 * Basically, an <code>ApplicationFile</code> just holds an <code>ILoadableFile</code> and stores
 	 * the dependencies on it.
 	 * 
@@ -24,7 +24,7 @@ package ch.capi.net.app
 		private var _global:Boolean					= false;
 		private var _name:String;
 		private var _loadableFile:ILoadableFile;
-		private var _applicationContext:ApplicationContext;
+		private var _applicationContext:IApplicationContext;
 		private var _priority:int					= 0;
 		
 		//-----------------//
@@ -32,15 +32,15 @@ package ch.capi.net.app
 		//-----------------//
 		
 		/**
-		 * Defines the <code>ApplicationContext</code> of the <code>ApplicationFile</code>.
+		 * Defines the <code>IApplicationContext</code> of the <code>ApplicationFile</code>.
 		 */
-		public function get applicationContext():ApplicationContext { return _applicationContext; }
+		public function get applicationContext():IApplicationContext { return _applicationContext; }
 		
 		/**
 		 * this method is just used to communicate the context between the ApplicationFile and ApplicationContext classes
 		 * and shouldn't be used !
 		 */
-		internal function setContext(value:ApplicationContext):void { _applicationContext = value; }
+		internal function setContext(value:IApplicationContext):void { _applicationContext = value; }
 		
 		/**
 		 * Defines the <code>ILoadableFile</code>.
@@ -78,7 +78,7 @@ package ch.capi.net.app
 		 * 
 		 * @see		ch.capi.net.ILoadableFile#properties	ILoadableFile.properties
 		 */
-		public function get properties():Properties { return _loadableFile.properties; }
+		public function get properties():IProperties { return _loadableFile.properties; }
 		
 		//-----------//
 		//Constructor//
@@ -88,16 +88,15 @@ package ch.capi.net.app
 		 * Creates a new <code>ApplicationFile</code> object.
 		 * 
 		 * @param	name				The name. It must be unique !
+		 * @param	context				The <code>IApplicationContext</code>. If not specified, then the global context will be used.
 		 * @param	loadableFile		The linked <code>ILoadableFile</code>.
-		 * @param	context				The <code>ApplicationContext</code>. If not specified, then the global context will be used.
-		 * @throws	ch.capi.errors.NameAlreadyExistsError	If the specified name already exists into the specified <code>ApplicationContext</code>.
+		 * @throws	ch.capi.errors.NameAlreadyExistsError	If the specified name already exists into the specified <code>IApplicationContext</code>.
 		 */
-		public function ApplicationFile(name:String, loadableFile:ILoadableFile=null, context:ApplicationContext=null):void
+		public function ApplicationFile(name:String, context:IApplicationContext, loadableFile:ILoadableFile=null):void
 		{
 			_loadableFile = loadableFile;
 			_name = name;
 			
-			if (context == null) context = ApplicationContext.globalContext;
 			context.addFile(this);
 		}
 		
@@ -105,34 +104,18 @@ package ch.capi.net.app
 		//Public methods//
 		//--------------//
 		
-		/**
-		 * Retrieves the specified <code>ApplicationFile</code> from the specified <code>ApplicationContext</code>.
-		 * 
-		 * @param	fileName		The name of the file to retrieve.
-		 * @param	contextName		The name of the <code>ApplicationContext</code>. If not specified, then the global 
-		 * 							<code>ApplicationContext</code> will be used.
-		 * @see		ch.capi.net.app.ApplicationContext#getFile()	ApplicationContext.getFile()
-		 * @see		ch.capi.net.app.ApplicationContext#get()		ApplicationContext.get()
-		 */
-		public static function get(fileName:String, contextName:String=null):ApplicationFile
-		{
-			var context:ApplicationContext = (contextName != null) ? ApplicationContext.get(contextName) : ApplicationContext.globalContext;
-			return context.getFile(fileName);
-		}
-		
+		//TODO put the method into ApplicationContext
 		/**
 		 * Retrieves the <code>ApplicationFile</code> that holds the specified <code>ILoadableFile</code>.
 		 * 
 		 * @param	file		The <code>ILoadableFile</code>.
-		 * @param	context		The <code>ApplicationContext</code>. If not specified, the global context will be used.
+		 * @param	context		The <code>IApplicationContext</code>.
 		 * @return	The <code>ApplicationFile</code> that holds the specified <code>ILoadableFile</code>.
 		 * @throws	Error		If there is no <code>ApplicationFile</code> with the specified <code>ILoadableFile</code> into the
-		 * 						specified <code>ApplicationContext</code>.
+		 * 						specified <code>IApplicationContext</code>.
 		 */
-		public static function getByLoadableFile(file:ILoadableFile, context:ApplicationContext=null):ApplicationFile
+		/*public static function getByLoadableFile(file:ILoadableFile, context:IApplicationContext):ApplicationFile
 		{
-			if (context == null) context = ApplicationContext.globalContext;
-			
 			var files:Array = context.enumerateAll();
 			for (var i:int=0 ; i<files.length ; i++)
 			{
@@ -141,21 +124,21 @@ package ch.capi.net.app
 			}
 			
 			throw new Error("There is no ApplicationFile with the specified ILoadableFile in the specified context ("+file+")");
-		}
+		}*/
 
 		/**
 		 * Add an <code>ApplicationFile</code> as dependency for this file. It means that the specified
 		 * <code>file</code> is necessary to be loaded before the current <code>ApplicationFile</code> can
 		 * be executed.
-		 * <p>The <code>ApplicationFile</code> added as dependency must be into the same <code>ApplicationContext</code>.</p>
+		 * <p>The <code>ApplicationFile</code> added as dependency must be into the same <code>IApplicationContext</code>.</p>
 		 * 
 		 * @param	file		The <code>ApplicationFile</code> to add.
-		 * @throws	ArgumentError	If the <code>ApplicationContext</code> is not the same.
+		 * @throws	ArgumentError	If the <code>IApplicationContext</code> is not the same.
 		 * @throws	ch.capi.errors.DependencyNotSafeError	If the dependency is not safe.
 		 */
 		public function addDependency(file:ApplicationFile):void
 		{
-			if (file.applicationContext != applicationContext) throw new ArgumentError("The ApplicationContext is not the same");
+			if (file.applicationContext != applicationContext) throw new ArgumentError("The IApplicationContext is not the same");
 			if (!isDependencyRecursive(file)) throw new DependencyNotSafeError("Dependency not safe for file '"+file+"' (recursive dependency)");
 			
 			_dependencies.push(file);

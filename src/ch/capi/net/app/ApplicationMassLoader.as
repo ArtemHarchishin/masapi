@@ -38,11 +38,10 @@ package ch.capi.net.app
 		/**
 		 * Add the global <code>ApplicationFile</code> into the loading queue.
 		 * 
-		 * @param	context		The <code>ApplicationContext</code>. If not specified, the global context will be used.
+		 * @param	context		The <code>IApplicationContext</code>.
 		 */
-		public function addGlobalFiles(context:ApplicationContext=null):void
+		public function addGlobalFiles(context:IApplicationContext):void
 		{
-			if (context == null) context = ApplicationContext.globalContext;
 			var f:Array = context.enumerateGlobals();
 			for each(var a:ApplicationFile in f)
 			{
@@ -65,16 +64,14 @@ package ch.capi.net.app
 		
 		/**
 		 * Add all the <code>ApplicationFile</code> objects that are into a specified <code>ApplicationContext</code> into
-		 * the loading queue. If the context is not specified, the global <code>ApplicationContext</code> will be used.
+		 * the loading queue.
 		 * 
-		 * @param context			The <code>ApplicationContext</code>.
+		 * @param context			The <code>IApplicationContext</code>.
 		 * @return	An <code>Array</code> containing all the <code>ApplicationFile</code> added to the loading queue.
 		 * @see		ch.capi.net.app.ApplicationContext#enumerateRoots()	ApplicationContext.enumerateRoots()
 		 */
-		public function addAll(context:ApplicationContext=null):Array
+		public function addAll(context:IApplicationContext):Array
 		{
-			if (context == null) context = ApplicationContext.globalContext;
-			
 			var files:Array = context.enumerateRoots();
 			for each(var appFile:ApplicationFile in files)
 			{
@@ -88,17 +85,17 @@ package ch.capi.net.app
 		 * Starts the loading of the specified file. If the file isn't an <code>ApplicationFile</code> then the toString() method
 		 * will be used to retrieve it from the specified <code>ApplicationContext</code>.
 		 * 
-		 * @param	load			The <code>ApplicationFile</code> object or the name of the <code>ApplicationFile</code>.
-		 * @param	context			The <code>ApplicationContext</code> to retrieve the <code>ApplicationFile</code> and global files.
+		 * @param	file			The <code>ApplicationFile</code> object or the name of the <code>ApplicationFile</code>. If this param
+		 * 							is a <code>String</code>, then the <code>IApplicationContext</code> must be specified.
+		 * @param	context			The <code>IApplicationContext</code> to retrieve the <code>ApplicationFile</code> and global files.
 		 * @param	withGlobalFiles	Tells the <code>ApplicationMassLoader</code> to automatically add the <code>ApplicationFile</code>
 		 * 							that are noted as global.
 		 * @return	The <code>ApplicationFile</code> being loaded.
 		 * @throws	IllegalOperationError	If the <code>ApplicationmassLoader</code> is currently loading.
 		 */
-		public function load(file:Object, context:ApplicationContext=null, withGlobalFiles:Boolean=false):ApplicationFile
+		public function load(file:Object, context:IApplicationContext=null, withGlobalFiles:Boolean=false):ApplicationFile
 		{
 			if (stateLoading) throw new IllegalOperationError("The ApplicationMassLoader is already loading when trying to add file "+file);
-			if (context == null) context = ApplicationContext.globalContext;
 			
 			//retrieves the specified file
 			var appFile:ApplicationFile = (file is ApplicationFile) ? (file as ApplicationFile) : context.getFile(file.toString());
