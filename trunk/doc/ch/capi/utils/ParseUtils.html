@@ -36,7 +36,7 @@
 		 	<li>yes</li>
 		 	<li>no</li>
 		 </ul>
-		 All other values are not valid values. Not that the values are not case sensitive.
+		 All other values are not valid values. The values are not case sensitive.
 		 </p>
 		 
 		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">str</span>:String</code> &mdash; 	The <code>String</code> to check.
@@ -73,6 +73,16 @@
 		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code> &mdash; <code>true</code> if the <code>String</code> is a valid unsigned <code>Integer</code>.
 		 </td></tr></table></div><a name="parseBoolean()"></a><a name="parseBoolean(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">parseBoolean</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public static function parseBoolean(str:String):Boolean</code><p></p><p></p><p>
 		 Parses the specified <code>String</code> to a <code>Boolean</code>.
+		 <p>Here are the allowed values : 
+		 <ul>
+		 	<li><code>true</code></li>
+		 	<li><code>false</code></li>
+		 	<li>Any <code>Integer</code> value (only the value 0 will return <code>false</code>)</li>
+		 	<li>yes</li>
+		 	<li>no</li>
+		 </ul>
+		 All other values are not valid values. The values are not case sensitive.
+		 </p>
 		 
 		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">str</span>:String</code> &mdash; 	The <code>String</code> to parse.
 		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code> &mdash; A <code>uint</code>.
@@ -108,4 +118,4 @@
 		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">str</span>:String</code> &mdash; 	The <code>String</code> to parse.
 		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>uint</code> &mdash; A <code>uint</code>.
 		 </td></tr></table><br/><span class="label">Throws</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>ch.capi.errors:ParseError	If </code> &mdash; the specified <code>String</code> is not a valid unsigned <code>Integer</code>.
-		 </td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="ParseUtils.html#isUnsigned()" target="">isUnsigned()</a></div></div><br/><br/><hr><br/><p></p><center class="copyright"><footer>Cedric Tabin - http://www.astorm.ch</footer><br/>Thu Apr 9 2009, 11:18 AM +02:00  </center></div></body></html><!--Cedric Tabin - http://www.astorm.ch<br/>Thu Apr 9 2009, 11:18 AM +02:00  -->
+		 </td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="ParseUtils.html#isUnsigned()" target="">isUnsigned()</a></div></div><br/><br/><hr><br/><p></p><center class="copyright"><footer>Cedric Tabin - http://www.astorm.ch</footer><br/>Thu Apr 30 2009, 01:02 PM +02:00  </center></div></body></html><!--Cedric Tabin - http://www.astorm.ch<br/>Thu Apr 30 2009, 01:02 PM +02:00  -->
