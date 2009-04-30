@@ -1,5 +1,5 @@
-package ch.capi.net {
-	import flash.errors.IllegalOperationError;	
+package ch.capi.net 
+{	
 	import flash.events.ProgressEvent;	
 	import flash.events.Event;	
 	import flash.net.URLRequest;		
@@ -10,9 +10,7 @@ package ch.capi.net {
 	import ch.capi.data.ArrayList;	
 	import ch.capi.net.LoadableFileFactory;
 	import ch.capi.net.IMassLoader;
-	import ch.capi.net.ILoadableFile;
-	import ch.capi.errors.NameAlreadyExistsError;	
-	import ch.capi.data.DictionnaryMap;	
+	import ch.capi.net.ILoadableFile;	
 	import ch.capi.data.IMap;
 	
 	/**
@@ -71,7 +69,7 @@ package ch.capi.net {
 	 * value are based on the overall progressing of the files stored into the loading queue. If the <code>bytesTotal</code> of a
 	 * <code>ILoadableFile</code> has not been retrieved, then the <code>virtualBytesTotal</code> value will be used.
 	 * 
-	 * @see			ch.capi.net.MassLoader		MassLoader
+	 * @see			ch.capi.net.IMassLoader		IMassLoader
 	 * @eventType	flash.events.ProgressEvent.PROGRESS
 	 */
 	[Event(name="progress", type="flash.events.ProgressEvent")]
@@ -84,12 +82,12 @@ package ch.capi.net {
 	 */
 	[Event(name="priorityChanged", type="ch.capi.events.PriorityEvent")]
 	
-	//TODO use the same method as ApplicationContext to store statically the massloaders
 	/**
 	 * This is a utility class to avoid too much verbose code within the Masapi API. Note that this
 	 * class simply uses the <code>PriorityMassLoader</code> and <code>LoadableFileFactory</code> to creates
 	 * the <code>ILoadableFile</code> and for the loading management.
-	 * It is an encapsulation class to the core Masapi API core functions.
+	 * It is an encapsulation class to the core Masapi API core functions. It is also a basic implementation
+	 * of a <code>ICompositeMassLoader</code>.
 	 *
 	 * <p>The <code>CompositeMassLoader</code> keeps by default a reference to the created <code>ILoadableFile</code>
 	 * (see the <code>keepFiles</code> property).</p>
@@ -120,10 +118,11 @@ package ch.capi.net {
 	 *
 	 * @see			ch.capi.net.LoadableFileFactory 	LoadableFileFactory
 	 * @see			ch.capi.net.IMassLoader				IMassLoader
+	 * @see			ch.capi.net.CompositeMassLoaderRegisterer	CompositeMassLoaderRegisterer
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		1.0
 	 */
-	public class CompositeMassLoader extends GlobalEventDispatcher
+	public class CompositeMassLoader extends GlobalEventDispatcher implements ICompositeMassLoader
 	{
 		//---------//
 		//Constants//
@@ -139,8 +138,6 @@ package ch.capi.net {
 		//---------//
 		//Variables//
 		//---------//
-		private static var __storedLoaders:IMap 		= new DictionnaryMap(false);
-
 		private var _storage:ArrayList 					= new ArrayList();
 		private var _massLoader:PriorityMassLoader		= new PriorityMassLoader();
 		private var _factory:LoadableFileFactory		= new LoadableFileFactory();
@@ -182,7 +179,7 @@ package ch.capi.net {
 		/**
 		 * Defines the <code>PriorityMassLoader</code> to use.
 		 */
-		public function get massLoader():PriorityMassLoader { return _massLoader; }
+		public function get massLoader():IMassLoader { return _massLoader; }
 		
 		//-----------//
 		//Constructor//
@@ -194,35 +191,23 @@ package ch.capi.net {
 		 * @param	name					The name of the <code>CompositeMassLoader</code>. That name must be unique. If no name is defined, then
 		 * 									the instance won't be registered.
 		 * @param	parallelFiles			The number of files to load at the same time.
+		 * @param	register				Defines if the <code>CompositeMassLoader</code> must be automatically registered into the
+		 * 									<code>CompositeMassLoaderRegisterer</code> class.
 		 */
-		public function CompositeMassLoader(name:String=null, parallelFiles:int=0)
+		public function CompositeMassLoader(name:String=null, parallelFiles:int=0, register:Boolean=true)
 		{
+			_name = name;
 			_massLoader.parallelFiles = parallelFiles;
 			
 			//register itself as listener
 			registerTo(massLoader);
 			
 			//if the name is specified, register the loader
-			if (name != null) register(name);
+			if (name != null && register) CompositeMassLoaderRegisterer.register(this); 
 		}
-		
-		//--------------//
+		//--------------//
 		//Public methods//
 		//--------------//
-		
-		/**
-		 * Retrieves the <code>CompositeMassLoader</code> matching the specified name.
-		 * 
-		 * @param	name	The name of the <code>CompositeMassLoader</code>.
-		 * @return	The <code>CompositeMassLoader</code>.
-		 * @throws	Error	If there is no <code>CompositeMassLoader</code> matching the specified name.
-		 */
-		public static function get(name:String):CompositeMassLoader
-		{
-			var cml:CompositeMassLoader = __storedLoaders.getValue(name);
-			if (cml == null) throw new Error("There is no CompositeMassLoader matching the name '"+name+"'");
-			return cml;
-		}
 
 		/**
 		 * Creates a <code>ILoadableFile</code> from a url. This method doesn't register the file to the <code>IMassLoader</code> but
@@ -407,28 +392,6 @@ package ch.capi.net {
 		{
 			_massLoader.clear();
 			_storage.clear();
-		}
-		
-		/**
-		 * Registers the <code>CompositeMassLoader</code> into the static map. After calling
-		 * this method, the <code>CompositeMassLoader</code> will be available with the <code>get()</code>
-		 * method.
-		 * 
-		 * @param	name		The name within the <code>CompositeMassLoader</code> will be registered.
-		 * @throws	flash.errors.ArgumentError				If the name is not defined.
-		 * @throws	flash.errors.IllegalOperationError		If the <code>CompositeMassLoader</code> is already
-		 * 													registered (that means, if its name is not <code>null</code>).
-		 * @throws	ch.capi.errors.NameAlreadyExistsError	If the name is not unique.
-		 * @see		#get()									CompositeMassLoader.get()
-		 */
-		public function register(name:String):void
-		{
-			if (name == null) throw new ArgumentError("The name is not defined");
-			if (_name != null) throw new IllegalOperationError("The CompositeMassLoader is already registered as '"+_name+"' (trying with "+name+")");
-			if (__storedLoaders.containsKey(name)) throw new NameAlreadyExistsError("The name '"+name+"' is already exists");
-			
-			_name = name;
-			__storedLoaders.put(name, this);	
 		}
 		
 		//-------------------//
