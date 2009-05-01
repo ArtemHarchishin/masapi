@@ -30,3 +30,7 @@ sample04		=>		This sample shows how to manage the priority of
 sample05		=>		This one show how you can share a CompositeMassLoader
 						through two SWF and use the loaded data into a
 						loaded SWF.
+						
+sample06		=>		A simple piece of code that shows how to simply deal
+						with the loading policy (reloading the files)
+						
