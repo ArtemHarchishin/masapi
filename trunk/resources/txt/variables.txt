@@ -1,1 +1,2 @@
-title=Masapi sample&text=This is a text issued from a sample of Masapi !
+title=Masapi 2.0&text=This is a text issued from 
+./resources/txt/variables.txt of Masapi !
