@@ -32,5 +32,5 @@ sample05		=>		This one show how you can share a CompositeMassLoader
 						loaded SWF.
 						
 sample06		=>		A simple piece of code that shows how to simply deal
-						with the loading policy (reloading the files)
+						with the loading policy (reloading the files).
 						

@@ -1,5 +1,6 @@
 package ch.capi.net 
-{	
+{	import ch.capi.data.IMap;
+	
 	import flash.events.ProgressEvent;	
 	import flash.events.Event;	
 	import flash.net.URLRequest;		
@@ -11,7 +12,6 @@ package ch.capi.net
 	import ch.capi.net.LoadableFileFactory;
 	import ch.capi.net.IMassLoader;
 	import ch.capi.net.ILoadableFile;	
-	import ch.capi.data.IMap;
 	
 	/**
 	 * Dispatched after all the files have been downloaded
@@ -392,6 +392,55 @@ package ch.capi.net
 		{
 			_massLoader.clear();
 			_storage.clear();
+		}
+		
+		/**
+		 * Retrieves the first file that matches the specified properties.
+		 * 
+		 * @param	props		An <code>Object</code> containing the properties to match.
+		 * @param	strict		Defines if the check must be strict or not.
+		 * @return	The first <code>ILoadableFile</code> instance that matches the properties
+		 * 			or <code>null</code>.
+		 * 			
+		 * @see		ch.capi.net.ILoadableFile#properties	ILoadableFile.properties
+		 * @see		ch.capi.data.IMap#matches()				IMap.matches()
+		 */
+		public function getFileByProps(props:Object, strict:Boolean=false):ILoadableFile
+		{
+			for(var i:int=0 ; i<_storage.length ; i++)
+			{
+				var f:ILoadableFile = _storage.getElementAt(i);
+				var m:IMap = f.properties.variables;
+				
+				if (m.matches(props, strict)) return f;
+			}
+			
+			return null;
+		}
+
+		/**
+		 * Retrieves all the files that matche the specified properties.
+		 * 
+		 * @param	props		An <code>Object</code> containing the properties to match.
+		 * @param	strict		Defines if the check must be strict or not.
+		 * @return	An <code>Array</code> of <code>ILoadableFile</code> that match the 
+		 * 			specified properties.
+		 * 			
+		 * @see		ch.capi.net.ILoadableFile#properties	ILoadableFile.properties
+		 * @see		ch.capi.data.IMap#matches()				IMap.matches()
+		 */
+		public function getFilesByProps(props:Object, strict:Boolean=false):Array
+		{
+			var results:Array = new Array();
+			for(var i:int=0 ; i<_storage.length ; i++)
+			{
+				var f:ILoadableFile = _storage.getElementAt(i);
+				var m:IMap = f.properties.variables;
+				
+				if (m.matches(props, strict)) results.push(f);
+			}
+			
+			return results;
 		}
 		
 		//-------------------//
