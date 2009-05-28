@@ -22,8 +22,8 @@ package masapi.sample06
 	[SWF(width="500", height="500", frameRate="30", backgroundColor="#FFFFFF")]
 	
 	/**
-	 * This is a simple demo of the usage of the <code>CompositeMassLoader</code>
-	 * class.
+	 * This is a simple demo of the usage of the <code>ILoadPolicy</code> interface and
+	 * <code>DefaultLoadPolicy</code> class.
 	 * 
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		1.0

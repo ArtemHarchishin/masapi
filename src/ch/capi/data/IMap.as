@@ -98,5 +98,25 @@ package ch.capi.data
 		 * @return	An <code>Array</code> containing all the keys.
 		 */
 		function keys():Array;
+		
+		/**
+		 * Returns an <code>Object</code> from the <code>IMap</code>.
+		 * 
+		 * @return	An <code>Object</code> with the same pair key/values.
+		 */
+		function toObject():Object;
+		
+		/**
+		 * Compares the <code>IMap</code> and the specified <code>Object</code> pairs
+		 * key/value and checks if the values are the same. A <code>null Object</code>
+		 * will be considered as an empty <code>Object</code>.
+		 * 
+		 * @param	obj		An <code>Object</code> to compare. If the <code>Object</code> is
+		 * 					a <code>IMap</code>, then it will be used as it.
+		 * @param	strict	Defines if the match must be strict or if there can be more pairs
+		 * 					into the <code>IMap</code> than defined into the <code>Object</code>.
+		 * @return	<code>true</code> if the <code>IMap</code> matches the <code>Object</code>.
+		 */
+		function matches(obj:Object, strict:Boolean=false):Boolean;
 	}
 }

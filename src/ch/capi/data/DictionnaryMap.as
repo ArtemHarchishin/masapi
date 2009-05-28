@@ -217,5 +217,75 @@ package ch.capi.data
 			
 			return str;
 		}
+		
+		/**
+		 * Returns an <code>Object</code> from the <code>IMap</code>.
+		 * 
+		 * @return	An <code>Object</code> with the same pair key/values.
+		 */
+		public function toObject():Object
+		{
+			var obj:Object = new Object();
+			
+			for(var key:* in _dictionnary)
+			{
+				obj[key] = _dictionnary[key];
+			}
+			
+			return obj;
+		}
+		
+		/**
+		 * Compares the <code>IMap</code> and the specified <code>Object</code> pairs
+		 * key/value and checks if the values are the same. A <code>null Object</code>
+		 * will be considered as an empty <code>Object</code>.
+		 * 
+		 * @param	obj		An <code>Object</code> to compare. If the <code>Object</code> is
+		 * 					a <code>IMap</code>, then it will be used as it.
+		 * @param	strict	Defines if the match must be strict or if there can be more pairs
+		 * 					into the <code>IMap</code> than defined into the <code>Object</code>.
+		 * @return	<code>true</code> if the <code>IMap</code> matches the <code>Object</code>.
+		 */
+		public function matches(obj:Object, strict:Boolean=false):Boolean
+		{
+			if (obj == null) obj = new Object();
+			
+			//special check if the object is an IMap
+			if (obj is IMap)
+			{
+				var m:IMap = obj as IMap;
+				
+				//if the match is strict and the size are not the same, then
+				//simply return false
+				if (strict && this.size() != m.size()) return false;
+				
+				obj = m.toObject();	
+			}
+			
+			/*
+			 * Loops on each key of the object and checks the corresponding
+			 * value into the map. If the key is not found, then directly
+			 * returns false, otherwise checks the values.
+			 */
+			var counter:int = 0;
+			for (var key:* in obj)
+			{
+				if (! (key in _dictionnary)) return false;
+				
+				var objValue:* = obj[key];
+				var dicValue:* = _dictionnary[key];
+				
+				if (objValue != dicValue) return false;
+				
+				counter++;
+			}
+			
+			/*
+			 * Here means that all the pairs key/value into the IMap and Object
+			 * matches. If the check is strict, the size must be the same otherwise
+			 * simple return true.
+			 */
+			return (strict) ? (counter == size()) : true;
+		}
 	}
 }
