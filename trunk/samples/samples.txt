@@ -34,3 +34,6 @@ sample05		=>		This one show how you can share a CompositeMassLoader
 sample06		=>		A simple piece of code that shows how to simply deal
 						with the loading policy (reloading the files).
 						
+sample07		=>		That's a simple picture loader that loads dynamically 
+						the files specified in ../resources/xml/clouds.xml.
+						
