@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+	<!-- The variable ${PICTURES} is defined into the code by the Constants class -->
+	<files>
+		<!-- All the lines below are striclty the same -->
+		<file url="${PICTURES}/cloud01.jpg" type="swf" />
+		<file url="${PICTURES}/cloud02.jpg" />
+		<file url="${PICTURES}/cloud03.jpg" />
+		<file url="${PICTURES}/cloud04.jpg" />
+		<file url="${PICTURES}/cloud05.jpg" />
+		<file url="${PICTURES}/cloud06.jpg" />
+		<file url="${PICTURES}/cloud07.jpg" />
+		
+		<!-- By default, the jpg file are loaded using a Loader (swf). This one will be loaded
+		     as binary data using a URLLoader -->
+		<file url="${PICTURES}/cloud08.jpg" type="binary" />
+	</files>
+</root>
