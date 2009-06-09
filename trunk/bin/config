@@ -16,12 +16,12 @@ masapi_version="2.0"
 target_player="9.0.0"
 
 source_path="src"
-doc_path="doc"
+doc_path="doc/api"
 resources_path="resources"
 samples_path="samples"
 current_folder=`pwd`
 
-default_output_documentation="./doc"
+default_output_documentation="./doc/api"
 default_output_swc="./masapi-$masapi_version.swc"
 default_output_bundle="./masapi-$masapi_version.zip"
 
