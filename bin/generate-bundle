@@ -26,17 +26,17 @@ temp_file="masapi-tmp.zip"
 
 mkdir "$temp_dir"
 echo "Copying sources..."
-cp -R "$source_path" "$temp_dir"
+cp -R "$source_path" "$temp_dir/src"
 
 echo "Copying documentation..."
-cp -R "$doc_path" "$temp_dir"
+cp -R "$doc_path" "$temp_dir/doc"
 
 echo "Removing svn private folders..."
 find "$temp_dir" -name \.svn -exec rm -rf {} \;
 
 echo "Generating $file_name..."
 cd "$temp_dir"
-zip -r "$temp_file" "$source_path" "$doc_path"
+zip -r "$temp_file" "src" "doc"
 cd ..
 
 mv "$temp_dir/$temp_file" "$current_folder/$file_name"

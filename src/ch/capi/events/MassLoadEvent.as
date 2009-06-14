@@ -40,6 +40,7 @@
 		private var _closeEvent:Event;
 		private var _staticIndex:int;
 		private var _queueIndex:int;
+		private var _loadedIndex:int;
 		private var _priority:int;
 		
 		//-----------------//
@@ -60,8 +61,16 @@
 		
 		/**
 		 * Defines the index of the file into the loading queue.
+		 * 
+		 * @see	ch.capi.net.MassLoader#getFileQueueIndex()	MassLoader.getFileQueueIndex()
 		 */
 		public function get queueIndex():int { return _queueIndex; }
+		
+		/**
+		 * Defines the index of the file into the loaded queue. It indicates how many files
+		 * have been loaded before the <code>loadManager</code>.
+		 */
+		public function get loadedIndex():int { return _loadedIndex; }
 		
 		/**
 		 * Defines the index of the file. The index is unique for a <code>ILoadableFile</code>
@@ -92,9 +101,10 @@
 		 * @param	closeEvent		The <code>Event</code> dispatched to close the file. This event is cloned before beeing stored.
 		 * @param	staticIndex		The static index of the file into the loading queue.
 		 * @param	queueIndex		The index of the file into the loading queue.
+		 * @param	loadedIndex		The index of the file into the loaded queue.
 		 * @param	priority		The file priority.
 		 */
-		public function MassLoadEvent(type:String, file:ILoadManager=null, closeEvent:Event=null, staticIndex:int=-1, queueIndex:int=0, priority:int=0):void
+		public function MassLoadEvent(type:String, file:ILoadManager=null, closeEvent:Event=null, staticIndex:int=-1, queueIndex:int=-1, loadedIndex:int=-1, priority:int=0):void
 		{
 			super(type, false, false);
 			
@@ -102,6 +112,7 @@
 			_closeEvent = (closeEvent==null) ? null : closeEvent.clone();
 			_staticIndex = staticIndex;
 			_queueIndex = queueIndex;
+			_loadedIndex = loadedIndex;
 			_priority = priority;
 		}
 		
@@ -116,7 +127,7 @@
 		 */
 		public override function clone():Event
 		{
-			return new MassLoadEvent(type, _file, _closeEvent, _staticIndex, _queueIndex, _priority);
+			return new MassLoadEvent(type, _file, _closeEvent, _staticIndex, _queueIndex, _loadedIndex, _priority);
 		}
 		 
 		/**
@@ -154,6 +165,24 @@
 		{
 			if (!isLoadableFile()) throw new Error("Cast exception : the loadManger is not a ILoadbleFile");
 			return _file as ILoadableFile;
+		}
+		
+		/**
+		 * Returns the <code>MassLoadEvent</code> into a <code>String</code>.
+		 * 
+		 * @return	A <code>String</code> containing the <code>MassLoadEvent</code> properties values.
+		 */
+		public override function toString():String
+		{
+			return "MassLoadEvent["+
+				"\n type : "+type+
+				"\n file : "+loadManager+
+				"\n closeEvent : "+closeEvent+
+				"\n priority : "+priority+
+				"\n queueIndex : "+queueIndex+
+				"\n staticIndex : "+staticIndex+
+				"\n loadedIndex : "+loadedIndex
+				+"\n]";
 		}
 	}
 }

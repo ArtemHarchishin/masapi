@@ -775,7 +775,8 @@ package ch.capi.net
 		{
 			var staticIndex:int = getStaticIndexOf(file);
 			var queueIndex:int = getFileQueueIndex(file);
-			var op:MassLoadEvent = new MassLoadEvent(type, file, evt, staticIndex, queueIndex);
+			var loadedIndex:int = (type == MassLoadEvent.FILE_CLOSE) ? _totalFilesLoaded-1 : -1;
+			var op:MassLoadEvent = new MassLoadEvent(type, file, evt, staticIndex, queueIndex, loadedIndex);
 			return op;
 		}
 		
