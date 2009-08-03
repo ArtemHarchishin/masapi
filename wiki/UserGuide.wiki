@@ -28,7 +28,8 @@ You'll find here interesting links to use masapi into your application. You can 
 == Useful links ==
 
   * [http://code.google.com/p/masapi/wiki/From11to15 Migration guide] from masapi 1.1 to 1.5
-  * [http://www.astorm.ch/masapi/doc Online API Reference]
+  * [http://www.astorm.ch/masapi/doc/2.0 Online API Reference 2.0]
+  * [http://www.astorm.ch/masapi/doc/1.5 Online API Reference 1.5]
   * XMLSchema [http://www.astorm.ch/masapi/validator.php validator] for the file dependencies
   * [http://www.astorm.ch/blog/index.php?tag/Masapi French tutorials]
   * Author's blog : [http://www.astorm.ch AStorm - Cédric Tabin]
