@@ -178,7 +178,6 @@ package ch.capi.net
 		 * function onLoadProgress(evt:ProgressEvent):void
 		 * {
 		 * 		trace(evt.target.loadInfo);
-		 * 		//trace(myMassLoader.loadInfo);
 		 * }
 		 * 
 		 * myMassLoader.addEventListener(ProgressEvent.PROGRESS, onLoadProgress);
@@ -305,7 +304,7 @@ package ch.capi.net
 		 * 
 		 * @param	parallelFiles	The number of files to be loaded simultaneously.
 		 */
-		public function MassLoader(parallelFiles:uint=0):void
+		public function MassLoader(parallelFiles:uint=1):void
 		{
 			_loadInfo = new MassLoadInfo(this);
 			_parallelFiles = parallelFiles;
@@ -426,7 +425,7 @@ package ch.capi.net
 		}
 		
 		/**
-		 * Starts downloading data from the specified <code>ILoadableFile</code> objects.
+		 * Starts downloading data from the specified <code>ILoadManager</code> objects.
 		 * 
 		 * @return	<code>true</code> if there is any file into the loading queue, <code>false</code> otherwise.
 		 * @throws	flash.errors.IllegalOperationError	If the <code>MassLoader</code> is already loading.
@@ -480,7 +479,9 @@ package ch.capi.net
 		}
 
 		/**
-		 * Empty the loading queue. This will not affect the current loading.
+		 * Resets the <code>MassLoader</code> data. This method will clear
+		 * the index values and the current loading queue. The current files
+		 * being loaded won't be affected.
 		 */
 		public function clear():void
 		{

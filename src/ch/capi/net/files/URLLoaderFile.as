@@ -173,6 +173,15 @@ package ch.capi.net.files
 			return (loadManagerObject as URLLoader).dataFormat;
 		}
 		
+		/**
+		 * Destroys this <code>URLLoaderFile</code>.
+		 */
+		public override function destroy():void
+		{
+			loaderContext = null;
+			super.destroy();
+		}
+
 		//-----------------//
 		//Protected methods//
 		//-----------------//

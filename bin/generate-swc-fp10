@@ -1,0 +1,29 @@
+#!/bin/sh
+
+dir_name=`dirname $0`
+cmd_name=`basename $0`
+
+source "$dir_name/config"
+cd "$dir_name/.."
+
+temp_name="masapi-tmp.swc"
+file_name="$default_output_swc-fp10.swc"
+
+if [ $# -eq 1 ]; then
+	if [ "$1" = "-help" ]; then
+		echo "Usage : $cmd_name [swc_path_name]"
+		exit
+	else
+		file_name=$1
+	fi
+elif [ $# -gt 1 ]; then
+	echo "Invalid number of arguments..." >&2
+	echo "Usage : $cmd_name [swc_path_name]"
+	exit
+fi
+
+echo "Generating $file_name..."
+$flex_sdk_path/compc -include-sources "$source_path/ch" -output "$temp_name" -strict -optimize -show-actionscript-warnings -target-player "$player_target_fp10" -define=$constant_fp9,false -define=$constant_fp10,true
+mv "$temp_name" "$current_folder/$file_name"
+
+echo "The file $file_name has been successfully generated !"

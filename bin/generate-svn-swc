@@ -7,8 +7,13 @@ source "$dir_name/config"
 source "$dir_name/svn-utils"
 cd "$dir_name/.."
 
-swc_name="masapi-$masapi_version-r$next_revision.swc"
-./bin/generate-swc "$bundles_path/$swc_name"
+echo 
+echo -n "Which version of the flash player ? (9 or 10) "
+read fpVersion
+
+cmd_name="./bin/generate-swc-fp$fpVersion"
+swc_name="masapi-$masapi_version-r$next_revision-fp$fpVersion.swc"
+$cmd_name "$bundles_path/$swc_name"
 
 echo
 echo -n "Do you want to add the file $swc_name to subversion ? (y or n) "

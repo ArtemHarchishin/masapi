@@ -220,7 +220,8 @@
 		
 		/**
 		 * Defines the <code>URLRequest</code> object that specify the
-		 * URL to load.
+		 * URL to load. If the <code>AbstractLoadableFile</code> is destroyed,
+		 * it will keep a <code>URLRequest</code> object with the URL.
 		 */
 		public function get urlRequest():URLRequest { return _request; }
 		public function set urlRequest(request:URLRequest):void { _request = request; }

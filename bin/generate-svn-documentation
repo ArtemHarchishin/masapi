@@ -1,0 +1,22 @@
+#!/bin/sh
+
+dir_name=`dirname $0`
+cmd_name=`basename $0`
+
+source "$dir_name/config"
+source "$dir_name/svn-utils"
+cd "$dir_name/.."
+
+folder_output="$default_output_documentation"
+
+if [ $# -eq 1 ]; then
+	if [ $1 = "-help" ]; then
+		echo "Usage : $0 [output_folder]"
+		exit
+	else
+		folder_output=$1
+	fi
+fi
+
+echo "Generating documentation into folder $folder_output"
+$flex_sdk_path/asdoc -source-path ./src -output $folder_output -doc-sources ./src/ch/ -main-title "Masapi 2.0 (r$next_revision) - http://masapi.googlecode.com" -window-title "Masapi 2.0 API Reference (r$next_revision)" -footer "Cedric Tabin - http://www.astorm.ch" -define=$constant_fp9,false -define=$constant_fp10,true

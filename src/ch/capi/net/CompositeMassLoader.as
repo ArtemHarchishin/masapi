@@ -1,10 +1,10 @@
 package ch.capi.net 
-{	import ch.capi.data.IMap;
-	
+{
 	import flash.events.ProgressEvent;	
 	import flash.events.Event;	
 	import flash.net.URLRequest;		
 	
+	import ch.capi.data.IMap;
 	import ch.capi.events.GlobalEventDispatcher;	
 	import ch.capi.events.PriorityEvent;	
 	import ch.capi.events.MassLoadEvent;
@@ -104,18 +104,6 @@ package ch.capi.net
 	 * cm.start();
 	 * </listing>
 	 *
-	 * @example
-	 * The <code>CompositeMassLoader</code> doesn't keep a reference to the created files :
-	 * 
-	 * <listing version="3.0">
-	 * var cm:CompositeMassLoader = new CompositeMassLoader(false);
-	 * var file1:ILoadableFile = cm.addFile("myAnimation.swf");
-	 * var file2:ILoadableFile = cm.addFile("otherSWF.swf", LoadableFileType.BINARY);
-	 * var file3:ILoadableFile = cm.addFile(new URLRequest("anotherFile.txt"));
-	 * 
-	 * cm.start();
-	 * </listing>
-	 *
 	 * @see			ch.capi.net.LoadableFileFactory 	LoadableFileFactory
 	 * @see			ch.capi.net.IMassLoader				IMassLoader
 	 * @see			ch.capi.net.CompositeMassLoaderRegisterer	CompositeMassLoaderRegisterer
@@ -194,7 +182,7 @@ package ch.capi.net
 		 * @param	register				Defines if the <code>CompositeMassLoader</code> must be automatically registered into the
 		 * 									<code>CompositeMassLoaderRegisterer</code> class.
 		 */
-		public function CompositeMassLoader(name:String=null, parallelFiles:int=0, register:Boolean=true)
+		public function CompositeMassLoader(name:String=null, parallelFiles:int=1, register:Boolean=true)
 		{
 			_name = name;
 			_massLoader.parallelFiles = parallelFiles;
@@ -386,10 +374,21 @@ package ch.capi.net
 		 * Clears the loading queue of the <code>IMassLoader</code> and empty the references to the
 		 * created <code>ILoadableFile</code> instances.
 		 * 
+		 * @param	destroyAll	If <code>true</code>, then the <code>destroy()</code> method will
+		 *                      be called on all the <code>ILoadableFile</code>.
 		 * @see	ch.capi.net.IMassLoader#clear	IMassLoader.clear()
 		 */
-		public function clear():void
+		public function clear(destroyAll:Boolean=true):void
 		{
+			if (destroyAll)
+			{
+				for (var i:int=0 ; i<_storage.length ; i++)
+				{
+					var file:ILoadableFile = _storage.getElementAt(i);
+					file.destroy();
+				}
+			}
+			
 			_massLoader.clear();
 			_storage.clear();
 		}
