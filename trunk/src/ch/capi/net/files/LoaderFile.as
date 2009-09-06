@@ -131,10 +131,21 @@
 		
 		/**
 		 * Destroys this <code>LoaderFile</code>. This will call the <code>unload()</code> method on the <code>Loader</code>.
+		 * If you're using the FP10, then this method will call the <code>unloadAndStop(true)</code> method.
 		 */
 		public override function destroy():void
 		{
-			(loadManagerObject as Loader).unload();
+			//those namespaces/variables are defined at compile-time
+			MASAPI::PLAYER_FP9
+			{
+				(loadManagerObject as Loader).unload();
+			}
+			
+			MASAPI::PLAYER_FP10
+			{
+				(loadManagerObject as Loader).unloadAndStop(true);
+			}
+			
 			loaderContext = null;
 			super.destroy();
 		}

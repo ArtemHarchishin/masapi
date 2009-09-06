@@ -1,0 +1,45 @@
+//////////////////////////////////////////////////////////////////////
+//																	//
+//	ooo        ooooo                                          o8o   //
+//	`88.       .888'                                                //
+//	 888b     d'888   .oooo.    .oooo.o  .oooo.   oo.ooooo.  oooo   //
+//	 8 Y88. .P  888  `P  )88b  d88(  "8 `P  )88b   888' `88b `888   //
+//	 8  `888'   888   .oP"888  `"Y88b.   .oP"888   888   888  888   //
+//	 8    Y     888  d8(  888  o.  )88b d8(  888   888   888  888   // 
+//	o8o        o888o `Y888""8o 8""888P' `Y888""8o  888bod8P' o888o 	// 
+//	                                               888              //
+//	                                              o888o            	//
+//																2.0	//
+//////////////////////////////////////////////////////////////////////	                                                               
+
+This file describes how you can compile the Masapi sources using different
+systems or programs. Here are the constants that can be used at compile-time :
+      * MASAPI::PLAYER_FP9 => boolean, defines if masapi must be compiled for FP9
+      * MASAPI::PLAYER_FP10 => boolean, defines if masapi must be compiled for FP10
+
+
+How to compile the sources using Flash CS4 :
+  - Go into the File menu > Publish settings > Flash > AS3 Settings
+  - Into the panel 'Config constants', add the needed constants
+
+
+How to compile the sources using Flex :
+  - Add the following define line in you MXMLC for each constants :
+    <define name="YOUR_NAMESPACE::YOUR_CONSTANT_NAME" value="yourConstantValue" />
+    
+    <define name="MASAPI::PLAYER_FP9" value="false" />
+    <define name="MASAPI::PLAYER_FP10" value="true" />
+
+
+How to compile with MXMLC command-line :
+  - On the command line, add the following parameter for each constants :
+    -define=YOUR_NAMESPACE::YOUR_CONSTANT_NAME,yourConstantValue
+    
+    -define=MASAPI::PLAYER_FP9,false
+    -define=MASAPI::PLAYER_FP10,true
+
+
+How to compile with complete svn version (Linux only) :
+  - Go into the folder %masapi%/bin and open the file 'config'
+  - Modifiy the 'flex_sdk_path' variable to make it point on the bin directory of your flex sdk
+  - The just use the script 'generate-swc-fp9' or 'generate-swc-fp10' to compile masapi

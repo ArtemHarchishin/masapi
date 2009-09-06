@@ -15,7 +15,8 @@ package ch.capi.net
 	 * var selector:FileTypeSelector = new FileTypeSelector();
 	 * selector.extensions.put("zip", LoadableFileType.BINARY);
 	 * 
-	 * var factory:LoadableFileFactory = new LoadableFileFactory(selector);
+	 * var factory:LoadableFileFactory = new LoadableFileFactory();
+	 * factory.fileTypeSelector = selector;
 	 * var file:ILoadableFile = factory.create("myFile.zip"); //creates a binary URLLoader-based ILoadableFile
 	 * </listing>
 	 * 
@@ -67,6 +68,7 @@ package ch.capi.net
 		 * 	<li><i>png</i> as <code>LoadableFileType.SWF</code></li>
 		 * 	<li><i>php</i> as <code>LoadableFileType.TEXT</code></li>
 		 * 	<li><i>asp</i> as <code>LoadableFileType.TEXT</code></li>
+		 * 	<li><i>zip</i> as <code>LoadableFileType.BINARY</code></li>
 		 * </ul></p>
 		 */
 		public function FileTypeSelector():void
@@ -85,6 +87,7 @@ package ch.capi.net
 			_extensions.put("png", LoadableFileType.SWF);
 			_extensions.put("php", LoadableFileType.TEXT);
 			_extensions.put("asp", LoadableFileType.TEXT);
+			_extensions.put("zip", LoadableFileType.BINARY);
 		}
 
 		//--------------//

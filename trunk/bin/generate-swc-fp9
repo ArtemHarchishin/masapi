@@ -7,7 +7,7 @@ source "$dir_name/config"
 cd "$dir_name/.."
 
 temp_name="masapi-tmp.swc"
-file_name="$default_output_swc"
+file_name="$default_output_swc-fp9.swc"
 
 if [ $# -eq 1 ]; then
 	if [ "$1" = "-help" ]; then
@@ -23,7 +23,7 @@ elif [ $# -gt 1 ]; then
 fi
 
 echo "Generating $file_name..."
-$flex_sdk_path/compc -include-sources "$source_path/ch" -output "$temp_name" -strict -optimize -show-actionscript-warnings
+$flex_sdk_path/compc -include-sources "$source_path/ch" -output "$temp_name" -strict -optimize -show-actionscript-warnings -target-player "$player_target_fp9" -define=$constant_fp9,true -define=$constant_fp10,false
 mv "$temp_name" "$current_folder/$file_name"
 
 echo "The file $file_name has been successfully generated !"
