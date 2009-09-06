@@ -32,4 +32,3 @@ samples_root_file="RootDocument.as"
 samples_config_file="config"
 
 constant_fp10="MASAPI::PLAYER_FP10"
-constant_fp9="MASAPI::PLAYER_FP9"
