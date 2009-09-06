@@ -18,4 +18,4 @@ if [ $# -eq 1 ]; then
 fi
 
 echo "Generating documentation into folder $folder_output"
-$flex_sdk_path/asdoc -source-path ./src -output $folder_output -doc-sources ./src/ch/ -main-title "Masapi 2.0 - http://masapi.googlecode.com" -window-title "Masapi 2.0 API Reference" -footer "Cedric Tabin - http://www.astorm.ch" -define=$constant_fp9,false -define=$constant_fp10,true
+$flex_sdk_path/asdoc -source-path ./src -output $folder_output -doc-sources ./src/ch/ -main-title "Masapi 2.0 - http://masapi.googlecode.com" -window-title "Masapi 2.0 API Reference" -footer "Cedric Tabin - http://www.astorm.ch" -define=$constant_fp10,true

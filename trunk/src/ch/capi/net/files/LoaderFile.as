@@ -135,15 +135,14 @@
 		 */
 		public override function destroy():void
 		{
-			//those namespaces/variables are defined at compile-time
-			MASAPI::PLAYER_FP9
-			{
-				(loadManagerObject as Loader).unload();
-			}
-			
-			MASAPI::PLAYER_FP10
+			//this namespace/variable is defined at compile-time
+			if (MASAPI::PLAYER_FP10)
 			{
 				(loadManagerObject as Loader).unloadAndStop(true);
+			}
+			else
+			{
+				(loadManagerObject as Loader).unload();
 			}
 			
 			loaderContext = null;

@@ -30,7 +30,7 @@ generate_sample_swf()
 	# $1 = root AS file
 	# $2 = output swf
 	output_path="./$samples_path/$2"
-	$flex_sdk_path/mxmlc -use-network=false -as3 -compiler.source-path "$samples_path" "$source_path" -output "$output_path" -strict -optimize -target-player "$player_target_fp10" -define=$constant_fp9,false -define=$constant_fp10,true "$1"
+	$flex_sdk_path/mxmlc -use-network=false -as3 -compiler.source-path "$samples_path" "$source_path" -output "$output_path" -strict -optimize -target-player "$player_target_fp10" -define=$constant_fp10,true "$1"
 }
 
 sample_root_path="./$samples_path/$samples_root_package/$1"
