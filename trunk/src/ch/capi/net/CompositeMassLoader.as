@@ -264,11 +264,11 @@ package ch.capi.net
 		 * all the properties will be put into the <code>ILoadableFile.properties</code> attribute of the created <code>ILoadableFile</code>.
 		 * 
 		 * @param 	fileOrURL	The url of the file or an <code>Object</code> containing at least the 'url' attribute.
+		 * @param	fileType	The type of the file. If not defined and the fileOrURL parameter is an <code>Object</code>, then
+		 * 						the type will be extracted from the attribute 'type'.
 		 * @param	priority	The priority of the file (must be an int). If not defined and the fileOrURL parameter is an <code>Object</code>, then
 		 * 						the priority of the file will be extracted from the attribute 'priority'. If no priority is specified, then the
 		 * 						priority will be 0.
-		 * @param	fileType	The type of the file. If not defined and the fileOrURL parameter is an <code>Object</code>, then
-		 * 						the type will be extracted from the attribute 'type'.
 		 * @param	onOpen		The <code>Event.OPEN</code> listener.
 		 * @param	onProgress	The <code>ProgressEvent.PROGRESS</code> listener.
 		 * @param	onComplete	The <code>Event.COMPLETE</code> listener.

@@ -39,5 +39,5 @@ How to compile with MXMLC command-line :
 
 How to compile with complete svn version (Linux only) :
   - Go into the folder %masapi%/bin and open the file 'config'
-  - Modifiy the 'flex_sdk_path' variable to make it point on the bin directory of your flex sdk
-  - The just use the script 'generate-swc-fp9' or 'generate-swc-fp10' to compile masapi
+  - Modify the 'flex_sdk_path' variable to make it point on the bin directory of your flex sdk
+  - Then just use the script 'generate-swc-fp9' or 'generate-swc-fp10' to compile masapi
