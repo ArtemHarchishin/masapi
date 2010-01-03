@@ -6,16 +6,21 @@ cmd_name=`basename $0`
 source "$dir_name/config"
 cd "$dir_name/.."
 
+mainTitle="Masapi 2.0 - http://masapi.googlecode.com"
 folder_output="$default_output_documentation"
 
-if [ $# -eq 1 ]; then
-	if [ $1 = "-help" ]; then
-		echo "Usage : $0 [output_folder]"
+if [ $# -ge 1 ]; then
+	if [ $1 = "-help" -o $# -gt 2 ]; then
+		echo "Usage : $0 [output_folder] [titleInfo]"
 		exit
 	else
 		folder_output=$1
+		
+		if [ $# -eq 2 ]; then
+			mainTitle="$mainTitle - $2"
+		fi
 	fi
 fi
 
 echo "Generating documentation into folder $folder_output"
-$flex_sdk_path/asdoc -source-path ./src -output $folder_output -doc-sources ./src/ch/ -main-title "Masapi 2.0 - http://masapi.googlecode.com" -window-title "Masapi 2.0 API Reference" -footer "Cedric Tabin - http://www.astorm.ch" -define=$constant_fp10,true
+$flex_sdk_path/asdoc -source-path ./src -output $folder_output -doc-sources ./src/ch/ -main-title "$mainTitle" -window-title "Masapi 2.0 API Reference" -footer "Cedric Tabin - http://www.astorm.ch" -define=$constant_fp10,true
