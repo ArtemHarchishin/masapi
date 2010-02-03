@@ -1,0 +1,33 @@
+#!/bin/sh
+
+if [ $# -lt 2 ]; then
+	echo "Usage : $0 licenceFile file1 [file2 [fileN]]";
+	echo "    This script will add the content of the first file on "
+	echo "    top of all the other specified files."
+	exit
+fi
+
+licenceFile=$1
+shift
+
+if [ ! -f "$licenceFile" ]; then
+	echo "The file $licenceFile does not exist or is not a regular file."
+	exit
+fi
+
+while [ $# -gt 0 ]; do
+	currentFile=$1
+	oldFile="$currentFile.old"
+	
+	if [ ! -f "$currentFile" ]; then
+		echo "The file $currentFile is not a regular file. Skipping..."
+	else
+		echo "Adding licence to $currentFile..."
+		mv "$currentFile" "$oldFile"
+		cat "$licenceFile" > "$currentFile"
+		cat "$oldFile" >> "$currentFile"
+		rm "$oldFile"
+	fi
+	
+	shift
+done
