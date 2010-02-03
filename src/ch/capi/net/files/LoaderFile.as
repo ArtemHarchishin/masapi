@@ -31,6 +31,12 @@
 		 */
 		public var loaderContext:LoaderContext 		= null; //initialized by LoadableFileFactory
 		
+		/**
+		 * Defines if the Garbage Collector will act directly
+		 * when the file is destroyed (Flash Player 10 only).
+		 */
+		public var garbageOnDestroy:Boolean			= true;
+		
 		//-----------//
 		//Constructor//
 		//-----------//
@@ -131,19 +137,19 @@
 		
 		/**
 		 * Destroys this <code>LoaderFile</code>. This will call the <code>unload()</code> method on the <code>Loader</code>.
-		 * If you're using the FP10, then this method will call the <code>unloadAndStop(true)</code> method.
+		 * If you're using the FP10, then this method will call the <code>unloadAndStop()</code> method.
+		 * 
+		 * @see	#garbageOnDestroy  garbageOnDestroy
 		 */
 		public override function destroy():void
 		{
-			//this namespace/variable is defined at compile-time
-			if (MASAPI::PLAYER_FP10)
-			{
-				(loadManagerObject as Loader).unloadAndStop(true);
-			}
-			else
-			{
-				(loadManagerObject as Loader).unload();
-			}
+			var loader:Loader = (loadManagerObject as Loader);
+			
+			//depending on the flash player version, the unloadAndStop method (fp10) will
+			//be called, otherwise the simple unload method will be called.
+			const uas:String = "unloadAndStop";
+			if (loader.hasOwnProperty(uas)) loader[uas](garbageOnDestroy);
+			else loader.unload();
 			
 			loaderContext = null;
 			super.destroy();

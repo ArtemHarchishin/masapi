@@ -12,32 +12,35 @@
 //																2.0	//
 //////////////////////////////////////////////////////////////////////	                                                               
 
-This file describes how you can compile the Masapi sources using different
-systems or programs. Here are the constants that can be used at compile-time :
-      * MASAPI::PLAYER_FP10 => boolean, defines if masapi must be compiled for FP10.
-                               if false, it will be compiled for FP9.
+This file describes how you :
+	1) use Masapi with Flash CS3/CS4
+	2) use Masapi with Eclipse with FDT plugin
+	3) Compile Masapi's SWC with MXMLC
+	4) Compile Masapi's SWC from SVN (Linux only)
 
+======================================================================
 
-How to compile the sources using Flash CS4 :
+1) How to use Masapi with Flash CS3/CS4 :
   - Go into the File menu > Publish settings > Flash > AS3 Settings
-  - Into the panel 'Config constants', add the needed constants
+  - In the panel 'Source path', add the 'src' folder
 
 
-How to compile the sources using Flex :
-  - Add the following define line in you MXMLC for each constants :
-    <define name="YOUR_NAMESPACE::YOUR_CONSTANT_NAME" value="yourConstantValue" />
-    
-    <define name="MASAPI::PLAYER_FP10" value="true" />
+2) How to use Masapi with Eclipse/FDT :
+  - Create a new Project and open its properties
+  - Go on the FDT Build Path > Library > Add SWCs
+  - Select the Masapi's SWC
 
 
-How to compile with MXMLC command-line :
-  - On the command line, add the following parameter for each constants :
-    -define=YOUR_NAMESPACE::YOUR_CONSTANT_NAME,yourConstantValue
-    
-    -define=MASAPI::PLAYER_FP10,true
+3) How to compile with MXMLC command-line (SWC) :
+  - Install the Flex SDK 4.0 or higher
+  - Open a Shell and go into the masapi folder
+  - Type one of the following commands :
+  
+    for FP9  : path/to/flex-sdk/bin/compc -include-sources "src/ch" -output "masapi-fp9.swc" -strict -optimize -target-player "9.0.246.0"
+    for FP10 : path/to/flex-sdk/bin/compc -include-sources "src/ch" -output "masapi-fp10.swc" -strict -optimize -target-player "10.0.32.18"
 
 
-How to compile with complete svn version (Linux only) :
+4) How to compile with complete svn version (Linux only) :
   - Go into the folder %masapi%/bin and open the file 'config'
   - Modify the 'flex_sdk_path' variable to make it point on the bin directory of your flex sdk
   - Then just use the script 'generate-swc-fp9' or 'generate-swc-fp10' to compile masapi

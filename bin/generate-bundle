@@ -34,6 +34,9 @@ cp -R "$doc_path" "$temp_dir/doc"
 echo "Removing svn private folders..."
 find "$temp_dir" -name \.svn -exec rm -rf {} \;
 
+echo "Adding licence to files..."
+./bin/add-license "./bin/$licence_file" `find "$temp_dir/src" -iname "*.as" -printf "%p "`
+
 echo "Generating $file_name..."
 cd "$temp_dir"
 zip -r "$temp_file" "src" "doc"

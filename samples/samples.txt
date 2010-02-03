@@ -40,3 +40,8 @@ sample07		=>		That's a simple picture loader that loads dynamically
 sample07b		=>		This is exactly the same sample as sample07, but it use
 						a much easier way to load all the files.
 						
+						
+sampleCS3.fla and sampleCS4.fla are two FLA files designed to be open with
+Adobe Flash CS3/CS4 and show the basic configuration to use Masapi's sources.
+There is no difference of configuration between both FLA, the only thing that
+is defined are the source folder in the publish settings.

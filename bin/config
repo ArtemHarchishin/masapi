@@ -13,6 +13,7 @@ flex_sdk_path=../tools/flex-sdk/bin
 ##########################################
 
 masapi_version="2.0"
+licence_file="license-include"
 
 player_target_fp10="10.0.32.18"
 player_target_fp9="9.0.246.0"
@@ -30,5 +31,3 @@ default_output_bundle="./masapi-$masapi_version"
 samples_root_package="masapi"
 samples_root_file="RootDocument.as"
 samples_config_file="config"
-
-constant_fp10="MASAPI::PLAYER_FP10"
