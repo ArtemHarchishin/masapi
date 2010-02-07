@@ -386,7 +386,7 @@
 		
 		/**
 		 * Creates a clone of the current <code>LoadableFileFactory</code>. This method will only clone the
-		 * current <code>LoadableFileFactory</code> and report its references into the new one.
+		 * current <code>LoadableFileFactory</code> and report its references in the new one.
 		 * 
 		 * @return	The cloned <code>LoadableFileFactory</code>.
 		 */

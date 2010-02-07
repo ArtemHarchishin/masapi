@@ -100,8 +100,8 @@ package ch.capi.net
 		 * @param	request		The <code>URLRequest</code>.
 		 * @param	factory		The <code>LoadableFileFactory</code>.
 		 * @return	The created <code>ILoadableFile</code> object.
-		 * @throws	ch.capi.errors.ExtensionNotDefinedError	If the extensions into the specified request was
-		 * 			not found into the extensions map.
+		 * @throws	ch.capi.errors.ExtensionNotDefinedError	If the extensions in the specified request was
+		 * 			not found in the extensions map.
 		 * @see		ch.capi.net.LoadableFileType	LoadableFileType.
 		 */
 		public function getType(request:URLRequest):String

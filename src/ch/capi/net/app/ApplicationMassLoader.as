@@ -36,7 +36,7 @@ package ch.capi.net.app
 		//--------------//
 		
 		/**
-		 * Add the global <code>ApplicationFile</code> into the loading queue.
+		 * Add the global <code>ApplicationFile</code> in the loading queue.
 		 * 
 		 * @param	context		The <code>IApplicationContext</code>.
 		 */
@@ -54,7 +54,7 @@ package ch.capi.net.app
 		 * 
 		 * @param	file		The <code>ApplicationFile</code> to add.
 		 * @param	priority	The priority of the <code>ApplicationFile</code>. All the dependencies will have a
-		 * 						higher priority (+1). The priority of the <code>ApplicationFile</code> is stored into the
+		 * 						higher priority (+1). The priority of the <code>ApplicationFile</code> is stored in the
 		 * 						<code>ApplicationMassLoader</code>, so it won't be affected, even if you change it.
 		 */
 		public function addApplicationFile(file:ApplicationFile):void
@@ -63,7 +63,7 @@ package ch.capi.net.app
 		}
 		
 		/**
-		 * Add all the <code>ApplicationFile</code> objects that are into a specified <code>ApplicationContext</code> into
+		 * Add all the <code>ApplicationFile</code> objects that are in a specified <code>ApplicationContext</code> in
 		 * the loading queue.
 		 * 
 		 * @param context			The <code>IApplicationContext</code>.
@@ -89,7 +89,7 @@ package ch.capi.net.app
 		 * 							is a <code>String</code>, then the <code>IApplicationContext</code> must be specified.
 		 * @param	context			The <code>IApplicationContext</code> to retrieve the <code>ApplicationFile</code> and global files.
 		 * @param	withGlobalFiles	Tells the <code>ApplicationMassLoader</code> to automatically add the <code>ApplicationFile</code>
-		 * 							that are noted as global.
+		 * 							that are noted as global (<code>IApplicationContext</code> must be specified).
 		 * @return	The <code>ApplicationFile</code> being loaded.
 		 * @throws	IllegalOperationError	If the <code>ApplicationmassLoader</code> is currently loading.
 		 */
@@ -116,14 +116,14 @@ package ch.capi.net.app
 		
 		/**
 		 * Add the specified <code>ILoadableFile</code> to the queue within the priority. If the <code>ILoadableFile</code> is
-		 * already into the loading queue, then it checks if the priority must be udpated or not.
+		 * already in the loading queue, then it checks if the priority must be udpated or not.
 		 * 
 		 * @param	file		The <code>ILoadableFile</code>.
 		 * @param	priority	The priority.
 		 */
 		protected function addLoadableFile(file:ILoadableFile, priority:int):void
 		{
-			if (hasFile(file)) //the file is contained into the queue, see if the priority must be updated
+			if (hasFile(file)) //the file is contained in the queue, see if the priority must be updated
 			{
 				var pr:int = getFilePriority(file);
 				
@@ -153,7 +153,7 @@ package ch.capi.net.app
 				addApplicationFileRecursively(af, level+1);
 			}
 			
-			//add the ILoadableFile into the queue only if it exists
+			//add the ILoadableFile in the queue only if it exists
 			var lf:ILoadableFile = file.loadableFile;
 			if (lf != null) addLoadableFile(lf, level);
 		}	}}

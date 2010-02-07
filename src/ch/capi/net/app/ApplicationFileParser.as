@@ -211,10 +211,10 @@ package ch.capi.net.app
 		}
 
 		/**
-		 * Parses the specified source <code>String</code>, using the specified <code>LoadableFileFactory</code> into
+		 * Parses the specified source <code>String</code>, using the specified <code>LoadableFileFactory</code> in
 		 * a new <code>ApplicationContext</code>.
 		 * 
-		 * @param	source					The source <code>String</code> into <code>XML</code> format that matches the XMLSchema.
+		 * @param	source					The source <code>String</code> in <code>XML</code> format that matches the XMLSchema.
 		 * @param	contextName				Defines the name of the <code>ApplicationContext</code>. If no context name is specified, then
 		 * 									the global <code>ApplicationContext</code> will be used.
 		 * @param	loadableFileFactory		The <code>LoadableFileFactory</code>. If not defined, then the 
@@ -362,7 +362,7 @@ package ch.capi.net.app
 		//-----------------//
 		
 		/**
-		 * Put the specified variable and its value into the <code>LoadableFileFactory</code>.
+		 * Put the specified variable and its value in the <code>LoadableFileFactory</code>.
 		 * 
 		 * @param	name	The variable name.
 		 * @param	value	The variable value.

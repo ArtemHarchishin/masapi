@@ -77,7 +77,7 @@ package ch.capi.net
 		function get filesLoading():Array;
 		
 		/**
-		 * Defines the files that currently not being loaded (waits into the loading queue).
+		 * Defines the files that currently not being loaded (waits in the loading queue).
 		 */
 		function get filesIdle():Array;
 		
@@ -92,7 +92,7 @@ package ch.capi.net
 		function update():void;
 		
 		/**
-		 * Represents the data of the <code>ILoadInfo</code> into a <code>String</code>.
+		 * Represents the data of the <code>ILoadInfo</code> in a <code>String</code>.
 		 * 
 		 * @return	A <code>String</code> with the useful information.
 		 */

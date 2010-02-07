@@ -9,20 +9,20 @@ package ch.capi.data
 	public interface IList
 	{
 		/**
-		 * Defines the number of elements contained into 
+		 * Defines the number of elements contained in
 		 * the <code>IList</code>.
 		 */
 		function get length():int;
 		
 		/**
-		 * Add an element into the <code>IList</code>.
+		 * Add an element in the <code>IList</code>.
 		 * 
 		 * @param	element		The element to add.
 		 */
 		function addElement(element:*):void;
 		
 		/**
-		 * Add an element into the <code>IList</code> at the specified index.
+		 * Add an element in the <code>IList</code> at the specified index.
 		 * 
 		 * @param	element		The element to add.
 		 * @param	index		The index of the element.
@@ -45,7 +45,7 @@ package ch.capi.data
 		function removeElementAt(index:int):*;
 		
 		/**
-		 * Removes all the elements contained into this <code>IList</code>.
+		 * Removes all the elements contained in this <code>IList</code>.
 		 */
 		function clear():void;
 		

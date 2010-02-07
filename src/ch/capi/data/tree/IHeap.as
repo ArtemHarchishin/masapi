@@ -13,10 +13,10 @@ package ch.capi.data.tree
 		function get sortFunction():Function;
 		
 		/**
-		 * Retrieves if the specified element is contained into
+		 * Retrieves if the specified element is contained in
 		 * the <code>IHeap</code>.
 		 * 
 		 * @param	element		The element.
-		 * @return	<code>true</code> if the element is contained into the <code>IHeap</code>.
+		 * @return	<code>true</code> if the element is contained in the <code>IHeap</code>.
 		 */
 		function contains(element:*):Boolean;	}}

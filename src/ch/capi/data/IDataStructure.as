@@ -36,8 +36,7 @@ package ch.capi.data
 		/**
 		 * Get if the structure is empty or not.
 		 * 
-		 * @return <code>true</code> if there is no element into
-		 * 		   the structure.
+		 * @return <code>true</code> if there is no element in the structure.
 		 */
 		function isEmpty():Boolean;
 	}

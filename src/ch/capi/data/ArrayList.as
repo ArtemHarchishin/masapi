@@ -19,7 +19,7 @@ package ch.capi.data
 		//-----------------//
 		
 		/**
-		 * Defines the number of elements contained into 
+		 * Defines the number of elements contained in
 		 * the <code>ArrayList</code>.
 		 */
 		public function get length():int { return _data.length; }
@@ -43,7 +43,7 @@ package ch.capi.data
 		//--------------//
 		
 		/**
-		 * Add an element into the <code>ArrayList</code>.
+		 * Add an element in the <code>ArrayList</code>.
 		 * 
 		 * @param	element		The element to add.
 		 */
@@ -53,7 +53,7 @@ package ch.capi.data
 		}
 		
 		/**
-		 * Add an element into the <code>ArrayList</code> at the specified index.
+		 * Add an element in the <code>ArrayList</code> at the specified index.
 		 * 
 		 * @param	element		The element to add.
 		 * @param	index		The index of the element.
@@ -94,7 +94,7 @@ package ch.capi.data
 		}
 		
 		/**
-		 * Removes all the elements contained into this <code>ArrayList</code>.
+		 * Removes all the elements contained in this <code>ArrayList</code>.
 		 */
 		public function clear():void
 		{
@@ -160,7 +160,7 @@ package ch.capi.data
 		/**
 		 * Get if the structure is empty or not.
 		 * 
-		 * @return <code>true</code> if there is no element into
+		 * @return <code>true</code> if there is no element in
 		 * 		   the structure.
 		 */
 		public function isEmpty():Boolean
@@ -169,7 +169,7 @@ package ch.capi.data
 		}
 		
 		/**
-		 * Displays the <code>ArrayList</code> into a <code>String</code>.
+		 * Displays the <code>ArrayList</code> in a <code>String</code>.
 		 * 
 		 * @return	A <code>String</code> representing the <code>ArrayList</code>.
 		 */

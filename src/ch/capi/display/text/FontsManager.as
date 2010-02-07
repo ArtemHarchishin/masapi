@@ -9,7 +9,7 @@ package ch.capi.display.text
 	
 	/**
 	 * Manages the registered <code>Font</code>. Within this class, the <code>Font</code> registration
-	 * is very easy : Just create your font symbol into the library, set it a linkage (the base class must
+	 * is very easy : Just create your font symbol in the library, set it a linkage (the base class must
 	 * be or extends <code>ch.capi.display.text.AbstractFont</code>) and then simply do the following :
 	 * <listing version="3.0">
 	 * //register the font

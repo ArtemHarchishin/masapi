@@ -51,7 +51,7 @@ package ch.capi.data
 		 * Returns <code>true</code> if this map contains a mapping for the specified key.
 		 * 
 		 * @param		key		The key.
-		 * @return		<code>true</code> if the specified key is contained into the <code>IMap</code>.
+		 * @return		<code>true</code> if the specified key is contained in the <code>IMap</code>.
 		 */
 		public function containsKey(key:*):Boolean
 		{
@@ -62,7 +62,7 @@ package ch.capi.data
 		 * Returns true if this map maps one or more keys to the specified value.
 		 * 
 		 * @param	value		The value.
-		 * @return	<code>true</code> if the specified value is contained into the <code>IMap</code>.
+		 * @return	<code>true</code> if the specified value is contained in the <code>IMap</code>.
 		 */
 		public function containsValue(value:*):Boolean
 		{
@@ -133,7 +133,7 @@ package ch.capi.data
 		}
 		
 		/**
-		 * Puts all the key/value from the specified object into the <code>IMap</code>.
+		 * Puts all the key/value from the specified object in the <code>IMap</code>.
 		 * 
 		 * @param	obj		The source <code>Object</code>.
 		 */
@@ -162,7 +162,7 @@ package ch.capi.data
 		}
 		
 		/**
-		 * Retrieves the number of key-value mappings into the <code>IMap</code>.
+		 * Retrieves the number of key-value mappings in the <code>IMap</code>.
 		 * 
 		 * @return	The number of key-value mappings.
 		 */
@@ -172,7 +172,7 @@ package ch.capi.data
 		}
 		
 		/**
-		 * Retrieves all the values contained into the <code>IMap</code>.
+		 * Retrieves all the values contained in the <code>IMap</code>.
 		 * 
 		 * @return	An <code>Array</code> containing all the values.
 		 */
@@ -188,7 +188,7 @@ package ch.capi.data
 		}
 		
 		/**
-		 * Retrieves all the keys contained into the <code>IMap</code>.
+		 * Retrieves all the keys contained in the <code>IMap</code>.
 		 * 
 		 * @return	An <code>Array</code> containing all the keys.
 		 */
@@ -243,7 +243,7 @@ package ch.capi.data
 		 * @param	obj		An <code>Object</code> to compare. If the <code>Object</code> is
 		 * 					a <code>IMap</code>, then it will be used as it.
 		 * @param	strict	Defines if the match must be strict or if there can be more pairs
-		 * 					into the <code>IMap</code> than defined into the <code>Object</code>.
+		 * 					in the <code>IMap</code> than defined in the <code>Object</code>.
 		 * @return	<code>true</code> if the <code>IMap</code> matches the <code>Object</code>.
 		 */
 		public function matches(obj:Object, strict:Boolean=false):Boolean
@@ -264,7 +264,7 @@ package ch.capi.data
 			
 			/*
 			 * Loops on each key of the object and checks the corresponding
-			 * value into the map. If the key is not found, then directly
+			 * value in the map. If the key is not found, then directly
 			 * returns false, otherwise checks the values.
 			 */
 			var counter:int = 0;
@@ -281,7 +281,7 @@ package ch.capi.data
 			}
 			
 			/*
-			 * Here means that all the pairs key/value into the IMap and Object
+			 * Here means that all the pairs key/value in the IMap and Object
 			 * matches. If the check is strict, the size must be the same otherwise
 			 * simple return true.
 			 */
