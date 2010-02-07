@@ -60,14 +60,14 @@
 		public function get closeEvent():Event { return _closeEvent; }
 		
 		/**
-		 * Defines the index of the file into the loading queue.
+		 * Defines the index of the file in the loading queue.
 		 * 
 		 * @see	ch.capi.net.MassLoader#getFileQueueIndex()	MassLoader.getFileQueueIndex()
 		 */
 		public function get queueIndex():int { return _queueIndex; }
 		
 		/**
-		 * Defines the index of the file into the loaded queue. It indicates how many files
+		 * Defines the index of the file in the loaded queue. It indicates how many files
 		 * have been loaded before the <code>loadManager</code>.
 		 */
 		public function get loadedIndex():int { return _loadedIndex; }
@@ -99,9 +99,9 @@
 		 * @param	type			The type.
 		 * @param	file			The file being loaded.
 		 * @param	closeEvent		The <code>Event</code> dispatched to close the file. This event is cloned before beeing stored.
-		 * @param	staticIndex		The static index of the file into the loading queue.
-		 * @param	queueIndex		The index of the file into the loading queue.
-		 * @param	loadedIndex		The index of the file into the loaded queue.
+		 * @param	staticIndex		The static index of the file in the loading queue.
+		 * @param	queueIndex		The index of the file in the loading queue.
+		 * @param	loadedIndex		The index of the file in the loaded queue.
 		 * @param	priority		The file priority.
 		 */
 		public function MassLoadEvent(type:String, file:ILoadManager=null, closeEvent:Event=null, staticIndex:int=-1, queueIndex:int=-1, loadedIndex:int=-1, priority:int=0):void
@@ -168,7 +168,7 @@
 		}
 		
 		/**
-		 * Returns the <code>MassLoadEvent</code> into a <code>String</code>.
+		 * Returns the <code>MassLoadEvent</code> in a <code>String</code>.
 		 * 
 		 * @return	A <code>String</code> containing the <code>MassLoadEvent</code> properties values.
 		 */

@@ -18,7 +18,7 @@ package ch.capi.data
 		 * Returns <code>true</code> if this map contains a mapping for the specified key.
 		 * 
 		 * @param		key		The key.
-		 * @return		<code>true</code> if the specified key is contained into the <code>IMap</code>.
+		 * @return		<code>true</code> if the specified key is contained in the <code>IMap</code>.
 		 */
 		function containsKey(key:*):Boolean;
 		
@@ -26,7 +26,7 @@ package ch.capi.data
 		 * Returns true if this map maps one or more keys to the specified value.
 		 * 
 		 * @param	value		The value.
-		 * @return	<code>true</code> if the specified value is contained into the <code>IMap</code>.
+		 * @return	<code>true</code> if the specified value is contained in the <code>IMap</code>.
 		 */
 		function containsValue(value:*):Boolean;
 		
@@ -64,7 +64,7 @@ package ch.capi.data
 		function putAll(source:IMap):void;
 		
 		/**
-		 * Puts all the key/value from the specified object into the <code>IMap</code>.
+		 * Puts all the key/value from the specified object in the <code>IMap</code>.
 		 * 
 		 * @param	obj		The source <code>Object</code>.
 		 */
@@ -79,21 +79,21 @@ package ch.capi.data
 		function remove(key:*):*;
 		
 		/**
-		 * Retrieves the number of key-value mappings into the <code>IMap</code>.
+		 * Retrieves the number of key-value mappings in the <code>IMap</code>.
 		 * 
 		 * @return	The number of key-value mappings.
 		 */
 		function size():uint;
 		
 		/**
-		 * Retrieves all the values contained into the <code>IMap</code>.
+		 * Retrieves all the values contained in the <code>IMap</code>.
 		 * 
 		 * @return	An <code>Array</code> containing all the values.
 		 */
 		function values():Array;
 		
 		/**
-		 * Retrieves all the keys contained into the <code>IMap</code>.
+		 * Retrieves all the keys contained in the <code>IMap</code>.
 		 * 
 		 * @return	An <code>Array</code> containing all the keys.
 		 */
@@ -112,9 +112,9 @@ package ch.capi.data
 		 * will be considered as an empty <code>Object</code>.
 		 * 
 		 * @param	obj		An <code>Object</code> to compare. If the <code>Object</code> is
-		 * 					a <code>IMap</code>, then it will be used as it.
+		 * 					a <code>IMap</code>, then it will be used as is.
 		 * @param	strict	Defines if the match must be strict or if there can be more pairs
-		 * 					into the <code>IMap</code> than defined into the <code>Object</code>.
+		 * 					in the <code>IMap</code> than defined in the <code>Object</code>.
 		 * @return	<code>true</code> if the <code>IMap</code> matches the <code>Object</code>.
 		 */
 		function matches(obj:Object, strict:Boolean=false):Boolean;

@@ -115,7 +115,7 @@ package ch.capi.data.tree
 				//if the p1 index is out of bounds => exit
 				if (p1 > _elements.length-1) break;
 				
-				//if the p2 index is into the bounds, compare the children and take the
+				//if the p2 index is in the bounds, compare the children and take the
 				//bigger one
 				if (p2 <= _elements.length-1)
 				{
@@ -152,7 +152,7 @@ package ch.capi.data.tree
 			
 			_nextElement = _elements[0];
 			
-			//if there is no more element into the heap, the index can
+			//if there is no more element in the heap, the index can
 			//be reset to zero
 			if (_elements.length == 0) HeapElement.resetSharedIndex();
 			
@@ -171,7 +171,7 @@ package ch.capi.data.tree
 		/**
 		 * Get if the structure is empty or not.
 		 * 
-		 * @return <code>true</code> if there is no element into
+		 * @return <code>true</code> if there is no element in
 		 * 		   the structure.
 		 */
 		public function isEmpty():Boolean
@@ -198,10 +198,10 @@ package ch.capi.data.tree
 		}
 		
 		/**
-		 * Retrieves if the specified element is contained into the <code>ArrayHeap</code>.
+		 * Retrieves if the specified element is contained in the <code>ArrayHeap</code>.
 		 * 
 		 * @param	element		The element.
-		 * @return	<code>true</code> if the element is contained into the <code>ArrayHeap</code>.
+		 * @return	<code>true</code> if the element is contained in the <code>ArrayHeap</code>.
 		 */
 		public function contains(element:*):Boolean
 		{
@@ -209,7 +209,7 @@ package ch.capi.data.tree
 		}
 		
 		/**
-		 * Retrieves the depth of an alement. If the specified element is not into the
+		 * Retrieves the depth of an alement. If the specified element is not in the
 		 * <code>ArrayHeap</code>, then <code>-1</code> is returned.
 		 * 
 		 * @param		element		The element.

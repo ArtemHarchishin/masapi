@@ -1,7 +1,7 @@
 package ch.capi.data.tree 
 {
 	/**
-	 * This class represents an element into the ArrayHeap.
+	 * This class represents an element in the ArrayHeap.
 	 * It is used by the <code>ArrayHeap</code> to store the its elements, but
 	 * shouldn't be used outside this purpose...
 	 * 

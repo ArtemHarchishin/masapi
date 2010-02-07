@@ -82,7 +82,7 @@ package ch.capi.net
 	
 	/**
 	 * Dispatched when data is received as the download operation progresses. The <code>bytesTotal</code> and <code>bytesLoaded</code>
-	 * value are based on the overall progressing of the files stored into the loading queue. If the <code>bytesTotal</code> of a
+	 * value are based on the overall progressing of the files stored in the loading queue. If the <code>bytesTotal</code> of a
 	 * <code>ILoadableFile</code> has not been retrieved, then the <code>virtualBytesTotal</code> value will be used.
 	 * 
 	 * @eventType	flash.events.ProgressEvent.PROGRESS
@@ -91,19 +91,18 @@ package ch.capi.net
 
 	/**
 	 * This is a basic implementation of a <code>IMassLoader</code> object. The files will be loaded
-	 * into the order of they have been added into the loading queue. In order to create some <code>ILoadableFile</code>,
-	 * use the <code>LoadableFileFactory</code> class. If you want to specify some priority
+	 * in the order of they have been added in the loading queue (FIFO). If you want to specify some priority
 	 * to the loaded files, check the <code>PriorityMassLoader</code> class.
 	 * <p>It is important to note that the files won't be stored anymore after they have been completely loaded. You should
-	 * have anoter reference to the created <code>ILoadManager</code> objects to access them and prevent that the Garbage Collector
-	 * destroy them.</p>
+	 * have another reference to the created <code>ILoadManager</code> instances to access them and prevent them to be destroyed
+	 * by the Garbage Collector.</p>
 	 * 
 	 * @see			ch.capi.net.ILoadPolicy			ILoadPolicy
 	 * @see			ch.capi.net.LoadableFileFactory	LoadableFileFactory
 	 * @see			ch.capi.net.CompositeMassLoader	CompositeMassLoader
 	 * @see			ch.capi.net.PriorityMassLoader	PriorityMassLoader
 	 * @author		Cedric Tabin - thecaptain
-	 * @version		2.2
+	 * @version		2.0
 	 */
 	public class MassLoader extends GlobalEventDispatcher implements IMassLoader
 	{
@@ -145,7 +144,6 @@ package ch.capi.net
 		 * Defines if the progress event should be dispatched each time or
 		 * only when all the number of specified parallel files are being
 		 * loaded.
-		 * <p>This value was set to <code>false</code> up to masapi 1.5.</p>
 		 */
 		public var alwaysDispatchProgressEvent:Boolean = true;
 		
@@ -249,7 +247,7 @@ package ch.capi.net
 		public function get numFilesLoaded():uint { return _totalFilesLoaded; }
 		
 		/**
-		 * Defines the total of the files into the <code>MassLoader</code>. This value will remain constant
+		 * Defines the total of the files in the <code>MassLoader</code>. This value will remain constant
 		 * after the loading has been started event if files are added.
 		 */
 		public function get numFiles():uint { return numFilesToLoad+numFilesLoaded+numFilesLoading; }
@@ -264,7 +262,7 @@ package ch.capi.net
 		 * Defines the data structure to use for the file enqueuing. By default, a
 		 * <code>QueueList</code> is used. The <code>MassLoader</code> will use this
 		 * <code>IDataStructure</code> to retrieves the next file to load. All the objects
-		 * contained into the list must implement the <code>ILoadManager</code> interface.
+		 * contained in the list must implement the <code>ILoadManager</code> interface.
 		 * 
 		 * @see		#files						files
 		 * @see		#filesLoading				filesLoading
@@ -320,7 +318,7 @@ package ch.capi.net
 		 * must call the <code>clear()</code> method.
 		 * 
 		 * @param	file	The <code>ILoadManager</code>.
-		 * @return	The static index of the file or -1 if the file is not into the loading queue.
+		 * @return	The static index of the file or -1 if the file is not in the loading queue.
 		 */
 		public function getStaticIndexOf(file:ILoadManager):int
 		{
@@ -332,17 +330,17 @@ package ch.capi.net
 		/**
 		 * Add a file to the loading queue. A file added while the <code>MassLoader</code>
 		 * is already running will not be added to the current loading queue. You should stop
-		 * and restart the <code>MassLoader</code> in order to include the file into the loading.
+		 * and restart the <code>MassLoader</code> in order to include the file in the loading.
 		 * 
 		 * @param	file		The file to add.
-		 * @throws	flash.errors.IllegalOperationError	If the file is already into the loading queue.
+		 * @throws	flash.errors.IllegalOperationError	If the file is already in the loading queue.
 		 * @see		#hasFile()						hasFile()
 		 * @see		ch.capi.net.ILoadableFile		ILoadableFile
 		 * @see		ch.capi.net.LoadableFileFactory	LoadableFileFactory
 		 */
 		public function addFile(file:ILoadManager):void
 		{
-			if (hasFile(file)) throw new IllegalOperationError("The file is already into the loading queue");
+			if (hasFile(file)) throw new IllegalOperationError("The file is already in the loading queue");
 			
 			_filesToLoad.addElement(file);
 			_filesIndex.put(file, _currentFileIndex++);
@@ -352,23 +350,23 @@ package ch.capi.net
 		 * Removes a file from the loading queue.
 		 * 
 		 * @param	file		The file to remove.
-		 * @throws	flash.errors.IllegalOperationError	If the file is not into the loading queue.
+		 * @throws	flash.errors.IllegalOperationError	If the file is not in the loading queue.
 		 * @see		#hasFile()						hasFile()
 		 * @see		ch.capi.net.ILoadableFile		ILoadableFile
 		 * @see		ch.capi.net.LoadableFileFactory	LoadableFileFactory
 		 */
 		public function removeFile(file:ILoadManager):void
 		{
-			if (!hasFile(file)) throw new IllegalOperationError("The file is not into the loading queue");
+			if (!hasFile(file)) throw new IllegalOperationError("The file is not in the loading queue");
 			
 			_filesToLoad.removeElement(file);
 		}
 
 		/**
-		 * Retrieves if a file is contained into the loading queue.
+		 * Retrieves if a file is contained in the loading queue.
 		 * 
 		 * @param	file	The <code>ILoadManager</code>.
-		 * @return	<code>true</code> if the file is into the loading queue.
+		 * @return	<code>true</code> if the file is in the loading queue.
 		 */
 		public function hasFile(file:ILoadManager):Boolean
 		{
@@ -427,7 +425,8 @@ package ch.capi.net
 		/**
 		 * Starts downloading data from the specified <code>ILoadManager</code> objects.
 		 * 
-		 * @return	<code>true</code> if there is any file into the loading queue, <code>false</code> otherwise.
+		 * @return	<code>true</code> if there is any file in the loading queue, <code>false</code> otherwise. In
+		 * 			any cases, the events <code>Event.OPEN</code> and <code>Event.COMPLETE</code> will be dispatched.
 		 * @throws	flash.errors.IllegalOperationError	If the <code>MassLoader</code> is already loading.
 		 */
 		public final function start():Boolean
@@ -445,7 +444,7 @@ package ch.capi.net
 			_filesQueue.clear(); //empty the files queue to load
 			_loadInfo.reset(); //reset the load information
 			
-			//put all the files into the queue
+			//put all the files in the queue
 			var l:uint = _filesToLoad.length;
 			_totalFilesToLoad = l;
 			_totalFilesLoaded = 0;
@@ -492,7 +491,7 @@ package ch.capi.net
 		}
 		
 		/**
-		 * Lists all the files contained into this <code>MassLoader</code> into a <code>String</code>.
+		 * Lists all the files contained in this <code>MassLoader</code> in a <code>String</code>.
 		 * 
 		 * @return A <code>String</code> containing all the files.
 		 */
@@ -581,7 +580,7 @@ package ch.capi.net
 				/*
 				 * If nf is null, that means that the loading of the
 				 * file hasn't been started due to some direct error...
-				 * In that case, if there is no more file into the loading
+				 * In that case, if there is no more file in the loading
 				 * queue, jump out of the loop.
 				 */
 				if (nf == null && _filesQueue.isEmpty()) break;
@@ -728,7 +727,7 @@ package ch.capi.net
 
 		/**
 		 * Defines if the massive loading is complete. This method will return <code>true</code> if there is no more
-		 * file into the loading queue and there is currently no file loading.
+		 * file in the loading queue and there is currently no file loading.
 		 * 
 		 * @return	<code>true</code> if all the files are loaded.
 		 * @see		#filesQueue	filesQueue
@@ -752,7 +751,7 @@ package ch.capi.net
 		
 		/**
 		 * Process the loading policy on the currently file that is being open. At this point,
-		 * the file hasn't been open and isn't registered into the <code>MassLoader</code>.
+		 * the file hasn't been open and isn't registered in the <code>MassLoader</code>.
 		 * 
 		 * @param	file		The <code>ILoadManager</code> that must be loaded.
 		 * @return	The <code>ILoadManager</code> that must be loaded or <code>null</code> if the specified
@@ -782,10 +781,10 @@ package ch.capi.net
 		}
 		
 		/**
-		 * Retrieves the index of a file into the loading queue (if the loading of the specified file has been started).
+		 * Retrieves the index of a file in the loading queue (if the loading of the specified file has been started).
 		 * 
 		 * @param	file		The <code>ILoadManager</code>.
-		 * @return	The index into the loading queue or -1.
+		 * @return	The index in the loading queue or -1.
 		 */
 		protected function getFileQueueIndex(file:ILoadManager):int
 		{
@@ -1047,7 +1046,7 @@ class MassLoadInfo implements ILoadInfo
 	public function get filesLoading():Array { return _listLoading.toArray(); }
 	
 	/**
-	 * Defines the files that currently not being loaded (waits into the loading queue).
+	 * Defines the files that currently not being loaded (waits in the loading queue).
 	 */
 	public function get filesIdle():Array { return _listIdle.toArray(); }
 	
@@ -1130,9 +1129,9 @@ class MassLoadInfo implements ILoadInfo
 	}
 	
 	/**
-	 * Represents this <code>ILoadInfo</code> into a <code>String</code>.
+	 * Represents this <code>ILoadInfo</code> in a <code>String</code>.
 	 * 
-	 * @return Useful information into a <code>String</code>.
+	 * @return Useful information in a <code>String</code>.
 	 */
 	public function toString():String
 	{
@@ -1169,7 +1168,7 @@ class MassLoadInfo implements ILoadInfo
 	{
 		_startTime = getTimer();
 		
-		//push all the files into the idle list
+		//push all the files in the idle list
 		var files:Array = massLoader.getFiles();
 		for each(var file:ILoadManager in files)
 		{

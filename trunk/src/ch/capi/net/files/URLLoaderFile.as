@@ -72,9 +72,9 @@ package ch.capi.net.files
 		 * <ul>
 		 * 	<li>If the format is binary, then the classes <code>DataType.BYTE_ARRAY</code>, <code>DataType.BITMAP</code> 
 		 * 	and <code>DataType.LOADER</code> are supported. If you use the class <code>DataType.BITMAP</code>, the data won't
-		 * 	be directly available into the <code>Bitmap</code> instance returned. An event <code>Event.INIT</code> will be dispatched
+		 * 	be directly available in the <code>Bitmap</code> instance returned. An event <code>Event.INIT</code> will be dispatched
 		 * 	by the <code>Bitmap</code> after the new <code>BitmapData</code> has been updated. If a <code>DataType.LOADER</code> is asked,
-		 * 	each time this method will create a new <code>Loader</code> and the put the data into it using the <code>loadBytes()</code> method.</li>
+		 * 	each time this method will create a new <code>Loader</code> and the put the data in it using the <code>loadBytes()</code> method.</li>
 		 * 	<li>If the format is variables, then the class <code>DatyType.URL_VARIABLES</code> is supported.</li>
 		 * 	<li>If the format is text, then the classes <code>DatyType.XML</code>, <code>DatyType.XML_DOCUMENT</code>,
 		 * 	<code>DatyType.STYLE_SHEET</code> and <code>DatyType.URL_VARIABLES</code> are supported.</li>
@@ -124,7 +124,7 @@ package ch.capi.net.files
 				{
 					if (! (tmpLoader.content is Bitmap)) throw new Error("The content of the ByteArray is not a Bitmap : "+this);
 					
-					//clone the data and put them into the returned Bitmap
+					//clone the data and put them in the returned Bitmap
 					var content:Bitmap = tmpLoader.content as Bitmap;
 					var clonedData:BitmapData = content.bitmapData.clone();
 					tmpBitmap.bitmapData = clonedData;

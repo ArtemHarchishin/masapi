@@ -7,15 +7,15 @@ package ch.capi.net.app
 	import ch.capi.errors.DependencyNotSafeError;
 	
 	/**
-	 * Represents an application file. An <code>ApplicationFile</code> is always registered into
+	 * Represents an application file. An <code>ApplicationFile</code> is always registered in
 	 * an <code>IApplicationContext</code> that will manage the unicity of each <code>ApplicationFile</code>.
 	 * Basically, an <code>ApplicationFile</code> just holds an <code>ILoadableFile</code> and stores
-	 * the dependencies on it.
+	 * the dependencies of it.
 	 * 
 	 * @see		ch.capi.net.app.ApplicationFileParser	ApplicationFileParser
 	 * @see		ch.capi.net.app.ApplicationMassLoader	ApplicationMassLoader
 	 * @see		ch.capi.net.app.ApplicationContext		ApplicationContext	 * @author	Cedric Tabin - thecaptain
-	 * @version	1.0	 */	public final class ApplicationFile
+	 * @version	2.0	 */	public final class ApplicationFile
 	{
 		//---------//
 		//Variables//
@@ -66,7 +66,7 @@ package ch.capi.net.app
 		public function set global(value:Boolean):void { _global = value; }		
 		/**
 		 * Defines the priority of the <code>ApplicationFile</code>. This value is only used if the <code>ApplicationFile</code>
-		 * is directly added into the <code>ApplicationMassLoader</code>.
+		 * is directly added in the <code>ApplicationMassLoader</code>.
 		 * 
 		 * @see	ch.capi.net.app.ApplicationMassLoader#addApplicationFile()	ApplicationMassLoader.addApplicationFile()
 		 */
@@ -90,7 +90,7 @@ package ch.capi.net.app
 		 * @param	name				The name. It must be unique !
 		 * @param	context				The <code>IApplicationContext</code>. If not specified, then the global context will be used.
 		 * @param	loadableFile		The linked <code>ILoadableFile</code>.
-		 * @throws	ch.capi.errors.NameAlreadyExistsError	If the specified name already exists into the specified <code>IApplicationContext</code>.
+		 * @throws	ch.capi.errors.NameAlreadyExistsError	If the specified name already exists in the specified <code>IApplicationContext</code>.
 		 */
 		public function ApplicationFile(name:String, context:IApplicationContext, loadableFile:ILoadableFile=null):void
 		{
@@ -104,14 +104,14 @@ package ch.capi.net.app
 		//Public methods//
 		//--------------//
 		
-		//TODO put the method into ApplicationContext
+		//TODO put the method in ApplicationContext
 		/**
 		 * Retrieves the <code>ApplicationFile</code> that holds the specified <code>ILoadableFile</code>.
 		 * 
 		 * @param	file		The <code>ILoadableFile</code>.
 		 * @param	context		The <code>IApplicationContext</code>.
 		 * @return	The <code>ApplicationFile</code> that holds the specified <code>ILoadableFile</code>.
-		 * @throws	Error		If there is no <code>ApplicationFile</code> with the specified <code>ILoadableFile</code> into the
+		 * @throws	Error		If there is no <code>ApplicationFile</code> with the specified <code>ILoadableFile</code> in the
 		 * 						specified <code>IApplicationContext</code>.
 		 */
 		/*public static function getByLoadableFile(file:ILoadableFile, context:IApplicationContext):ApplicationFile
@@ -127,10 +127,10 @@ package ch.capi.net.app
 		}*/
 
 		/**
-		 * Add an <code>ApplicationFile</code> as dependency for this file. It means that the specified
+		 * Add an <code>ApplicationFile</code> as dependency of this file. It means that the specified
 		 * <code>file</code> is necessary to be loaded before the current <code>ApplicationFile</code> can
 		 * be executed.
-		 * <p>The <code>ApplicationFile</code> added as dependency must be into the same <code>IApplicationContext</code>.</p>
+		 * <p>The <code>ApplicationFile</code> added as dependency must be in the same <code>IApplicationContext</code>.</p>
 		 * 
 		 * @param	file		The <code>ApplicationFile</code> to add.
 		 * @throws	ArgumentError	If the <code>IApplicationContext</code> is not the same.
@@ -253,7 +253,7 @@ package ch.capi.net.app
 		}
 
 		/**
-		 * Represents this <code>ApplicationFile</code> into a <code>String</code>. This gives just useful information
+		 * Represents this <code>ApplicationFile</code> in a <code>String</code>. This gives just useful information
 		 * for debugging purpose.
 		 * 
 		 * @return	A <code>String</code> representation of this <code>ApplicationFile</code>.

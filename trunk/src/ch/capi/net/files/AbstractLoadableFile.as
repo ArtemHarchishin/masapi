@@ -156,7 +156,7 @@
 		public function get loaded():Boolean { return _loaded; }
 		
 		/**
-		 * Defines the properties stored into the
+		 * Defines the properties stored in the
 		 * <code>ILoadableFile</code>.
 		 * 
 		 */
@@ -174,7 +174,7 @@
 		
 		/**
 		 * Defines the variables key/values to be replaced
-		 * into the url before the loading is launched.
+		 * in the url before the loading is launched.
 		 */
 		public function get urlVariables():IMap { return _urlVariables; }
 		public function set urlVariables(value:IMap):void { _urlVariables = value; }
@@ -355,7 +355,11 @@
 				
 				//check if the new generated URL is different. If not and the bytes are already loaded, then
 				//the data won't be reloaded (static cache)
-				if (!useCache || !isEqual(oldFixedRequest, fixedRequest) || bytesTotal <= 0 || bytesLoaded < bytesTotal)
+				if (!useCache || 
+				    !isEqual(oldFixedRequest, fixedRequest) || //TODO this equality will always be true because
+				    										   //the prepareFixedRequest is called by the MassLoader
+				    bytesTotal <= 0 || 
+				    bytesLoaded < bytesTotal)
 				{
 					_loaded = false;
 					_stateLoading = true;
@@ -423,7 +427,7 @@
 		
 		/**
 		 * Destroys this <code>ILoadableFile</code>. This method causes to set the <code>loadManagerObject</code> value to
-		 * <code>null</code> and releases all other references to the content loaded contained into the current <code>ILoadableFile</code>.
+		 * <code>null</code> and releases all other references to the content loaded contained in the current <code>ILoadableFile</code>.
 		 * This method also resets all the variables of the <code>ILoadableFile</code>. It just keeps a <code>URLRequest</code> with the 
 		 * specified file URL.
 		 * After calling this method, no more operation is available on the <code>ILoadableFile</code> instance.
@@ -712,8 +716,8 @@
 		}
 		
 		/**
-		 * Creates a clone of the current <code>URLRequest</code> and put the variables values into its data. 
-		 * If there is some variables into the data object, they will be also replaced.
+		 * Creates a clone of the current <code>URLRequest</code> and put the variables values in its data. 
+		 * If there is some variables in the data object, they will be also replaced.
 		 * 
 		 * @return	The new <code>URLRequest</code>.
 		 */
@@ -727,7 +731,7 @@
 			newRequest.requestHeaders = urlRequest.requestHeaders;
 			newRequest.contentType = urlRequest.contentType;
 			
-			//replaces the variable into the data
+			//replaces the variable in the data
 			var data:Object = urlRequest.data;
 			if (data != null && !(data is ByteArray))
 			{

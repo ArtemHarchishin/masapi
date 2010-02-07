@@ -21,8 +21,8 @@ package ch.capi.net
 	
 	/**
 	 * Manages the massive loading of the files by priority. The files with the highest priority will be loaded first.
-	 * By default, all the files with the higher priority will be loaded before the files with a lower priority will
-	 * start being loaded (<code>loadByPriority</code> value).
+	 * By default, all the files with the higher priority will be loaded before the files with a lower one start being 
+	 * loaded (<code>loadByPriority</code> value).
 	 * <p>To sort the files by priority, the <code>PriorityMassLoader</code> will use a <code>ArrayHeap</code> object as
 	 * <code>filesQueue</code> data structure.</p>
 	 * 
@@ -49,8 +49,8 @@ package ch.capi.net
 	 * ml.start();
 	 * </listing>
 	 * 
-	 * @see		ch.capi.net.CompositePriorityMassLoader	CompositePriorityMassLoader	 * @author	Cedric Tabin - thecaptain
-	 * @version	1.0	 */	public class PriorityMassLoader extends MassLoader implements IMassLoader
+	 * @see		ch.capi.net.CompositeMassLoader	CompositeMassLoader	 * @author	Cedric Tabin - thecaptain
+	 * @version	2.0	 */	public class PriorityMassLoader extends MassLoader implements IMassLoader
 	{
 		//---------//
 		//Constants//
@@ -81,13 +81,14 @@ package ch.capi.net
 		/**
 		 * Defines if the loading is done by priority. By default, this value is <code>false</code>.
 		 * <p>If this value is <code>false</code> then the files
-		 * will be loaded directly into the priority order but will not take care of the change of the priority.
+		 * will be loaded directly in the priority order but will not take care of the change of the priority.
 		 * If this value is <code>true</code>, then the <code>parallelFiles</code> value will not be used.</p>
 		 * <p>If this value is changed after some files have been added to the loading queue, the order won't be
 		 * the same as they were added (data structure updated)</p>
 		 * 
-		 * @see	ch.capi.data.IDataStructure	IDataStructure
-		 * @see	ch.capi.net.MassLoader#filesQueue	MassLoader.filesQueue
+		 * @see	ch.capi.data.IDataStructure				IDataStructure
+		 * @see	ch.capi.net.MassLoader#filesQueue		MassLoader.filesQueue
+		 * @see ch.capi.net.MassLoader#parallelFiles	MassLoader.parallelFiles
 		 */
 		public function get loadByPriority():Boolean { return _loadByPriority; }
 		public function set loadByPriority(value:Boolean):void { _loadByPriority = value; }
@@ -117,7 +118,7 @@ package ch.capi.net
 		//--------------//
 		
 		/**
-		 * Add the specified file into the loading queue with the default priority.
+		 * Add the specified file in the loading queue with the default priority.
 		 * 
 		 * @param	file	The <code>ILoadManager</code>.
 		 * @see		#addPriorizedFile()	addPriorizedFile()
@@ -140,7 +141,7 @@ package ch.capi.net
 		}
 	
 		/**
-		 * Add a file with a specific priority into the loading queue.
+		 * Add a file with a specific priority in the loading queue.
 		 * 
 		 * @param	file		The <code>ILoadManager</code>.
 		 * @param	priority	The priority of the file.
@@ -156,7 +157,7 @@ package ch.capi.net
 		 * Retreives the priority of a <code>ILoadManager</code> object.
 		 * 
 		 * @param	file		The file to get the priority.
-		 * @return	The priority or 0 if the file isn't into the loading queue.
+		 * @return	The priority or 0 if the file isn't in the loading queue.
 		 * @see		#addPriorizedFile()	addPriorizedFile()
 		 * @see		#setFilePriority()	setFilePriority()
 		 */
@@ -171,11 +172,11 @@ package ch.capi.net
 		 * 
 		 * @param	file		The file to set the priority.
 		 * @param	priority	The new priority of the file.
-		 * @throws	IllegalOperationError	If the file is not into the loading queue.
+		 * @throws	IllegalOperationError	If the file is not in the loading queue.
 		 */
 		public function setFilePriority(file:ILoadManager, priority:int):void
 		{
-			if (!hasFile(file)) throw new IllegalOperationError("The specified file "+file+" is not into the loading queue");
+			if (!hasFile(file)) throw new IllegalOperationError("The specified file "+file+" is not in the loading queue");
 			_filePriority.put(file, priority);
 		}
 
@@ -210,7 +211,7 @@ package ch.capi.net
 		}
 
 		/**
-		 * Lists all the files contained into this <code>PriorityMassLoader</code> into a <code>String</code>.
+		 * Lists all the files contained in this <code>PriorityMassLoader</code> in a <code>String</code>.
 		 * 
 		 * @return A <code>String</code> containing all the files.
 		 */
@@ -272,7 +273,7 @@ package ch.capi.net
 		 * then, the method will retrieves the next file, checks his priority and start the loading of all
 		 * the files with the same one. In that case, a <code>PriorityEvent.PRIORITY_CHANGED</code> event
 		 * will be dispatched. If the <code>loadByPriority</code> value is <code>false</code>, it will
-		 * retrieves the files by priority and start the loading of the value specified into the <code>parallelFiles</code>
+		 * retrieves the files by priority and start the loading of the value specified in the <code>parallelFiles</code>
 		 * property.</p>
 		 * <p>If there is file currently being loaded or the <code>filesQueue</code> is empty, this method does
 		 * nothing.</p>

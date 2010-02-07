@@ -67,7 +67,7 @@ package ch.capi.net
 	
 	/**
 	 * Dispatched when data is received as the download operation progresses. The <code>bytesTotal</code> and <code>bytesLoaded</code>
-	 * value are based on the overall progressing of the files stored into the loading queue. If the <code>bytesTotal</code> of a
+	 * value are based on the overall progressing of the files stored in the loading queue. If the <code>bytesTotal</code> of a
 	 * <code>ILoadableFile</code> has not been retrieved, then the <code>virtualBytesTotal</code> value will be used.
 	 * 
 	 * @see			ch.capi.net.IMassLoader		IMassLoader
@@ -140,7 +140,7 @@ package ch.capi.net
 		/**
 		 * Defines the name of the <code>CompositeMassLoader</code>. If the name is
 		 * <code>null</code>, then the <code>CompositeMassLoader</code> is not registered
-		 * into the global map.
+		 * in the global map.
 		 * 
 		 * @see	#get()		CompositeMassLoader.get()
 		 */
@@ -180,7 +180,7 @@ package ch.capi.net
 		 * @param	name					The name of the <code>CompositeMassLoader</code>. That name must be unique. If no name is defined, then
 		 * 									the instance won't be registered.
 		 * @param	parallelFiles			The number of files to load at the same time.
-		 * @param	register				Defines if the <code>CompositeMassLoader</code> must be automatically registered into the
+		 * @param	register				Defines if the <code>CompositeMassLoader</code> must be automatically registered in the
 		 * 									<code>CompositeMassLoaderRegisterer</code> class.
 		 */
 		public function CompositeMassLoader(name:String=null, parallelFiles:int=1, register:Boolean=true)
@@ -200,8 +200,8 @@ package ch.capi.net
 
 		/**
 		 * Creates a <code>ILoadableFile</code> from a url. This method doesn't register the file to the <code>IMassLoader</code> but
-		 * it stores it into the <code>CompositeMassLoader</code>. If the fileOrURL parameter is an object, all the properties will
-		 * be put into the <code>ILoadableFile.properties</code> attribute of the created <code>ILoadableFile</code>.
+		 * it stores it in the <code>CompositeMassLoader</code>. If the fileOrURL parameter is an object, all the properties will
+		 * be put in the <code>ILoadableFile.properties</code> attribute of the created <code>ILoadableFile</code>.
 		 * 
 		 * @param 	fileOrURL	The url of the file or an <code>Object</code> containing at least the 'url' attribute.
 		 * @param	fileType	The type of the file. If not defined and the fileOrURL parameter is an <code>Object</code>, then
@@ -262,7 +262,7 @@ package ch.capi.net
 		
 		/**
 		 * Creates a <code>ILoadableFile</code> from a url and add it to the current loading queue. If the fileOrURL parameter is an object, 
-		 * all the properties will be put into the <code>ILoadableFile.properties</code> attribute of the created <code>ILoadableFile</code>.
+		 * all the properties will be put in the <code>ILoadableFile.properties</code> attribute of the created <code>ILoadableFile</code>.
 		 * 
 		 * @param 	fileOrURL	The url of the file or an <code>Object</code> containing at least the 'url' attribute.
 		 * @param	fileType	The type of the file. If not defined and the fileOrURL parameter is an <code>Object</code>, then
@@ -312,7 +312,7 @@ package ch.capi.net
 			if (priority == null) priority = 0;
 			if (!(priority is int)) throw new ArgumentError("Illegal value for priority : "+priority);
 			
-			//creates the file an put it into the loading queue
+			//creates the file an put it in the loading queue
 			var file:ILoadableFile = createFile(fileOrURL, fileType, onOpen, onProgress, onComplete, onClose, onIOError, onSecurityError);
 			_massLoader.addPrioritizedFile(file, priority as int);
 			

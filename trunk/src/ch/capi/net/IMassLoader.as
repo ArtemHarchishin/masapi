@@ -30,7 +30,7 @@ package ch.capi.net
 	 * @see			ch.capi.net.LoadableFileFactory	LoadableFileFactory
 	 * @see			ch.capi.net.CompositeMassLoader	CompositeMassLoader
 	 * @author		Cedric Tabin - thecaptain
-	 * @version		2.1
+	 * @version		2.0
 	 */
 	public interface IMassLoader extends ILoadManager
 	{
@@ -82,7 +82,7 @@ package ch.capi.net
 		function get numFilesLoaded():uint;
 		
 		/**
-		 * Defines the total of the files into the <code>IMassLoader</code>. This value will remain correct even
+		 * Defines the total of the files in the <code>IMassLoader</code>. This value will remain correct even
 		 * if files are added during the loading.
 		 */
 		function get numFiles():uint;

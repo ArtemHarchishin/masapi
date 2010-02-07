@@ -57,14 +57,14 @@ package ch.capi.net
 	public interface ILoadableFile extends ILoadManager, INetStateManager
 	{
 		/**
-		 * Defines the properties stored into the
+		 * Defines the properties stored in the
 		 * <code>ILoadableFile</code>.
 		 */
 		function get properties():IProperties;
 
 		/**
 		 * Defines the variables key/values to be replaced
-		 * into the url before the loading is launched.
+		 * in the url before the loading is launched.
 		 * 
 		 * @see	ch.capi.net.LoadableFileFactory#defaultVariables		LoadableFileFactory.defaultVariables
 		 * @see	ch.capi.utils.VariableReplacer#defaultVariableRegexp	VariableReplacer.defaultVariableRegexp
@@ -143,7 +143,7 @@ package ch.capi.net
 		/**
 		 * Retrieves the data of the <code>loadManagerObject</code> if the loading
 		 * is complete. If the <code>asClass</code> parameter is specified, then the <code>ILoadableFile</code>
-		 * will try to create an instance of it and parse the content into it.
+		 * will try to create an instance of it and parse the content in it.
 		 * 
 		 * @param 	asClass		The class instance that should be returned by the method.
 		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
@@ -187,7 +187,7 @@ package ch.capi.net
 		
 		/**
 		 * Destroys this <code>ILoadableFile</code>. This method causes to set the <code>loadManagerObject</code> value to
-		 * <code>null</code> and releases all other references to the content loaded contained into the current <code>ILoadableFile</code>.
+		 * <code>null</code> and releases all other references to the content loaded contained in the current <code>ILoadableFile</code>.
 		 * After calling this method, no more operation is available on the <code>ILoadableFile</code> instance.
 		 */
 		function destroy():void;

@@ -29,7 +29,7 @@ package ch.capi.data
 		 * Creates a new <code>QueueList</code> object.
 		 * 
 		 * @param	initialData		The <code>Array</code> with the elements to initialize. All the elements
-		 * 							contained into the <code>Array</code> will be added into the <code>QueueList</code>.
+		 * 							contained in the <code>Array</code> will be added in the <code>QueueList</code>.
 		 */
 		public function QueueList(initialData:Array=null):void
 		{

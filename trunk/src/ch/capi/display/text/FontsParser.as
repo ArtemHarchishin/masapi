@@ -73,7 +73,7 @@ package ch.capi.display.text
 		//--------------//
 		
 		/**
-		 * Parse the <code>Font</code> contained into the <code>XMLNode</code>.
+		 * Parse the <code>Font</code> contained in the <code>XMLNode</code>.
 		 * 
 		 * @param	node		The node to parse.
 		 * @throws	ch.capi.errors.ParseError	If the <code>XMLNode</code> is invalid.
