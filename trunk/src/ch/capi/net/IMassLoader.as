@@ -88,18 +88,22 @@ package ch.capi.net
 		function get numFiles():uint;
 
 		/**
-		 * Add a file to the loading queue.
+		 * Add a file to the loading queue. If the file is already in the loading queue,
+		 * then a <code>flash.errors.IllegalOperationError</code> will be thrown.
 		 * 
 		 * @param	file		The file to add.
+		 * @throws	flash.errors.IllegalOperationError	If the file is already in the loading queue.
 		 * @see		ch.capi.net.ILoadableFile		ILoadableFile
 		 * @see		ch.capi.net.LoadableFileFactory	LoadableFileFactory
 		 */
 		function addFile(file:ILoadManager):void;
 		
 		/**
-		 * Removes a file from the loading queue.
+		 * Removes a file from the loading queue. If the file is not in the loading queue,
+		 * then a <code>flash.errors.IllegalOperationError</code> will be thrown.
 		 * 
 		 * @param	file		The file to remove.
+		 * @throws	flash.errors.IllegalOperationError	If the file is not in the loading queue.
 		 */
 		function removeFile(file:ILoadManager):void;
 		

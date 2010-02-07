@@ -21,7 +21,7 @@
                     <xsd:element name="file" type="FileDefinition" />
                 </xsd:choice>
                 
-                <xsd:attribute name="useCache" type="Boolean" />
+                <xsd:attribute name="alwaysUseCache" type="Boolean" />
                 <xsd:attribute name="virtualBytesTotal" type="xsd:int" />
                 <xsd:attribute name="basePath" type="xsd:string" />
 				<xsd:attribute name="appDomain" type="AppDomain" />

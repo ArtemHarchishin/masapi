@@ -1,5 +1,6 @@
 package ch.capi.net 
 {
+	import ch.capi.data.IList;
 	import flash.events.ProgressEvent;	
 	import flash.events.Event;	
 	import flash.net.URLRequest;		
@@ -84,9 +85,9 @@ package ch.capi.net
 	
 	/**
 	 * This is a utility class to avoid too much verbose code within the Masapi API. Note that this
-	 * class simply uses the <code>PriorityMassLoader</code> and <code>LoadableFileFactory</code> to creates
+	 * class simply uses the <code>PriorityMassLoader</code> and <code>LoadableFileFactory</code> to create
 	 * the <code>ILoadableFile</code> and for the loading management.
-	 * It is an encapsulation class to the core Masapi API core functions. It is also a basic implementation
+	 * It is an encapsulation class to the Masapi API core functions. It is also a basic implementation
 	 * of a <code>ICompositeMassLoader</code>.
 	 *
 	 * <p>The <code>CompositeMassLoader</code> keeps by default a reference to the created <code>ILoadableFile</code>
@@ -353,10 +354,28 @@ package ch.capi.net
 		/**
 		 * Starts the loading of the massive loader.
 		 * 
+		 * @param	noCache		If <code>true</code>, then all the files contained in this
+		 * 		<code>ICompositeMassLoader</code> will be added back in the <code>IMassLoader</code>
+		 * 		to be reloaded. This cache has <strong>nothing</strong> to do with the <code>useCache</code>
+		 * 		property of a <code>ILoadableFile</code>. Moreover, this parameter will have an effect
+		 * 		only if the <code>keepFiles</code> property is <code>true</code>.
+		 * 		
+		 * @see #keeFiles	keepFiles
 		 * @see	ch.capi.net.ILoadManager#start	ILoadManager.start()
+		 * @see	ch.capi.net.ILoadableFile#useCache	ILoadableFile.useCache
 		 */
-		public function start():void
+		public function start(noCache:Boolean=false):void
 		{
+			if (noCache)
+			{
+				var files:IList = new ArrayList(_massLoader.getFiles());
+				for (var i:int=0 ; i<_storage.length ; i++)
+				{
+					var fileToPush:ILoadableFile = _storage.getElementAt(i);
+					if (!files.contains(fileToPush)) _massLoader.addFile(fileToPush);
+				}
+			}
+			
 			_massLoader.start();
 		}
 		

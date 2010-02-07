@@ -114,21 +114,47 @@ package ch.capi.data
 		}
 		
 		/**
-		 * Get the index of the specified element.
+		 * Get the index of the specified element. The comparison operator is the strict
+		 * equality (<code>===</code>).
 		 * 
 		 * @param	element		The element to find.
 		 * @return	The index of the element or -1 if the element is
 		 * 			not found.
 		 */
 		public function getElementIndex(element:*):int
+		{ 
+			return _data.indexOf(element);
+		}
+		
+		/**
+		 * Returns <code>true</code> if the specified element is contained in the <code>IList</code>
+		 * or <code>false</code> otherwise.
+		 * <p>The comparison function must take two arguments that are issued from the <code>IList</code>
+		 * and must return a <code>Boolean</code> indicating whetever the two elements are the same or not.</p>
+		 * 
+		 * @param	element		The element to find.
+		 * @param 	compare		The comparison function. If <code>null</code>, then the strict equality operator 
+		 * 						(<code>===</code>) will be used.
+		 * @return	<code>true</code> if the element is in the <code>IList</code>.
+		 * @see		#getElementIndex()	getElementIndex()
+		 * 
+		 * @example
+		 * <listing version="3.0">
+		 * var cmp:Function = function(a:Object, b:Object):Boolean
+		 * {
+		 * 		// a will always be the element passed to the contains method
+		 * 		return a.aProperty == b.aProperty;
+		 * }
+		 * var isContained:Boolean = myList.contains(myObject, cmp);
+		 * </listing>
+		 */
+		public function contains(element:*, compare:Function=null):Boolean
 		{
-			var l:int = _data.length;
-			for (var i:int=0 ; i<l ; i++)
-			{
-				if (_data[i] == element) return i;
-			}
+			var test:Function;
+			if (compare == null) test = function(obj:*, i:int, a:Array):Boolean { return obj === element; };
+			else test = function(obj:*, i:int, a:Array):Boolean { return compare(element, obj); };
 			
-			return -1;
+			return _data.some(test, null); //as test is a closure, thisObject must be null	
 		}
 		
 		/**

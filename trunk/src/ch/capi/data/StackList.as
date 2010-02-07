@@ -47,7 +47,7 @@ package ch.capi.data
 		 */
 		public function getTopElement():*
 		{
-			return getElementAt(0).data;
+			return getElementAt(0);
 		}
 		
 		/**

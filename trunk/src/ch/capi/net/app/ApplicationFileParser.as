@@ -80,6 +80,11 @@ package ch.capi.net.app
 		private static const ATTRIBUTE_VIRTUALBYTESTOTAL_VALUE:String = "virtualBytesTotal";
 		
 		/**
+		 * Defines the 'alwaysUseCache' attribute value.
+		 */
+		private static const ATTRIBUTE_ALWAYSUSECACHE_VALUE:String = "alwaysUseCache";
+		
+		/**
 		 * Defines the 'useCache' attribute value.
 		 */
 		private static const ATTRIBUTE_USECACHE_VALUE:String = "useCache";
@@ -297,10 +302,10 @@ package ch.capi.net.app
 			}
 			
 			//use cache
-			if (node.attributes[ATTRIBUTE_USECACHE_VALUE] != null)
+			if (node.attributes[ATTRIBUTE_ALWAYSUSECACHE_VALUE] != null)
 			{
-				var valueUC:String = node.attributes[ATTRIBUTE_USECACHE_VALUE];
-				loadableFileFactory.defaultUseCache = ParseUtils.parseBoolean(valueUC);
+				var valueUC:String = node.attributes[ATTRIBUTE_ALWAYSUSECACHE_VALUE];
+				loadableFileFactory.alwaysUseCache = ParseUtils.parseBoolean(valueUC);
 			}
 			
 			//base path

@@ -47,7 +47,7 @@ package ch.capi.data
 		 */
 		public function getFirstElement():*
 		{
-			return getElementAt(0).data;
+			return getElementAt(0);
 		}
 		
 		/**
@@ -57,7 +57,7 @@ package ch.capi.data
 		 */
 		public function getLastElement():*
 		{
-			return getElementAt(length-1).data;
+			return getElementAt(length-1);
 		}
 		
 		/**

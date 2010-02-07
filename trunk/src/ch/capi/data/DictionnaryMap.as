@@ -212,7 +212,7 @@ package ch.capi.data
 			var str:String = "";
 			for (var key:* in _dictionnary)
 			{
-				str += key.toString()+ " => " + _dictionnary[key] + "\n";
+				str += key+ " => " + _dictionnary[key] + "\n";
 			}
 			
 			return str;
