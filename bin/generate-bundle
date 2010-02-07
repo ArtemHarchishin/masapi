@@ -29,7 +29,7 @@ echo "Copying sources..."
 cp -R "$source_path" "$temp_dir/src"
 
 echo "Copying documentation..."
-cp -R "$doc_path" "$temp_dir/doc"
+cp -R "$doc_path/.." "$temp_dir/doc"
 
 echo "Removing svn private folders..."
 find "$temp_dir" -name \.svn -exec rm -rf {} \;

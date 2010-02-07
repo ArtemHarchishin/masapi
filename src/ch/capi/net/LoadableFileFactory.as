@@ -1,5 +1,6 @@
 ﻿package ch.capi.net
 {
+	import ch.capi.utils.VariableReplacer;
 	import ch.capi.net.policies.DefaultContextPolicy;	
 	import ch.capi.data.TreeMap;	
 	import ch.capi.data.DictionnaryMap;	
@@ -49,7 +50,7 @@
 		private var _fileSelector:FileTypeSelector					= FileTypeSelector.defaultFileTypeSelector;
 		private var _listenersPriority:int;
 		private var _defaultVirtualBytes:uint;
-		private var _defaultUseCache:Boolean;
+		private var _alwaysUseCache:Boolean;
 		
 
 		/**
@@ -135,15 +136,6 @@
 			if (value == null) throw new ArgumentError("The value is not defined");
 			_defaultVariables = value;
 		}
-
-		/**
-		 * Defines if the <code>ILoadableFile</code> created will use the
-		 * cache or not.
-		 * 
-		 * @see		ch.capi.net.ILoadManager#useCache	ILoadManager.useCache
-		 */
-		public function get defaultUseCache():Boolean { return _defaultUseCache; }
-		public function set defaultUseCache(value:Boolean):void { _defaultUseCache = value; }
 		
 		/**
 		 * Defines the default virtual bytes to set to the created <code>ILoadableFile</code>
@@ -154,6 +146,14 @@
 		public function get defaultVirtualBytesTotal():uint { return _defaultVirtualBytes; }
 		public function set defaultVirtualBytesTotal(value:uint):void { _defaultVirtualBytes = value; }
 
+		/**
+		 * Defines if all the <code>ILoadableFile</code> instances will use the cache or not. If
+		 * <code>false</code>, the the <code>ILoadableFile.useCache</code> property will be <code>true</code>
+		 * only if there is a variable in its URL.
+		 */
+		public function get alwaysUseCache():Boolean { return _alwaysUseCache; }
+		public function set alwaysUseCache(value:Boolean):void { _alwaysUseCache = value; }
+
 		//-----------//
 		//Constructor//
 		//-----------//
@@ -161,19 +161,21 @@
 		/**
 		 * Creates a new <code>LoadableFileFactory</code> object.
 		 * 
-		 * @param	defaultUseCache				Indicates if the <code>ILoadableFile</code>
-		 * 										will use the cache or not.
+		 * @param	alwaysUseCache				Indicates if the <code>ILoadableFile.useCache</code>
+		 * 										property will be always <code>true</code>. Otherwise it
+		 * 										will be <code>true</code> only if there is a variable in
+		 * 										the URL.
 		 * @param	defaultVirtualBytesTotal	The virtual bytes to set by default to the
 		 * 										created <code>ILoadableFile</code> objects.
 		 * @param	listenersPriority			Defines the listeners priority when the <code>attachListeners</code>
 		 * 										method is used.
 		 */
-		public function LoadableFileFactory(defaultUseCache:Boolean=true,  
+		public function LoadableFileFactory(alwaysUseCache:Boolean=false,  
 											defaultVirtualBytesTotal:uint = 204800,
 											listenersPriority:int = 0):void
 		{
 			_defaultVirtualBytes = defaultVirtualBytesTotal;
-			_defaultUseCache = defaultUseCache;
+			_alwaysUseCache = alwaysUseCache;
 			_listenersPriority = listenersPriority;
 		}
 		
@@ -396,7 +398,7 @@
 			ncl._defaultVirtualBytes = _defaultVirtualBytes;
 			ncl._fileSelector = _fileSelector;
 			ncl._listenersPriority = _listenersPriority;
-			ncl._defaultUseCache = _defaultUseCache;
+			ncl._alwaysUseCache = _alwaysUseCache;
 			ncl.basePath = basePath;
 			return ncl;
 		}
@@ -413,7 +415,16 @@
 		{
 			file.urlVariables = new TreeMap(_defaultVariables);
 			file.virtualBytesTotal = _defaultVirtualBytes;
-			file.useCache = _defaultUseCache;
+			
+			var useCache:Boolean = true;
+			if (!_alwaysUseCache) //determines the useCache property dynamically
+			{
+				var url:String = file.urlRequest.url;
+				var varRegexp:RegExp = VariableReplacer.defaultVariableRegexp;
+				useCache = (url.search(varRegexp) == -1);
+			}
+			
+			file.useCache = useCache;
 		}
 		
 		/**
