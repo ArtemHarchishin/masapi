@@ -112,7 +112,7 @@ package ch.capi.net.files
 			else if (insClass is StyleSheet){ insClass.parseCSS(loadedData); }
 			
 			//bitmap creation (asynchronous)
-			if (asClass is Bitmap)
+			if (insClass is Bitmap)
 			{
 				var tmpBitmap:Bitmap = insClass as Bitmap;
 				var tmpLoader:Loader = new Loader();
@@ -150,7 +150,8 @@ package ch.capi.net.files
 		 */
 		public function isClassSupported(aClass:String, appDomain:ApplicationDomain=null):Boolean
 		{
-			if (getType() == LoadableFileType.BINARY && (aClass == DataType.BYTE_ARRAY || aClass == DataType.BITMAP
+			if (getType() == LoadableFileType.BINARY && (aClass == DataType.BYTE_ARRAY
+			                                             || isInstanceOfClass(aClass, DataType.BITMAP, appDomain)
 														 || isInstanceOfClass(aClass, DataType.LOADER, appDomain))) return true;
 			if (getType() == LoadableFileType.VARIABLES && isInstanceOfClass(aClass, DataType.URL_VARIABLES, appDomain)) return true;
 			
