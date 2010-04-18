@@ -89,7 +89,8 @@
 		{
 			checkDestroyed();
 			checkData();
-			if (asClass != null && !isClassSupported(asClass, appDomain)) throw new ArgumentError("The type '"+asClass+"' is not supported");	
+			if (asClass != null && 
+			    !isClassSupported(asClass, appDomain)) throw new ArgumentError("The type '"+asClass+"' is not supported");	
 			
 			//simply returns the Loader
 			if (asClass == null || asClass == DataType.LOADER) return (loadManagerObject as Loader);
@@ -106,6 +107,7 @@
 			//simply returns the cloned BitmapData if needed
 			if (asClass == DataType.BITMAP_DATA) return clonedBitmapData;
 			
+			//the class inherits from Bitmap !			
 			var bmpClass:Class = appDomain.getDefinition(asClass) as Class;
 			return new bmpClass(clonedBitmapData);
 		}

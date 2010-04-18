@@ -15,7 +15,8 @@ package ch.capi.net
 	import ch.capi.net.ILoadableFile;	
 	
 	/**
-	 * Dispatched after all the files have been downloaded
+	 * Dispatched after all the files have been downloaded, even if errors
+	 * occured.
 	 * 
 	 * @see			ch.capi.net.MassLoader		MassLoader
 	 * @eventType	flash.events.Event.COMPLETE

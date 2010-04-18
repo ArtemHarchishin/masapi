@@ -145,7 +145,7 @@ package ch.capi.net
 		 * is complete. If the <code>asClass</code> parameter is specified, then the <code>ILoadableFile</code>
 		 * will try to create an instance of it and parse the content in it.
 		 * 
-		 * @param 	asClass		The class instance that should be returned by the method.
+		 * @param 	dataType	The type that should be returned by the method (see DataType).
 		 * @param	appDomain	The <code>ApplicationDomain</code> to retrieve the class. If <code>null</code> is specified, then
 		 * 						the current domain will be used.
 		 * @return	The data of the <code>loadManagerObject</code>.
@@ -154,9 +154,8 @@ package ch.capi.net
 		 * 
 		 * @see		ch.capi.net.DataType	DataType class
 		 * @see		#isClassSupported()		isClassSupported()
-		 * @see		ch.capi.net.DataType	DataType
 		 */
-		function getData(asClass:String=null, appDomain:ApplicationDomain=null):*;
+		function getData(dataType:String=null, appDomain:ApplicationDomain=null):*;
 
 		/**
 		 * Retrieves if the specified class type is supported by this <code>ILoadableFile</code> or not.
