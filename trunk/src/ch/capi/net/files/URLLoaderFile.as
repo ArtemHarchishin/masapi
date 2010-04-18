@@ -70,7 +70,7 @@ package ch.capi.net.files
 		 * Retrieves the data of the <code>loadManagerObject</code> if the loading
 		 * is complete. Depending of the type of data, many classes are supported :
 		 * <ul>
-		 * 	<li>If the format is binary, then the classes <code>DataType.BYTE_ARRAY</code>, <code>DataType.BITMAP</code> 
+		 * 	<li>If the format is binary, then the classes <code>DataType.BYTE_ARRAY</code>, <code>DataType.BITMAP</code> (for bitmap files only)
 		 * 	and <code>DataType.LOADER</code> are supported. If you use the class <code>DataType.BITMAP</code>, the data won't
 		 * 	be directly available in the <code>Bitmap</code> instance returned. An event <code>Event.INIT</code> will be dispatched
 		 * 	by the <code>Bitmap</code> after the new <code>BitmapData</code> has been updated. If a <code>DataType.LOADER</code> is asked,
@@ -133,8 +133,6 @@ package ch.capi.net.files
 					var initEvt:Event = new Event(Event.INIT);
 					tmpBitmap.dispatchEvent(initEvt);
 				}
-				
-				return tmpBitmap;
 			}
 			
 			return insClass;
