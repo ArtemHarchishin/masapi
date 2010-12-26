@@ -8,7 +8,7 @@ package ch.capi.net.files
 	import flash.text.StyleSheet;	
 	import flash.xml.XMLDocument;	
 	import flash.net.URLVariables;	
-	import flash.display.Loader;	
+	import flash.display.Loader;
 	import flash.events.IEventDispatcher;
 	import flash.net.URLLoader;
 
@@ -114,6 +114,7 @@ package ch.capi.net.files
 			//bitmap creation (asynchronous)
 			if (insClass is Bitmap)
 			{
+				//TODO read the bitmap header to retrieve the size (so the data will be directly available)
 				var tmpBitmap:Bitmap = insClass as Bitmap;
 				var tmpLoader:Loader = new Loader();
 				tmpLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onDataLoaded);

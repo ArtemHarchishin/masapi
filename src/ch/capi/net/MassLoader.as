@@ -15,8 +15,7 @@
 
 
 package ch.capi.net
-{
-	import ch.capi.events.GlobalEventDispatcher;	
+{	
 	import ch.capi.net.policies.DefaultLoadPolicy;		import ch.capi.data.DictionnaryMap;	
 	import ch.capi.data.IMap;	
 	import ch.capi.data.IList;
@@ -26,6 +25,7 @@ package ch.capi.net
 	import ch.capi.events.MassLoadEvent;
 	
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.events.IOErrorEvent;
@@ -104,7 +104,7 @@ package ch.capi.net
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		2.0
 	 */
-	public class MassLoader extends GlobalEventDispatcher implements IMassLoader
+	public class MassLoader extends EventDispatcher implements IMassLoader
 	{
 		//---------//
 		//Constants//
@@ -136,6 +136,7 @@ package ch.capi.net
 		private var _totalFilesToLoad:uint				= 0;
 		private var _totalFilesLoaded:uint				= 0;
 		private var _loaded:Boolean						= false;
+		private var _dynamicEnqueuing:Boolean				= true;
 		private var _launchTimeout:uint;
 		private var _loadInfo:ILoadInfo;
 		private var _parallelFiles:uint;
@@ -259,6 +260,18 @@ package ch.capi.net
 		public function get closeEvent():Event { return _closeEvent; }
 		
 		/**
+		 * Defines if the <code>MassLoader</code> enqueues dynamically the files added during
+		 * the loading. <strong>This value cannot be modified during the loading !</strong>
+		 */
+		public function get dynamicEnqueuing():Boolean { return _dynamicEnqueuing; }
+		public function set dynamicEnqueuing(value:Boolean):void
+		{
+			if (_isLoading) throw new IllegalOperationError("Modification of dynamicEnqueue to "+value+
+			                                                " not allowed during loading");
+			_dynamicEnqueuing = value;
+		}
+
+		/**
 		 * Defines the data structure to use for the file enqueuing. By default, a
 		 * <code>QueueList</code> is used. The <code>MassLoader</code> will use this
 		 * <code>IDataStructure</code> to retrieves the next file to load. All the objects
@@ -300,12 +313,15 @@ package ch.capi.net
 		/**
 		 * Creates a new <code>MassLoader</code> object.
 		 * 
-		 * @param	parallelFiles	The number of files to be loaded simultaneously.
+		 * @param	parallelFiles		The number of files to be loaded simultaneously.
+		 * @param	dynamicEnqueuing	Defines if the files added during the loading must be 
+		 *                              enqueued dynamically.
 		 */
-		public function MassLoader(parallelFiles:uint=1):void
+		public function MassLoader(parallelFiles:uint=1, dynamicEnqueuing:Boolean=true):void
 		{
 			_loadInfo = new MassLoadInfo(this);
 			_parallelFiles = parallelFiles;
+			_dynamicEnqueuing = dynamicEnqueuing;
 		}
 
 		//--------------//
@@ -550,12 +566,12 @@ package ch.capi.net
 			//request. So it can be available within the open event.
 			if (file is ILoadableFile) (file as ILoadableFile).prepareFixedRequest();
 			
-			//open event
+			//notify listeners that the file is being loaded
 			dispatchOpenEvent(file);
 			
 			//try to start the loading
 			var fileStarted:Boolean = file.start();
-			if (fileStarted) return true; //okay !!!
+			if (fileStarted) return true;
 		
 			//problem during the launching (or already in cache) => stop it !
 			closeFile(file, null);

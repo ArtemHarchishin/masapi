@@ -1,12 +1,12 @@
 package ch.capi.net 
 {
-	import ch.capi.data.IList;
+	import flash.events.EventDispatcher;
 	import flash.events.ProgressEvent;	
 	import flash.events.Event;	
 	import flash.net.URLRequest;		
 	
+	import ch.capi.data.IList;
 	import ch.capi.data.IMap;
-	import ch.capi.events.GlobalEventDispatcher;	
 	import ch.capi.events.PriorityEvent;	
 	import ch.capi.events.MassLoadEvent;
 	import ch.capi.data.ArrayList;	
@@ -112,7 +112,7 @@ package ch.capi.net
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		1.0
 	 */
-	public class CompositeMassLoader extends GlobalEventDispatcher implements ICompositeMassLoader
+	public class CompositeMassLoader extends EventDispatcher implements ICompositeMassLoader
 	{
 		//---------//
 		//Constants//
@@ -183,6 +183,7 @@ package ch.capi.net
 		 * @param	parallelFiles			The number of files to load at the same time.
 		 * @param	register				Defines if the <code>CompositeMassLoader</code> must be automatically registered in the
 		 * 									<code>CompositeMassLoaderRegisterer</code> class.
+         * @see		ch.capi.net.CompositeMassLoaderRegisterer	CompositeMassLoaderRegisterer
 		 */
 		public function CompositeMassLoader(name:String=null, parallelFiles:int=1, register:Boolean=true)
 		{

@@ -1,5 +1,6 @@
 ﻿package ch.capi.net.files
-{			import flash.events.TextEvent;	
+{			import flash.events.EventDispatcher;
+	import flash.events.TextEvent;	
 	import flash.display.DisplayObject;	
 	import flash.display.LoaderInfo;	
 	import flash.utils.ByteArray;	
@@ -17,7 +18,6 @@
 	import flash.utils.getQualifiedClassName;
 	import flash.utils.setTimeout;
 	
-	import ch.capi.events.GlobalEventDispatcher;
 	import ch.capi.data.text.Properties;	
 	import ch.capi.data.text.IProperties;
 	import ch.capi.display.IRootDocument;
@@ -107,7 +107,7 @@
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		2.1
 	 */
-	public class AbstractLoadableFile extends GlobalEventDispatcher implements INetStateManager
+	public class AbstractLoadableFile extends EventDispatcher implements INetStateManager
 	{
 		//---------//
 		//Constants//
