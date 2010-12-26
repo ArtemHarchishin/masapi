@@ -1,8 +1,7 @@
 package ch.capi.net
 {
-	import flash.events.Event;	
-	
-	import ch.capi.events.IGlobalEventDispatcher;	
+	import flash.events.IEventDispatcher;
+	import flash.events.Event;
 	
 	/**
 	 * Dispatched after all the received data is received.
@@ -42,7 +41,7 @@ package ch.capi.net
 	 * @author		Cedric Tabin - thecaptain
 	 * @version		2.1
 	 */
-	public interface ILoadManager extends IGlobalEventDispatcher
+	public interface ILoadManager extends IEventDispatcher
 	{
 		/**
 		 * Defines if the <code>ILoadManager</code> operation is complete. This

@@ -24,3 +24,13 @@ fi
 
 echo "Generating documentation into folder $folder_output"
 $flex_sdk_path/asdoc -source-path ./src -output $folder_output -doc-sources ./src/ch/ -main-title "$mainTitle" -window-title "Masapi 2.0 API Reference" -footer "Cedric Tabin - http://www.astorm.ch"
+
+echo
+echo -n "Do you want to create the offline version ? (y or n) "
+read answer
+
+if [ "$answer" = "y" ]; then
+	cp -r "$folder_output" "${folder_output}_offline"
+	find "${folder_output}_offline" -name \.svn -exec rm -rf {} \;
+fi
+
